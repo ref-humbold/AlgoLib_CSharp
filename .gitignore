@@ -1,0 +1,8 @@
+# [ CSharp ]
+# CSharp output
+**/bin
+**/obj
+
+# Visual Studio / NuGet
+.vs
+packages
