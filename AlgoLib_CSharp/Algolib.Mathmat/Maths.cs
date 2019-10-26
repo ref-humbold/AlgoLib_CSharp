@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Mathmat
 {
-   public class Maths
+    public class Maths
     {
         /// <summary>Greatest common divisor of two numbers</summary>
         /// <param name="number1">first number</param>
@@ -39,13 +39,13 @@ namespace Algolib.Mathmat
             long result = 1;
 
             if(modulo < 0)
-                throw new ArithmeticException("Negative modulo.");
+                throw new ArithmeticException("Negative modulo");
 
             if(exponent < 0)
-                throw new ArithmeticException("Negative exponent.");
+                throw new ArithmeticException("Negative exponent");
 
             if(baseNum == 0 && exponent == 0)
-                throw new NotFiniteNumberException("Zero to the power of zero is NaN.");
+                throw new NotFiniteNumberException("Zero to the power of zero is NaN");
 
             while(exponent > 0)
             {
@@ -62,13 +62,14 @@ namespace Algolib.Mathmat
         /// <summary>Fast modulo multiplication</summary>
         /// <param name="factor1">multiplier</param>
         /// <param name="factor2">multiplicand</param>
+        /// <param name="modulo">modulo</param>
         /// <returns>multiplication result taken modulo</returns>
         public static long MultMod(long factor1, long factor2, long modulo)
         {
             long result = 0;
 
             if(modulo < 0)
-                throw new ArithmeticException("Negative modulo.");
+                throw new ArithmeticException("Negative modulo");
 
             if(factor1 < 0 && factor2 < 0)
                 return MultMod(-factor1, -factor2, modulo);
@@ -82,9 +83,9 @@ namespace Algolib.Mathmat
             while(factor2 > 0)
             {
                 if(factor2 % 2 == 1)
-                    result = modulo ==  0 ? factor1 + result : (factor1 + result) % modulo;
+                    result = modulo == 0 ? factor1 + result : (factor1 + result) % modulo;
 
-                factor1 = modulo ==  0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
+                factor1 = modulo == 0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
                 factor2 >>= 1;
             }
 

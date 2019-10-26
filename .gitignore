@@ -1,6 +1,7 @@
 # [ CSharp ]
 # CSharp output
 **/bin
+**/doc
 **/obj
 
 # Visual Studio / NuGet

@@ -1,14 +1,16 @@
 // Disjoint sets structure (union-find).
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
     public class DisjointSets<E>
     {
-        /// <summary>Mapa reprezentantów elementów</summary>
+        /// <summary>Map of element represents</summary>
         private readonly Dictionary<E, E> represents;
+
+        /// <summary>Number of sets</summary>
+        public int Count { get; private set; }
 
         public DisjointSets(IEnumerable<E> universe)
         {
@@ -16,38 +18,36 @@ namespace Algolib.Structures
 
             foreach(E e in universe)
                 represents[e] = e;
+
+            Count = represents.Count;
         }
 
-        /// <summary>Liczba zbiorów.</summary>
-        public int Count
-        {
-            get
-            {
-                return represents.Keys.Select(e => FindSet(e)).Distinct().ToList().Count;
-            }
-        }
-
-        /// <summary>Sprawdzanie należenia do dowolnego zbioru.</summary>
+        /// <summary>Checks whether element belongs to any set</summary>
         /// <param name="element">element</param>
-        /// <returns>czy element w jednym ze zbiorów</returns>
+        /// <returns><code>true</code> if element is contained, otherwise <code>false</code></returns>
         public bool Contains(E element)
         {
             return represents.ContainsKey(element);
         }
 
-        /// <summary>Dodawanie nowego elementu jako singleton.</summary>
-        /// <param name="element">nowy element</param>
-        public void AddElem(E element)
+        /// <summary>Adds new elements as singleton sets</summary>
+        /// <param name="elements">new elements</param>
+        public void Add(IEnumerable<E> elements)
         {
-            if(Contains(element))
-                throw new ArgumentException($"Value {element} already present.");
+            foreach(E elem in elements)
+                if(Contains(elem))
+                    throw new ArgumentException($"Value {elem} already present.");
 
-            represents[element] = element;
+            foreach(E elem in elements)
+            {
+                represents[elem] = elem;
+                ++Count;
+            }
         }
 
-        /// <summary>Ustalanie reprezentanta zbioru.</summary>
-        /// <param name="element">element ze zbioru</param>
-        /// <returns>reprezentant elementu</returns>
+        /// <summary>Finds represent of element in set</summary>
+        /// <param name="element">element from structure</param>
+        /// <returns>represent of the element</returns>
         public E FindSet(E element)
         {
             if(!represents[element].Equals(element))
@@ -56,22 +56,25 @@ namespace Algolib.Structures
             return represents[element];
         }
 
-        /// <summary>Scalanie dwóch zbiorów.</summary>
-        /// <param name="element1">element pierwszego zbioru</param>
-        /// <param name="element2">element drugiego zbioru</param>
+        /// <summary>Joins two sets</summary>
+        /// <param name="element1">element from first set</param>
+        /// <param name="element2">element from second set</param>
         public void UnionSet(E element1, E element2)
         {
             if(!IsSameSet(element1, element2))
+            {
                 represents[FindSet(element1)] = FindSet(element2);
+                --Count;
+            }
         }
 
-        /// <summary>Sprawdzanie, czy elementy należą do tego samego zbioru.</summary>
-        /// <param name="element1">element pierwszego zbioru</param>
-        /// <param name="element2">element drugiego zbioru</param>
-        /// <returns>czy elementy znajdują się w jednym zbiorze</returns>
+        /// <summary>Checks whether elements belong to the same set</summary>
+        /// <param name="element1">element from first set</param>
+        /// <param name="element2">element from second set</param>
+        /// <returns><code>true</code> if elements are in same set, otherwise <code>false</code></returns>
         public bool IsSameSet(E element1, E element2)
         {
             return FindSet(element1).Equals(FindSet(element2));
         }
-    } 
+    }
 }

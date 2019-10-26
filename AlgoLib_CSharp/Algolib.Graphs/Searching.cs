@@ -32,6 +32,7 @@ namespace Algolib.Graphs
                         foreach(int neighbour in graph.GetNeighbours(vertex))
                             if(reached[neighbour] == 0)
                             {
+                                strategy.ForNeighbour(vertex, neighbour);
                                 reached[neighbour] = iter;
                                 vertexQueue.Enqueue(neighbour);
                             }
@@ -77,7 +78,10 @@ namespace Algolib.Graphs
 
                         foreach(int neighbour in graph.GetNeighbours(vertex))
                             if(reached[neighbour] == 0)
+                            {
+                                strategy.ForNeighbour(vertex, neighbour);
                                 vertexStack.Push(neighbour);
+                            }
                             else if(reached[neighbour] == iter)
                                 strategy.OnCycle(vertex, neighbour);
 
@@ -97,38 +101,67 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertex</param>
         public static List<bool> DFSR(IGraph graph, ISearchingStrategy strategy, params int[] roots)
         {
-            List<int> reached = Enumerable.Repeat(0, graph.VerticesNumber).ToList();
-            int iter = 1;
+            DfsrState state = new DfsrState(graph.VerticesNumber);
 
             foreach(int root in roots)
-                if(reached[root] != 0)
+                if(state.reached[root] != 0)
                 {
-                    DFSRstep(graph, strategy, root, iter, ref reached);
-                    ++iter;
+                    DFSRstep(graph, strategy, root, state);
+                    state.AddIteration();
                 }
 
-            return reached.Select(i => i != 0).ToList();
+            return state.reached.Select(i => i != 0).ToList();
         }
 
         /// <summary>Step of recursive DFS algorithm</summary>
         /// <param name="graph">graph</param>
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="vertex">current vertex</param>
-        /// <param name="iter">iteration number</param>
-        private static void DFSRstep(IGraph graph, ISearchingStrategy strategy, int vertex, 
-                                     int iter, ref List<int> reached)
+        /// <param name="state">current searching state</param>
+        private static void DFSRstep(IGraph graph, ISearchingStrategy strategy, int vertex,
+                                     DfsrState state)
         {
-            reached[vertex] = iter;
+            state.OnEntry(vertex);
             strategy.Preprocess(vertex);
 
             foreach(int neighbour in graph.GetNeighbours(vertex))
-                if(reached[neighbour] == 0)
-                    DFSRstep(graph, strategy, neighbour, iter, ref reached);
-                else if(reached[neighbour] == iter)
+                if(state.reached[neighbour] == 0)
+                {
+                    strategy.ForNeighbour(vertex, neighbour);
+                    DFSRstep(graph, strategy, neighbour, state);
+                }
+                else if(state.reached[neighbour] == state.Iteration)
                     strategy.OnCycle(vertex, neighbour);
 
             strategy.Postprocess(vertex);
-            reached[vertex] = -iter;
+            state.OnExit(vertex);
+        }
+
+        private class DfsrState
+        {
+            internal int Iteration { get; private set; }
+            internal List<int> reached;
+
+            internal DfsrState(int verticesNumber)
+            {
+                Iteration = 1;
+                reached = Enumerable.Repeat(0, verticesNumber).ToList();
+            }
+
+            internal void AddIteration()
+            {
+                ++Iteration;
+            }
+
+            internal void OnEntry(int vertex)
+            {
+                reached[vertex] = Iteration;
+            }
+
+            internal void OnExit(int vertex)
+            {
+                reached[vertex] = -Iteration;
+            }
         }
     }
 }
