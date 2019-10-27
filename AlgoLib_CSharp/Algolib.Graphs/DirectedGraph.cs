@@ -23,14 +23,14 @@ namespace Algolib.Graphs
                 graphrepr[(int)e.Item1].Add(Tuple.Create(e.Item2, DEFAULT_WEIGHT));
         }
 
-        public override int EdgesNumber => Vertices.Aggregate(0, (int acc, int v) => acc + GetOutdegree(v));
+        public override int EdgesCount => Vertices.Aggregate(0, (int acc, int v) => acc + GetOutdegree(v));
 
         public override IEnumerable<Tuple<int, int>> Edges => Vertices.SelectMany(
                 v => GetNeighbours(v).Select(u => Tuple.Create(v, u)));
 
         public override void AddEdge(int v, int u)
         {
-            if(v > VerticesNumber || u > VerticesNumber)
+            if(v > VerticesCount || u > VerticesCount)
                 throw new ArgumentOutOfRangeException("No such vertex.");
 
             graphrepr[v].Add(Tuple.Create(u, DEFAULT_WEIGHT));

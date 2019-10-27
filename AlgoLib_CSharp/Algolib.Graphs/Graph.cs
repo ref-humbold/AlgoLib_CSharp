@@ -11,10 +11,10 @@ namespace Algolib.Graphs
         double Inf { get; }
 
         /// <summary>Liczba wierzchołków</summary>
-        int VerticesNumber { get; }
+        int VerticesCount { get; }
 
         /// <summary>Liczba krawędzi</summary>
-        int EdgesNumber { get; }
+        int EdgesCount { get; }
 
         /// <summary>Lista wierzchołków</summary>
         IEnumerable<int> Vertices { get; }
@@ -75,11 +75,11 @@ namespace Algolib.Graphs
 
         public double Inf => double.PositiveInfinity;
 
-        public int VerticesNumber => graphrepr.Count;
+        public int VerticesCount => graphrepr.Count;
 
-        public abstract int EdgesNumber { get; }
+        public abstract int EdgesCount { get; }
 
-        public IEnumerable<int> Vertices => Enumerable.Range(0, VerticesNumber);
+        public IEnumerable<int> Vertices => Enumerable.Range(0, VerticesCount);
 
         public abstract IEnumerable<Tuple<int, int>> Edges { get; }
 

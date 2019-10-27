@@ -13,7 +13,7 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertex</param>
         public static List<bool> BFS(IGraph graph, ISearchingStrategy strategy, params int[] roots)
         {
-            List<int> reached = Enumerable.Repeat(0, graph.VerticesNumber).ToList();
+            List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
             Queue<int> vertexQueue = new Queue<int>();
             int iter = 1;
 
@@ -58,7 +58,7 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertex</param>
         public static List<bool> DFSI(IGraph graph, ISearchingStrategy strategy, params int[] roots)
         {
-            List<int> reached = Enumerable.Repeat(0, graph.VerticesNumber).ToList();
+            List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
             Stack<int> vertexStack = new Stack<int>();
             int iter = 1;
 
@@ -101,12 +101,12 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertex</param>
         public static List<bool> DFSR(IGraph graph, ISearchingStrategy strategy, params int[] roots)
         {
-            DfsrState state = new DfsrState(graph.VerticesNumber);
+            DfsrState state = new DfsrState(graph.VerticesCount);
 
             foreach(int root in roots)
                 if(state.reached[root] != 0)
                 {
-                    DFSRstep(graph, strategy, root, state);
+                    dfsrStep(graph, strategy, root, state);
                     state.AddIteration();
                 }
 
@@ -118,7 +118,7 @@ namespace Algolib.Graphs
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="vertex">current vertex</param>
         /// <param name="state">current searching state</param>
-        private static void DFSRstep(IGraph graph, ISearchingStrategy strategy, int vertex,
+        private static void dfsrStep(IGraph graph, ISearchingStrategy strategy, int vertex,
                                      DfsrState state)
         {
             state.OnEntry(vertex);
@@ -128,7 +128,7 @@ namespace Algolib.Graphs
                 if(state.reached[neighbour] == 0)
                 {
                     strategy.ForNeighbour(vertex, neighbour);
-                    DFSRstep(graph, strategy, neighbour, state);
+                    dfsrStep(graph, strategy, neighbour, state);
                 }
                 else if(state.reached[neighbour] == state.Iteration)
                     strategy.OnCycle(vertex, neighbour);
