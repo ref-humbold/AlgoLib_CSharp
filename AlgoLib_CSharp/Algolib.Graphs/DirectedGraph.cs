@@ -1,7 +1,7 @@
 // Directed graphs structures.
-using System;
 using System.Linq;
 using System.Collections.Generic;
+using Algolib.Graphs.Properties;
 
 namespace Algolib.Graphs
 {
@@ -11,44 +11,46 @@ namespace Algolib.Graphs
         void Reverse();
     }
 
-    public class DirectedSimpleGraph : SimpleGraph, IDirectedGraph
+    public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph
+        where V : IVertexProperties where E : IEdgeProperties
     {
-        public DirectedSimpleGraph(int n) : base(n)
+        public DirectedSimpleGraph(int n, V vertexProperties) : base(n, vertexProperties)
         {
         }
 
-        public DirectedSimpleGraph(int n, List<Tuple<int, int>> edges) : base(n)
+        public override int EdgesCount => Vertices.Aggregate(0, (int acc, Vertex<V> v) => acc + GetOutdegree(v));
+
+        public override IEnumerable<Edge<E, V>> Edges =>
+            Graphrepr.Values.Aggregate(new List<Edge<E, V>>(),
+                                       (List<Edge<E, V>> acc, HashSet<Edge<E, V>> neighbours) => {
+                                           acc.AddRange(neighbours);
+                                           return acc;
+                                       });
+
+        public override Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E properties)
         {
-            foreach(var e in edges)
-                graphrepr[(int)e.Item1].Add(Tuple.Create(e.Item2, DEFAULT_WEIGHT));
+            Edge<E, V> edge = new Edge<E, V>(from, to, properties);
+
+            Graphrepr[from].Add(edge);
+
+            return edge;
         }
 
-        public override int EdgesCount => Vertices.Aggregate(0, (int acc, int v) => acc + GetOutdegree(v));
-
-        public override IEnumerable<Tuple<int, int>> Edges => Vertices.SelectMany(
-                v => GetNeighbours(v).Select(u => Tuple.Create(v, u)));
-
-        public override void AddEdge(int v, int u)
-        {
-            if(v > VerticesCount || u > VerticesCount)
-                throw new ArgumentOutOfRangeException("No such vertex.");
-
-            graphrepr[v].Add(Tuple.Create(u, DEFAULT_WEIGHT));
-        }
-
-        public override int GetIndegree(int v) => Edges.Aggregate(0, (int acc, Tuple<int, int> e) => e.Item1 == v ? acc + 1 : acc);
+        public override int GetIndegree(Vertex<V> v) =>
+            Graphrepr.Values.Aggregate(0, (int acc, HashSet<Edge<E, V>> es) =>
+                es.Aggregate(acc, (int acc, Edge<E, V> e) => v.Equals(e.To) ? acc + 1 : acc));
 
         public void Reverse()
         {
-            List<HashSet<Tuple<int, double>>> revgraphrepr = new List<HashSet<Tuple<int, double>>>();
+            Dictionary<Vertex<V>, HashSet<Edge<E, V>>> revgraphrepr = new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
 
             foreach(var v in Vertices)
-                revgraphrepr.Add(new HashSet<Tuple<int, double>>());
+                revgraphrepr.Add(v, new HashSet<Edge<E, V>>());
 
             foreach(var e in Edges)
-                revgraphrepr[e.Item2].Add(Tuple.Create(e.Item1, DEFAULT_WEIGHT));
+                revgraphrepr[e.To].Add(new Edge<E, V>(e.To, e.From, e.Properties));
 
-            graphrepr = revgraphrepr;
+            Graphrepr = revgraphrepr;
         }
     }
 }

@@ -1,26 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Algolib.Graphs.Properties;
 
 namespace Algolib.Graphs.Searching
 {
-    public interface ISearchingStrategy
+    public interface ISearchingStrategy<V> where V : IVertexProperties
     {
         /// <summary>Action before vertex processing</summary>
         /// <param name="vertex">current vertex</param>
-        void Preprocess(int vertex);
+        void Preprocess(Vertex<V> vertex);
 
         /// <summary>Action before entering neighbour</summary>
         /// <param name="vertex">current vertex</param>
         /// <param name="neighbour">next vertex</param>
-        void ForNeighbour(int vertex, int neighbour);
+        void ForNeighbour(Vertex<V> vertex, Vertex<V> neighbour);
 
         /// <summary>Action after vertex processing</summary>
         /// <param name="vertex">current vertex</param>
-        void Postprocess(int vertex);
+        void Postprocess(Vertex<V> vertex);
 
         /// <summary>Action on cycle detectioon</summary>
         /// <param name="vertex">current vertex</param>
         /// <param name="neighbour">neighbouring vertex on cycle</param>
-        void OnCycle(int vertex, int neighbour);
+        void OnCycle(Vertex<V> vertex, Vertex<V> neighbour);
     }
 }
