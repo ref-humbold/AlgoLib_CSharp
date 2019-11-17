@@ -6,39 +6,43 @@ using Algolib.Graphs.Properties;
 
 namespace Algolib.Graphs
 {
-    public class Vertex<T> where T : IVertexProperties
+    public sealed class Vertex<V> where V : IVertexProperties
     {
         public readonly int Id;
-        public readonly T Properties;
+        public readonly V Properties;
 
-        public Vertex(int number, T properties)
+        internal Vertex(int number, V properties)
         {
             this.Id = number;
             this.Properties = properties;
         }
 
-        public bool Equals(Vertex<T> v)
+        public bool Equals(Vertex<V> v)
         {
-            return Id == v.Id;
+            return this.Id == v.Id;
         }
+
+        public override int GetHashCode() => this.Id;
     }
 
-    public class Edge<T, V> where T : IEdgeProperties where V : IVertexProperties
+    public sealed class Edge<E, V> where E : IEdgeProperties where V : IVertexProperties
     {
         public readonly Vertex<V> From;
         public readonly Vertex<V> To;
-        public readonly T Properties;
+        public readonly E Properties;
 
-        public Edge(Vertex<V> from, Vertex<V> to, T properties)
+        internal Edge(Vertex<V> from, Vertex<V> to, E properties)
         {
             this.From = from;
             this.To = to;
             this.Properties = properties;
         }
-        public bool Equals(Edge<T, V> e)
+        public bool Equals(Edge<E, V> e)
         {
-            return From.Equals(e.From) && To.Equals(e.To);
+            return this.From.Equals(e.From) && this.To.Equals(e.To);
         }
+
+        public override int GetHashCode() => Tuple.Create(From, To).GetHashCode();
     }
 
     public interface IGraph<V, E> where V : IVertexProperties where E : IEdgeProperties
@@ -89,12 +93,12 @@ namespace Algolib.Graphs
         /// <summary>Lista sąsiedztwa grafu</summary>
         protected Dictionary<Vertex<V>, HashSet<Edge<E, V>>> Graphrepr;
 
-        public SimpleGraph(int n, V vertexProperties)
+        public SimpleGraph(IEnumerable<V> properties)
         {
             Graphrepr = new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
 
-            for(int i = 0; i < n; ++i)
-                AddVertex(vertexProperties);
+            foreach(var prop in properties)
+                AddVertex(prop);
         }
 
         public double Inf => double.PositiveInfinity;

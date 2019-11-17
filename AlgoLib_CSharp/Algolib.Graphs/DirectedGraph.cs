@@ -14,15 +14,15 @@ namespace Algolib.Graphs
     public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph
         where V : IVertexProperties where E : IEdgeProperties
     {
-        public DirectedSimpleGraph(int n, V vertexProperties) : base(n, vertexProperties)
+        public DirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
         {
         }
 
-        public override int EdgesCount => Vertices.Aggregate(0, (int acc, Vertex<V> v) => acc + GetOutdegree(v));
+        public override int EdgesCount => Vertices.Aggregate(0, (acc, v) => acc + GetOutdegree(v));
 
         public override IEnumerable<Edge<E, V>> Edges =>
             Graphrepr.Values.Aggregate(new List<Edge<E, V>>(),
-                                       (List<Edge<E, V>> acc, HashSet<Edge<E, V>> neighbours) => {
+                                       (acc, neighbours) => {
                                            acc.AddRange(neighbours);
                                            return acc;
                                        });
@@ -37,8 +37,7 @@ namespace Algolib.Graphs
         }
 
         public override int GetIndegree(Vertex<V> v) =>
-            Graphrepr.Values.Aggregate(0, (int acc, HashSet<Edge<E, V>> es) =>
-                es.Aggregate(acc, (int acc, Edge<E, V> e) => v.Equals(e.To) ? acc + 1 : acc));
+            Graphrepr.Values.Aggregate(0, (acc, edges) => acc + edges.Where(e => v.Equals(e.To)).Count());
 
         public void Reverse()
         {
