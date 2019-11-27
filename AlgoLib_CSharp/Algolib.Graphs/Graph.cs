@@ -3,10 +3,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Algolib.Graphs.Properties;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Graphs
 {
-    public sealed class Vertex<V> where V : IVertexProperties
+    public sealed class Vertex<V> : IComparable<Vertex<V>> where V : IVertexProperties
     {
         public readonly int Id;
         public readonly V Properties;
@@ -17,15 +18,15 @@ namespace Algolib.Graphs
             this.Properties = properties;
         }
 
-        public bool Equals(Vertex<V> v)
-        {
-            return this.Id == v.Id;
-        }
+        public int CompareTo([AllowNull] Vertex<V> other) => this.Id.CompareTo(other?.Id);
 
-        public override int GetHashCode() => this.Id;
+        public bool Equals(Vertex<V> v) => this.Id == v.Id;
+
+        public override int GetHashCode() => this.Id.GetHashCode();
     }
 
-    public sealed class Edge<E, V> where E : IEdgeProperties where V : IVertexProperties
+    public sealed class Edge<E, V> : IComparable<Edge<E, V>>
+        where E : IEdgeProperties where V : IVertexProperties
     {
         public readonly Vertex<V> From;
         public readonly Vertex<V> To;
@@ -37,12 +38,17 @@ namespace Algolib.Graphs
             this.To = to;
             this.Properties = properties;
         }
-        public bool Equals(Edge<E, V> e)
+
+        public int CompareTo([AllowNull] Edge<E, V> other)
         {
-            return this.From.Equals(e.From) && this.To.Equals(e.To);
+            int firstComp = this.From.CompareTo(other?.From);
+
+            return firstComp != 0 ? firstComp : this.To.CompareTo(other?.To);
         }
 
-        public override int GetHashCode() => Tuple.Create(From, To).GetHashCode();
+        public bool Equals(Edge<E, V> e) => this.From.Equals(e.From) && this.To.Equals(e.To);
+
+        public override int GetHashCode() => Tuple.Create(From.Id, To.Id).GetHashCode();
     }
 
     public interface IGraph<V, E> where V : IVertexProperties where E : IEdgeProperties
