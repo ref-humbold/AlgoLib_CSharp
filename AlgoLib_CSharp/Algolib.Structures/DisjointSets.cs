@@ -22,6 +22,19 @@ namespace Algolib.Structures
             Count = represents.Count;
         }
 
+        /// <summary>Finds represent of element in set</summary>
+        /// <param name="element">element from structure</param>
+        /// <returns>represent of the element</returns>
+        /// <exception cref="KeyNotFoundException">if element not present</exception>
+        public E this[E element] {
+            get {
+                if (!represents[element].Equals(element))
+                    represents[element] = this[represents[element]];
+
+                return represents[element];
+            }
+        }
+
         /// <summary>Checks whether element belongs to any set</summary>
         /// <param name="element">element</param>
         /// <returns><code>true</code> if element is contained, otherwise <code>false</code></returns>
@@ -32,6 +45,7 @@ namespace Algolib.Structures
 
         /// <summary>Adds new elements as singleton sets</summary>
         /// <param name="elements">new elements</param>
+        /// <exception cref="ArgumentException">if any value is already present</exception>
         public void Add(IEnumerable<E> elements)
         {
             foreach(E elem in elements)
@@ -46,24 +60,30 @@ namespace Algolib.Structures
         }
 
         /// <summary>Finds represent of element in set</summary>
-        /// <param name="element">element from structure</param>
-        /// <returns>represent of the element</returns>
-        public E FindSet(E element)
+        /// <param name="element">element</param>
+        /// <param name="defval">value to return when element not present</param>
+        /// <returns>represent of the element or default value</returns>
+        public E FindSet(E element, E defval)
         {
-            if(!represents[element].Equals(element))
-                represents[element] = FindSet(represents[element]);
-
-            return represents[element];
+            try 
+            {
+                return this[element];
+            }
+            catch(KeyNotFoundException)
+            {
+                return defval;
+            }
         }
 
         /// <summary>Joins two sets</summary>
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
+        /// <exception cref="KeyNotFoundException">if element not present</exception>
         public void UnionSet(E element1, E element2)
         {
             if(!IsSameSet(element1, element2))
             {
-                represents[FindSet(element1)] = FindSet(element2);
+                represents[this[element1]] = this[element2];
                 --Count;
             }
         }
@@ -72,9 +92,10 @@ namespace Algolib.Structures
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
         /// <returns><code>true</code> if elements are in same set, otherwise <code>false</code></returns>
+        /// <exception cref="KeyNotFoundException">if element not present</exception>
         public bool IsSameSet(E element1, E element2)
         {
-            return FindSet(element1).Equals(FindSet(element2));
+            return this[element1].Equals(this[element2]);
         }
     }
 }
