@@ -1,4 +1,4 @@
-// Disjoint sets structure (union-find).
+// Disjoint sets structure (union-find)
 using System;
 using System.Collections.Generic;
 

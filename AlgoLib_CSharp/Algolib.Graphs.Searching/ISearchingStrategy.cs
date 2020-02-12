@@ -1,8 +1,6 @@
-﻿using Algolib.Graphs.Properties;
-
-namespace Algolib.Graphs.Searching
+﻿namespace Algolib.Graphs.Searching
 {
-    public interface ISearchingStrategy<V> where V : IVertexProperties
+    public interface ISearchingStrategy<V>
     {
         /// <summary>Action before vertex processing</summary>
         /// <param name="vertex">current vertex</param>

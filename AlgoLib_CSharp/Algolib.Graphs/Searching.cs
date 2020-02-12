@@ -1,8 +1,7 @@
-// Graph searching algorithms.
+// Graph searching algorithms
 using System.Linq;
 using System.Collections.Generic;
 using Algolib.Graphs.Searching;
-using Algolib.Graphs.Properties;
 
 namespace Algolib.Graphs
 {
@@ -14,7 +13,6 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertices</param>
         public static List<bool> BFS<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
                                            IEnumerable<Vertex<V>> roots)
-            where V : IVertexProperties where E : IEdgeProperties
         {
             List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
             Queue<Vertex<V>> vertexQueue = new Queue<Vertex<V>>();
@@ -61,7 +59,6 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertices</param>
         public static List<bool> DFSI<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
                                             IEnumerable<Vertex<V>> roots)
-            where V : IVertexProperties where E : IEdgeProperties
         {
             List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
             Stack<Vertex<V>> vertexStack = new Stack<Vertex<V>>();
@@ -105,7 +102,6 @@ namespace Algolib.Graphs
         /// <param name="roots">starting vertices</param>
         public static List<bool> DFSR<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
                                             IEnumerable<Vertex<V>> roots)
-            where V : IVertexProperties where E : IEdgeProperties
         {
             DfsrState state = new DfsrState(graph.VerticesCount);
 
@@ -126,7 +122,6 @@ namespace Algolib.Graphs
         /// <param name="state">current searching state</param>
         private static void dfsrStep<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
                                            Vertex<V> vertex, DfsrState state)
-            where V : IVertexProperties where E : IEdgeProperties
         {
             state.OnEntry(vertex.Id);
             strategy.Preprocess(vertex);

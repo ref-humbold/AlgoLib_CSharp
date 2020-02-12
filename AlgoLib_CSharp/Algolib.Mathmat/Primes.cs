@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Algorithms for prime numbers
+using System;
 using System.Collections.Generic;
 using System.Linq;
 

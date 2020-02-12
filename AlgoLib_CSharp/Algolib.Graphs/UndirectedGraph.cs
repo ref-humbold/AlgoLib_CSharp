@@ -1,7 +1,6 @@
-﻿using System;
+﻿// Undirected graph structures
 using System.Collections.Generic;
 using System.Linq;
-using Algolib.Graphs.Properties;
 
 namespace Algolib.Graphs
 {

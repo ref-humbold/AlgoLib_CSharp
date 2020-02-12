@@ -1,8 +1,7 @@
-// Graphs structures.
+// Basic graph structures
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Graphs
 {
@@ -17,7 +16,7 @@ namespace Algolib.Graphs
             this.Property = property;
         }
 
-        public int CompareTo([AllowNull] Vertex<V> other) => this.Id.CompareTo(other?.Id);
+        public int CompareTo(Vertex<V> other) => this.Id.CompareTo(other?.Id);
 
         public bool Equals(Vertex<V> v) => this.Id == v.Id;
 
@@ -37,7 +36,7 @@ namespace Algolib.Graphs
             this.Property = property;
         }
 
-        public int CompareTo([AllowNull] Edge<E, V> other)
+        public int CompareTo(Edge<E, V> other)
         {
             int firstComp = this.From.CompareTo(other?.From);
 
@@ -51,49 +50,49 @@ namespace Algolib.Graphs
 
     public interface IGraph<V, E>
     {
-        /// <summary>Oznaczenie nieskończoności</summary>
+        /// <summary>Infinity symbol</summary>
         double Inf { get; }
 
-        /// <summary>Liczba wierzchołków</summary>
+        /// <summary>Number of vertices</summary>
         int VerticesCount { get; }
 
-        /// <summary>Liczba krawędzi</summary>
+        /// <summary>Number of edges</summary>
         int EdgesCount { get; }
 
-        /// <summary>Lista wierzchołków</summary>
+        /// <summary>List of all vertices</summary>
         IEnumerable<Vertex<V>> Vertices { get; }
 
-        /// <summary>Lista krawędzi</summary>
+        /// <summary>List of all edges</summary>
         IEnumerable<Edge<E, V>> Edges { get; }
 
-        /// <summary>Dodawanie nowego wierzchołka</summary>
-        /// <param name="properties">właściwości wierzchołka</param>
-        /// <returns>nowy wierzchołek</returns>
-        Vertex<V> AddVertex(V properties);
+        /// <summary>Adds new vertex with given property</summary>
+        /// <param name="property">property of new vertex</param>
+        /// <returns>new vertex</returns>
+        Vertex<V> AddVertex(V property);
 
-        /// <summary>Dodawanie nowej krawędzi</summary>
-        /// <param name="from">początkowy wierzchołek</param>
-        /// <param name="to">końcowy wierzchołek</param>
-        /// <param name="properties">właściwości krawędzi</param>
-        /// <returns>nowa krawędź</returns>
-        Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E properties);
+        /// <summary>Adds new edge with given property</summary>
+        /// <param name="from">beginning vertex</param>
+        /// <param name="to">ending vertex</param>
+        /// <param name="property">property of new edge</param>
+        /// <returns>new edge</returns>
+        Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E property);
 
-        /// <param name="v">wierzchołek</param>
-        /// <returns>lista sąsiadów wierzchołka</returns>
+        /// <param name="v">vertex</param>
+        /// <returns>list of neighbouring vertices</returns>
         IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> v);
 
-        /// <param name="v">numer wierzchołka</param>
-        /// <returns>stopień wyjściowy wierzchołka</returns>
+        /// <param name="v">vertex</param>
+        /// <returns>input degree of vertex</returns>
         int GetOutdegree(Vertex<V> v);
 
-        /// <param name="v">numer wierzchołka</param>
-        /// <returns>stopień wejściowy wierzchołka</returns>
+        /// <param name="v">vertex</param>
+        /// <returns>output degree of vertex</returns>
         int GetIndegree(Vertex<V> v);
     }
 
     public abstract class SimpleGraph<V, E> : IGraph<V, E>
     {
-        /// <summary>Lista sąsiedztwa grafu</summary>
+        /// <summary>Adjacency list of graph</summary>
         protected Dictionary<Vertex<V>, HashSet<Edge<E, V>>> Graphrepr;
 
         public SimpleGraph(IEnumerable<V> properties)

@@ -1,4 +1,4 @@
-// Basic mathematics algorithm.
+// Basic mathematics algorithms
 using System;
 
 namespace Algolib.Mathmat
