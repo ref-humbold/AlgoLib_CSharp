@@ -10,7 +10,6 @@ namespace Algolib.Graphs
     }
 
     public class UndirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IUndirectedGraph
-        where V : IVertexProperties where E : IEdgeProperties
     {
         public UndirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
         {

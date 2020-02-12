@@ -12,7 +12,6 @@ namespace Algolib.Graphs
     }
 
     public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph
-        where V : IVertexProperties where E : IEdgeProperties
     {
         public DirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
         {
@@ -47,7 +46,7 @@ namespace Algolib.Graphs
                 revgraphrepr.Add(v, new HashSet<Edge<E, V>>());
 
             foreach(var e in Edges)
-                revgraphrepr[e.To].Add(new Edge<E, V>(e.To, e.From, e.Properties));
+                revgraphrepr[e.To].Add(new Edge<E, V>(e.To, e.From, e.Property));
 
             Graphrepr = revgraphrepr;
         }

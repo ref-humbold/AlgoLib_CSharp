@@ -2,20 +2,19 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Algolib.Graphs.Properties;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Graphs
 {
-    public sealed class Vertex<V> : IComparable<Vertex<V>> where V : IVertexProperties
+    public sealed class Vertex<V> : IComparable<Vertex<V>>
     {
         public readonly int Id;
-        public readonly V Properties;
+        public V Property;
 
-        internal Vertex(int number, V properties)
+        internal Vertex(int number, V property)
         {
             this.Id = number;
-            this.Properties = properties;
+            this.Property = property;
         }
 
         public int CompareTo([AllowNull] Vertex<V> other) => this.Id.CompareTo(other?.Id);
@@ -26,17 +25,16 @@ namespace Algolib.Graphs
     }
 
     public sealed class Edge<E, V> : IComparable<Edge<E, V>>
-        where E : IEdgeProperties where V : IVertexProperties
     {
         public readonly Vertex<V> From;
         public readonly Vertex<V> To;
-        public readonly E Properties;
+        public E Property;
 
-        internal Edge(Vertex<V> from, Vertex<V> to, E properties)
+        internal Edge(Vertex<V> from, Vertex<V> to, E property)
         {
             this.From = from;
             this.To = to;
-            this.Properties = properties;
+            this.Property = property;
         }
 
         public int CompareTo([AllowNull] Edge<E, V> other)
@@ -51,7 +49,7 @@ namespace Algolib.Graphs
         public override int GetHashCode() => Tuple.Create(From.Id, To.Id).GetHashCode();
     }
 
-    public interface IGraph<V, E> where V : IVertexProperties where E : IEdgeProperties
+    public interface IGraph<V, E>
     {
         /// <summary>Oznaczenie nieskończoności</summary>
         double Inf { get; }
@@ -93,8 +91,7 @@ namespace Algolib.Graphs
         int GetIndegree(Vertex<V> v);
     }
 
-    public abstract class SimpleGraph<V, E> : IGraph<V, E> where V : IVertexProperties
-                                                           where E : IEdgeProperties
+    public abstract class SimpleGraph<V, E> : IGraph<V, E>
     {
         /// <summary>Lista sąsiedztwa grafu</summary>
         protected Dictionary<Vertex<V>, HashSet<Edge<E, V>>> Graphrepr;
