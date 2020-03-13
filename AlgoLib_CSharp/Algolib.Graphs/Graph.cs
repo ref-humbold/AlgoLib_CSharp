@@ -34,6 +34,10 @@ namespace Algolib.Graphs
             this.To = to;
             this.Property = property;
         }
+        public Edge<E, V> Reversed
+        {
+            get { return new Edge<E, V>(To, From, Property); }
+        }
 
         public int CompareTo(Edge<E, V> other)
         {
@@ -63,6 +67,10 @@ namespace Algolib.Graphs
 
         /// <summary>List of all edges</summary>
         IEnumerable<Edge<E, V>> Edges { get; }
+
+        /// <param name="vertex">vertex</param>
+        /// <returns>list of adjacent edges</returns>
+        IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>list of neighbouring vertices</returns>

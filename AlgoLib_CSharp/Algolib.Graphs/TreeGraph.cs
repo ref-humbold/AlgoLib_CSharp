@@ -12,26 +12,15 @@ namespace Algolib.Graphs
             Graph = new UndirectedSimpleGraph<V, E>(Enumerable.Repeat(property, 1));
         }
 
-        public double Inf
-        {
-            get { return double.PositiveInfinity; }
-        }
-        public int VerticesCount
-        {
-            get { return Graph.VerticesCount; }
-        }
-        public int EdgesCount
-        {
-            get { return Graph.EdgesCount; }
-        }
-        public IEnumerable<Vertex<V>> Vertices
-        {
-            get { return Graph.Vertices; }
-        }
-        public IEnumerable<Edge<E, V>> Edges
-        {
-            get { return Graph.Edges; }
-        }
+        public double Inf => double.PositiveInfinity;
+
+        public int VerticesCount => Graph.VerticesCount;
+
+        public int EdgesCount => Graph.EdgesCount;
+
+        public IEnumerable<Vertex<V>> Vertices => Graph.Vertices;
+        
+        public IEnumerable<Edge<E, V>> Edges => Graph.Edges;
 
         public Vertex<V> AddVertex(V vertexProperty, Vertex<V> neighbour, E edgeProperty)
         {
@@ -41,18 +30,12 @@ namespace Algolib.Graphs
             return vertex;
         }
 
-        public int GetIndegree(Vertex<V> vertex)
-        {
-            return Graph.GetIndegree(vertex);
-        }
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex)
-        {
-            return Graph.GetNeighbours(vertex);
-        }
+        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => Graph.GetAdjacentEdges(vertex);
 
-        public int GetOutdegree(Vertex<V> vertex)
-        {
-            return Graph.GetOutdegree(vertex);
-        }
+        public int GetIndegree(Vertex<V> vertex) => Graph.GetIndegree(vertex);
+
+        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) => Graph.GetNeighbours(vertex);
+
+        public int GetOutdegree(Vertex<V> vertex) => Graph.GetOutdegree(vertex);
     }
 }

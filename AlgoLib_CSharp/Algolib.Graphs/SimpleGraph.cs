@@ -49,6 +49,8 @@ namespace Algolib.Graphs
         public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) =>
             Graphrepr[vertex].Select(e => e.To);
 
+        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => Graphrepr[vertex];
+
         public int GetOutdegree(Vertex<V> vertex) => Graphrepr[vertex].Count;
 
         public abstract int GetIndegree(Vertex<V> vertex);

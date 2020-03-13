@@ -44,7 +44,7 @@ namespace Algolib.Graphs
                 revgraphrepr.Add(v, new HashSet<Edge<E, V>>());
 
             foreach(var e in Edges)
-                revgraphrepr[e.To].Add(new Edge<E, V>(e.To, e.From, e.Property));
+                revgraphrepr[e.To].Add(e.Reversed);
 
             Graphrepr = revgraphrepr;
         }

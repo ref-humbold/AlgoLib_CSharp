@@ -31,7 +31,7 @@ namespace Algolib.Graphs
             Edge<E, V> edge = new Edge<E, V>(from, to, properties);
 
             Graphrepr[from].Add(edge);
-            Graphrepr[to].Add(edge);
+            Graphrepr[to].Add(edge.Reversed);
 
             return edge;
         }
