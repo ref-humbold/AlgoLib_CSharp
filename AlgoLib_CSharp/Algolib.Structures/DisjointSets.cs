@@ -61,9 +61,9 @@ namespace Algolib.Structures
 
         /// <summary>Finds represent of element in set</summary>
         /// <param name="element">element</param>
-        /// <param name="defval">value to return when element not present</param>
+        /// <param name="default_value">value to return when element not present</param>
         /// <returns>represent of the element or default value</returns>
-        public E FindSet(E element, E defval)
+        public E FindSet(E element, E default_value)
         {
             try 
             {
@@ -71,14 +71,14 @@ namespace Algolib.Structures
             }
             catch(KeyNotFoundException)
             {
-                return defval;
+                return default_value;
             }
         }
 
-        /// <summary>Joins two sets</summary>
+        /// <summary>Joins two sets together</summary>
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
-        /// <exception cref="KeyNotFoundException">if element not present</exception>
+        /// <exception cref="KeyNotFoundException">if either element is not present</exception>
         public void UnionSet(E element1, E element2)
         {
             if(!IsSameSet(element1, element2))
@@ -92,7 +92,7 @@ namespace Algolib.Structures
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
         /// <returns><code>true</code> if elements are in same set, otherwise <code>false</code></returns>
-        /// <exception cref="KeyNotFoundException">if element not present</exception>
+        /// <exception cref="KeyNotFoundException">if either element is not present</exception>
         public bool IsSameSet(E element1, E element2)
         {
             return this[element1].Equals(this[element2]);

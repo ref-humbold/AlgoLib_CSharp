@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    interface IUndirectedGraph
+    interface IUndirectedGraph<V, E> : IGraph<V, E>
     {
     }
 
-    public class UndirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IUndirectedGraph
+    public class UndirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IUndirectedGraph<V, E>
     {
         public UndirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
         {

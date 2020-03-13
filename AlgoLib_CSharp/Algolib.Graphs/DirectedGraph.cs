@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Algolib.Graphs
 {
-    public interface IDirectedGraph
+    public interface IDirectedGraph<V, E> : IGraph<V,E>
     {
         /// <summary>Reverses direction of edges</summary>
         void Reverse();
     }
 
-    public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph
+    public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph<V, E>
     {
         public DirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
         {

@@ -1,6 +1,5 @@
 // Basic graph structures
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Algolib.Graphs
@@ -65,18 +64,6 @@ namespace Algolib.Graphs
         /// <summary>List of all edges</summary>
         IEnumerable<Edge<E, V>> Edges { get; }
 
-        /// <summary>Adds new vertex with given property</summary>
-        /// <param name="property">property of new vertex</param>
-        /// <returns>new vertex</returns>
-        Vertex<V> AddVertex(V property);
-
-        /// <summary>Adds new edge with given property</summary>
-        /// <param name="from">beginning vertex</param>
-        /// <param name="to">ending vertex</param>
-        /// <param name="property">property of new edge</param>
-        /// <returns>new edge</returns>
-        Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E property);
-
         /// <param name="v">vertex</param>
         /// <returns>list of neighbouring vertices</returns>
         IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> v);
@@ -88,46 +75,5 @@ namespace Algolib.Graphs
         /// <param name="v">vertex</param>
         /// <returns>output degree of vertex</returns>
         int GetIndegree(Vertex<V> v);
-    }
-
-    public abstract class SimpleGraph<V, E> : IGraph<V, E>
-    {
-        /// <summary>Adjacency list of graph</summary>
-        protected Dictionary<Vertex<V>, HashSet<Edge<E, V>>> Graphrepr;
-
-        public SimpleGraph(IEnumerable<V> properties)
-        {
-            Graphrepr = new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
-
-            foreach(var prop in properties)
-                AddVertex(prop);
-        }
-
-        public double Inf => double.PositiveInfinity;
-
-        public int VerticesCount => Graphrepr.Count;
-
-        public abstract int EdgesCount { get; }
-
-        public IEnumerable<Vertex<V>> Vertices => Graphrepr.Keys;
-
-        public abstract IEnumerable<Edge<E, V>> Edges { get; }
-
-        public Vertex<V> AddVertex(V properties)
-        {
-            Vertex<V> vertex = new Vertex<V>(Graphrepr.Count, properties);
-
-            Graphrepr.Add(vertex, new HashSet<Edge<E, V>>());
-
-            return vertex;
-        }
-
-        public abstract Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E properties);
-
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> v) => Graphrepr[v].Select(e => e.To);
-
-        public int GetOutdegree(Vertex<V> v) => Graphrepr[v].Count;
-
-        public abstract int GetIndegree(Vertex<V> v);
     }
 }
