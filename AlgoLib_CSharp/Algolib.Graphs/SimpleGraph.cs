@@ -13,7 +13,7 @@ namespace Algolib.Graphs
         {
             Graphrepr = new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
 
-            foreach (var prop in properties)
+            foreach(var prop in properties)
                 AddVertex(prop);
         }
 
@@ -46,10 +46,11 @@ namespace Algolib.Graphs
         /// <returns>new edge</returns>
         public abstract Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E property);
 
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> v) => Graphrepr[v].Select(e => e.To);
+        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) =>
+            Graphrepr[vertex].Select(e => e.To);
 
-        public int GetOutdegree(Vertex<V> v) => Graphrepr[v].Count;
+        public int GetOutdegree(Vertex<V> vertex) => Graphrepr[vertex].Count;
 
-        public abstract int GetIndegree(Vertex<V> v);
+        public abstract int GetIndegree(Vertex<V> vertex);
     }
 }

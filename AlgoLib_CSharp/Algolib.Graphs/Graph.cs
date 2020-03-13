@@ -64,16 +64,16 @@ namespace Algolib.Graphs
         /// <summary>List of all edges</summary>
         IEnumerable<Edge<E, V>> Edges { get; }
 
-        /// <param name="v">vertex</param>
+        /// <param name="vertex">vertex</param>
         /// <returns>list of neighbouring vertices</returns>
-        IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> v);
+        IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex);
 
-        /// <param name="v">vertex</param>
+        /// <param name="vertex">vertex</param>
         /// <returns>input degree of vertex</returns>
-        int GetOutdegree(Vertex<V> v);
+        int GetOutdegree(Vertex<V> vertex);
 
-        /// <param name="v">vertex</param>
+        /// <param name="vertex">vertex</param>
         /// <returns>output degree of vertex</returns>
-        int GetIndegree(Vertex<V> v);
+        int GetIndegree(Vertex<V> vertex);
     }
 }
