@@ -26,9 +26,11 @@ namespace Algolib.Structures
         /// <param name="element">element from structure</param>
         /// <returns>represent of the element</returns>
         /// <exception cref="KeyNotFoundException">if element not present</exception>
-        public E this[E element] {
-            get {
-                if (!represents[element].Equals(element))
+        public E this[E element]
+        {
+            get
+            {
+                if(!represents[element].Equals(element))
                     represents[element] = this[represents[element]];
 
                 return represents[element];
@@ -43,10 +45,22 @@ namespace Algolib.Structures
             return represents.ContainsKey(element);
         }
 
+        /// <summary>Adds new element as singleton set</summary>
+        /// <param name="element">new element</param>
+        /// <exception cref="ArgumentException">if any value is already present</exception>
+        public void Add(E element)
+        {
+            if(Contains(element))
+                throw new ArgumentException($"Value {element} already present.");
+
+            represents[element] = element;
+            ++Count;
+        }
+
         /// <summary>Adds new elements as singleton sets</summary>
         /// <param name="elements">new elements</param>
         /// <exception cref="ArgumentException">if any value is already present</exception>
-        public void Add(IEnumerable<E> elements)
+        public void AddAll(IEnumerable<E> elements)
         {
             foreach(E elem in elements)
                 if(Contains(elem))
@@ -65,7 +79,7 @@ namespace Algolib.Structures
         /// <returns>represent of the element or default value</returns>
         public E FindSet(E element, E default_value)
         {
-            try 
+            try
             {
                 return this[element];
             }
