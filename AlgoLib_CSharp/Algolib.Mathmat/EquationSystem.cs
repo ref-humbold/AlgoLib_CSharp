@@ -26,11 +26,19 @@ namespace Algolib.Mathmat
         public EquationSystem(Equation[] equations)
         {
             this.equations = equations;
+
+            foreach(Equation eq in equations)
+                if(eq.Count != equations.Length)
+                    throw new ArgumentException($"Equation {eq} has {eq.Count} variables, but was "
+                                                + $" expected to have {equations.Length}");
         }
 
         /// <param name="i">index of equation</param>
         /// <returns>i-th equation of this system</returns>
         public Equation this[int i] => equations[i];
+
+        public override string ToString() =>
+            $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
 
         /// <summary>Solves this equation system.</summary>
         /// <exception cref="InfiniteSolutionsException">if there are infinitely many solutions</exception>
