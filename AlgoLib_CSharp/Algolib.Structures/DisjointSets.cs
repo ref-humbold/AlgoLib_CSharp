@@ -47,20 +47,23 @@ namespace Algolib.Structures
 
         /// <summary>Adds new element as singleton set</summary>
         /// <param name="element">new element</param>
+        /// <returns><code>this</code> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
-        public void Add(E element)
+        public DisjointSets<E> Add(E element)
         {
             if(Contains(element))
                 throw new ArgumentException($"Value {element} already present.");
 
             represents[element] = element;
             ++Count;
+            return this;
         }
 
         /// <summary>Adds new elements as singleton sets</summary>
         /// <param name="elements">new elements</param>
+        /// <returns><code>this</code> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
-        public void AddAll(IEnumerable<E> elements)
+        public DisjointSets<E> AddAll(IEnumerable<E> elements)
         {
             foreach(E elem in elements)
                 if(Contains(elem))
@@ -71,6 +74,8 @@ namespace Algolib.Structures
                 represents[elem] = elem;
                 ++Count;
             }
+
+            return this;
         }
 
         /// <summary>Finds represent of element in set</summary>
@@ -92,14 +97,17 @@ namespace Algolib.Structures
         /// <summary>Joins two sets together</summary>
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
+        /// <returns><code>this</code> for method chaining</returns>
         /// <exception cref="KeyNotFoundException">if either element is not present</exception>
-        public void UnionSet(E element1, E element2)
+        public DisjointSets<E> UnionSet(E element1, E element2)
         {
             if(!IsSameSet(element1, element2))
             {
                 represents[this[element1]] = this[element2];
                 --Count;
             }
+
+            return this;
         }
 
         /// <summary>Checks whether elements belong to the same set</summary>
