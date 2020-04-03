@@ -54,7 +54,7 @@ namespace Algolib.Graphs
     public interface IGraph<V, E>
     {
         /// <summary>Infinity symbol</summary>
-        double Inf { get; }
+        double Inf => double.PositiveInfinity;
 
         /// <summary>Number of vertices</summary>
         int VerticesCount { get; }

@@ -17,8 +17,6 @@ namespace Algolib.Graphs
                 AddVertex(prop);
         }
 
-        public double Inf => double.PositiveInfinity;
-
         public int VerticesCount => Graphrepr.Count;
 
         public abstract int EdgesCount { get; }

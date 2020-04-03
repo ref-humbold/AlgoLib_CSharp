@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Algolib.Graphs.Searching;
 
-namespace Algolib.Graphs
+namespace Algolib.Graphs.Algorithms
 {
     public class BreadthFirstSearch
     {

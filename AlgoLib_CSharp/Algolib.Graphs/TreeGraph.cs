@@ -12,8 +12,6 @@ namespace Algolib.Graphs
             Graph = new UndirectedSimpleGraph<V, E>(Enumerable.Repeat(property, 1));
         }
 
-        public double Inf => double.PositiveInfinity;
-
         public int VerticesCount => Graph.VerticesCount;
 
         public int EdgesCount => Graph.EdgesCount;
