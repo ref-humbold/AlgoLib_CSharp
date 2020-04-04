@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    internal interface IUndirectedGraph<V, E> : IGraph<V, E>
+    public interface IUndirectedGraph<V, E> : IGraph<V, E>
     {
     }
 

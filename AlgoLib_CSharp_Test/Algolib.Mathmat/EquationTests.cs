@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Structure of linear equation
+using System;
 using NUnit.Framework;
 
 namespace Algolib.Mathmat

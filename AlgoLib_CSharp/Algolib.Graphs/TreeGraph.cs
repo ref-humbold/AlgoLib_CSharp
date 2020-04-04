@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    internal class TreeGraph<V, E> : IUndirectedGraph<V, E>
+    public class TreeGraph<V, E> : IUndirectedGraph<V, E>
     {
         protected UndirectedSimpleGraph<V, E> Graph;
 

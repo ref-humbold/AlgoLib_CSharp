@@ -7,35 +7,35 @@ namespace Algolib.Graphs
     public interface IGraph<V, E>
     {
         /// <summary>Infinity symbol</summary>
-        double Inf => double.PositiveInfinity;
+        public double Inf => double.PositiveInfinity;
 
         /// <summary>Number of vertices</summary>
-        int VerticesCount { get; }
+        public int VerticesCount { get; }
 
         /// <summary>Number of edges</summary>
-        int EdgesCount { get; }
+        public int EdgesCount { get; }
 
         /// <summary>List of all vertices</summary>
-        IEnumerable<Vertex<V>> Vertices { get; }
+        public IEnumerable<Vertex<V>> Vertices { get; }
 
         /// <summary>List of all edges</summary>
-        IEnumerable<Edge<E, V>> Edges { get; }
+        public IEnumerable<Edge<E, V>> Edges { get; }
 
         /// <param name="vertex">vertex</param>
         /// <returns>list of adjacent edges</returns>
-        IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex);
+        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>list of neighbouring vertices</returns>
-        IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex);
+        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>input degree of vertex</returns>
-        int GetOutdegree(Vertex<V> vertex);
+        public int GetOutdegree(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>output degree of vertex</returns>
-        int GetIndegree(Vertex<V> vertex);
+        public int GetIndegree(Vertex<V> vertex);
     }
 
     public sealed class Vertex<V> : IComparable<Vertex<V>>

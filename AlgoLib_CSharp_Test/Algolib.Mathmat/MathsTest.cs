@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿// Tests: Algorithms for basic mathematics
+using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {

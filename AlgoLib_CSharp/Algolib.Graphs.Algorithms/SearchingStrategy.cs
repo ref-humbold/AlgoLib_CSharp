@@ -8,21 +8,21 @@ namespace Algolib.Graphs.Algorithms
     {
         /// <summary>Runs an action before vertex processing.</summary>
         /// <param name="vertex">current vertex</param>
-        void Preprocess(Vertex<V> vertex);
+        public void Preprocess(Vertex<V> vertex);
 
         /// <summary>Runs an action before entering neighbour</summary>
         /// <param name="vertex">current vertex</param>
         /// <param name="neighbour">next vertex</param>
-        void ForNeighbour(Vertex<V> vertex, Vertex<V> neighbour);
+        public void ForNeighbour(Vertex<V> vertex, Vertex<V> neighbour);
 
         /// <summary>Runs an action after vertex processing</summary>
         /// <param name="vertex">current vertex</param>
-        void Postprocess(Vertex<V> vertex);
+        public void Postprocess(Vertex<V> vertex);
 
         /// <summary>Runs an action on cycle detectioon</summary>
         /// <param name="vertex">current vertex</param>
         /// <param name="neighbour">neighbouring vertex on cycle</param>
-        void OnCycle(Vertex<V> vertex, Vertex<V> neighbour);
+        public void OnCycle(Vertex<V> vertex, Vertex<V> neighbour);
     }
 
     public class EmptyStrategy<V> : ISearchingStrategy<V>

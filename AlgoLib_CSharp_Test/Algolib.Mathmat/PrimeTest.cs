@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿// Tests: Algorithms for prime numbers
+using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {

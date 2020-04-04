@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿// Tests: Structure of linear equations system
+using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {

@@ -7,7 +7,7 @@ namespace Algolib.Graphs
     public interface IDirectedGraph<V, E> : IGraph<V, E>
     {
         /// <summary>Reverses direction of edges</summary>
-        void Reverse();
+        public void Reverse();
     }
 
     public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph<V, E>
