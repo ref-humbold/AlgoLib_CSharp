@@ -1,4 +1,4 @@
-﻿// Simple graph structure
+﻿// Structure of simple graph
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +6,7 @@ namespace Algolib.Graphs
 {
     public abstract class SimpleGraph<V, E> : IGraph<V, E>
     {
-        /// <summary>Adjacency list of graph</summary>
+        // Adjacency list of graph
         protected Dictionary<Vertex<V>, HashSet<Edge<E, V>>> Graphrepr;
 
         public SimpleGraph(IEnumerable<V> properties)

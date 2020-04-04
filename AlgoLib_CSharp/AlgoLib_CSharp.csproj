@@ -17,4 +17,8 @@
     <None Remove="doc\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Algolib.Sequences\" />
+  </ItemGroup>
+
 </Project>

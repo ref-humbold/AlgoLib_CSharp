@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// Structure of tree graph
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    class TreeGraph<V, E> : IUndirectedGraph<V, E>
+    internal class TreeGraph<V, E> : IUndirectedGraph<V, E>
     {
         protected UndirectedSimpleGraph<V, E> Graph;
 
@@ -17,7 +18,7 @@ namespace Algolib.Graphs
         public int EdgesCount => Graph.EdgesCount;
 
         public IEnumerable<Vertex<V>> Vertices => Graph.Vertices;
-        
+
         public IEnumerable<Edge<E, V>> Edges => Graph.Edges;
 
         public Vertex<V> AddVertex(V vertexProperty, Vertex<V> neighbour, E edgeProperty)

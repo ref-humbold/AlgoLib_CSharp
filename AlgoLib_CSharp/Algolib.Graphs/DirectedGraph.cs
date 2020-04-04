@@ -1,10 +1,10 @@
-// Directed graph structures
-using System.Linq;
+// Structures of directed graphs
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IDirectedGraph<V, E> : IGraph<V,E>
+    public interface IDirectedGraph<V, E> : IGraph<V, E>
     {
         /// <summary>Reverses direction of edges</summary>
         void Reverse();
@@ -20,9 +20,9 @@ namespace Algolib.Graphs
 
         public override IEnumerable<Edge<E, V>> Edges =>
             Graphrepr.Values.Aggregate(new List<Edge<E, V>>(), (acc, neighbours) => {
-                                           acc.AddRange(neighbours);
-                                           return acc;
-                                       });
+                acc.AddRange(neighbours);
+                return acc;
+            });
 
         public override Edge<E, V> AddEdge(Vertex<V> from, Vertex<V> to, E properties)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Structure of linear equation
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,13 +10,13 @@ namespace Algolib.Mathmat
         public double[] Coefficients;
         public double Free;
 
-        public int Count => Coefficients.Length;
-
         public Equation(double[] coefficients, double free)
         {
             Coefficients = coefficients;
             Free = free;
         }
+
+        public int Count => Coefficients.Length;
 
         /// <param name="i">index of a variable</param>
         /// <returns>coefficient by i-th variable</returns>
@@ -65,7 +66,11 @@ namespace Algolib.Mathmat
 
         /// <summary>Checks whether specified values solve this equation.</summary>
         /// <param name="solution">values to check</param>
-        /// <returns><code>true</code> if solution is correct, otherwise <code>false</code></returns>
+        /// <returns>
+        /// <code>true</code>
+        /// if solution is correct, otherwise
+        /// <code>false</code>
+        /// </returns>
         public bool IsSolution(double[] solution)
         {
             return solution.Length == Coefficients.Length

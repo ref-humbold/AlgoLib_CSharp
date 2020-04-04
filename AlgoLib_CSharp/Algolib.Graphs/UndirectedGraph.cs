@@ -1,10 +1,10 @@
-﻿// Undirected graph structures
+﻿// Structures of undirected graphs
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    interface IUndirectedGraph<V, E> : IGraph<V, E>
+    internal interface IUndirectedGraph<V, E> : IGraph<V, E>
     {
     }
 
@@ -37,6 +37,5 @@ namespace Algolib.Graphs
         }
 
         public override int GetIndegree(Vertex<V> v) => GetOutdegree(v);
-
     }
 }

@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 
 namespace Algolib.Structures
 {
@@ -182,7 +182,6 @@ namespace Algolib.Structures
             Assert.IsTrue(testObject.IsSameSet(elems[0], elems[2]));
             Assert.AreEqual(testObject[elems[0]], testObject[elems[2]]);
         }
-
 
         [Test]
         public void IsSameSet_WhenDifferentSets_ThenFalse()

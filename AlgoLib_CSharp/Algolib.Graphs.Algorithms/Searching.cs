@@ -1,7 +1,6 @@
-// Graph searching algorithms
-using System.Linq;
+// Algorithms for graph searching
 using System.Collections.Generic;
-using Algolib.Graphs.Searching;
+using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
@@ -141,7 +140,6 @@ namespace Algolib.Graphs.Algorithms
 
         private class DfsrState
         {
-            internal int Iteration { get; private set; }
             internal List<int> reached;
 
             internal DfsrState(int verticesNumber)
@@ -149,6 +147,8 @@ namespace Algolib.Graphs.Algorithms
                 Iteration = 1;
                 reached = Enumerable.Repeat(0, verticesNumber).ToList();
             }
+
+            internal int Iteration { get; private set; }
 
             internal void AddIteration()
             {

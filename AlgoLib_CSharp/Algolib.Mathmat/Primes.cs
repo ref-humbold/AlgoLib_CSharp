@@ -48,7 +48,11 @@ namespace Algolib.Mathmat
 
         /// <summary>Fermat primality test</summary>
         /// <param name="number">number to test</param>
-        /// <returns><code>true</code> if number is prime, otherwise <code>false</code></returns>
+        /// <returns>
+        /// <code>true</code>
+        /// if number is prime, otherwise
+        /// <code>false</code>
+        /// </returns>
         public static bool TestFermat(int number)
         {
             number = Math.Abs(number);
@@ -74,7 +78,11 @@ namespace Algolib.Mathmat
 
         /// <summary>Miller–Rabin primality test</summary>
         /// <param name="number">number to test</param>
-        /// <returns><code>true</code> if number is prime, otherwise <code>false</code></returns>
+        /// <returns>
+        /// <code>true</code>
+        /// if number is prime, otherwise
+        /// <code>false</code>
+        /// </returns>
         public static bool TestMiller(int number)
         {
             number = Math.Abs(number);
