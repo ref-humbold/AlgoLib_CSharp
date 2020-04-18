@@ -65,8 +65,10 @@ namespace Algolib.Structures
         [Test]
         public void Add_WhenPresentElement_ThenArgumentException()
         {
-            // when - then
-            Assert.Throws<ArgumentException>(() => testObject.Add(6));
+            // when
+            TestDelegate testDelegate = () => testObject.Add(6);
+            // then
+            Assert.Throws<ArgumentException>(testDelegate);
         }
 
         [Test]
@@ -87,8 +89,10 @@ namespace Algolib.Structures
         [Test]
         public void AddAll_WhenPresentElements_ThenArgumentException()
         {
-            // when - then
-            Assert.Throws<ArgumentException>(() => testObject.AddAll(new List<int> { 20, 7, 35 }));
+            // when
+            TestDelegate testDelegate = () => testObject.AddAll(new List<int> { 20, 7, 35 });
+            // then
+            Assert.Throws<ArgumentException>(testDelegate);
         }
 
         [Test]
@@ -105,8 +109,10 @@ namespace Algolib.Structures
         [Test]
         public void Indexer_WhenAbsentElement_Then()
         {
-            // when - then
-            Assert.Throws<KeyNotFoundException>(() => _ = testObject[17]);
+            // when
+            TestDelegate testDelegate = () => _ = testObject[17];
+            // then
+            Assert.Throws<KeyNotFoundException>(testDelegate);
         }
 
         [Test]
@@ -137,9 +143,9 @@ namespace Algolib.Structures
             // given
             int elem1 = 4;
             int elem2 = 6;
-
+            // when
             testObject.UnionSet(elem1, elem2);
-
+            // then
             Assert.IsTrue(testObject.IsSameSet(elem1, elem2));
             Assert.AreEqual(testObject[elem1], testObject[elem2]);
         }
@@ -149,9 +155,9 @@ namespace Algolib.Structures
         {
             // given
             int elem = 4;
-
+            // when
             testObject.UnionSet(elem, elem);
-
+            // then
             Assert.IsTrue(testObject.IsSameSet(elem, elem));
             Assert.AreEqual(testObject[elem], testObject[elem]);
         }
@@ -163,9 +169,9 @@ namespace Algolib.Structures
             int elem1 = 3;
             int elem2 = 8;
             testObject.UnionSet(elem1, elem2);
-
+            // when
             testObject.UnionSet(elem2, elem1);
-
+            // then
             Assert.IsTrue(testObject.IsSameSet(elem1, elem2));
             Assert.AreEqual(testObject[elem1], testObject[elem2]);
         }
@@ -175,11 +181,11 @@ namespace Algolib.Structures
         {
             // given
             List<int> elems = new List<int> { 20, 17, 35 };
-
+            // when
             testObject.AddAll(elems)
                       .UnionSet(elems[0], elems[1])
                       .UnionSet(elems[1], elems[2]);
-
+            // then
             Assert.IsTrue(testObject.IsSameSet(elems[0], elems[2]));
             Assert.AreEqual(testObject[elems[0]], testObject[elems[2]]);
         }
@@ -190,9 +196,9 @@ namespace Algolib.Structures
             // given
             int elem1 = 4;
             int elem2 = 6;
-
+            // when
             bool result = testObject.IsSameSet(elem1, elem2);
-
+            // then
             Assert.IsFalse(result);
         }
 
@@ -201,9 +207,9 @@ namespace Algolib.Structures
         {
             // given
             int elem = 4;
-
+            // when
             bool result = testObject.IsSameSet(elem, elem);
-
+            // then
             Assert.IsTrue(result);
         }
 
@@ -214,9 +220,9 @@ namespace Algolib.Structures
             int elem1 = 3;
             int elem2 = 8;
             testObject.UnionSet(elem1, elem2);
-
+            // when
             bool result = testObject.IsSameSet(elem2, elem1);
-
+            // then
             Assert.IsTrue(result);
         }
     }

@@ -32,7 +32,7 @@ namespace Algolib.Structures
             {
                 int nextIndex = (index - 1) / 2;
 
-                if(heap[nextIndex].CompareTo(heap[index]) < 0)
+                if(heap[index].CompareTo(heap[nextIndex]) < 0)
                 {
                     swap(index, nextIndex);
                     index = nextIndex;
@@ -44,13 +44,18 @@ namespace Algolib.Structures
 
         /// <summary>Retrieves the least element from this heap.</summary>
         /// <returns>the least element</returns>
+        /// <exception cref="InvalidOperationException">if the heap is empty</exception>
         public T Get()
         {
+            if(Count == 0)
+                throw new InvalidOperationException("The heap is empty");
+
             return heap[0];
         }
 
-        /// <summary>Removes the least element from this heap.</summary>
+        /// <summary>Retrieves and removes the least element from this heap.</summary>
         /// <returns>removed element</returns>
+        /// <exception cref="InvalidOperationException">if the heap is empty</exception>
         public T Pop()
         {
             T element = Get();
