@@ -4,21 +4,27 @@ using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
-    public class Heap<T> where T : IComparable<T>
+    public class Heap<T>
     {
         private readonly List<T> heap;
 
-        public Heap()
-        {
-            heap = new List<T>();
-        }
-
-        public Heap(int capacity)
-        {
-            heap = new List<T>(capacity);
-        }
+        public IComparer<T> Comparer { get; }
 
         public int Count => heap.Count;
+
+        public Heap() : this(Comparer<T>.Default)
+        {
+        }
+
+        public Heap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
+        {
+        }
+
+        public Heap(IComparer<T> comparer)
+        {
+            heap = new List<T>();
+            Comparer = comparer;
+        }
 
         /// <summary>Adds new element to this heap.</summary>
         /// <param name="element">new element</param>
@@ -32,7 +38,7 @@ namespace Algolib.Structures
             {
                 int nextIndex = (index - 1) / 2;
 
-                if(heap[index].CompareTo(heap[nextIndex]) < 0)
+                if(Comparer.Compare(heap[index], heap[nextIndex]) < 0)
                 {
                     swap(index, nextIndex);
                     index = nextIndex;
@@ -69,11 +75,11 @@ namespace Algolib.Structures
             {
                 int childIndex = index + index + 2 == heap.Count
                         ? index + index + 1
-                        : heap[index + index + 1].CompareTo(heap[index + index + 2]) < 0
+                        : Comparer.Compare(heap[index + index + 1], heap[index + index + 2]) < 0
                             ? index + index + 1
                             : index + index + 2;
 
-                if(heap[childIndex].CompareTo(heap[index]) < 0)
+                if(Comparer.Compare(heap[childIndex], heap[index]) < 0)
                 {
                     swap(index, childIndex);
                     index = childIndex;

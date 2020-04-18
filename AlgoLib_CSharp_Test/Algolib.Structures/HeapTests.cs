@@ -8,12 +8,13 @@ namespace Algolib.Structures
     [TestFixture]
     public class HeapTests
     {
+        private Comparison<int> comparison = (n, m) => m.CompareTo(n);
         private Heap<int> testObject;
 
         [SetUp]
         public void SetUp()
         {
-            testObject = new Heap<int>();
+            testObject = new Heap<int>(comparison);
         }
 
         [TearDown]
@@ -32,7 +33,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Push_Pop_WhenMultipleElements_ThenLeastFirst()
+        public void Push_Pop_WhenMultipleElements_ThenElementsAccordingToComparer()
         {
             // given
             List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
@@ -44,12 +45,12 @@ namespace Algolib.Structures
             while(testObject.Count > 0)
                 result.Add(testObject.Pop());
             // then
-            elements.Sort();
+            elements.Sort(comparison);
             Assert.AreEqual(elements, result);
         }
 
         [Test]
-        public void Get_WhenContainsElements_ThenLeastElement()
+        public void Get_WhenContainsElements_ThenElementAccordingToComparer()
         {
             // given
             List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
@@ -58,7 +59,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Get();
             // then
-            Assert.AreEqual(elements.Min(), result);
+            Assert.AreEqual(elements.Max(), result);
             Assert.AreEqual(elements.Count, testObject.Count);
         }
 
@@ -72,7 +73,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Pop_WhenContainsElements_ThenLeastElementRemoved()
+        public void Pop_WhenContainsElements_ThenElementRemoved()
         {
             // given
             List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
@@ -81,7 +82,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Pop();
             // then
-            Assert.AreEqual(elements.Min(), result);
+            Assert.AreEqual(elements.Max(), result);
             Assert.AreEqual(elements.Count - 1, testObject.Count);
         }
 
