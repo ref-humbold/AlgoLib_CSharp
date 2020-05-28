@@ -1,6 +1,6 @@
 ﻿namespace Algolib.Graphs
 {
-    public interface WeightProperties
+    public interface IWeightProperties
     {
         double Weight { get; }
     }

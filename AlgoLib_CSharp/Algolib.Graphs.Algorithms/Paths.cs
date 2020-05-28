@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
-    internal class Paths<V, E> where E : WeightProperties
+    internal class Paths<V, E> where E : IWeightProperties
     {
         /// <summary>Bellman-Ford algorithm</summary>
         /// <param name="digraph">directed weighted graph</param>
@@ -22,11 +22,11 @@ namespace Algolib.Graphs.Algorithms
             for(int u = 0; u < digraph.VerticesCount - 1; ++u)
                 foreach(Vertex<V> v in digraph.Vertices)
                     foreach(Edge<E, V> e in digraph.GetAdjacentEdges(v))
-                        distances[e.To] = Math.Min(distances[e.To], distances[v] + e.Property.Weight);
+                        distances[e.Destination] = Math.Min(distances[e.Destination], distances[v] + e.Property.Weight);
 
             foreach(Vertex<V> v in digraph.Vertices)
                 foreach(Edge<E, V> e in digraph.GetAdjacentEdges(v))
-                    if(distances[v] < digraph.Inf && distances[v] + e.Property.Weight < distances[e.To])
+                    if(distances[v] < digraph.Inf && distances[v] + e.Property.Weight < distances[e.Destination])
                         throw new InvalidOperationException("Graph contains a negative cycle");
 
             return distances;
@@ -45,7 +45,7 @@ namespace Algolib.Graphs.Algorithms
                     distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : digraph.Inf;
 
             foreach(Edge<E, V> e in digraph.Edges)
-                distances[Tuple.Create(e.From, e.To)] = e.Property.Weight;
+                distances[Tuple.Create(e.Source, e.Destination)] = e.Property.Weight;
 
             foreach(Vertex<V> w in digraph.Vertices)
                 foreach(Vertex<V> v in digraph.Vertices)

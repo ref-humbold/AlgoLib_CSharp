@@ -9,14 +9,14 @@ namespace Algolib.Mathmat
     {
         public static IEnumerable<int> Find(int maxNumber)
         {
-            return Primes.Find(0, maxNumber);
+            return Find(0, maxNumber);
         }
 
         public static IEnumerable<int> Find(int minNumber, int maxNumber)
         {
             if(maxNumber < minNumber)
                 throw new ArgumentException(
-                    "Second argument must be grater or equal to the first argument.");
+                    "Second argument must be grater or equal to the first argument");
 
             List<int> primes = new List<int>();
             List<bool> is_prime = new List<bool>();

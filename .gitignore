@@ -4,6 +4,8 @@
 **/doc
 **/obj
 
-# Visual Studio / NuGet
+# Visual Studio
 .vs
+
+# NuGet
 packages
