@@ -1,4 +1,4 @@
-// Basic graph structures
+// Structure of basic graph
 using System;
 using System.Collections.Generic;
 
@@ -6,19 +6,16 @@ namespace Algolib.Graphs
 {
     public interface IGraph<V, E>
     {
-        /// <summary>Infinity symbol</summary>
-        public double Inf => double.PositiveInfinity;
-
-        /// <summary>Number of vertices</summary>
+        /// <summary>number of vertices</summary>
         public int VerticesCount { get; }
 
-        /// <summary>Number of edges</summary>
+        /// <summary>number of edges</summary>
         public int EdgesCount { get; }
 
-        /// <summary>List of all vertices sorted by index</summary>
+        /// <summary>list of all vertices sorted by index</summary>
         public IList<Vertex<V>> Vertices { get; }
 
-        /// <summary>List of all edges sorted first by source then by destination</summary>
+        /// <summary>list of all edges sorted first by source then by destination</summary>
         public IList<Edge<E, V>> Edges { get; }
 
         /// <param name="vertex">vertex</param>
@@ -38,7 +35,7 @@ namespace Algolib.Graphs
         public int GetInputDegree(Vertex<V> vertex);
     }
 
-    public struct Vertex<V> : IComparable<Vertex<V>>
+    public class Vertex<V> : IComparable<Vertex<V>>
     {
         public readonly int Id;
         public V Property;
@@ -56,7 +53,7 @@ namespace Algolib.Graphs
         public override int GetHashCode() => Id.GetHashCode();
     }
 
-    public struct Edge<E, V> : IComparable<Edge<E, V>>
+    public class Edge<E, V> : IComparable<Edge<E, V>>
     {
         public readonly Vertex<V> Source;
         public readonly Vertex<V> Destination;

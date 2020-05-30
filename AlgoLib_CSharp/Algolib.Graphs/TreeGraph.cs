@@ -12,9 +12,9 @@ namespace Algolib.Graphs
 
         public int EdgesCount => Graph.EdgesCount;
 
-        public IEnumerable<Vertex<V>> Vertices => Graph.Vertices;
+        public IList<Vertex<V>> Vertices => Graph.Vertices;
 
-        public IEnumerable<Edge<E, V>> Edges => Graph.Edges;
+        public IList<Edge<E, V>> Edges => Graph.Edges;
 
         public TreeGraph(V property)
         {
@@ -29,12 +29,12 @@ namespace Algolib.Graphs
             return vertex;
         }
 
-        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => Graph.GetAdjacentEdges(vertex);
-
-        public int GetInputDegree(Vertex<V> vertex) => Graph.GetInputDegree(vertex);
-
         public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) => Graph.GetNeighbours(vertex);
 
+        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => Graph.GetAdjacentEdges(vertex);
+
         public int GetOutputDegree(Vertex<V> vertex) => Graph.GetOutputDegree(vertex);
+
+        public int GetInputDegree(Vertex<V> vertex) => Graph.GetInputDegree(vertex);
     }
 }

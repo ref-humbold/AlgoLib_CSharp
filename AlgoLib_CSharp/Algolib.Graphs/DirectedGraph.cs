@@ -12,9 +12,9 @@ namespace Algolib.Graphs
 
     public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph<V, E>
     {
-        public override int EdgesCount => GraphDict.Values.Sum(edges => edges.Count);
+        public override int EdgesCount => graphRepresentation.EdgesSet.Sum(edges => edges.Count);
 
-        public DirectedSimpleGraph()
+        public DirectedSimpleGraph() : base()
         {
         }
 
@@ -24,36 +24,28 @@ namespace Algolib.Graphs
 
         public override Edge<E, V> AddEdge(Vertex<V> source, Vertex<V> destination, E property)
         {
-            Edge<E, V> edge = new Edge<E, V>(source, destination, property);
+            Vertex<V> newSource = source.CompareTo(destination) < 0 ? source : destination;
+            Vertex<V> newDestination = source.CompareTo(destination) >= 0 ? source : destination;
+            Edge<E, V> edge = new Edge<E, V>(newSource, newDestination, property);
 
-            GraphDict[source].Add(edge);
+            graphRepresentation.AddEdgeToSource(edge);
             return edge;
         }
 
-        public override int GetOutputDegree(Vertex<V> vertex) => GraphDict[vertex].Count;
+        public override int GetOutputDegree(Vertex<V> vertex) => graphRepresentation[vertex].Count;
 
         public override int GetInputDegree(Vertex<V> vertex) =>
-            GraphDict.Values.Aggregate(0, (acc, edges) => acc + edges.Where(e => vertex.Equals(e.Destination)).Count());
+            graphRepresentation.EdgesSet.Aggregate(0,
+                (acc, edges) => acc + edges.Where(e => vertex.Equals(e.Destination)).Count());
 
         public void Reverse()
         {
-            Dictionary<Vertex<V>, HashSet<Edge<E, V>>> revGraphDict = new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
+            IEnumerable<Edge<E, V>> edges = Edges;
 
-            foreach(var v in Vertices)
-                revGraphDict.Add(v, new HashSet<Edge<E, V>>());
-
-            foreach(var e in Edges)
-                revGraphDict[e.Destination].Add(e.Reverse(prop => prop));
-
-            GraphDict = revGraphDict;
-        }
-
-        protected override List<Edge<E, V>> DoGetEdges()
-        {
-            return GraphDict.Values.Aggregate(new List<Edge<E, V>>(), (acc, edges) => {
-                acc.AddRange(edges);
-                return acc;
-            });
+            graphRepresentation = new GraphRepresentation<V, E>(graphRepresentation);
+            foreach(Edge<E, V> edge in edges)
+                graphRepresentation.AddEdgeToSource(new Edge<E, V>(edge.Destination, edge.Source,
+                                                                   edge.Property));
         }
     }
 }
