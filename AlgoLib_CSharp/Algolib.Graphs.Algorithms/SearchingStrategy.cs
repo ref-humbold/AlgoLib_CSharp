@@ -8,7 +8,7 @@ namespace Algolib.Graphs.Algorithms
     {
         /// <summary>Runs an action before vertex processing.</summary>
         /// <param name="vertex">current vertex</param>
-        public void Preprocess(Vertex<V> vertex);
+        public void PreProcess(Vertex<V> vertex);
 
         /// <summary>Runs an action before entering neighbour</summary>
         /// <param name="vertex">current vertex</param>
@@ -17,17 +17,12 @@ namespace Algolib.Graphs.Algorithms
 
         /// <summary>Runs an action after vertex processing</summary>
         /// <param name="vertex">current vertex</param>
-        public void Postprocess(Vertex<V> vertex);
-
-        /// <summary>Runs an action on cycle detectioon</summary>
-        /// <param name="vertex">current vertex</param>
-        /// <param name="neighbour">neighbouring vertex on cycle</param>
-        public void OnCycle(Vertex<V> vertex, Vertex<V> neighbour);
+        public void PostProcess(Vertex<V> vertex);
     }
 
     public class EmptyStrategy<V> : ISearchingStrategy<V>
     {
-        public void Preprocess(Vertex<V> vertex)
+        public void PreProcess(Vertex<V> vertex)
         {
         }
 
@@ -35,11 +30,7 @@ namespace Algolib.Graphs.Algorithms
         {
         }
 
-        public void Postprocess(Vertex<V> vertex)
-        {
-        }
-
-        public void OnCycle(Vertex<V> vertex, Vertex<V> neighbour)
+        public void PostProcess(Vertex<V> vertex)
         {
         }
     }
@@ -67,7 +58,7 @@ namespace Algolib.Graphs.Algorithms
         /// <returns>postprocess time of vertex</returns>
         public int GetPostTime(Vertex<V> vertex) => postTimes[vertex];
 
-        public void Preprocess(Vertex<V> vertex)
+        public void PreProcess(Vertex<V> vertex)
         {
             preTimes[vertex] = timer;
             ++timer;
@@ -77,14 +68,10 @@ namespace Algolib.Graphs.Algorithms
         {
         }
 
-        public void Postprocess(Vertex<V> vertex)
+        public void PostProcess(Vertex<V> vertex)
         {
             postTimes[vertex] = timer;
             ++timer;
-        }
-
-        public void OnCycle(Vertex<V> vertex, Vertex<V> neighbour)
-        {
         }
     }
 }

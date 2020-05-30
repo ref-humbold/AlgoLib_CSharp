@@ -1,6 +1,5 @@
 // Algorithms for graph searching
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
@@ -10,43 +9,42 @@ namespace Algolib.Graphs.Algorithms
         /// <param name="graph">graph</param>
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="roots">starting vertices</param>
-        public static List<bool> BFS<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
-                                           IEnumerable<Vertex<V>> roots)
+        public static IEnumerable<Vertex<V>> BFS<V, E>(IGraph<V, E> graph,
+                                                       ISearchingStrategy<V> strategy,
+                                                       IEnumerable<Vertex<V>> roots)
         {
-            List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
+            Dictionary<Vertex<V>, int> reached = new Dictionary<Vertex<V>, int>();
             Queue<Vertex<V>> vertexQueue = new Queue<Vertex<V>>();
             int iter = 1;
 
-            foreach(var root in roots)
-                if(reached[root.Id] == 0)
+            foreach(Vertex<V> root in roots)
+                if(!reached.ContainsKey(root))
                 {
                     vertexQueue.Enqueue(root);
-                    reached[root.Id] = iter;
+                    reached[root] = iter;
 
                     while(vertexQueue.Count != 0)
                     {
                         Vertex<V> vertex = vertexQueue.Dequeue();
 
-                        strategy.Preprocess(vertex);
+                        strategy.PreProcess(vertex);
 
-                        foreach(var neighbour in graph.GetNeighbours(vertex))
-                            if(reached[neighbour.Id] == 0)
+                        foreach(Vertex<V> neighbour in graph.GetNeighbours(vertex))
+                            if(!reached.ContainsKey(neighbour))
                             {
                                 strategy.ForNeighbour(vertex, neighbour);
-                                reached[neighbour.Id] = iter;
+                                reached[neighbour] = iter;
                                 vertexQueue.Enqueue(neighbour);
                             }
-                            else if(reached[neighbour.Id] == iter)
-                                strategy.OnCycle(vertex, neighbour);
 
-                        strategy.Postprocess(vertex);
-                        reached[root.Id] = -iter;
+                        strategy.PostProcess(vertex);
+                        reached[root] = -iter;
                     }
 
                     ++iter;
                 }
 
-            return reached.Select(i => i != 0).ToList();
+            return reached.Keys;
         }
     }
 
@@ -56,62 +54,60 @@ namespace Algolib.Graphs.Algorithms
         /// <param name="graph">graph</param>
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="roots">starting vertices</param>
-        public static List<bool> DFSI<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
-                                            IEnumerable<Vertex<V>> roots)
+        public static IEnumerable<Vertex<V>> DFSIterative<V, E>(
+            IGraph<V, E> graph, ISearchingStrategy<V> strategy, IEnumerable<Vertex<V>> roots)
         {
-            List<int> reached = Enumerable.Repeat(0, graph.VerticesCount).ToList();
+            Dictionary<Vertex<V>, int> reached = new Dictionary<Vertex<V>, int>();
             Stack<Vertex<V>> vertexStack = new Stack<Vertex<V>>();
             int iter = 1;
 
-            foreach(var root in roots)
-                if(reached[root.Id] == 0)
+            foreach(Vertex<V> root in roots)
+                if(!reached.ContainsKey(root))
                 {
                     vertexStack.Push(root);
-                    reached[root.Id] = iter;
+                    reached[root] = iter;
 
                     while(vertexStack.Count != 0)
                     {
                         Vertex<V> vertex = vertexStack.Pop();
 
-                        reached[vertex.Id] = iter;
-                        strategy.Preprocess(vertex);
+                        reached[vertex] = iter;
+                        strategy.PreProcess(vertex);
 
-                        foreach(var neighbour in graph.GetNeighbours(vertex))
-                            if(reached[neighbour.Id] == 0)
+                        foreach(Vertex<V> neighbour in graph.GetNeighbours(vertex))
+                            if(!reached.ContainsKey(neighbour))
                             {
                                 strategy.ForNeighbour(vertex, neighbour);
                                 vertexStack.Push(neighbour);
                             }
-                            else if(reached[neighbour.Id] == iter)
-                                strategy.OnCycle(vertex, neighbour);
 
-                        strategy.Postprocess(vertex);
-                        reached[root.Id] = -iter;
+                        strategy.PostProcess(vertex);
+                        reached[root] = -iter;
                     }
 
                     ++iter;
                 }
 
-            return reached.Select(i => i != 0).ToList();
+            return reached.Keys;
         }
 
         /// <summary>Recursive DFS algorithm</summary>
         /// <param name="graph">graph</param>
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="roots">starting vertices</param>
-        public static List<bool> DFSR<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
-                                            IEnumerable<Vertex<V>> roots)
+        public static IEnumerable<Vertex<V>> DFSRecursive<V, E>(
+            IGraph<V, E> graph, ISearchingStrategy<V> strategy, IEnumerable<Vertex<V>> roots)
         {
-            DfsrState state = new DfsrState(graph.VerticesCount);
+            DfsrState<V> state = new DfsrState<V>();
 
-            foreach(var root in roots)
-                if(state.reached[root.Id] != 0)
+            foreach(Vertex<V> root in roots)
+                if(state.reached[root] != 0)
                 {
-                    dfsrStep(graph, strategy, root, state);
+                    dfsStep(graph, strategy, root, state);
                     state.AddIteration();
                 }
 
-            return state.reached.Select(i => i != 0).ToList();
+            return state.reached.Keys;
         }
 
         /// <summary>Step of recursive DFS algorithm</summary>
@@ -119,51 +115,39 @@ namespace Algolib.Graphs.Algorithms
         /// <param name="strategy">vertex processing strategy</param>
         /// <param name="vertex">current vertex</param>
         /// <param name="state">current searching state</param>
-        private static void dfsrStep<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
-                                           Vertex<V> vertex, DfsrState state)
+        private static void dfsStep<V, E>(IGraph<V, E> graph, ISearchingStrategy<V> strategy,
+                                          Vertex<V> vertex, DfsrState<V> state)
         {
-            state.OnEntry(vertex.Id);
-            strategy.Preprocess(vertex);
+            state.OnEntry(vertex);
+            strategy.PreProcess(vertex);
 
-            foreach(var neighbour in graph.GetNeighbours(vertex))
-                if(state.reached[neighbour.Id] == 0)
+            foreach(Vertex<V> neighbour in graph.GetNeighbours(vertex))
+                if(state.reached[neighbour] == 0)
                 {
                     strategy.ForNeighbour(vertex, neighbour);
-                    dfsrStep(graph, strategy, neighbour, state);
+                    dfsStep(graph, strategy, neighbour, state);
                 }
-                else if(state.reached[neighbour.Id] == state.Iteration)
-                    strategy.OnCycle(vertex, neighbour);
 
-            strategy.Postprocess(vertex);
-            state.OnExit(vertex.Id);
+            strategy.PostProcess(vertex);
+            state.OnExit(vertex);
         }
 
-        private class DfsrState
+        private class DfsrState<V>
         {
-            internal List<int> reached;
-
-            internal DfsrState(int verticesNumber)
-            {
-                Iteration = 1;
-                reached = Enumerable.Repeat(0, verticesNumber).ToList();
-            }
+            internal Dictionary<Vertex<V>, int> reached;
 
             internal int Iteration { get; private set; }
 
-            internal void AddIteration()
+            internal DfsrState()
             {
-                ++Iteration;
+                Iteration = 1;
             }
 
-            internal void OnEntry(int vertex)
-            {
-                reached[vertex] = Iteration;
-            }
+            internal void AddIteration() => ++Iteration;
 
-            internal void OnExit(int vertex)
-            {
-                reached[vertex] = -Iteration;
-            }
+            internal void OnEntry(Vertex<V> vertex) => reached[vertex] = Iteration;
+
+            internal void OnExit(Vertex<V> vertex) => reached[vertex] = -Iteration;
         }
     }
 }

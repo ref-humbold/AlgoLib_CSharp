@@ -8,7 +8,8 @@ namespace Algolib.Graphs
     internal class GraphRepresentation<V, E>
     {
         // Adjacency list of graph
-        private readonly Dictionary<Vertex<V>, HashSet<Edge<E, V>>> graphDict;
+        private readonly Dictionary<Vertex<V>, HashSet<Edge<E, V>>> graphDict =
+            new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
 
         internal int Count => graphDict.Count;
 

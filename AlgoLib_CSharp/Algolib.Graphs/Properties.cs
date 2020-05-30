@@ -2,7 +2,7 @@
 {
     public interface IWeightProperties
     {
-        double Inf => double.PositiveInfinity;
+        static double Inf => double.PositiveInfinity;
 
         double Weight { get; }
     }

@@ -15,7 +15,7 @@ namespace Algolib.Graphs.Algorithms
         {
             Dictionary<Vertex<V>, double> distances =
                 new Dictionary<Vertex<V>, double>(
-                    digraph.Vertices.Select(v => KeyValuePair.Create(v, digraph.Inf))) {
+                    digraph.Vertices.Select(v => KeyValuePair.Create(v, IWeightProperties.Inf))) {
                     [source] = 0.0
                 };
 
@@ -26,7 +26,7 @@ namespace Algolib.Graphs.Algorithms
 
             foreach(Vertex<V> v in digraph.Vertices)
                 foreach(Edge<E, V> e in digraph.GetAdjacentEdges(v))
-                    if(distances[v] < digraph.Inf && distances[v] + e.Property.Weight < distances[e.Destination])
+                    if(distances[v] < IWeightProperties.Inf && distances[v] + e.Property.Weight < distances[e.Destination])
                         throw new InvalidOperationException("Graph contains a negative cycle");
 
             return distances;
@@ -42,7 +42,7 @@ namespace Algolib.Graphs.Algorithms
 
             foreach(Vertex<V> v in digraph.Vertices)
                 foreach(Vertex<V> u in digraph.Vertices)
-                    distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : digraph.Inf;
+                    distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : IWeightProperties.Inf;
 
             foreach(Edge<E, V> e in digraph.Edges)
                 distances[Tuple.Create(e.Source, e.Destination)] = e.Property.Weight;
