@@ -9,6 +9,9 @@ namespace Algolib.Structures
         // Map of element represents
         private readonly Dictionary<E, E> represents;
 
+        /// <summary>Number of sets</summary>
+        public int Count { get; private set; }
+
         public DisjointSets(IEnumerable<E> universe)
         {
             represents = new Dictionary<E, E>();
@@ -18,9 +21,6 @@ namespace Algolib.Structures
 
             Count = represents.Count;
         }
-
-        /// <summary>Number of sets</summary>
-        public int Count { get; private set; }
 
         /// <summary>Finds represent of element in set</summary>
         /// <param name="element">element from structure</param>
@@ -39,11 +39,7 @@ namespace Algolib.Structures
 
         /// <summary>Checks whether element belongs to any set</summary>
         /// <param name="element">element</param>
-        /// <returns>
-        /// <code>true</code>
-        /// if element is contained, otherwise
-        /// <code>false</code>
-        /// </returns>
+        /// <returns><c>true</c> if element is contained, otherwise <c>false</c></returns>
         public bool Contains(E element)
         {
             return represents.ContainsKey(element);
@@ -51,10 +47,7 @@ namespace Algolib.Structures
 
         /// <summary>Adds new element as singleton set</summary>
         /// <param name="element">new element</param>
-        /// <returns>
-        /// <code>this</code>
-        /// for method chaining
-        /// </returns>
+        /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
         public DisjointSets<E> Add(E element)
         {
@@ -68,10 +61,7 @@ namespace Algolib.Structures
 
         /// <summary>Adds new elements as singleton sets</summary>
         /// <param name="elements">new elements</param>
-        /// <returns>
-        /// <code>this</code>
-        /// for method chaining
-        /// </returns>
+        /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
         public DisjointSets<E> AddAll(IEnumerable<E> elements)
         {
@@ -107,10 +97,7 @@ namespace Algolib.Structures
         /// <summary>Joins two sets together</summary>
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
-        /// <returns>
-        /// <code>this</code>
-        /// for method chaining
-        /// </returns>
+        /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="KeyNotFoundException">if either element is not present</exception>
         public DisjointSets<E> UnionSet(E element1, E element2)
         {
@@ -126,11 +113,7 @@ namespace Algolib.Structures
         /// <summary>Checks whether elements belong to the same set</summary>
         /// <param name="element1">element from first set</param>
         /// <param name="element2">element from second set</param>
-        /// <returns>
-        /// <code>true</code>
-        /// if elements are in same set, otherwise
-        /// <code>false</code>
-        /// </returns>
+        /// <returns><c>true</c> if elements are in same set, otherwise <c>false</c></returns>
         /// <exception cref="KeyNotFoundException">if either element is not present</exception>
         public bool IsSameSet(E element1, E element2)
         {

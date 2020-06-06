@@ -21,6 +21,10 @@ namespace Algolib.Graphs
             Graph = new UndirectedSimpleGraph<V, E>(Enumerable.Repeat(property, 1));
         }
 
+        public Vertex<V> this[int index] => Graph[index];
+
+        public Edge<E, V> this[Vertex<V> source, Vertex<V> destination] => Graph[source, destination];
+
         public Vertex<V> AddVertex(V vertexProperty, E edgeProperty, Vertex<V> neighbour)
         {
             Vertex<V> vertex = Graph.AddVertex(vertexProperty);

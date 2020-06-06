@@ -1,6 +1,6 @@
 ﻿namespace Algolib.Graphs
 {
-    public interface IWeightProperties
+    public interface IWeighted
     {
         static double Inf => double.PositiveInfinity;
 

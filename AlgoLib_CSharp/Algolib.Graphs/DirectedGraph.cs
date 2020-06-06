@@ -7,7 +7,7 @@ namespace Algolib.Graphs
     public interface IDirectedGraph<V, E> : IGraph<V, E>
     {
         /// <summary>Reverses direction of edges in this graph.</summary>
-        public void Reverse();
+        void Reverse();
     }
 
     public class DirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IDirectedGraph<V, E>
@@ -42,7 +42,7 @@ namespace Algolib.Graphs
         {
             IEnumerable<Edge<E, V>> edges = Edges;
 
-            graphRepresentation = new GraphRepresentation<V, E>(graphRepresentation);
+            graphRepresentation = new GraphRepresentation<V, E>(Vertices);
             foreach(Edge<E, V> edge in edges)
                 graphRepresentation.AddEdgeToSource(new Edge<E, V>(edge.Destination, edge.Source,
                                                                    edge.Property));

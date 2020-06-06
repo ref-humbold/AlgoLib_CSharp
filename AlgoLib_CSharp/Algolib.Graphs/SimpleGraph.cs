@@ -1,4 +1,5 @@
 ﻿// Structure of simple graph
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,6 +46,24 @@ namespace Algolib.Graphs
 
             foreach(V property in properties)
                 AddVertex(property);
+        }
+
+        public Vertex<V> this[int index]
+        {
+            get
+            {
+                return graphRepresentation.Vertices.FirstOrDefault(v => v.Index == index)
+                    ?? throw new IndexOutOfRangeException($"No vertex with index {index} in this graph");
+            }
+        }
+
+        public Edge<E, V> this[Vertex<V> source, Vertex<V> destination]
+        {
+            get
+            {
+                return graphRepresentation[source]
+                    .FirstOrDefault(edge => edge.GetNeighbour(source) == destination);
+            }
         }
 
         /// <summary>Adds new vertex with given property.</summary>

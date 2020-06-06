@@ -22,6 +22,8 @@ namespace Algolib.Mathmat
     {
         private readonly Equation[] equations;
 
+        public int Count => equations.Length;
+
         public EquationSystem(Equation[] equations)
         {
             this.equations = equations;
@@ -31,8 +33,6 @@ namespace Algolib.Mathmat
                     throw new ArgumentException($"Equation {eq} has {eq.Count} variables, but was "
                                                 + $" expected to have {equations.Length}");
         }
-
-        public int Count => equations.Length;
 
         /// <param name="i">index of equation</param>
         /// <returns>i-th equation of this system</returns>
@@ -115,12 +115,7 @@ namespace Algolib.Mathmat
 
         /// <summary>Checks whether given values solve this equation system.</summary>
         /// <param name="solution">values to check</param>
-        /// <returns>
-        /// <code>true</code>
-        /// if solution is correct, otherwise
-        /// <code>false</code>
-        /// .
-        /// </returns>
+        /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
         public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
     }
 }

@@ -23,9 +23,9 @@ namespace Algolib.Graphs
         {
         }
 
-        internal GraphRepresentation(GraphRepresentation<V, E> representation)
+        internal GraphRepresentation(IEnumerable<Vertex<V>> vertices)
         {
-            foreach(Vertex<V> vertex in representation.graphDict.Keys)
+            foreach(Vertex<V> vertex in vertices)
                 graphDict[vertex] = new HashSet<Edge<E, V>>();
         }
 
@@ -34,7 +34,6 @@ namespace Algolib.Graphs
             get
             {
                 validateVertex(vertex);
-
                 return graphDict[vertex];
             }
         }

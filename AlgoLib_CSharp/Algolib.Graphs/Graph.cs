@@ -7,50 +7,56 @@ namespace Algolib.Graphs
     public interface IGraph<V, E>
     {
         /// <summary>number of vertices</summary>
-        public int VerticesCount { get; }
+        int VerticesCount { get; }
 
         /// <summary>number of edges</summary>
-        public int EdgesCount { get; }
+        int EdgesCount { get; }
 
         /// <summary>list of all vertices sorted by index</summary>
-        public IList<Vertex<V>> Vertices { get; }
+        IList<Vertex<V>> Vertices { get; }
 
         /// <summary>list of all edges sorted first by source then by destination</summary>
-        public IList<Edge<E, V>> Edges { get; }
+        IList<Edge<E, V>> Edges { get; }
+
+        /// <summary>vertex with given index</summary>
+        Vertex<V> this[int index] { get; }
+
+        /// <summary>edge between the vertices, or <c>null</c> if no edge</summary>
+        Edge<E, V> this[Vertex<V> source, Vertex<V> destination] { get; }
 
         /// <param name="vertex">vertex</param>
         /// <returns>list of adjacent edges</returns>
-        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex);
+        IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>list of neighbouring vertices</returns>
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex);
+        IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>input degree of vertex</returns>
-        public int GetOutputDegree(Vertex<V> vertex);
+        int GetOutputDegree(Vertex<V> vertex);
 
         /// <param name="vertex">vertex</param>
         /// <returns>output degree of vertex</returns>
-        public int GetInputDegree(Vertex<V> vertex);
+        int GetInputDegree(Vertex<V> vertex);
     }
 
     public class Vertex<V> : IComparable<Vertex<V>>
     {
-        public readonly int Id;
+        public readonly int Index;
         public V Property;
 
         internal Vertex(int number, V property)
         {
-            this.Id = number;
-            this.Property = property;
+            Index = number;
+            Property = property;
         }
 
-        public int CompareTo(Vertex<V> other) => Id.CompareTo(other.Id);
+        public int CompareTo(Vertex<V> other) => Index.CompareTo(other.Index);
 
-        public bool Equals(Vertex<V> v) => Id == v.Id;
+        public bool Equals(Vertex<V> v) => Index == v.Index;
 
-        public override int GetHashCode() => Id.GetHashCode();
+        public override int GetHashCode() => Index.GetHashCode();
     }
 
     public class Edge<E, V> : IComparable<Edge<E, V>>
@@ -61,18 +67,21 @@ namespace Algolib.Graphs
 
         internal Edge(Vertex<V> source, Vertex<V> destination, E property)
         {
-            this.Source = source;
-            this.Destination = destination;
-            this.Property = property;
+            Source = source;
+            Destination = destination;
+            Property = property;
         }
 
-        /// <summary>Reverses direction of this edge.</summary>
-        /// <param name="propertyMapper">
-        /// mapping function that creates property of reversed edge using current edge property
-        /// </param>
-        /// <returns>reversed edge</returns>
-        public Edge<E, V> Reverse(Func<E, E> propertyMapper) =>
-            new Edge<E, V>(Destination, Source, propertyMapper.Invoke(Property));
+        public Vertex<V> GetNeighbour(Vertex<V> vertex)
+        {
+            if(vertex == Source)
+                return Destination;
+
+            if(vertex == Destination)
+                return Source;
+
+            throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
+        }
 
         public int CompareTo(Edge<E, V> other)
         {
@@ -83,6 +92,6 @@ namespace Algolib.Graphs
 
         public bool Equals(Edge<E, V> e) => Source.Equals(e.Source) && Destination.Equals(e.Destination);
 
-        public override int GetHashCode() => Tuple.Create(Source.Id, Destination.Id).GetHashCode();
+        public override int GetHashCode() => Tuple.Create(Source.Index, Destination.Index).GetHashCode();
     }
 }
