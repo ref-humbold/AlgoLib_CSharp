@@ -4,41 +4,57 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public class TreeGraph<V, E> : IUndirectedGraph<V, E>
+    public class TreeGraph<V, VP, EP> : IUndirectedGraph<V, VP, EP>
     {
-        protected UndirectedSimpleGraph<V, E> Graph;
+        private readonly UndirectedSimpleGraph<V, VP, EP> graph;
 
-        public int VerticesCount => Graph.VerticesCount;
+        public int VerticesCount => graph.VerticesCount;
 
-        public int EdgesCount => Graph.EdgesCount;
+        public int EdgesCount => graph.EdgesCount;
 
-        public IList<Vertex<V>> Vertices => Graph.Vertices;
+        public IEnumerable<V> Vertices => graph.Vertices;
 
-        public IList<Edge<E, V>> Edges => Graph.Edges;
+        public IEnumerable<Edge<V>> Edges => graph.Edges;
 
-        public TreeGraph(V property)
+        public TreeGraph(V vertex)
         {
-            Graph = new UndirectedSimpleGraph<V, E>(Enumerable.Repeat(property, 1));
+            graph = new UndirectedSimpleGraph<V, VP, EP>(Enumerable.Repeat(vertex, 1));
         }
 
-        public Vertex<V> this[int index] => Graph[index];
-
-        public Edge<E, V> this[Vertex<V> source, Vertex<V> destination] => Graph[source, destination];
-
-        public Vertex<V> AddVertex(V vertexProperty, E edgeProperty, Vertex<V> neighbour)
+        public VP this[V vertex]
         {
-            Vertex<V> vertex = Graph.AddVertex(vertexProperty);
-
-            Graph.AddEdge(vertex, neighbour, edgeProperty);
-            return vertex;
+            get { return graph[vertex]; }
+            set { graph[vertex] = value; }
         }
 
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) => Graph.GetNeighbours(vertex);
+        public EP this[Edge<V> edge]
+        {
+            get { return graph[edge]; }
+            set { graph[edge] = value; }
+        }
 
-        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => Graph.GetAdjacentEdges(vertex);
+        public Edge<V> GetEdge(V source, V destination) => graph.GetEdge(source, destination);
 
-        public int GetOutputDegree(Vertex<V> vertex) => Graph.GetOutputDegree(vertex);
+        public IEnumerable<Edge<V>> GetAdjacentEdges(V vertex) => graph.GetAdjacentEdges(vertex);
 
-        public int GetInputDegree(Vertex<V> vertex) => Graph.GetInputDegree(vertex);
+        public IEnumerable<V> GetNeighbours(V vertex) => graph.GetNeighbours(vertex);
+
+        public int GetOutputDegree(V vertex) => graph.GetOutputDegree(vertex);
+
+        public int GetInputDegree(V vertex) => graph.GetInputDegree(vertex);
+
+        /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <param name="vertex">a new vertex</param>
+        /// <param name="neighbour">an existing vertex</param>
+        /// <param name="vertexProperty">a vertex property</param>
+        /// <param name="edgeProperty">an edge property</param>
+        /// <returns>the edge between the vertices, or <c>null</c> if vertex already exists</returns>
+        public Edge<V> AddVertex(V vertex, V neighbour,
+                                 VP vertexProperty = default, EP edgeProperty = default)
+        {
+            bool wasAdded = graph.AddVertex(vertex, vertexProperty);
+
+            return wasAdded ? graph.AddEdge(vertex, neighbour, edgeProperty) : null;
+        }
     }
 }

@@ -4,35 +4,60 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IUndirectedGraph<V, E> : IGraph<V, E>
+    public interface IUndirectedGraph<V, VP, EP> : IGraph<V, VP, EP>
     {
     }
 
-    public class UndirectedSimpleGraph<V, E> : SimpleGraph<V, E>, IUndirectedGraph<V, E>
+    public class UndirectedSimpleGraph<V, VP, EP> : SimpleGraph<V, VP, EP>, IUndirectedGraph<V, VP, EP>
     {
-        public override int EdgesCount => graphRepresentation.Edges.Distinct().Count();
+        public override int EdgesCount => representation.Edges.Distinct().Count();
+
+        public override IEnumerable<Edge<V>> Edges => representation.Edges.Distinct();
 
         public UndirectedSimpleGraph() : base()
         {
         }
 
-        public UndirectedSimpleGraph(IEnumerable<V> properties) : base(properties)
+        public UndirectedSimpleGraph(IEnumerable<V> vertices) : base(vertices)
         {
         }
 
-        public override Edge<E, V> AddEdge(Vertex<V> source, Vertex<V> destination, E property)
-        {
-            Vertex<V> newSource = source.CompareTo(destination) < 0 ? source : destination;
-            Vertex<V> newDestination = source.CompareTo(destination) >= 0 ? source : destination;
-            Edge<E, V> edge = new Edge<E, V>(newSource, newDestination, property);
+        public override int GetOutputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
 
-            graphRepresentation.AddEdgeToSource(edge);
-            graphRepresentation.AddEdgeToDestination(edge);
-            return edge;
+        public override int GetInputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
+
+        public override Edge<V> AddEdge(V source, V destination, EP property)
+        {
+            Edge<V> existingEdge = GetEdge(source, destination);
+
+            if(existingEdge != null)
+                return existingEdge;
+
+            Edge<V> newEdge = new Edge<V>(source, destination);
+
+            representation.AddEdgeToSource(newEdge);
+            representation.AddEdgeToDestination(newEdge);
+            representation[newEdge] = property;
+            return newEdge;
         }
 
-        public override int GetOutputDegree(Vertex<V> vertex) => graphRepresentation[vertex].Count;
+        /// <summary>Converts this graph to a directed graph with same vertices.</summary>
+        /// <returns>directed graph</returns>
+        public DirectedSimpleGraph<V, VP, EP> AsDirected()
+        {
+            DirectedSimpleGraph<V, VP, EP> directedSimpleGraph =
+                new DirectedSimpleGraph<V, VP, EP>(Vertices);
 
-        public override int GetInputDegree(Vertex<V> vertex) => graphRepresentation[vertex].Count;
+            foreach(V vertex in Vertices)
+                directedSimpleGraph[vertex] = this[vertex];
+
+            foreach(Edge<V> edge in Edges)
+            {
+                directedSimpleGraph.AddEdge(edge.Source, edge.Destination, this[edge]);
+                directedSimpleGraph.AddEdge(edge.Destination, edge.Source, this[edge]);
+            }
+
+            return directedSimpleGraph;
+        }
     }
 }

@@ -2,45 +2,41 @@
 
 namespace Algolib.Graphs.Algorithms
 {
-    public interface IBFSStrategy<V>
+    public interface IBfsStrategy<V>
     {
-        /// <summary>Runs an action before vertex processing.</summary>
-        /// <param name="vertex">current vertex</param>
-        void OnEnter(Vertex<V> vertex);
+        void ForRoot(V root);
 
-        /// <summary>Runs an action before entering neighbour.</summary>
-        /// <param name="vertex">current vertex</param>
-        /// <param name="neighbour">next vertex</param>
-        void OnNextVertex(Vertex<V> vertex, Vertex<V> neighbour);
+        void OnEnter(V vertex);
 
-        /// <summary>Runs an action after vertex processing.</summary>
-        /// <param name="vertex">current vertex</param>
-        void OnExit(Vertex<V> vertex);
+        void OnNextVertex(V vertex, V neighbour);
+
+        void OnExit(V vertex);
     }
 
-    public interface IDFSStrategy<V> : IBFSStrategy<V>
+    public interface IDfsStrategy<V> : IBfsStrategy<V>
     {
-        /// <summary>Runs an action when edge to a visited neighbour was detected.</summary>
-        /// <param name="vertex">current vertex</param>
-        /// <param name="neighbour">next vertex</param>
-        void OnEdgeToVisited(Vertex<V> vertex, Vertex<V> neighbour);
+        void OnEdgeToVisited(V vertex, V neighbour);
     }
 
-    public class EmptyStrategy<V> : IDFSStrategy<V>
+    public class EmptyStrategy<V> : IDfsStrategy<V>
     {
-        public void OnEnter(Vertex<V> vertex)
+        public void ForRoot(V root)
         {
         }
 
-        public void OnNextVertex(Vertex<V> vertex, Vertex<V> neighbour)
+        public void OnEnter(V vertex)
         {
         }
 
-        public void OnExit(Vertex<V> vertex)
+        public void OnNextVertex(V vertex, V neighbour)
         {
         }
 
-        public void OnEdgeToVisited(Vertex<V> vertex, Vertex<V> neighbour)
+        public void OnExit(V vertex)
+        {
+        }
+
+        public void OnEdgeToVisited(V vertex, V neighbour)
         {
         }
     }

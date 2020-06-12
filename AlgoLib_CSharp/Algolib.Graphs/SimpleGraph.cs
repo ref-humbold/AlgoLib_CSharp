@@ -5,89 +5,73 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public abstract class SimpleGraph<V, E> : IGraph<V, E>
+    public abstract class SimpleGraph<V, VP, EP> : IGraph<V, VP, EP>
     {
-        // Adjacency list of graph
-        internal GraphRepresentation<V, E> graphRepresentation;
+        internal GraphRepresentation<V, VP, EP> representation;
 
-        public int VerticesCount => graphRepresentation.Count;
+        public int VerticesCount => representation.Count;
 
         public abstract int EdgesCount { get; }
 
-        public IList<Vertex<V>> Vertices
-        {
-            get
-            {
-                List<Vertex<V>> vertices = graphRepresentation.Vertices.ToList();
+        public IEnumerable<V> Vertices => representation.Vertices;
 
-                vertices.Sort();
-                return vertices;
-            }
+        public abstract IEnumerable<Edge<V>> Edges { get; }
+
+        public SimpleGraph()
+        {
+            representation = new GraphRepresentation<V, VP, EP>();
         }
 
-        public IList<Edge<E, V>> Edges
+        public SimpleGraph(IEnumerable<V> vertices)
         {
-            get
-            {
-                List<Edge<E, V>> edges = graphRepresentation.Edges.ToList();
-
-                edges.Sort();
-                return edges;
-            }
+            representation = new GraphRepresentation<V, VP, EP>(vertices);
         }
 
-        public SimpleGraph() : this(Enumerable.Empty<V>())
+        public VP this[V vertex]
         {
+            get { return representation[vertex]; }
+            set { representation[vertex] = value; }
         }
 
-        public SimpleGraph(IEnumerable<V> properties)
+        public EP this[Edge<V> edge]
         {
-            graphRepresentation = new GraphRepresentation<V, E>();
-
-            foreach(V property in properties)
-                AddVertex(property);
+            get { return representation[edge]; }
+            set { representation[edge] = value; }
         }
 
-        public Vertex<V> this[int index]
+        public Edge<V> GetEdge(V source, V destination) =>
+            representation.GetAdjacentEdges(source)
+                          .Where(edge => edge.GetNeighbour(source).Equals(destination))
+                          .FirstOrDefault();
+
+        public IEnumerable<V> GetNeighbours(V vertex) =>
+            representation.GetAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
+
+        public IEnumerable<Edge<V>> GetAdjacentEdges(V vertex) => representation.GetAdjacentEdges(vertex);
+
+        public abstract int GetOutputDegree(V vertex);
+
+        public abstract int GetInputDegree(V vertex);
+
+        /// <summary>Adds new vertex with given property to this graph.</summary>
+        /// <param name="vertex">a new vertex</param>
+        /// <param name="property">a vertex property</param>
+        /// <returns><c>true</c> if vertex was added, otherwise <c>false</c></returns>
+        public bool AddVertex(V vertex, VP property = default)
         {
-            get
-            {
-                return graphRepresentation.Vertices.FirstOrDefault(v => v.Index == index)
-                    ?? throw new IndexOutOfRangeException($"No vertex with index {index} in this graph");
-            }
+            bool wasAdded = representation.AddVertex(vertex);
+
+            if(wasAdded)
+                this[vertex] = property;
+
+            return wasAdded;
         }
 
-        public Edge<E, V> this[Vertex<V> source, Vertex<V> destination]
-        {
-            get
-            {
-                return graphRepresentation[source]
-                    .FirstOrDefault(edge => edge.GetNeighbour(source) == destination);
-            }
-        }
-
-        /// <summary>Adds new vertex with given property.</summary>
-        /// <param name="property">property of new vertex</param>
-        /// <returns>new vertex</returns>
-        public Vertex<V> AddVertex(V property)
-        {
-            return graphRepresentation.AddVertex(property);
-        }
-
-        /// <summary>Adds new edge with given property.</summary>
+        /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
         /// <param name="source">source vertex</param>
         /// <param name="destination">destination vertex</param>
-        /// <param name="property">property of new edge</param>
-        /// <returns>new edge</returns>
-        public abstract Edge<E, V> AddEdge(Vertex<V> source, Vertex<V> destination, E property);
-
-        public IEnumerable<Vertex<V>> GetNeighbours(Vertex<V> vertex) =>
-            graphRepresentation[vertex].Select(e => vertex.Equals(e.Source) ? e.Destination : e.Source);
-
-        public IEnumerable<Edge<E, V>> GetAdjacentEdges(Vertex<V> vertex) => graphRepresentation[vertex];
-
-        public abstract int GetOutputDegree(Vertex<V> vertex);
-
-        public abstract int GetInputDegree(Vertex<V> vertex);
+        /// <param name="property">an edge property</param>
+        /// <returns>the new edge if added, otherwise existing edge</returns>
+        public abstract Edge<V> AddEdge(V source, V destination, EP property = default);
     }
 }

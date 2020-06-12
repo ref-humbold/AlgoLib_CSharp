@@ -5,80 +5,103 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    internal class GraphRepresentation<V, E>
+    internal class GraphRepresentation<V, VP, EP>
     {
-        // Adjacency list of graph
-        private readonly Dictionary<Vertex<V>, HashSet<Edge<E, V>>> graphDict =
-            new Dictionary<Vertex<V>, HashSet<Edge<E, V>>>();
+        // Adjacency list
+        private readonly Dictionary<V, HashSet<Edge<V>>> graphDict =
+            new Dictionary<V, HashSet<Edge<V>>>();
+
+        // Vertex properties
+        private readonly Dictionary<V, VP> vertexProperties = new Dictionary<V, VP>();
+
+        // Edge properties
+        private readonly Dictionary<Edge<V>, EP> edgeProperties = new Dictionary<Edge<V>, EP>();
 
         internal int Count => graphDict.Count;
 
-        internal IEnumerable<Vertex<V>> Vertices => graphDict.Keys;
+        internal IEnumerable<V> Vertices => graphDict.Keys;
 
-        internal IEnumerable<Edge<E, V>> Edges => graphDict.Values.SelectMany(edges => edges);
+        internal IEnumerable<Edge<V>> Edges => graphDict.Values.SelectMany(edges => edges);
 
-        internal IEnumerable<HashSet<Edge<E, V>>> EdgesSet => graphDict.Values;
+        internal IEnumerable<HashSet<Edge<V>>> EdgesSet => graphDict.Values;
 
         internal GraphRepresentation()
         {
         }
 
-        internal GraphRepresentation(IEnumerable<Vertex<V>> vertices)
+        internal GraphRepresentation(IEnumerable<V> vertices)
         {
-            foreach(Vertex<V> vertex in vertices)
-                graphDict[vertex] = new HashSet<Edge<E, V>>();
+            foreach(V vertex in vertices)
+                graphDict[vertex] = new HashSet<Edge<V>>();
         }
 
-        internal HashSet<Edge<E, V>> this[Vertex<V> vertex]
+        internal VP this[V vertex]
         {
             get
             {
-                validateVertex(vertex);
-                return graphDict[vertex];
+                validate(vertex);
+                return vertexProperties[vertex];
+            }
+
+            set
+            {
+                validate(vertex);
+                vertexProperties[vertex] = value;
             }
         }
 
-        internal void ClearEdges()
+        internal EP this[Edge<V> edge]
         {
-            foreach(Vertex<V> vertex in graphDict.Keys)
-                graphDict[vertex] = new HashSet<Edge<E, V>>();
+            get
+            {
+                validate(edge);
+                return edgeProperties[edge];
+            }
+
+            set
+            {
+                validate(edge);
+                edgeProperties[edge] = value;
+            }
         }
 
-        internal Vertex<V> AddVertex(V property)
+        internal HashSet<Edge<V>> GetAdjacentEdges(V vertex)
         {
-            Vertex<V> vertex = new Vertex<V>(graphDict.Count, property);
-
-            graphDict[vertex] = new HashSet<Edge<E, V>>();
-            return vertex;
+            validate(vertex);
+            return graphDict[vertex];
         }
 
-        internal void AddEdgeToSource(Edge<E, V> edge)
+        internal bool AddVertex(V vertex)
         {
-            validateEdge(edge);
+            if(graphDict.ContainsKey(vertex))
+                return false;
+
+            graphDict[vertex] = new HashSet<Edge<V>>();
+            return true;
+        }
+
+        internal void AddEdgeToSource(Edge<V> edge)
+        {
+            validate(edge);
             graphDict[edge.Source].Add(edge);
         }
 
-        internal void AddEdgeToDestination(Edge<E, V> edge)
+        internal void AddEdgeToDestination(Edge<V> edge)
         {
-            validateEdge(edge);
+            validate(edge);
             graphDict[edge.Destination].Add(edge);
         }
 
-        private void validateVertex(Vertex<V> vertex)
+        private void validate(V vertex)
         {
-            if(graphDict.Keys.All(v => v != vertex))
-                throw new ArgumentException("Vertex object does not belong to graph");
+            if(!graphDict.ContainsKey(vertex))
+                throw new ArgumentException($"Vertex {vertex} does not belong to this graph");
         }
 
-        private void validateEdge(Edge<E, V> edge)
+        private void validate(Edge<V> edge)
         {
-            if(graphDict.Keys.All(v => v != edge.Source))
-                throw new ArgumentException(
-                        "Edge source or destination does not belong to graph");
-
-            if(graphDict.Keys.All(v => v != edge.Destination))
-                throw new ArgumentException(
-                        "Edge source or destination does not belong to graph");
+            if(graphDict.ContainsKey(edge.Source) || graphDict.ContainsKey(edge.Destination))
+                throw new ArgumentException($"Edge {edge} does not belong to this graph");
         }
     }
 }
