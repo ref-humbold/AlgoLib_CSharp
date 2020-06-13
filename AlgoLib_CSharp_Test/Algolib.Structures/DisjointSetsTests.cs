@@ -96,7 +96,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Indexer_WhenPresentElement_ThenRepresent()
+        public void IndexerGet_WhenPresentElement_ThenRepresent()
         {
             // given
             int elem = 4;
@@ -107,7 +107,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Indexer_WhenAbsentElement_Then()
+        public void IndexerGet_WhenAbsentElement_Then()
         {
             // when
             TestDelegate testDelegate = () => _ = testObject[17];

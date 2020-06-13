@@ -26,7 +26,7 @@ namespace Algolib.Graphs
 
         public override int GetInputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
 
-        public override Edge<V> AddEdge(V source, V destination, EP property)
+        public override Edge<V> AddEdge(V source, V destination, EP property = default)
         {
             Edge<V> existingEdge = GetEdge(source, destination);
 

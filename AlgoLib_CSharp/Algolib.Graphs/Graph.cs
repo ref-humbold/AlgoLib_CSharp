@@ -70,7 +70,8 @@ namespace Algolib.Graphs
 
         public Edge<V> Reversed() => new Edge<V>(Destination, Source);
 
-        public bool Equals(Edge<V> other) => Source.Equals(other.Source) && Destination.Equals(other.Destination);
+        public override bool Equals(object obj) =>
+            obj is Edge<V> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
 
         public override int GetHashCode() => Tuple.Create(Source, Destination).GetHashCode();
 

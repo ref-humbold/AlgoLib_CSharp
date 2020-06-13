@@ -4,33 +4,29 @@ using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
-    internal class Paths<V, E> where E : IWeighted
+    internal class Paths<V, VP, EP> where EP : IWeighted
     {
-        public const double Infinity = double.PositiveInfinity;
+        public static double Infinity = double.PositiveInfinity;
 
         /// <summary>Bellman-Ford algorithm</summary>
         /// <param name="graph">a directed weighted graph</param>
         /// <param name="source">a source vertex</param>
         /// <returns>dictionary of distances for vertices</returns>
-        public static Dictionary<Vertex<V>, double> BellmanFord(IDirectedGraph<V, E> graph,
-            Vertex<V> source)
+        public static Dictionary<V, double> BellmanFord(IDirectedGraph<V, VP, EP> graph, V source)
         {
-            Dictionary<Vertex<V>, double> distances =
-                new Dictionary<Vertex<V>, double>(
-                    graph.Vertices.Select(v => KeyValuePair.Create(v, Infinity))) {
-                    [source] = 0.0
-                };
+            Dictionary<V, double> distances = new Dictionary<V, double>(
+                graph.Vertices.Select(v => KeyValuePair.Create(v, Infinity))) { [source] = 0.0 };
 
             for(int i = 0; i < graph.VerticesCount - 1; ++i)
-                foreach(Vertex<V> vertex in graph.Vertices)
-                    foreach(Edge<E, V> edge in graph.GetAdjacentEdges(vertex))
+                foreach(V vertex in graph.Vertices)
+                    foreach(Edge<V> edge in graph.GetAdjacentEdges(vertex))
                         distances[edge.Destination] = Math.Min(distances[edge.Destination],
-                                                               distances[vertex] + edge.Property.Weight);
+                                                               distances[vertex] + graph[edge].Weight);
 
-            foreach(Vertex<V> vertex in graph.Vertices)
-                foreach(Edge<E, V> edge in graph.GetAdjacentEdges(vertex))
+            foreach(V vertex in graph.Vertices)
+                foreach(Edge<V> edge in graph.GetAdjacentEdges(vertex))
                     if(distances[vertex] < Infinity
-                        && distances[vertex] + edge.Property.Weight < distances[edge.Destination])
+                       && distances[vertex] + graph[edge].Weight < distances[edge.Destination])
                         throw new InvalidOperationException("Graph contains a negative cycle");
 
             return distances;
@@ -39,21 +35,20 @@ namespace Algolib.Graphs.Algorithms
         /// <summary>Floyd-Warshall algorithm</summary>
         /// <param name="graph">a directed weighted graph</param>
         /// <returns>dictionary of distances for each pair of vertices</returns>
-        public static Dictionary<Tuple<Vertex<V>, Vertex<V>>, double> FloydWarshall(IDirectedGraph<V, E> graph)
+        public static Dictionary<Tuple<V, V>, double> FloydWarshall(IDirectedGraph<V, VP, EP> graph)
         {
-            Dictionary<Tuple<Vertex<V>, Vertex<V>>, double> distances =
-                new Dictionary<Tuple<Vertex<V>, Vertex<V>>, double>();
+            Dictionary<Tuple<V, V>, double> distances = new Dictionary<Tuple<V, V>, double>();
 
-            foreach(Vertex<V> v in graph.Vertices)
-                foreach(Vertex<V> u in graph.Vertices)
+            foreach(V v in graph.Vertices)
+                foreach(V u in graph.Vertices)
                     distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : Infinity;
 
-            foreach(Edge<E, V> e in graph.Edges)
-                distances[Tuple.Create(e.Source, e.Destination)] = e.Property.Weight;
+            foreach(Edge<V> edge in graph.Edges)
+                distances[Tuple.Create(edge.Source, edge.Destination)] = graph[edge].Weight;
 
-            foreach(Vertex<V> w in graph.Vertices)
-                foreach(Vertex<V> v in graph.Vertices)
-                    foreach(Vertex<V> u in graph.Vertices)
+            foreach(V w in graph.Vertices)
+                foreach(V v in graph.Vertices)
+                    foreach(V u in graph.Vertices)
                         distances[Tuple.Create(v, u)] =
                             Math.Min(distances[Tuple.Create(v, u)],
                                      distances[Tuple.Create(v, w)] + distances[Tuple.Create(w, u)]);

@@ -40,7 +40,8 @@ namespace Algolib.Graphs
             get
             {
                 validate(vertex);
-                return vertexProperties[vertex];
+                vertexProperties.TryGetValue(vertex, out VP val);
+                return val;
             }
 
             set
@@ -55,7 +56,8 @@ namespace Algolib.Graphs
             get
             {
                 validate(edge);
-                return edgeProperties[edge];
+                edgeProperties.TryGetValue(edge, out EP val);
+                return val;
             }
 
             set
@@ -100,7 +102,7 @@ namespace Algolib.Graphs
 
         private void validate(Edge<V> edge)
         {
-            if(graphDict.ContainsKey(edge.Source) || graphDict.ContainsKey(edge.Destination))
+            if(!graphDict.ContainsKey(edge.Source) || !graphDict.ContainsKey(edge.Destination))
                 throw new ArgumentException($"Edge {edge} does not belong to this graph");
         }
     }

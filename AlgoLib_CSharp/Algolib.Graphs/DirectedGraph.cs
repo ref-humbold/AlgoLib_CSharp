@@ -34,7 +34,7 @@ namespace Algolib.Graphs
                           .SelectMany(edges => edges.Where(edge => edge.Destination.Equals(vertex)))
                           .Count();
 
-        public override Edge<V> AddEdge(V source, V destination, EP property)
+        public override Edge<V> AddEdge(V source, V destination, EP property = default)
         {
             Edge<V> existingEdge = GetEdge(source, destination);
 
