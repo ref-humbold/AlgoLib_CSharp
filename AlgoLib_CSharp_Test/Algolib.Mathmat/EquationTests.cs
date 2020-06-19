@@ -43,8 +43,10 @@ namespace Algolib.Mathmat
         [Test]
         public void Multiply_WhenConstantIsZero_ThenArithmeticException()
         {
-            // when - then
-            Assert.Throws<ArithmeticException>(() => TestObject.Multiply(0));
+            // when
+            TestDelegate testDelegate = () => TestObject.Multiply(0);
+            // then
+            Assert.Throws<ArithmeticException>(testDelegate);
         }
 
         [Test]
@@ -60,9 +62,11 @@ namespace Algolib.Mathmat
         [Test]
         public void Combine_WhenConstantIsZero_ThenArithmeticException()
         {
-            // when - then
-            Assert.Throws<ArithmeticException>(
-                () => TestObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0));
+            // when
+            TestDelegate testDelegate =
+                () => TestObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0);
+            // then
+            Assert.Throws<ArithmeticException>(testDelegate);
         }
     }
 }

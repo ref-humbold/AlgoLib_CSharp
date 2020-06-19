@@ -44,8 +44,10 @@ namespace Algolib.Mathmat
                 new Equation(new double [] { 7, -1, 0 }, 4),
                 new Equation(new double[] { -1, -1.5, 1 }, -1)
             });
-            // when - then
-            Assert.Throws<NoSolutionException>(() => TestObject.Solve());
+            // when
+            TestDelegate testDelegate = () => TestObject.Solve();
+            // then
+            Assert.Throws<NoSolutionException>(testDelegate);
             Assert.IsFalse(TestObject.IsSolution(new double[] { 1, 3, -2 }));
             Assert.IsFalse(TestObject.IsSolution(new double[] { -2, -18, -36.5 }));
         }
@@ -59,8 +61,10 @@ namespace Algolib.Mathmat
                 new Equation(new double [] { 7, -1, 0 }, 4),
                 new Equation(new double[] { 4, 6, -4 }, 30)
             });
-            // when - then
-            Assert.Throws<InfiniteSolutionsException>(() => TestObject.Solve());
+            // when
+            TestDelegate testDelegate = () => TestObject.Solve();
+            // then
+            Assert.Throws<InfiniteSolutionsException>(testDelegate);
             Assert.IsTrue(TestObject.IsSolution(new double[] { 1, 3, -2 }));
             Assert.IsTrue(TestObject.IsSolution(new double[] { -2, -18, -36.5 }));
         }

@@ -6,14 +6,14 @@ using System.Linq;
 namespace Algolib.Graphs
 {
     [TestFixture]
-    public class DirectedSimpleGraphTests
+    public class UndirectedSimpleGraphTest
     {
-        private DirectedSimpleGraph<int, string, string> testObject;
+        private UndirectedSimpleGraph<int, string, string> testObject;
 
         [SetUp]
         public void SetUp()
         {
-            testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
+            testObject = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
         }
 
         [TearDown]
@@ -42,7 +42,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void IndexerGet_WhenNoProperty_ThenDefault()
+        public void IndexerGet_WhenNoProperty_ThenNull()
         {
             // given
             Edge<int> edge = testObject.AddEdge(6, 7);
@@ -50,8 +50,8 @@ namespace Algolib.Graphs
             string resultVertex = testObject[4];
             string resultEdge = testObject[edge];
             // then
-            Assert.AreEqual(default(string), resultVertex);
-            Assert.AreEqual(default(string), resultEdge);
+            Assert.IsNull(resultVertex);
+            Assert.IsNull(resultEdge);
         }
 
         [Test]
@@ -67,13 +67,13 @@ namespace Algolib.Graphs
         public void VerticesCount_ThenNumberOfVertices()
         {
             // when
-            int result = testObject.VerticesCount;
+            long result = testObject.VerticesCount;
             // then
             Assert.AreEqual(10, result);
         }
 
         [Test]
-        public void GetVertices_ThenAllVertices()
+        public void Vertices_ThenAllVertices()
         {
             // when
             IEnumerable<int> result = testObject.Vertices;
@@ -127,7 +127,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.EdgesCount;
             // then
-            Assert.AreEqual(7, result);
+            Assert.AreEqual(6, result);
         }
 
         [Test]
@@ -146,9 +146,9 @@ namespace Algolib.Graphs
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
             CollectionAssert.AreEquivalent(
-                new List<Edge<int>>() { new Edge<int>(1, 5), new Edge<int>(2, 4), new Edge<int>(3, 6),
-                                        new Edge<int>(6, 3), new Edge<int>(7, 7), new Edge<int>(8, 0),
-                                        new Edge<int>(9, 3) }, result);
+                new List<Edge<int>>() { new Edge<int>(7, 7), new Edge<int>(1, 5), new Edge<int>(2, 4),
+                                        new Edge<int>(8, 0), new Edge<int>(6, 3), new Edge<int>(9, 3) },
+                result);
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenReversedDirection_ThenNull()
+        public void GetEdge_WhenReversedDirection_ThenEdge()
         {
             // given
             int source = 9;
@@ -177,11 +177,12 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.GetEdge(destination, source);
             // then
-            Assert.IsNull(result);
+            Assert.AreEqual(source, result.Source);
+            Assert.AreEqual(destination, result.Destination);
         }
 
         [Test]
-        public void GetEdge_WhenNotExists_ThenNull()
+        public void getEdge_WhenNotExists_ThenNull()
         {
             // when
             Edge<int> result = testObject.GetEdge(1, 2);
@@ -202,7 +203,7 @@ namespace Algolib.Graphs
             Assert.AreEqual(5, result.Destination);
             Assert.AreEqual(property, testObject[result]);
             CollectionAssert.AreEquivalent(new List<int>() { 1, 5 }, testObject.GetNeighbours(1));
-            CollectionAssert.IsEmpty(testObject.GetNeighbours(5));
+            CollectionAssert.AreEquivalent(new List<int>() { 1 }, testObject.GetNeighbours(5));
         }
 
         [Test]
@@ -219,6 +220,19 @@ namespace Algolib.Graphs
         }
 
         [Test]
+        public void AddEdge_WhenReversed_ThenExistingEdge()
+        {
+            // given
+            int source = 3;
+            int destination = 7;
+            Edge<int> expected = testObject.AddEdge(source, destination);
+            // when
+            Edge<int> result = testObject.AddEdge(destination, source);
+            // then
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void GetNeighbours_ThenDestinationVerticesOfOutgoingEdges()
         {
             // given
@@ -232,7 +246,7 @@ namespace Algolib.Graphs
             // when
             IEnumerable<int> result = testObject.GetNeighbours(1);
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 1, 3, 4, 7, 9 }, result);
+            CollectionAssert.AreEquivalent(new List<int>() { 1, 2, 3, 4, 6, 7, 9 }, result);
         }
 
         [Test]
@@ -250,8 +264,9 @@ namespace Algolib.Graphs
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(1);
             // then
             CollectionAssert.AreEquivalent(
-                new List<Edge<int>>() { new Edge<int>(1, 1), new Edge<int>(1, 3), new Edge<int>(1, 4),
-                                        new Edge<int>(1, 7), new Edge<int>(1, 9) }, result);
+                new List<Edge<int>>() { new Edge<int>(1, 1), new Edge<int>(2, 1), new Edge<int>(1, 3),
+                                        new Edge<int>(1, 4), new Edge<int>(6, 1), new Edge<int>(1, 7),
+                                        new Edge<int>(1, 9) }, result);
         }
 
         [Test]
@@ -268,7 +283,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetOutputDegree(1);
             // then
-            Assert.AreEqual(5, result);
+            Assert.AreEqual(7, result);
         }
 
         [Test]
@@ -285,74 +300,40 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetInputDegree(1);
             // then
-            Assert.AreEqual(5, result);
+            Assert.AreEqual(7, result);
         }
 
         [Test]
-        public void Reverse_ThenAllEdgesHaveReversedDirection()
+        public void AsDirected_ThenDirectedGraph()
         {
             // given
             int vertex = 5;
             string vertexProperty = "123456";
             string edgeProperty = "zxcvb";
-            Edge<int> edge = testObject.AddEdge(1, 2);
-            testObject.AddEdge(3, 5);
-            testObject.AddEdge(4, 9);
-            testObject.AddEdge(5, 4);
-            testObject.AddEdge(5, 7);
-            testObject.AddEdge(6, 2);
-            testObject.AddEdge(6, 6);
-            testObject.AddEdge(7, 8);
-            testObject.AddEdge(9, 1);
-            testObject.AddEdge(9, 6);
+            Edge<int> edge = testObject.AddEdge(1, 5);
+            testObject.AddEdge(7, 7);
+            testObject.AddEdge(2, 4);
+            testObject.AddEdge(8, 0);
+            testObject.AddEdge(6, 3);
+            testObject.AddEdge(3, 6);
+            testObject.AddEdge(9, 3);
+            testObject.AddEdge(8, 0);
             testObject[vertex] = vertexProperty;
             testObject[edge] = edgeProperty;
             // when
-            testObject.Reverse();
-            // then
-            CollectionAssert.AreEquivalent(
-                new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
-                                        new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
-                                        new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
-                                        new Edge<int>(9, 4) }, testObject.Edges);
-            Assert.AreEqual(vertexProperty, testObject[vertex]);
-            Assert.IsNull(testObject[9]);
-            Assert.AreEqual(edgeProperty, testObject[testObject.GetEdge(2, 1)]);
-            Assert.IsNull(testObject[testObject.GetEdge(5, 3)]);
-        }
-
-        [Test]
-        public void ReversedCopy_ThenNewGraphWithReversedEdges()
-        {
-            // given
-            int vertex = 5;
-            string vertexProperty = "123456";
-            string edgeProperty = "zxcvb";
-            Edge<int> edge = testObject.AddEdge(1, 2);
-            testObject.AddEdge(3, 5);
-            testObject.AddEdge(4, 9);
-            testObject.AddEdge(5, 4);
-            testObject.AddEdge(5, 7);
-            testObject.AddEdge(6, 2);
-            testObject.AddEdge(6, 6);
-            testObject.AddEdge(7, 8);
-            testObject.AddEdge(9, 1);
-            testObject.AddEdge(9, 6);
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
-            // when
-            IDirectedGraph<int, string, string> result = testObject.ReversedCopy();
+            DirectedSimpleGraph<int, string, string> result = testObject.AsDirected();
             // then
             CollectionAssert.AreEquivalent(testObject.Vertices, result.Vertices);
             CollectionAssert.AreEquivalent(
-                new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
-                                        new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
-                                        new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
-                                        new Edge<int>(9, 4) }, result.Edges);
+                new List<Edge<int>>() { new Edge<int>(0, 8), new Edge<int>(1, 5), new Edge<int>(2, 4),
+                                        new Edge<int>(3, 6), new Edge<int>(3, 9), new Edge<int>(4, 2),
+                                        new Edge<int>(5, 1), new Edge<int>(6, 3), new Edge<int>(7, 7),
+                                        new Edge<int>(8, 0), new Edge<int>(9, 3) }, result.Edges);
             Assert.AreEqual(vertexProperty, result[vertex]);
             Assert.IsNull(result[9]);
-            Assert.AreEqual(edgeProperty, result[result.GetEdge(2, 1)]);
-            Assert.IsNull(result[result.GetEdge(5, 3)]);
+            Assert.AreEqual(edgeProperty, result[result.GetEdge(1, 5)]);
+            Assert.AreEqual(edgeProperty, result[result.GetEdge(5, 1)]);
+            Assert.IsNull(result[result.GetEdge(8, 0)]);
         }
     }
 }

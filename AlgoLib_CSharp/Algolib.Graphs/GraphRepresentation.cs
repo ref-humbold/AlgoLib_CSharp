@@ -55,14 +55,14 @@ namespace Algolib.Graphs
         {
             get
             {
-                validate(edge);
+                validate(edge, true);
                 edgeProperties.TryGetValue(edge, out EP val);
                 return val;
             }
 
             set
             {
-                validate(edge);
+                validate(edge, true);
                 edgeProperties[edge] = value;
             }
         }
@@ -84,13 +84,13 @@ namespace Algolib.Graphs
 
         internal void AddEdgeToSource(Edge<V> edge)
         {
-            validate(edge);
+            validate(edge, false);
             graphDict[edge.Source].Add(edge);
         }
 
         internal void AddEdgeToDestination(Edge<V> edge)
         {
-            validate(edge);
+            validate(edge, false);
             graphDict[edge.Destination].Add(edge);
         }
 
@@ -100,9 +100,13 @@ namespace Algolib.Graphs
                 throw new ArgumentException($"Vertex {vertex} does not belong to this graph");
         }
 
-        private void validate(Edge<V> edge)
+        private void validate(Edge<V> edge, bool existing)
         {
             if(!graphDict.ContainsKey(edge.Source) || !graphDict.ContainsKey(edge.Destination))
+                throw new ArgumentException($"Edge {edge} does not belong to this graph");
+
+            if(existing && !graphDict[edge.Source].Contains(edge)
+               && !graphDict[edge.Destination].Contains(edge))
                 throw new ArgumentException($"Edge {edge} does not belong to this graph");
         }
     }
