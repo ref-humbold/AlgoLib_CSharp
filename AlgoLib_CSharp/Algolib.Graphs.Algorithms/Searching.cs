@@ -66,7 +66,7 @@ namespace Algolib.Graphs.Algorithms
                     {
                         V vertex = vertexStack.Pop();
 
-                        if(!reached.ContainsKey(root))
+                        if(!reached.ContainsKey(vertex))
                         {
                             reached[vertex] = iteration;
                             strategy.OnEnter(vertex);
@@ -102,7 +102,7 @@ namespace Algolib.Graphs.Algorithms
             DfsRecursiveState<V> state = new DfsRecursiveState<V>();
 
             foreach(V root in roots)
-                if(state.reached[root] != 0)
+                if(!state.reached.ContainsKey(root))
                 {
                     strategy.ForRoot(root);
                     state.vertex = root;
@@ -122,7 +122,7 @@ namespace Algolib.Graphs.Algorithms
             strategy.OnEnter(vertex);
 
             foreach(V neighbour in graph.GetNeighbours(vertex))
-                if(state.reached[neighbour] == 0)
+                if(!state.reached.ContainsKey(neighbour))
                 {
                     strategy.OnNextVertex(vertex, neighbour);
                     state.vertex = neighbour;
