@@ -34,18 +34,16 @@ namespace Algolib.Graphs
                           .SelectMany(edges => edges.Where(edge => edge.Destination.Equals(vertex)))
                           .Count();
 
-        public override Edge<V> AddEdge(V source, V destination, EP property = default)
+        public override Edge<V> AddEdge(Edge<V> edge, EP property = default)
         {
-            Edge<V> existingEdge = GetEdge(source, destination);
+            Edge<V> existingEdge = GetEdge(edge.Source, edge.Destination);
 
             if(existingEdge != null)
                 return existingEdge;
 
-            Edge<V> newEdge = new Edge<V>(source, destination);
-
-            representation.AddEdgeToSource(newEdge);
-            representation[newEdge] = property;
-            return newEdge;
+            representation.AddEdgeToSource(edge);
+            representation[edge] = property;
+            return edge;
         }
 
         public void Reverse()
@@ -74,7 +72,7 @@ namespace Algolib.Graphs
                 reversedGraph[vertex] = this[vertex];
 
             foreach(Edge<V> edge in Edges)
-                reversedGraph.AddEdge(edge.Destination, edge.Source, this[edge]);
+                reversedGraph.AddEdge(edge.Reversed(), this[edge]);
 
             return reversedGraph;
         }

@@ -29,7 +29,7 @@ namespace Algolib.Graphs
             string vertexProperty = "x";
             string edgeProperty = "y";
             int vertex = 2;
-            Edge<int> edge = testObject.AddEdge(0, 1);
+            Edge<int> edge = testObject.AddEdgeBetween(0, 1);
             // when
             testObject[vertex] = vertexProperty;
             testObject[edge] = edgeProperty;
@@ -45,7 +45,7 @@ namespace Algolib.Graphs
         public void IndexerGet_WhenNoProperty_ThenNull()
         {
             // given
-            Edge<int> edge = testObject.AddEdge(6, 7);
+            Edge<int> edge = testObject.AddEdgeBetween(6, 7);
             // when
             string resultVertex = testObject[4];
             string resultEdge = testObject[edge];
@@ -116,14 +116,14 @@ namespace Algolib.Graphs
         public void EdgesCount_ThenNumberOfEdges()
         {
             // given
-            testObject.AddEdge(7, 7);
-            testObject.AddEdge(1, 5);
-            testObject.AddEdge(2, 4);
-            testObject.AddEdge(8, 0);
-            testObject.AddEdge(6, 3);
-            testObject.AddEdge(3, 6);
-            testObject.AddEdge(9, 3);
-            testObject.AddEdge(8, 0);
+            testObject.AddEdgeBetween(7, 7);
+            testObject.AddEdgeBetween(1, 5);
+            testObject.AddEdgeBetween(2, 4);
+            testObject.AddEdgeBetween(8, 0);
+            testObject.AddEdgeBetween(6, 3);
+            testObject.AddEdgeBetween(3, 6);
+            testObject.AddEdgeBetween(9, 3);
+            testObject.AddEdgeBetween(8, 0);
             // when
             long result = testObject.EdgesCount;
             // then
@@ -134,14 +134,14 @@ namespace Algolib.Graphs
         public void Edges_ThenAllEdges()
         {
             // given
-            testObject.AddEdge(7, 7);
-            testObject.AddEdge(1, 5);
-            testObject.AddEdge(2, 4);
-            testObject.AddEdge(8, 0);
-            testObject.AddEdge(6, 3);
-            testObject.AddEdge(3, 6);
-            testObject.AddEdge(9, 3);
-            testObject.AddEdge(8, 0);
+            testObject.AddEdgeBetween(7, 7);
+            testObject.AddEdgeBetween(1, 5);
+            testObject.AddEdgeBetween(2, 4);
+            testObject.AddEdgeBetween(8, 0);
+            testObject.AddEdgeBetween(6, 3);
+            testObject.AddEdgeBetween(3, 6);
+            testObject.AddEdgeBetween(9, 3);
+            testObject.AddEdgeBetween(8, 0);
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
@@ -158,7 +158,7 @@ namespace Algolib.Graphs
             int source = 9;
             int destination = 5;
 
-            testObject.AddEdge(source, destination);
+            testObject.AddEdgeBetween(source, destination);
             // when
             Edge<int> result = testObject.GetEdge(source, destination);
             // then
@@ -173,7 +173,7 @@ namespace Algolib.Graphs
             int source = 9;
             int destination = 5;
 
-            testObject.AddEdge(source, destination);
+            testObject.AddEdgeBetween(source, destination);
             // when
             Edge<int> result = testObject.GetEdge(destination, source);
             // then
@@ -182,7 +182,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void getEdge_WhenNotExists_ThenNull()
+        public void GetEdge_WhenNotExists_ThenNull()
         {
             // when
             Edge<int> result = testObject.GetEdge(1, 2);
@@ -191,13 +191,13 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void AddEdge_WhenNewEdge_ThenCreatedEdge()
+        public void AddEdgeBetween_WhenNewEdge_ThenCreatedEdge()
         {
             // given
             string property = "asdfgh";
             // when
-            Edge<int> result = testObject.AddEdge(1, 5, property);
-            testObject.AddEdge(1, 1);
+            Edge<int> result = testObject.AddEdgeBetween(1, 5, property);
+            testObject.AddEdgeBetween(1, 1);
             // then
             Assert.AreEqual(1, result.Source);
             Assert.AreEqual(5, result.Destination);
@@ -207,27 +207,27 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void AddEdge_WhenDuplicatedEdge_ThenExistingEdge()
+        public void AddEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge()
         {
             // given
             int source = 3;
             int destination = 7;
-            Edge<int> expected = testObject.AddEdge(source, destination);
+            Edge<int> expected = testObject.AddEdgeBetween(source, destination);
             // when
-            Edge<int> result = testObject.AddEdge(source, destination);
+            Edge<int> result = testObject.AddEdgeBetween(source, destination);
             // then
             Assert.AreSame(expected, result);
         }
 
         [Test]
-        public void AddEdge_WhenReversed_ThenExistingEdge()
+        public void AddEdgeBetween_WhenReversed_ThenExistingEdge()
         {
             // given
             int source = 3;
             int destination = 7;
-            Edge<int> expected = testObject.AddEdge(source, destination);
+            Edge<int> expected = testObject.AddEdgeBetween(source, destination);
             // when
-            Edge<int> result = testObject.AddEdge(destination, source);
+            Edge<int> result = testObject.AddEdgeBetween(destination, source);
             // then
             Assert.AreEqual(expected, result);
         }
@@ -236,13 +236,13 @@ namespace Algolib.Graphs
         public void GetNeighbours_ThenDestinationVerticesOfOutgoingEdges()
         {
             // given
-            testObject.AddEdge(1, 1);
-            testObject.AddEdge(1, 3);
-            testObject.AddEdge(1, 4);
-            testObject.AddEdge(1, 7);
-            testObject.AddEdge(1, 9);
-            testObject.AddEdge(2, 1);
-            testObject.AddEdge(6, 1);
+            testObject.AddEdgeBetween(1, 1);
+            testObject.AddEdgeBetween(1, 3);
+            testObject.AddEdgeBetween(1, 4);
+            testObject.AddEdgeBetween(1, 7);
+            testObject.AddEdgeBetween(1, 9);
+            testObject.AddEdgeBetween(2, 1);
+            testObject.AddEdgeBetween(6, 1);
             // when
             IEnumerable<int> result = testObject.GetNeighbours(1);
             // then
@@ -253,13 +253,13 @@ namespace Algolib.Graphs
         public void GetAdjacentEdges_ThenOutgoingEdges()
         {
             // given
-            testObject.AddEdge(1, 1);
-            testObject.AddEdge(1, 3);
-            testObject.AddEdge(1, 4);
-            testObject.AddEdge(1, 7);
-            testObject.AddEdge(1, 9);
-            testObject.AddEdge(2, 1);
-            testObject.AddEdge(6, 1);
+            testObject.AddEdgeBetween(1, 1);
+            testObject.AddEdgeBetween(1, 3);
+            testObject.AddEdgeBetween(1, 4);
+            testObject.AddEdgeBetween(1, 7);
+            testObject.AddEdgeBetween(1, 9);
+            testObject.AddEdgeBetween(2, 1);
+            testObject.AddEdgeBetween(6, 1);
             // when
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(1);
             // then
@@ -273,13 +273,13 @@ namespace Algolib.Graphs
         public void GetOutputDegree_ThenNumberOfOutgoingEdges()
         {
             // given
-            testObject.AddEdge(1, 1);
-            testObject.AddEdge(1, 3);
-            testObject.AddEdge(1, 4);
-            testObject.AddEdge(1, 7);
-            testObject.AddEdge(1, 9);
-            testObject.AddEdge(2, 1);
-            testObject.AddEdge(6, 1);
+            testObject.AddEdgeBetween(1, 1);
+            testObject.AddEdgeBetween(1, 3);
+            testObject.AddEdgeBetween(1, 4);
+            testObject.AddEdgeBetween(1, 7);
+            testObject.AddEdgeBetween(1, 9);
+            testObject.AddEdgeBetween(2, 1);
+            testObject.AddEdgeBetween(6, 1);
             // when
             long result = testObject.GetOutputDegree(1);
             // then
@@ -290,13 +290,13 @@ namespace Algolib.Graphs
         public void GetInputDegree_ThenNumberOfIncomingEdges()
         {
             // given
-            testObject.AddEdge(1, 1);
-            testObject.AddEdge(3, 1);
-            testObject.AddEdge(4, 1);
-            testObject.AddEdge(7, 1);
-            testObject.AddEdge(9, 1);
-            testObject.AddEdge(1, 2);
-            testObject.AddEdge(1, 6);
+            testObject.AddEdgeBetween(1, 1);
+            testObject.AddEdgeBetween(3, 1);
+            testObject.AddEdgeBetween(4, 1);
+            testObject.AddEdgeBetween(7, 1);
+            testObject.AddEdgeBetween(9, 1);
+            testObject.AddEdgeBetween(1, 2);
+            testObject.AddEdgeBetween(1, 6);
             // when
             long result = testObject.GetInputDegree(1);
             // then
@@ -310,14 +310,14 @@ namespace Algolib.Graphs
             int vertex = 5;
             string vertexProperty = "123456";
             string edgeProperty = "zxcvb";
-            Edge<int> edge = testObject.AddEdge(1, 5);
-            testObject.AddEdge(7, 7);
-            testObject.AddEdge(2, 4);
-            testObject.AddEdge(8, 0);
-            testObject.AddEdge(6, 3);
-            testObject.AddEdge(3, 6);
-            testObject.AddEdge(9, 3);
-            testObject.AddEdge(8, 0);
+            Edge<int> edge = testObject.AddEdgeBetween(1, 5);
+            testObject.AddEdgeBetween(7, 7);
+            testObject.AddEdgeBetween(2, 4);
+            testObject.AddEdgeBetween(8, 0);
+            testObject.AddEdgeBetween(6, 3);
+            testObject.AddEdgeBetween(3, 6);
+            testObject.AddEdgeBetween(9, 3);
+            testObject.AddEdgeBetween(8, 0);
             testObject[vertex] = vertexProperty;
             testObject[edge] = edgeProperty;
             // when

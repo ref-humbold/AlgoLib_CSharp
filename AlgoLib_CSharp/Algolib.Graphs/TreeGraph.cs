@@ -49,12 +49,12 @@ namespace Algolib.Graphs
         /// <param name="vertexProperty">a vertex property</param>
         /// <param name="edgeProperty">an edge property</param>
         /// <returns>the edge between the vertices, or <c>null</c> if vertex already exists</returns>
-        public Edge<V> AddVertex(V vertex, V neighbour,
-                                 VP vertexProperty = default, EP edgeProperty = default)
+        public Edge<V> AddVertex(V vertex, V neighbour, VP vertexProperty = default,
+                                 EP edgeProperty = default)
         {
             bool wasAdded = graph.AddVertex(vertex, vertexProperty);
 
-            return wasAdded ? graph.AddEdge(vertex, neighbour, edgeProperty) : null;
+            return wasAdded ? graph.AddEdgeBetween(vertex, neighbour, edgeProperty) : null;
         }
     }
 }

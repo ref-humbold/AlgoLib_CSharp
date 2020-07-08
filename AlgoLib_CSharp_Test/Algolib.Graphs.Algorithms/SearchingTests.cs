@@ -15,27 +15,27 @@ namespace Algolib.Graphs.Algorithms
         public void SetUp()
         {
             directedGraph = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
-            directedGraph.AddEdge(0, 1);
-            directedGraph.AddEdge(1, 3);
-            directedGraph.AddEdge(1, 7);
-            directedGraph.AddEdge(3, 4);
-            directedGraph.AddEdge(4, 0);
-            directedGraph.AddEdge(5, 4);
-            directedGraph.AddEdge(5, 8);
-            directedGraph.AddEdge(6, 2);
-            directedGraph.AddEdge(6, 9);
-            directedGraph.AddEdge(8, 5);
+            directedGraph.AddEdgeBetween(0, 1);
+            directedGraph.AddEdgeBetween(1, 3);
+            directedGraph.AddEdgeBetween(1, 7);
+            directedGraph.AddEdgeBetween(3, 4);
+            directedGraph.AddEdgeBetween(4, 0);
+            directedGraph.AddEdgeBetween(5, 4);
+            directedGraph.AddEdgeBetween(5, 8);
+            directedGraph.AddEdgeBetween(6, 2);
+            directedGraph.AddEdgeBetween(6, 9);
+            directedGraph.AddEdgeBetween(8, 5);
 
             undirectedGraph = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
-            undirectedGraph.AddEdge(0, 1);
-            undirectedGraph.AddEdge(0, 4);
-            undirectedGraph.AddEdge(1, 3);
-            undirectedGraph.AddEdge(1, 7);
-            undirectedGraph.AddEdge(2, 6);
-            undirectedGraph.AddEdge(3, 4);
-            undirectedGraph.AddEdge(4, 5);
-            undirectedGraph.AddEdge(5, 8);
-            undirectedGraph.AddEdge(6, 9);
+            undirectedGraph.AddEdgeBetween(0, 1);
+            undirectedGraph.AddEdgeBetween(0, 4);
+            undirectedGraph.AddEdgeBetween(1, 3);
+            undirectedGraph.AddEdgeBetween(1, 7);
+            undirectedGraph.AddEdgeBetween(2, 6);
+            undirectedGraph.AddEdgeBetween(3, 4);
+            undirectedGraph.AddEdgeBetween(4, 5);
+            undirectedGraph.AddEdgeBetween(5, 8);
+            undirectedGraph.AddEdgeBetween(6, 9);
         }
 
         [TearDown]

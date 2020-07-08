@@ -1,5 +1,4 @@
 ﻿// Structure of simple graph
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -72,6 +71,15 @@ namespace Algolib.Graphs
         /// <param name="destination">destination vertex</param>
         /// <param name="property">an edge property</param>
         /// <returns>the new edge if added, otherwise existing edge</returns>
-        public abstract Edge<V> AddEdge(V source, V destination, EP property = default);
+        public Edge<V> AddEdgeBetween(V source, V destination, EP property = default)
+        {
+            return AddEdge(new Edge<V>(source, destination), property);
+        }
+
+        /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
+        /// <param name="edge">a new edge</param>
+        /// <param name="property">an edge property</param>
+        /// <returns>the new edge if added, otherwise existing edge</returns>
+        public abstract Edge<V> AddEdge(Edge<V> edge, EP property = default);
     }
 }

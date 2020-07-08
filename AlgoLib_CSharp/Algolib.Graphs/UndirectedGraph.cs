@@ -26,19 +26,17 @@ namespace Algolib.Graphs
 
         public override int GetInputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
 
-        public override Edge<V> AddEdge(V source, V destination, EP property = default)
+        public override Edge<V> AddEdge(Edge<V> edge, EP property = default)
         {
-            Edge<V> existingEdge = GetEdge(source, destination);
+            Edge<V> existingEdge = GetEdge(edge.Source, edge.Destination);
 
             if(existingEdge != null)
                 return existingEdge;
 
-            Edge<V> newEdge = new Edge<V>(source, destination);
-
-            representation.AddEdgeToSource(newEdge);
-            representation.AddEdgeToDestination(newEdge);
-            representation[newEdge] = property;
-            return newEdge;
+            representation.AddEdgeToSource(edge);
+            representation.AddEdgeToDestination(edge);
+            representation[edge] = property;
+            return edge;
         }
 
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
@@ -53,8 +51,8 @@ namespace Algolib.Graphs
 
             foreach(Edge<V> edge in Edges)
             {
-                directedSimpleGraph.AddEdge(edge.Source, edge.Destination, this[edge]);
-                directedSimpleGraph.AddEdge(edge.Destination, edge.Source, this[edge]);
+                directedSimpleGraph.AddEdge(edge, this[edge]);
+                directedSimpleGraph.AddEdge(edge.Reversed(), this[edge]);
             }
 
             return directedSimpleGraph;
