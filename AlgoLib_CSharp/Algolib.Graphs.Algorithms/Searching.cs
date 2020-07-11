@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Algolib.Graphs.Algorithms
 {
-    public class Searching
+    public sealed class Searching
     {
         /// <summary>Breadth-first-search algorithm.</summary>
         /// <param name="graph">a graph</param>

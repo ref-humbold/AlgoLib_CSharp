@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
-    internal class Paths<V, VP, EP> where EP : IWeighted
+    public sealed class Paths
     {
         public static double Infinity = double.PositiveInfinity;
 
@@ -12,7 +12,8 @@ namespace Algolib.Graphs.Algorithms
         /// <param name="graph">a directed weighted graph</param>
         /// <param name="source">a source vertex</param>
         /// <returns>dictionary of distances for vertices</returns>
-        public static Dictionary<V, double> BellmanFord(IDirectedGraph<V, VP, EP> graph, V source)
+        public static Dictionary<V, double> BellmanFord<V, VP, EP>(
+            IDirectedGraph<V, VP, EP> graph, V source) where EP : IWeighted
         {
             Dictionary<V, double> distances = new Dictionary<V, double>(
                 graph.Vertices.Select(v => KeyValuePair.Create(v, Infinity))) { [source] = 0.0 };
@@ -35,7 +36,8 @@ namespace Algolib.Graphs.Algorithms
         /// <summary>Floyd-Warshall algorithm</summary>
         /// <param name="graph">a directed weighted graph</param>
         /// <returns>dictionary of distances for each pair of vertices</returns>
-        public static Dictionary<Tuple<V, V>, double> FloydWarshall(IDirectedGraph<V, VP, EP> graph)
+        public static Dictionary<Tuple<V, V>, double> FloydWarshall<V, VP, EP>(
+            IDirectedGraph<V, VP, EP> graph) where EP : IWeighted
         {
             Dictionary<Tuple<V, V>, double> distances = new Dictionary<Tuple<V, V>, double>();
 

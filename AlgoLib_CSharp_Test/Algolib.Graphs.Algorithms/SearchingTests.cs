@@ -8,13 +8,13 @@ namespace Algolib.Graphs.Algorithms
     [TestFixture()]
     public class SearchingTests
     {
-        private DirectedSimpleGraph<int, string, string> directedGraph;
-        private UndirectedSimpleGraph<int, string, string> undirectedGraph;
+        private DirectedSimpleGraph<int, object, object> directedGraph;
+        private UndirectedSimpleGraph<int, object, object> undirectedGraph;
 
         [SetUp]
         public void SetUp()
         {
-            directedGraph = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
+            directedGraph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
             directedGraph.AddEdgeBetween(0, 1);
             directedGraph.AddEdgeBetween(1, 3);
             directedGraph.AddEdgeBetween(1, 7);
@@ -26,7 +26,7 @@ namespace Algolib.Graphs.Algorithms
             directedGraph.AddEdgeBetween(6, 9);
             directedGraph.AddEdgeBetween(8, 5);
 
-            undirectedGraph = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
+            undirectedGraph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
             undirectedGraph.AddEdgeBetween(0, 1);
             undirectedGraph.AddEdgeBetween(0, 4);
             undirectedGraph.AddEdgeBetween(1, 3);
