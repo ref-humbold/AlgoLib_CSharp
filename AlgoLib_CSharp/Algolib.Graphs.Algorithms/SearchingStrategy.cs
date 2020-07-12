@@ -6,7 +6,7 @@ namespace Algolib.Graphs.Algorithms
     {
         void ForRoot(V root);
 
-        void OnEnter(V vertex);
+        void OnEntry(V vertex);
 
         void OnNextVertex(V vertex, V neighbour);
 
@@ -24,7 +24,7 @@ namespace Algolib.Graphs.Algorithms
         {
         }
 
-        public void OnEnter(V vertex)
+        public void OnEntry(V vertex)
         {
         }
 

@@ -241,7 +241,7 @@ namespace Algolib.Graphs.Algorithms
             {
             }
 
-            public void OnEnter(V vertex)
+            public void OnEntry(V vertex)
             {
                 entries.Add(vertex);
             }

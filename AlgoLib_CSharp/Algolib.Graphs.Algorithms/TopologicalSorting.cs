@@ -64,12 +64,12 @@ namespace Algolib.Graphs.Algorithms
             TopologicalStrategy<V> strategy = new TopologicalStrategy<V>();
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
 
-            return strategy.Order.Reverse<V>();
+            return strategy.order.Reverse<V>();
         }
 
         private class TopologicalStrategy<V> : IDfsStrategy<V>
         {
-            public List<V> Order = new List<V>();
+            internal List<V> order = new List<V>();
 
             public void ForRoot(V root)
             {
@@ -79,13 +79,13 @@ namespace Algolib.Graphs.Algorithms
             {
             }
 
-            public void OnEnter(V vertex)
+            public void OnEntry(V vertex)
             {
             }
 
             public void OnExit(V vertex)
             {
-                Order.Add(vertex);
+                order.Add(vertex);
             }
 
             public void OnNextVertex(V vertex, V neighbour)

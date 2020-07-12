@@ -27,7 +27,7 @@ namespace Algolib.Graphs.Algorithms
                     {
                         V vertex = vertexQueue.Dequeue();
 
-                        strategy.OnEnter(vertex);
+                        strategy.OnEntry(vertex);
 
                         foreach(V neighbour in graph.GetNeighbours(vertex))
                             if(!reached.Contains(neighbour))
@@ -69,7 +69,7 @@ namespace Algolib.Graphs.Algorithms
                         if(!reached.ContainsKey(vertex))
                         {
                             reached[vertex] = iteration;
-                            strategy.OnEnter(vertex);
+                            strategy.OnEntry(vertex);
 
                             foreach(V neighbour in graph.GetNeighbours(vertex))
                                 if(!reached.ContainsKey(neighbour))
@@ -119,7 +119,7 @@ namespace Algolib.Graphs.Algorithms
         {
             V vertex = state.vertex;
             state.OnEntry(vertex);
-            strategy.OnEnter(vertex);
+            strategy.OnEntry(vertex);
 
             foreach(V neighbour in graph.GetNeighbours(vertex))
                 if(!state.reached.ContainsKey(neighbour))
