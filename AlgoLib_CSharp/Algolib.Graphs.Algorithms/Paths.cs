@@ -6,8 +6,6 @@ namespace Algolib.Graphs.Algorithms
 {
     public sealed class Paths
     {
-        public static double Infinity = double.PositiveInfinity;
-
         /// <summary>Bellman-Ford algorithm</summary>
         /// <param name="graph">a directed weighted graph</param>
         /// <param name="source">a source vertex</param>
@@ -16,7 +14,7 @@ namespace Algolib.Graphs.Algorithms
             IDirectedGraph<V, VP, EP> graph, V source) where EP : IWeighted
         {
             Dictionary<V, double> distances = new Dictionary<V, double>(
-                graph.Vertices.Select(v => KeyValuePair.Create(v, Infinity))) { [source] = 0.0 };
+                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) { [source] = 0.0 };
 
             for(int i = 0; i < graph.VerticesCount - 1; ++i)
                 foreach(V vertex in graph.Vertices)
@@ -26,7 +24,7 @@ namespace Algolib.Graphs.Algorithms
 
             foreach(V vertex in graph.Vertices)
                 foreach(Edge<V> edge in graph.GetAdjacentEdges(vertex))
-                    if(distances[vertex] < Infinity
+                    if(distances[vertex] < IWeighted.Infinity
                        && distances[vertex] + graph[edge].Weight < distances[edge.Destination])
                         throw new InvalidOperationException("Graph contains a negative cycle");
 
@@ -43,7 +41,7 @@ namespace Algolib.Graphs.Algorithms
 
             foreach(V v in graph.Vertices)
                 foreach(V u in graph.Vertices)
-                    distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : Infinity;
+                    distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : IWeighted.Infinity;
 
             foreach(Edge<V> edge in graph.Edges)
                 distances[Tuple.Create(edge.Source, edge.Destination)] = graph[edge].Weight;
