@@ -8,7 +8,7 @@ namespace Algolib.Structures
     [TestFixture]
     public class HeapTests
     {
-        private Comparison<int> comparison = (n, m) => m.CompareTo(n);
+        private readonly Comparison<int> comparison = (n, m) => m.CompareTo(n);
         private Heap<int> testObject;
 
         [SetUp]
@@ -73,6 +73,32 @@ namespace Algolib.Structures
         }
 
         [Test]
+        public void TryGet_WhenContainsElements_ThenElementAccordingToComparer()
+        {
+            // given
+            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+
+            elements.ForEach(e => testObject.Push(e));
+            // when
+            bool result = testObject.TryGet(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(elements.Max(), resultValue);
+            Assert.AreEqual(elements.Count, testObject.Count);
+        }
+
+        [Test]
+        public void TryGet_WhenEmptyHeap_ThenDefaultValue()
+        {
+            // when
+            bool result = testObject.TryGet(out int resultValue);
+            // then
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+            Assert.AreEqual(0, testObject.Count);
+        }
+
+        [Test]
         public void Pop_WhenContainsElements_ThenElementRemoved()
         {
             // given
@@ -93,6 +119,32 @@ namespace Algolib.Structures
             TestDelegate testDelegate = () => _ = testObject.Pop();
             // then
             Assert.Throws<InvalidOperationException>(testDelegate);
+        }
+
+        [Test]
+        public void TryPop_WhenContainsElements_ThenElementRemoved()
+        {
+            // given
+            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+
+            elements.ForEach(e => testObject.Push(e));
+            // when
+            bool result = testObject.TryPop(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(elements.Max(), resultValue);
+            Assert.AreEqual(elements.Count - 1, testObject.Count);
+        }
+
+        [Test]
+        public void TryPop_WhenEmptyHeap_ThenDefaultValue()
+        {
+            // when
+            bool result = testObject.TryPop(out int resultValue);
+            // then
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+            Assert.AreEqual(0, testObject.Count);
         }
     }
 }

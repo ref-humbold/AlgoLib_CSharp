@@ -22,10 +22,10 @@ namespace Algolib.Structures
             Count = represents.Count;
         }
 
-        /// <summary>Finds represent of element in set</summary>
-        /// <param name="element">element from structure</param>
-        /// <returns>represent of the element</returns>
-        /// <exception cref="KeyNotFoundException">if element not present</exception>
+        /// <summary>Finds represent of element in set.</summary>
+        /// <param name="element">Element from structure</param>
+        /// <returns>Represent of the element</returns>
+        /// <exception cref="KeyNotFoundException">If element not present</exception>
         public E this[E element]
         {
             get
@@ -37,16 +37,16 @@ namespace Algolib.Structures
             }
         }
 
-        /// <summary>Checks whether element belongs to any set</summary>
-        /// <param name="element">element</param>
+        /// <summary>Checks whether an element belongs to any set.</summary>
+        /// <param name="element">Element to be found</param>
         /// <returns><c>true</c> if element is contained, otherwise <c>false</c></returns>
         public bool Contains(E element)
         {
             return represents.ContainsKey(element);
         }
 
-        /// <summary>Adds new element as singleton set</summary>
-        /// <param name="element">new element</param>
+        /// <summary>Adds a new element as singleton set.</summary>
+        /// <param name="element">New element</param>
         /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
         public DisjointSets<E> Add(E element)
@@ -59,8 +59,8 @@ namespace Algolib.Structures
             return this;
         }
 
-        /// <summary>Adds new elements as singleton sets</summary>
-        /// <param name="elements">new elements</param>
+        /// <summary>Adds a new elements as singleton sets.</summary>
+        /// <param name="elements">New elements</param>
         /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
         public DisjointSets<E> AddAll(IEnumerable<E> elements)
@@ -78,27 +78,31 @@ namespace Algolib.Structures
             return this;
         }
 
-        /// <summary>Finds represent of element in set</summary>
-        /// <param name="element">element</param>
-        /// <param name="default_value">value to return when element not present</param>
-        /// <returns>represent of the element or default value</returns>
-        public E FindSet(E element, E default_value)
+        /// <summary>Finds represent of an element in set.</summary>
+        /// <param name="element">Element from structure</param>
+        /// <param name="result">
+        /// Represent of the element if it's present, otherwise the default value
+        /// </param>
+        /// <returns><c>true</c> if the represent exists, otherwise <c>false</c> e</returns>
+        public bool TryFindSet(E element, out E result)
         {
             try
             {
-                return this[element];
+                result = this[element];
+                return true;
             }
             catch(KeyNotFoundException)
             {
-                return default_value;
+                result = default;
+                return false;
             }
         }
 
-        /// <summary>Joins two sets together</summary>
-        /// <param name="element1">element from first set</param>
-        /// <param name="element2">element from second set</param>
+        /// <summary>Joins two sets together.</summary>
+        /// <param name="element1">Element from first set</param>
+        /// <param name="element2">Element from second set</param>
         /// <returns><c>this</c> for method chaining</returns>
-        /// <exception cref="KeyNotFoundException">if either element is not present</exception>
+        /// <exception cref="KeyNotFoundException">If either element is not present</exception>
         public DisjointSets<E> UnionSet(E element1, E element2)
         {
             if(!IsSameSet(element1, element2))
@@ -110,11 +114,11 @@ namespace Algolib.Structures
             return this;
         }
 
-        /// <summary>Checks whether elements belong to the same set</summary>
-        /// <param name="element1">element from first set</param>
-        /// <param name="element2">element from second set</param>
+        /// <summary>Checks whether elements belong to the same set.</summary>
+        /// <param name="element1">Element from first set</param>
+        /// <param name="element2">Element from second set</param>
         /// <returns><c>true</c> if elements are in same set, otherwise <c>false</c></returns>
-        /// <exception cref="KeyNotFoundException">if either element is not present</exception>
+        /// <exception cref="KeyNotFoundException">If either element is not present</exception>
         public bool IsSameSet(E element1, E element2)
         {
             return this[element1].Equals(this[element2]);

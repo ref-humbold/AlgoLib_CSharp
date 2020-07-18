@@ -1,15 +1,18 @@
 ﻿// Structure of heap
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
-    public class Heap<T>
+    public class Heap<T> : IEnumerable<T>
     {
         private readonly List<T> heap;
 
+        /// <summary>The comparer.</summary>
         public IComparer<T> Comparer { get; }
 
+        /// <summary>Number of elements.</summary>
         public int Count => heap.Count;
 
         public Heap() : this(Comparer<T>.Default)
@@ -26,8 +29,12 @@ namespace Algolib.Structures
             Comparer = comparer;
         }
 
-        /// <summary>Adds new element to this heap.</summary>
-        /// <param name="element">new element</param>
+        public IEnumerator<T> GetEnumerator() => heap.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
+
+        /// <summary>Adds a new element to this heap.</summary>
+        /// <param name="element">New element</param>
         public void Push(T element)
         {
             heap.Add(element);
@@ -49,8 +56,8 @@ namespace Algolib.Structures
         }
 
         /// <summary>Retrieves the least element from this heap.</summary>
-        /// <returns>the least element</returns>
-        /// <exception cref="InvalidOperationException">if the heap is empty</exception>
+        /// <returns>The least element</returns>
+        /// <exception cref="InvalidOperationException">If the heap is empty</exception>
         public T Get()
         {
             if(Count == 0)
@@ -59,13 +66,52 @@ namespace Algolib.Structures
             return heap[0];
         }
 
+        /// <summary>
+        /// Retrieves the least element from this heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryGet(out T result)
+        {
+            if(Count == 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = heap[0];
+            return true;
+        }
+
         /// <summary>Retrieves and removes the least element from this heap.</summary>
-        /// <returns>removed element</returns>
-        /// <exception cref="InvalidOperationException">if the heap is empty</exception>
+        /// <returns>Removed element</returns>
+        /// <exception cref="InvalidOperationException">If the heap is empty</exception>
         public T Pop()
         {
             T element = Get();
 
+            doPop();
+            return element;
+        }
+
+        /// <summary>
+        /// Removes the least element from this heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryPop(out T result)
+        {
+            bool wasPresent = TryGet(out result);
+
+            if(wasPresent)
+                doPop();
+
+            return wasPresent;
+        }
+
+        // Removes the least element
+        private void doPop()
+        {
             heap[0] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
 
@@ -87,8 +133,6 @@ namespace Algolib.Structures
                 else
                     break;
             }
-
-            return element;
         }
 
         private void swap(int indexFirst, int indexSecond)

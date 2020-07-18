@@ -116,25 +116,25 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void FindSet_WhenPresentElement_ThenRepresent()
+        public void TryFindSet_WhenPresentElement_ThenRepresent()
         {
             // given
             int elem = 4;
             // when
-            int result = testObject.FindSet(elem, 0);
+            bool result = testObject.TryFindSet(elem, out int resultValue);
             // then
-            Assert.AreEqual(elem, result);
+            Assert.IsTrue(result);
+            Assert.AreEqual(elem, resultValue);
         }
 
         [Test]
-        public void FindSet_WhenAbsentElement_ThenDefaultValue()
+        public void TryFindSet_WhenAbsentElement_ThenDefaultValue()
         {
-            // given
-            int defaultValue = 10;
             // when
-            int result = testObject.FindSet(22, defaultValue);
+            bool result = testObject.TryFindSet(22, out int resultValue);
             // then
-            Assert.AreEqual(defaultValue, result);
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
         }
 
         [Test]
