@@ -73,14 +73,7 @@ namespace Algolib.Graphs
             return graphDict[vertex];
         }
 
-        internal bool AddVertex(V vertex)
-        {
-            if(graphDict.ContainsKey(vertex))
-                return false;
-
-            graphDict[vertex] = new HashSet<Edge<V>>();
-            return true;
-        }
+        internal bool AddVertex(V vertex) => graphDict.TryAdd(vertex, new HashSet<Edge<V>>());
 
         internal void AddEdgeToSource(Edge<V> edge)
         {

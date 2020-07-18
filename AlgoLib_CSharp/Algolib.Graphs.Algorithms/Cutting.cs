@@ -15,8 +15,8 @@ namespace Algolib.Graphs.Algorithms
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return graph.Vertices
-                    .Where(vertex => strategy.HasBridge(vertex))
-                    .Select(vertex => graph.GetEdge(vertex, strategy.dfsParents[vertex]));
+                        .Where(vertex => strategy.HasBridge(vertex))
+                        .Select(vertex => graph.GetEdge(vertex, strategy.dfsParents[vertex]));
         }
 
         /// <summary>Finds a vertex cut of given graph.</summary>

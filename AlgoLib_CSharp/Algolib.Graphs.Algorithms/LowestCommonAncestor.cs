@@ -62,11 +62,9 @@ namespace Algolib.Graphs.Algorithms
             empty = false;
         }
 
-        private bool isOffspring(V vertex1, V vertex2)
-        {
-            return strategy.preTimes[vertex1] >= strategy.preTimes[vertex2]
+        private bool isOffspring(V vertex1, V vertex2) =>
+            strategy.preTimes[vertex1] >= strategy.preTimes[vertex2]
                     && strategy.postTimes[vertex1] <= strategy.postTimes[vertex2];
-        }
 
         private class LcaStrategy : IDfsStrategy<V>
         {

@@ -19,28 +19,28 @@ namespace Algolib.Mathmat
                     "Second argument must be grater or equal to the first argument");
 
             List<int> primes = new List<int>();
-            List<bool> is_prime = new List<bool>();
-            List<bool> base_primes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2))
-                                               .ToList();
+            List<bool> isPrime = new List<bool>();
+            List<bool> basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2))
+                                              .ToList();
 
             for(int i = minNumber; i <= maxNumber; ++i)
-                is_prime.Add(i == 2 || (i > 2 && i % 2 != 0));
+                isPrime.Add(i == 2 || (i > 2 && i % 2 != 0));
 
-            for(int i = 0; i < base_primes.Count; ++i)
-                if(base_primes[i])
+            for(int i = 0; i < basePrimes.Count; ++i)
+                if(basePrimes[i])
                 {
                     int p = 2 * i + 3;
                     int begin = minNumber < p * p ? p * p - minNumber : (p - minNumber % p) % p;
 
-                    for(int j = (p * p - 3) / 2; j < base_primes.Count; j += p)
-                        base_primes[j] = false;
+                    for(int j = (p * p - 3) / 2; j < basePrimes.Count; j += p)
+                        basePrimes[j] = false;
 
-                    for(int j = begin; j < is_prime.Count; j += p)
-                        is_prime[j] = false;
+                    for(int j = begin; j < isPrime.Count; j += p)
+                        isPrime[j] = false;
                 }
 
-            for(int i = 0; i < is_prime.Count; ++i)
-                if(is_prime[i])
+            for(int i = 0; i < isPrime.Count; ++i)
+                if(isPrime[i])
                     primes.Add(minNumber + i);
 
             return primes;
