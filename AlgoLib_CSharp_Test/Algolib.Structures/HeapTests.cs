@@ -64,7 +64,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Get_WhenEmptyHeap_ThenInvalidOperationException()
+        public void Get_WhenEmpty_ThenInvalidOperationException()
         {
             // when
             TestDelegate testDelegate = () => _ = testObject.Get();
@@ -88,7 +88,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void TryGet_WhenEmptyHeap_ThenDefaultValue()
+        public void TryGet_WhenEmpty_ThenDefaultValue()
         {
             // when
             bool result = testObject.TryGet(out int resultValue);
@@ -113,7 +113,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Pop_WhenEmptyHeap_ThenInvalidOperationException()
+        public void Pop_WhenEmpty_ThenInvalidOperationException()
         {
             // when
             TestDelegate testDelegate = () => _ = testObject.Pop();
@@ -137,7 +137,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void TryPop_WhenEmptyHeap_ThenDefaultValue()
+        public void TryPop_WhenEmpty_ThenDefaultValue()
         {
             // when
             bool result = testObject.TryPop(out int resultValue);

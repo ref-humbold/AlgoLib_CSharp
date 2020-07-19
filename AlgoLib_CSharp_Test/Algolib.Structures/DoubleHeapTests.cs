@@ -45,7 +45,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Count_WhenNotEmpty_ThenNumberOfElements()
+        public void Count_WhenContainsElements_ThenNumberOfElements()
         {
             // when
             int result = testObject.Count;
@@ -55,7 +55,7 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void GetEnumerator_WhenNotEmpty_ThenFirstMinimumAndLastMaximum()
+        public void GetEnumerator_WhenContainsElements_ThenFirstMinimumAndLastMaximum()
         {
             // when
             List<int> result = new List<int>();
@@ -95,12 +95,34 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void GetMin_WhenNotEmpty_ThenMinimalElement()
+        public void GetMin_WhenContainsElements_ThenMinimalElement()
         {
             // when
             int result = testObject.GetMin();
             // then
             Assert.AreEqual(minimum, result);
+        }
+
+        [Test]
+        public void TryGetMin_WhenEmpty_ThenDefaultValue()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            bool result = testObject.TryGetMin(out int resultValue);
+            // then
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+        }
+
+        [Test]
+        public void TryGetMin_WhenContainsElements_ThenMinimalElement()
+        {
+            // when
+            bool result = testObject.TryGetMin(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(minimum, resultValue);
         }
 
         [Test]
@@ -136,6 +158,28 @@ namespace Algolib.Structures
         }
 
         [Test]
+        public void TryGetMax_WhenEmpty_ThenDefaultValue()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            bool result = testObject.TryGetMax(out int resultValue);
+            // then
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+        }
+
+        [Test]
+        public void TryGetMax_WhenContainsElements_ThenMaximalElement()
+        {
+            // when
+            bool result = testObject.TryGetMax(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(maximum, resultValue);
+        }
+
+        [Test]
         public void Push_WhenNewElement_ThenAdded()
         {
             // given
@@ -149,7 +193,18 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void PopMin_WhenNotEmpty_ThenMinimalElementRemoved()
+        public void PopMin_WhenEmpty_ThenInvalidOperationException()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            TestDelegate testDelegate = () => testObject.PopMin();
+            // then
+            Assert.Throws<InvalidOperationException>(testDelegate);
+        }
+
+        [Test]
+        public void PopMin_WhenContainsElements_ThenMinimalElementRemoved()
         {
             // when
             int result = testObject.PopMin();
@@ -159,16 +214,26 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void PopMin_WhenSingleElement_ThenThisElementRemoved()
+        public void TryPopMin_WhenEmpty_ThenDefaultValue()
         {
             // given
-            int element = 19;
-            testObject = new DoubleHeap<int>(new List<int>() { element });
+            testObject = new DoubleHeap<int>();
             // when
-            int result = testObject.PopMin();
+            bool result = testObject.TryPopMin(out int resultValue);
             // then
-            CollectionAssert.IsEmpty(testObject);
-            Assert.AreEqual(element, result);
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+        }
+
+        [Test]
+        public void TryPopMin_WhenContainsElements_ThenMinimalElementRemoved()
+        {
+            // when
+            bool result = testObject.TryPopMin(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(numbers.Count - 1, testObject.Count);
+            Assert.AreEqual(minimum, resultValue);
         }
 
         [Test]
@@ -203,6 +268,29 @@ namespace Algolib.Structures
             // then
             Assert.AreEqual(numbers.Count - 1, testObject.Count);
             Assert.AreEqual(maximum, result);
+        }
+
+        [Test]
+        public void TryPopMax_WhenEmpty_ThenDefaultValue()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            bool result = testObject.TryPopMax(out int resultValue);
+            // then
+            Assert.IsFalse(result);
+            Assert.AreEqual(default(int), resultValue);
+        }
+
+        [Test]
+        public void TryPopMax_WhenContainsElements_ThenMaximalElementRemoved()
+        {
+            // when
+            bool result = testObject.TryPopMax(out int resultValue);
+            // then
+            Assert.IsTrue(result);
+            Assert.AreEqual(numbers.Count - 1, testObject.Count);
+            Assert.AreEqual(maximum, resultValue);
         }
     }
 }

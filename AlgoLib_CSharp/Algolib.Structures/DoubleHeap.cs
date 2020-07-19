@@ -86,6 +86,23 @@ namespace Algolib.Structures
             return heap[indexMin];
         }
 
+        /// <summary>
+        /// Retrieves the minimal element from this double heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryGetMin(out T result)
+        {
+            if(Count == 0)
+            {
+                result = default;
+                return false;
+            }
+
+            result = heap[indexMin];
+            return true;
+        }
+
         /// <summary>Retrieves the maximal element from this double heap.</summary>
         /// <returns>Maximal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
@@ -99,6 +116,29 @@ namespace Algolib.Structures
             };
         }
 
+        /// <summary>
+        /// Retrieves the maximal element from this double heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryGetMax(out T result)
+        {
+            switch(Count)
+            {
+                case 0:
+                    result = default;
+                    return false;
+
+                case 1:
+                    result = heap[indexMin];
+                    return true;
+
+                default:
+                    result = heap[indexMax];
+                    return true;
+            }
+        }
+
         /// <summary>Retrieves and removes the minimal element from this double heap.</summary>
         /// <returns>Removed element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
@@ -106,10 +146,23 @@ namespace Algolib.Structures
         {
             T minimal = GetMin();
 
-            heap[indexMin] = heap[^1];
-            heap.RemoveAt(heap.Count - 1);
-            moveToMax(indexMin);
+            doPopAt(indexMin);
             return minimal;
+        }
+
+        /// <summary>
+        /// Removes the minimal element from this double heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryPopMin(out T result)
+        {
+            bool wasPresent = TryGetMin(out result);
+
+            if(wasPresent)
+                doPopAt(indexMin);
+
+            return wasPresent;
         }
 
         /// <summary>Retrieves and removes the maximal element from this double heap.</summary>
@@ -122,15 +175,35 @@ namespace Algolib.Structures
 
             T maximal = GetMax();
 
-            heap[indexMax] = heap[^1];
-            heap.RemoveAt(heap.Count - 1);
-            moveToMin(indexMax);
+            doPopAt(indexMax);
             return maximal;
+        }
+
+        /// <summary>
+        /// Removes the maximal element from this double heap and copies it to the <c>result</c> parameter.
+        /// </summary>
+        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        public bool TryPopMax(out T result)
+        {
+            bool wasPresent = TryGetMax(out result);
+
+            if(wasPresent)
+                doPopAt(indexMax);
+
+            return wasPresent;
         }
 
         private int compare(int index1, int index2)
         {
             return Comparer.Compare(heap[index1], heap[index2]);
+        }
+
+        private void doPopAt(int index)
+        {
+            heap[index] = heap[^1];
+            heap.RemoveAt(heap.Count - 1);
+            moveToMax(index);
         }
 
         private void moveToMin(int index)
