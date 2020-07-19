@@ -19,6 +19,12 @@ namespace Algolib.Structures
         {
         }
 
+        public Heap(IEnumerable<T> enumerable) : this()
+        {
+            foreach(T element in enumerable)
+                Push(element);
+        }
+
         public Heap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
         {
         }

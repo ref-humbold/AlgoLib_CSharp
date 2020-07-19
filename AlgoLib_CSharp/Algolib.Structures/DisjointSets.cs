@@ -63,7 +63,7 @@ namespace Algolib.Structures
         /// <param name="elements">New elements</param>
         /// <returns><c>this</c> for method chaining</returns>
         /// <exception cref="ArgumentException">if any value is already present</exception>
-        public DisjointSets<E> AddAll(IEnumerable<E> elements)
+        public DisjointSets<E> AddRange(IEnumerable<E> elements)
         {
             foreach(E elem in elements)
                 if(Contains(elem))

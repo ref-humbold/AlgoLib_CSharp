@@ -77,7 +77,7 @@ namespace Algolib.Structures
             // given
             List<int> elems = new List<int> { 20, 17, 35 };
             // when
-            testObject.AddAll(elems);
+            testObject.AddRange(elems);
             // then
             foreach(int e in elems)
             {
@@ -90,7 +90,7 @@ namespace Algolib.Structures
         public void AddAll_WhenPresentElements_ThenArgumentException()
         {
             // when
-            TestDelegate testDelegate = () => testObject.AddAll(new List<int> { 20, 7, 35 });
+            TestDelegate testDelegate = () => testObject.AddRange(new List<int> { 20, 7, 35 });
             // then
             Assert.Throws<ArgumentException>(testDelegate);
         }
@@ -182,7 +182,7 @@ namespace Algolib.Structures
             // given
             List<int> elems = new List<int> { 20, 17, 35 };
             // when
-            testObject.AddAll(elems)
+            testObject.AddRange(elems)
                       .UnionSet(elems[0], elems[1])
                       .UnionSet(elems[1], elems[2]);
             // then
