@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgoLib.Sequences
+namespace Algolib.Sequences
 {
     public class Sorting
     {
