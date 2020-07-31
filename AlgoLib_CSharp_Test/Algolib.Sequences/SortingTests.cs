@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AlgoLib.Sequences
+namespace Algolib.Sequences
 {
     [TestFixture]
     public class SortingTests
