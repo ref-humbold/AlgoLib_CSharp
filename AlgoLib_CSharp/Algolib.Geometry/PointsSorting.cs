@@ -16,7 +16,8 @@ namespace Algolib.Geometry
             if(points == null)
                 throw new ArgumentNullException("Points list is null");
 
-            points.Sort((pt1, pt2) => pt1.CompareTo(pt2));
+            points.Sort((pt1, pt2) => pt1.X == pt2.X ? pt1.Y.CompareTo(pt2.Y)
+                                                     : pt1.X.CompareTo(pt2.X));
         }
 
         /// <summary>

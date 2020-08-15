@@ -83,7 +83,7 @@ namespace Algolib.Structures
         /// <param name="result">
         /// Represent of the element if it's present, otherwise the default value
         /// </param>
-        /// <returns><c>true</c> if the represent exists, otherwise <c>false</c> e</returns>
+        /// <returns><c>true</c> if the represent exists, otherwise <c>false</c></returns>
         public bool TryFindSet(E element, out E result)
         {
             try
