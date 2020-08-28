@@ -43,8 +43,9 @@ namespace Algolib.Geometry
             if(points == null)
                 throw new ArgumentNullException("Points list is null");
 
-            points.Sort((pt1, pt2) => pt1.Angle == pt2.Angle ? pt1.Radius.CompareTo(pt2.Radius)
-                                                             : pt1.Angle.CompareTo(pt2.Angle));
+            points.Sort((pt1, pt2) => pt1.AngleDeg == pt2.AngleDeg
+                                          ? pt1.Radius.CompareTo(pt2.Radius)
+                                          : pt1.AngleDeg.CompareTo(pt2.AngleDeg));
         }
     }
 }
