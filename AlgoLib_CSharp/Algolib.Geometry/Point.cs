@@ -5,6 +5,7 @@ namespace Algolib.Geometry
 {
     public struct Point2D : IEquatable<Point2D>
     {
+        public static readonly Point2D ZERO = new Point2D(0.0, 0.0);
         public readonly double X;
         public readonly double Y;
 
@@ -35,6 +36,7 @@ namespace Algolib.Geometry
 
     public struct Point3D : IEquatable<Point3D>
     {
+        public static readonly Point3D ZERO = new Point3D(0.0, 0.0, 0.0);
         public readonly double X;
         public readonly double Y;
         public readonly double Z;
