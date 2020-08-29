@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Mathmat
 {
-    public class Maths
+    public sealed class Maths
     {
         /// <summary>Greatest common divisor of two numbers</summary>
         /// <param name="number1">first number</param>

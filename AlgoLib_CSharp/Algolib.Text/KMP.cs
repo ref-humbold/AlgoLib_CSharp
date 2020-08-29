@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algolib.Text
 {
-    internal class KMP
+    public sealed class KMP
     {
         /// <summary>
         /// Searches for pattern occurrences in specified text using Knuth-Morris-Pratt algorithm.

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algolib.Mathmat
 {
-    public class Primes
+    public sealed class Primes
     {
         public static IEnumerable<int> Find(int maxNumber)
         {

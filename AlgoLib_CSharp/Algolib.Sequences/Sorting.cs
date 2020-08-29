@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Algolib.Sequences
 {
-    public class Sorting
+    public sealed class Sorting
     {
         /// <summary>Mutably sorts given sequence using a heap.</summary>
         /// <param name="sequence">A sequence of elements</param>
