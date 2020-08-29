@@ -5,10 +5,10 @@ namespace Algolib.Geometry
 {
     public sealed class Geometry
     {
-        public static Vector2D Vector(Point2D begin, Point2D end) =>
+        public static Vector2D MakeVector(Point2D begin, Point2D end) =>
             new Vector2D(end.X - begin.X, end.Y - begin.Y);
 
-        public static Vector3D Vector(Point3D begin, Point3D end) =>
+        public static Vector3D MakeVector(Point3D begin, Point3D end) =>
             new Vector3D(end.X - begin.X, end.Y - begin.Y, end.Z - begin.Z);
 
         public static double Distance(Point2D p1, Point2D p2) =>

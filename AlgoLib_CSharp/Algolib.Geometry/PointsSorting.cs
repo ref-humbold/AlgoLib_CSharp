@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Algolib.Geometry
 {
-    public class PointsSorting
+    public sealed class PointsSorting
     {
         /// <summary>
         /// Mutably sorts points by their cartesian coordinates. First sorts by X coordinate, then
