@@ -1,51 +1,70 @@
 ﻿// Algorithms for sorting lists of points
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algolib.Geometry
 {
     public sealed class PointsSorting
     {
         /// <summary>
-        /// Mutably sorts points by their cartesian coordinates. First sorts by X coordinate, then
-        /// by Y coordinate.
+        /// Immutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
         /// </summary>
         /// <param name="points">a list of points</param>
-        public void SortByX(List<Point2D> points)
-        {
-            if(points == null)
-                throw new ArgumentNullException("Points list is null");
-
-            points.Sort((pt1, pt2) => pt1.X == pt2.X ? pt1.Y.CompareTo(pt2.Y)
-                                                     : pt1.X.CompareTo(pt2.X));
-        }
+        /// <returns>sorted list of points</returns>
+        public List<Point2D> SortByX(List<Point2D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                    : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
-        /// Mutably sorts points by their cartesian coordinates. First sorts by Y coordinate, then
-        /// by X coordinate.
+        /// Immutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
         /// </summary>
         /// <param name="points">a list of points</param>
-        public void SortByY(List<Point2D> points)
-        {
-            if(points == null)
-                throw new ArgumentNullException("Points list is null");
-
-            points.Sort((pt1, pt2) => pt1.Y == pt2.Y ? pt1.X.CompareTo(pt2.X)
-                                                     : pt1.Y.CompareTo(pt2.Y));
-        }
+        /// <returns>sorted list of points</returns>
+        public List<Point3D> SortByX(List<Point3D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                    : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
-        /// Mutably sorts points by their polar coordinates. First sorts by angle, then by radius.
+        /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
         /// </summary>
         /// <param name="points">a list of points</param>
-        public void SortByAngle(List<Point2D> points)
-        {
-            if(points == null)
-                throw new ArgumentNullException("Points list is null");
+        /// <returns>sorted list of points</returns>
+        public List<Point2D> SortByY(List<Point2D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                    : points.OrderBy(pt => pt.Y).ToList();
 
-            points.Sort((pt1, pt2) => pt1.AngleDeg == pt2.AngleDeg
-                                          ? pt1.Radius.CompareTo(pt2.Radius)
-                                          : pt1.AngleDeg.CompareTo(pt2.AngleDeg));
-        }
+        /// <summary>
+        /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
+        /// </summary>
+        /// <param name="points">a list of points</param>
+        /// <returns>sorted list of points</returns>
+        public List<Point3D> SortByY(List<Point3D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                     : points.OrderBy(pt => pt.Y).ToList();
+
+        /// <summary>
+        /// Immutably sorts points by their Z coordinate. Sorting is guaranteed to be stable.
+        /// </summary>
+        /// <param name="points">a list of points</param>
+        /// <returns>sorted list of points</returns>
+        public List<Point3D> SortByZ(List<Point3D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                    : points.OrderBy(pt => pt.Z).ToList();
+
+        /// <summary>
+        /// Immutably sorts points by their polar coordinates. First sorts by angle, then by radius.
+        /// </summary>
+        /// <param name="points">a list of points</param>
+        /// <returns>sorted list of points</returns>
+        public List<Point2D> SortByAngle(List<Point2D> points) =>
+            points == null
+                    ? throw new ArgumentNullException("Points list is null")
+                    : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
     }
 }

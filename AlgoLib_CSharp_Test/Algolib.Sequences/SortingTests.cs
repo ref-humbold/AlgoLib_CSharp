@@ -1,12 +1,42 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Sequences
 {
     [TestFixture]
     public class SortingTests
     {
+        private class IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
+        {
+            public int First { get; set; }
+            public int Second { get; set; }
+
+            public IntPair(int first, int second)
+            {
+                First = first;
+                Second = second;
+            }
+
+            public int CompareTo(object obj) =>
+                obj is null && !(obj is IntPair)
+                        ? throw new ArgumentException()
+                        : CompareTo(obj as IntPair);
+
+            public int CompareTo([AllowNull] IntPair other) =>
+                other is null ? 1 : First.CompareTo(other.First);
+
+            public override bool Equals(object obj) => obj is IntPair && Equals(obj as IntPair);
+
+            public bool Equals([AllowNull] IntPair other) =>
+                !(other is null) && First == other.First && Second == other.Second;
+
+            public override string ToString() => $"IntPair({First}, {Second})";
+        }
+
+        #region HeapSort
+
         [Test]
         public void HeapSort_ThenSortedAscending()
         {
@@ -38,67 +68,108 @@ namespace Algolib.Sequences
             Assert.Throws<ArgumentNullException>(testDelegate);
         }
 
+        #endregion
+        #region TopDownMergeSort
+
         [Test]
-        public void MergedownSort_ThenSortedAscending()
+        public void TopDownMergeSort_ThenSortedAscending()
         {
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.MergedownSort(sequence);
+            Sorting.TopDownMergeSort(sequence);
             // then
             CollectionAssert.IsOrdered(sequence);
         }
 
         [Test]
-        public void MergedownSort_WhenEmptyList_ThenEmpty()
+        public void TopDownMergeSort_WhenSortingTuplesByFirst_ThenSortingIsStable()
+        {
+            // given
+            List<IntPair> sequence = new List<IntPair>() {
+                new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
+                new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+            };
+            // when
+            Sorting.TopDownMergeSort(sequence);
+            // then
+            CollectionAssert.IsOrdered(sequence);
+            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
+            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+        }
+
+        [Test]
+        public void TopDownMergeSort_WhenEmptyList_ThenEmpty()
         {
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.MergedownSort(sequence);
+            Sorting.TopDownMergeSort(sequence);
             // then
             CollectionAssert.IsEmpty(sequence);
         }
 
         [Test]
-        public void MergedownSort_WhenNull_ThenNullPointerException()
+        public void TopDownMergeSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.MergedownSort<int>(null);
+            TestDelegate testDelegate = () => Sorting.TopDownMergeSort<int>(null);
             // then
             Assert.Throws<ArgumentNullException>(testDelegate);
         }
 
+        #endregion
+        #region BottomUpMergeSort
+
         [Test]
-        public void MergeupSort_ThenSortedAscending()
+        public void BottomUpMergeSort_ThenSortedAscending()
         {
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.MergeupSort(sequence);
+            Sorting.BottomUpMergeSort(sequence);
             // then
             CollectionAssert.IsOrdered(sequence);
         }
 
         [Test]
-        public void MergeupSort_WhenEmptyList_ThenEmpty()
+        public void BottomUpMergeSort_WhenSortingTuplesByFirst_ThenSortingIsStable()
+        {
+            // given
+            List<IntPair> sequence = new List<IntPair>() {
+                new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
+                new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+            };
+            // when
+            Sorting.BottomUpMergeSort(sequence);
+            // then
+            CollectionAssert.IsOrdered(sequence);
+            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
+            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+        }
+
+        [Test]
+        public void BottomUpMergeSort_WhenEmptyList_ThenEmpty()
         {
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.MergeupSort(sequence);
+            Sorting.BottomUpMergeSort(sequence);
             // then
             CollectionAssert.IsEmpty(sequence);
         }
 
         [Test]
-        public void MergeupSort_WhenNull_ThenNullPointerException()
+        public void BottomUpMergeSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.MergeupSort<int>(null);
+            TestDelegate testDelegate = () => Sorting.BottomUpMergeSort<int>(null);
             // then
             Assert.Throws<ArgumentNullException>(testDelegate);
         }
+
+        #endregion
+        #region QuickSort
 
         [Test]
         public void QuickSort_ThenSortedAscending()
@@ -130,5 +201,7 @@ namespace Algolib.Sequences
             // then
             Assert.Throws<ArgumentNullException>(testDelegate);
         }
+
+        #endregion
     }
 }

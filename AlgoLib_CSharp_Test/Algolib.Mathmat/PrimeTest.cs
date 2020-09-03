@@ -6,16 +6,6 @@ namespace Algolib.Mathmat
     [TestFixture]
     public class PrimeTest
     {
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-        }
-
         #region TestFermat
 
         [Test]

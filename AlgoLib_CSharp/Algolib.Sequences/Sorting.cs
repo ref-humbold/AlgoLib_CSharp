@@ -7,7 +7,7 @@ namespace Algolib.Sequences
     {
         /// <summary>Mutably sorts given sequence using a heap.</summary>
         /// <param name="sequence">A sequence of elements</param>
-        public static void HeapSort<T>(List<T> sequence) where T : IComparable<T>
+        public static void HeapSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -30,9 +30,12 @@ namespace Algolib.Sequences
             }
         }
 
-        /// <summary>Mutably sorts given sequence using a top-down merge-sort algorithm.</summary>
+        /// <summary>
+        /// Mutably sorts given sequence using a top-down merge-sort algorithm. Sorting is
+        /// guaranteed to be stable.
+        /// </summary>
         /// <param name="sequence">A sequence of elements</param>
-        public static void MergedownSort<T>(List<T> sequence) where T : IComparable<T>
+        public static void TopDownMergeSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -40,9 +43,12 @@ namespace Algolib.Sequences
             doMergeSort(sequence, 0, sequence.Count);
         }
 
-        /// <summary>Mutably sorts given sequence using a bottom-up merge-sort algorithm.</summary>
+        /// <summary>
+        /// Mutably sorts given sequence using a bottom-up merge-sort algorithm. Sorting is
+        /// guaranteed to be stable.
+        /// </summary>
         /// <param name="sequence">A sequence of elements</param>
-        public static void MergeupSort<T>(List<T> sequence) where T : IComparable<T>
+        public static void BottomUpMergeSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -58,7 +64,7 @@ namespace Algolib.Sequences
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
         /// <param name="sequence">A sequence of elements</param>
-        public static void QuickSort<T>(List<T> sequence) where T : IComparable<T>
+        public static void QuickSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -67,7 +73,7 @@ namespace Algolib.Sequences
         }
 
         // Move element down inside given heap.
-        private static void moveDown<T>(List<T> heap, int vertex, int indexEnd) where T : IComparable<T>
+        private static void moveDown<T>(List<T> heap, int vertex, int indexEnd) where T : IComparable
         {
             int nextVertex = -1;
             int leftVertex = vertex + vertex + 1;
@@ -91,7 +97,7 @@ namespace Algolib.Sequences
 
         // Mutably sorts given sequence using a recursive merge-sort algorithm.
         private static void doMergeSort<T>(List<T> sequence, int indexBegin, int indexEnd)
-            where T : IComparable<T>
+            where T : IComparable
         {
             if(indexEnd - indexBegin <= 1)
                 return;
@@ -103,16 +109,16 @@ namespace Algolib.Sequences
             merge(sequence, indexBegin, indexMiddle, indexEnd);
         }
 
-        // Merges two sorted fragments of a sequence.
+        // Merges two sorted fragments of a sequence. Guaranteed to be stable.
         private static void merge<T>(List<T> sequence, int indexBegin, int indexMiddle, int indexEnd)
-            where T : IComparable<T>
+            where T : IComparable
         {
             List<T> ordered = new List<T>();
             int iter1 = indexBegin;
             int iter2 = indexMiddle;
 
             while(iter1 < indexMiddle && iter2 < indexEnd)
-                if(sequence[iter1].CompareTo(sequence[iter2]) < 0)
+                if(sequence[iter1].CompareTo(sequence[iter2]) <= 0)
                 {
                     ordered.Add(sequence[iter1]);
                     ++iter1;
@@ -135,7 +141,7 @@ namespace Algolib.Sequences
 
         // Mutably sorts given sequence using a quick-sort algorithm.
         private static void doQuickSort<T>(List<T> sequence, int indexBegin, int indexEnd)
-            where T : IComparable<T>
+            where T : IComparable
         {
             if(indexEnd - indexBegin <= 1)
                 return;
@@ -185,7 +191,7 @@ namespace Algolib.Sequences
         }
 
         // Swaps two elements in given sequence.
-        private static void swap<T>(List<T> sequence, int index1, int index2) where T : IComparable<T>
+        private static void swap<T>(List<T> sequence, int index1, int index2) where T : IComparable
         {
             T temp = sequence[index1];
 

@@ -6,16 +6,6 @@ namespace Algolib.Mathmat
     [TestFixture]
     public class MathsTest
     {
-        [SetUp]
-        public void SetUp()
-        {
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-        }
-
         [Test]
         public void GCD_WhenNumbersAreComposite_ThenReturnsGCD()
         {
