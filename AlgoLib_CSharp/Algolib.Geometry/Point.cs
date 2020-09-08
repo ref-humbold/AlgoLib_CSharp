@@ -5,7 +5,6 @@ namespace Algolib.Geometry
 {
     public struct Point2D : IEquatable<Point2D>
     {
-        public static readonly Point2D ZERO = new Point2D(0.0, 0.0);
         public readonly double X;
         public readonly double Y;
 
@@ -20,6 +19,8 @@ namespace Algolib.Geometry
             X = x;
             Y = y;
         }
+
+        public static Point2D Of(double x, double y) => new Point2D(x, y);
 
         public static bool operator ==(Point2D p1, Point2D p2) => p1.Equals(p2);
 
@@ -36,7 +37,6 @@ namespace Algolib.Geometry
 
     public struct Point3D : IEquatable<Point3D>
     {
-        public static readonly Point3D ZERO = new Point3D(0.0, 0.0, 0.0);
         public readonly double X;
         public readonly double Y;
         public readonly double Z;
@@ -49,6 +49,8 @@ namespace Algolib.Geometry
             Y = y;
             Z = z;
         }
+
+        public static Point3D Of(double x, double y, double z) => new Point3D(x, y, z);
 
         public static bool operator ==(Point3D p1, Point3D p2) => p1.Equals(p2);
 

@@ -12,7 +12,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point2D> SortByX(List<Point2D> points) =>
+        public static List<Point2D> SortByX(List<Point2D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                     : points.OrderBy(pt => pt.X).ToList();
@@ -22,7 +22,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point3D> SortByX(List<Point3D> points) =>
+        public static List<Point3D> SortByX(List<Point3D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                     : points.OrderBy(pt => pt.X).ToList();
@@ -32,7 +32,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point2D> SortByY(List<Point2D> points) =>
+        public static List<Point2D> SortByY(List<Point2D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                     : points.OrderBy(pt => pt.Y).ToList();
@@ -42,7 +42,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point3D> SortByY(List<Point3D> points) =>
+        public static List<Point3D> SortByY(List<Point3D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                      : points.OrderBy(pt => pt.Y).ToList();
@@ -52,7 +52,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point3D> SortByZ(List<Point3D> points) =>
+        public static List<Point3D> SortByZ(List<Point3D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                     : points.OrderBy(pt => pt.Z).ToList();
@@ -62,7 +62,7 @@ namespace Algolib.Geometry
         /// </summary>
         /// <param name="points">a list of points</param>
         /// <returns>sorted list of points</returns>
-        public List<Point2D> SortByAngle(List<Point2D> points) =>
+        public static List<Point2D> SortByAngle(List<Point2D> points) =>
             points == null
                     ? throw new ArgumentNullException("Points list is null")
                     : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();

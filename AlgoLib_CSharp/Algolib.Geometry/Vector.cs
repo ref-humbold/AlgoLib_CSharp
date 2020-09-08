@@ -5,7 +5,6 @@ namespace Algolib.Geometry
 {
     public struct Vector2D : IEquatable<Vector2D>
     {
-        public static readonly Vector2D ZERO = new Vector2D(0.0, 0.0);
         public readonly double X;
         public readonly double Y;
 
@@ -16,6 +15,8 @@ namespace Algolib.Geometry
             X = x;
             Y = y;
         }
+
+        public static Vector2D Of(double x, double y) => new Vector2D(x, y);
 
         public static bool operator ==(Vector2D v1, Vector2D v2) => v1.Equals(v2);
 
@@ -35,6 +36,9 @@ namespace Algolib.Geometry
 
         public static Vector2D operator /(Vector2D v, double c) =>
             c == 0 ? throw new DivideByZeroException() : new Vector2D(v.X / c, v.Y / c);
+
+        public static Vector2D Between(Point2D begin, Point2D end) =>
+            new Vector2D(end.X - begin.X, end.Y - begin.Y);
 
         public static double Area(Vector2D v1, Vector2D v2) => v1.X * v2.Y - v1.Y * v2.X;
 
@@ -63,6 +67,8 @@ namespace Algolib.Geometry
             Z = z;
         }
 
+        public static Vector3D Of(double x, double y, double z) => new Vector3D(x, y, z);
+
         public static bool operator ==(Vector3D v1, Vector3D v2) => v1.Equals(v2);
 
         public static bool operator !=(Vector3D v1, Vector3D v2) => !(v1 == v2);
@@ -87,6 +93,9 @@ namespace Algolib.Geometry
         public static Vector3D operator ^(Vector3D v1, Vector3D v2) =>
             new Vector3D(v1.Y * v2.Z - v1.Z * v2.Y, v1.Z * v2.X - v1.X * v2.Z,
                          v1.X * v2.Y - v1.Y * v2.X);
+
+        public static Vector3D Between(Point3D begin, Point3D end) =>
+            new Vector3D(end.X - begin.X, end.Y - begin.Y, end.Z - begin.Z);
 
         public static double Area(Vector3D v1, Vector3D v2) => (v1 ^ v2).Length;
 
