@@ -30,7 +30,7 @@ namespace Algolib.Geometry
 
         public bool Equals(Point2D p) => X == p.X && Y == p.Y;
 
-        public override int GetHashCode() => HashCode.Combine(X, Y, 0x9e3779b9);
+        public override int GetHashCode() => HashCode.Combine(X, Y);
 
         public override string ToString() => $"({X}, {Y})";
     }
@@ -60,7 +60,7 @@ namespace Algolib.Geometry
 
         public bool Equals(Point3D p) => X == p.X && Y == p.Y && Z == p.Z;
 
-        public override int GetHashCode() => HashCode.Combine(X, Y, Z, 0x9e3779b9);
+        public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
         public override string ToString() => $"({X}, {Y}, {Z})";
     }
