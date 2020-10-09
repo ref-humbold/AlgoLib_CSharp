@@ -7,24 +7,19 @@ namespace Algolib.Mathmat
 {
     public sealed class Primes
     {
-        public static IEnumerable<int> Find(int maxNumber)
-        {
-            return Find(0, maxNumber);
-        }
+        public static IEnumerable<int> Find(int maxNumber) => Find(0, maxNumber);
 
         public static IEnumerable<int> Find(int minNumber, int maxNumber)
         {
             if(maxNumber < minNumber)
-                throw new ArgumentException(
-                    "Second argument must be grater or equal to the first argument");
+                return Enumerable.Empty<int>();
 
             List<int> primes = new List<int>();
             List<bool> isPrime = new List<bool>();
-            List<bool> basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2))
-                                              .ToList();
+            List<bool> basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2)).ToList();
 
-            for(int i = minNumber; i <= maxNumber; ++i)
-                isPrime.Add(i == 2 || (i > 2 && i % 2 != 0));
+            for(int i = minNumber; i < maxNumber; ++i)
+                isPrime.Add(i == 2 || i > 2 && i % 2 != 0);
 
             for(int i = 0; i < basePrimes.Count; ++i)
                 if(basePrimes[i])
