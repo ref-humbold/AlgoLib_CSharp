@@ -14,10 +14,20 @@ namespace Algolib.Structures
 
         public bool IsReadOnly { get; }
 
-        public AVLTree(IComparer<E> comparer = null)
+        private AVLNode<E> Tree
         {
-            this.comparer = comparer ?? Comparer<E>.Default;
+            get => tree;
+
+            set
+            {
+                tree = value;
+
+                if(tree != null)
+                    tree.Parent = null;
+            }
         }
+
+        public AVLTree(IComparer<E> comparer = null) => this.comparer = comparer ?? Comparer<E>.Default;
 
         public AVLTree(IEnumerable<E> elements, IComparer<E> comparer = null) : this(comparer)
         {
@@ -29,7 +39,8 @@ namespace Algolib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public bool Contains(E element) => throw new NotImplementedException();
+        public bool Contains(E element)
+            => Count > 0 && findNode(element, (node, elem) => Equals(node.Element, elem)) != null;
 
         public bool Add(E element) => throw new NotImplementedException();
 
@@ -37,7 +48,11 @@ namespace Algolib.Structures
 
         public bool Remove(E element) => throw new NotImplementedException();
 
-        public void Clear() => throw new NotImplementedException();
+        public void Clear()
+        {
+            Tree = null;
+            Count = 0;
+        }
 
         public void CopyTo(E[] array, int arrayIndex) => throw new NotImplementedException();
 
@@ -60,6 +75,41 @@ namespace Algolib.Structures
         public void SymmetricExceptWith(IEnumerable<E> elements) => throw new NotImplementedException();
 
         public void UnionWith(IEnumerable<E> elements) => throw new NotImplementedException();
+
+        private bool isLeftSon(AVLNode<E> node) => node.Parent != null && node.Parent.Left == node;
+
+        private bool isRightSon(AVLNode<E> node) => node.Parent != null && node.Parent.Right == node;
+
+        // Determines the subtree where given value might be present:
+        // - node if element is in it
+        // - left child if element is less than node's element
+        // - right child if element is greater than node's element
+        private AVLNode<E> search(AVLNode<E> node, E element)
+        {
+            if(Equals(element, node.Element))
+                return node;
+
+            int result = comparer.Compare(element, node.Element);
+
+            if(result < 0)
+                return node.Left;
+
+            if(result > 0)
+                return node.Right;
+
+            return node;
+        }
+
+        // Searches for node that satisfies given predicate with given value.
+        private AVLNode<E> findNode(E element, Func<AVLNode<E>, E, bool> predicate)
+        {
+            AVLNode<E> node = tree;
+
+            while(node != null && !predicate.Invoke(node, element))
+                node = search(node, element);
+
+            return node;
+        }
 
         private class AVLNode<T>
         {
