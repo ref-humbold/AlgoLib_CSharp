@@ -42,7 +42,40 @@ namespace Algolib.Structures
         public bool Contains(E element)
             => Count > 0 && findNode(element, (node, elem) => Equals(node.Element, elem)) != null;
 
-        public bool Add(E element) => throw new NotImplementedException();
+        public bool Add(E element)
+        {
+            AVLNode<E> nodeParent = findNode(element, (node, elem) => {
+                AVLNode<E> child = search(node, elem);
+
+                return child == null || Equals(elem, child.Element);
+            });
+
+            if(nodeParent == null)
+            {
+                AVLNode<E> newNode = new AVLNode<E>(element);
+                Tree = newNode;
+                ++Count;
+                return true;
+            }
+
+            AVLNode<E> theNode = search(nodeParent, element);
+
+            if(theNode == null)
+            {
+                AVLNode<E> newNode = new AVLNode<E>(element);
+
+                if(comparer.Compare(element, nodeParent.Element) < 0)
+                    nodeParent.Left = (newNode);
+                else
+                    nodeParent.Right = (newNode);
+
+                balance(newNode);
+                ++Count;
+                return true;
+            }
+
+            return false;
+        }
 
         void ICollection<E>.Add(E element) => Add(element);
 
@@ -111,10 +144,86 @@ namespace Algolib.Structures
             return node;
         }
 
+        // Replaces the first node as a child of its parent with the second node.
+        private void replaceNode(AVLNode<E> node1, AVLNode<E> node2)
+        {
+            if(isLeftSon(node1))
+                node1.Parent.Left = node2;
+            else if(isRightSon(node1))
+                node1.Parent.Right = node2;
+            else
+                Tree = node2;
+
+            node1.Parent = null;
+        }
+
+        // Rotates the node along the edge to its parent.
+        private void rotate(AVLNode<E> node)
+        {
+            if(isRightSon(node))
+            {
+                AVLNode<E> upperNode = node.Parent;
+
+                upperNode.Right = node.Left;
+                replaceNode(upperNode, node);
+                node.Left = upperNode;
+            }
+            else if(isLeftSon(node))
+            {
+                AVLNode<E> upperNode = node.Parent;
+
+                upperNode.Left = node.Right;
+                replaceNode(upperNode, node);
+                node.Right = upperNode;
+            }
+        }
+
+        // Restores balancing on a path from given node to the root.
+        private void balance(AVLNode<E> node)
+        {
+            while(node != null)
+            {
+                node.countHeight();
+
+                if(countBalance(node) > 1)
+                {
+                    if(countBalance(node.Left) > 0)
+                        rotate(node.Left);
+                    else if(countBalance(node.Left) < 0)
+                    {
+                        rotate(node.Left.Right);
+                        rotate(node.Left);
+                    }
+                }
+                else if(countBalance(node) < -1)
+                    if(countBalance(node.Right) < 0)
+                        rotate(node.Right);
+                    else if(countBalance(node.Right) > 0)
+                    {
+                        rotate(node.Right.Left);
+                        rotate(node.Right);
+                    }
+
+                node = node.Parent;
+            }
+        }
+
+        private int countBalance(AVLNode<E> node)
+        {
+            int leftHeight = node.Left == null ? 0 : node.Left.Height;
+            int rightHeight = node.Right == null ? 0 : node.Right.Height;
+
+            return leftHeight - rightHeight;
+        }
+
         private class AVLNode<T>
         {
             private AVLNode<T> left;
             private AVLNode<T> right;
+
+            internal AVLNode<T> Minimum => left == null ? this : left.Minimum;
+
+            internal AVLNode<T> Maximum => right == null ? this : right.Maximum;
 
             /// <summary>Value in the node</summary>
             internal T Element { get; set; }
@@ -155,17 +264,13 @@ namespace Algolib.Structures
 
             internal AVLNode(T element) => Element = element;
 
-            private void countHeight()
+            internal void countHeight()
             {
                 int leftHeight = left == null ? 0 : left.Height;
                 int rightHeight = right == null ? 0 : right.Height;
 
                 Height = Math.Max(leftHeight, rightHeight) + 1;
             }
-
-            private AVLNode<T> minimum() => left == null ? this : left.minimum();
-
-            private AVLNode<T> maximum() => right == null ? this : right.maximum();
         }
     }
 }
