@@ -8,229 +8,151 @@ namespace Algolib.Structures
     public class AVLTree<E> : ISet<E>, IReadOnlyCollection<E>
     {
         private readonly IComparer<E> comparer;
-        private AVLNode<E> tree = null;
+        private AVLHeaderNode<E> tree = new AVLHeaderNode<E>();
 
         public int Count { get; private set; }
-
         public bool IsReadOnly { get; }
 
-        private AVLNode<E> Tree
+        private AVLInnerNode<E> Root
         {
-            get => tree;
-
-            set
-            {
-                tree = value;
-
-                if(tree != null)
-                    tree.Parent = null;
-            }
+            get => tree.Parent;
+            set => tree.Parent = value;
         }
 
-        public AVLTree(IComparer<E> comparer = null) => this.comparer = comparer ?? Comparer<E>.Default;
-
-        public AVLTree(IEnumerable<E> elements, IComparer<E> comparer = null) : this(comparer)
-        {
-            foreach(E element in elements)
-                _ = Add(element);
-        }
-
-        public IEnumerator<E> GetEnumerator() => throw new NotImplementedException();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public bool Contains(E element)
-            => Count > 0 && findNode(element, (node, elem) => Equals(node.Element, elem)) != null;
-
-        public bool Add(E element)
-        {
-            AVLNode<E> nodeParent = findNode(element, (node, elem) => {
-                AVLNode<E> child = search(node, elem);
-
-                return child == null || Equals(elem, child.Element);
-            });
-
-            if(nodeParent == null)
-            {
-                AVLNode<E> newNode = new AVLNode<E>(element);
-                Tree = newNode;
-                ++Count;
-                return true;
-            }
-
-            AVLNode<E> theNode = search(nodeParent, element);
-
-            if(theNode == null)
-            {
-                AVLNode<E> newNode = new AVLNode<E>(element);
-
-                if(comparer.Compare(element, nodeParent.Element) < 0)
-                    nodeParent.Left = (newNode);
-                else
-                    nodeParent.Right = (newNode);
-
-                balance(newNode);
-                ++Count;
-                return true;
-            }
-
-            return false;
-        }
-
-        void ICollection<E>.Add(E element) => Add(element);
-
-        public bool Remove(E element) => throw new NotImplementedException();
+        public bool Add(E item) => throw new NotImplementedException();
 
         public void Clear()
         {
-            Tree = null;
+            Root = null;
             Count = 0;
         }
 
+        public bool Contains(E item) => throw new NotImplementedException();
+
         public void CopyTo(E[] array, int arrayIndex) => throw new NotImplementedException();
 
-        public void ExceptWith(IEnumerable<E> elements) => throw new NotImplementedException();
+        public void ExceptWith(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public void IntersectWith(IEnumerable<E> elements) => throw new NotImplementedException();
+        public IEnumerator<E> GetEnumerator() => throw new NotImplementedException();
 
-        public bool IsProperSubsetOf(IEnumerable<E> elements) => throw new NotImplementedException();
+        public void IntersectWith(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool IsProperSupersetOf(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool IsProperSubsetOf(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool IsSubsetOf(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool IsProperSupersetOf(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool IsSupersetOf(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool IsSubsetOf(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool Overlaps(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool IsSupersetOf(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool SetEquals(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool Overlaps(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public void SymmetricExceptWith(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool Remove(E item) => throw new NotImplementedException();
 
-        public void UnionWith(IEnumerable<E> elements) => throw new NotImplementedException();
+        public bool SetEquals(IEnumerable<E> other) => throw new NotImplementedException();
 
-        private bool isLeftSon(AVLNode<E> node) => node.Parent != null && node.Parent.Left == node;
+        public void SymmetricExceptWith(IEnumerable<E> other) => throw new NotImplementedException();
 
-        private bool isRightSon(AVLNode<E> node) => node.Parent != null && node.Parent.Right == node;
+        public void UnionWith(IEnumerable<E> other) => throw new NotImplementedException();
 
-        // Determines the subtree where given value might be present:
-        // - node if element is in it
-        // - left child if element is less than node's element
-        // - right child if element is greater than node's element
-        private AVLNode<E> search(AVLNode<E> node, E element)
+        void ICollection<E>.Add(E item) => throw new NotImplementedException();
+
+        IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
+
+        private bool isLeftChild(AVLInnerNode<E> node) =>
+            node.Parent.Height > 0 && node.Parent.Left == node;
+
+        private bool isRightChild(AVLInnerNode<E> node) =>
+            node.Parent.Height > 0 && node.Parent.Right == node;
+
+        private AVLInnerNode<E> search(AVLInnerNode<E> node, E element)
         {
-            if(Equals(element, node.Element))
-                return node;
-
-            int result = comparer.Compare(element, node.Element);
-
-            if(result < 0)
+            if(comparer.Compare(element, node.Element) < 0)
                 return node.Left;
 
-            if(result > 0)
+            if(comparer.Compare(element, node.Element) > 0)
                 return node.Right;
 
             return node;
         }
 
-        // Searches for node that satisfies given predicate with given value.
-        private AVLNode<E> findNode(E element, Func<AVLNode<E>, E, bool> predicate)
+        private interface IAVLNode<T>
         {
-            AVLNode<E> node = tree;
+            int Height { get; }
 
-            while(node != null && !predicate.Invoke(node, element))
-                node = search(node, element);
+            IAVLNode<T> Left { get; set; }
 
-            return node;
+            IAVLNode<T> Right { get; set; }
+
+            IAVLNode<T> Parent { get; set; }
+
+            // Searches in its subtree for the node with minimal value.
+            IAVLNode<T> Minimum { get; }
+
+            // Searches in its subtree for the node with maximal value.
+            IAVLNode<T> Maximum { get; }
         }
 
-        // Replaces the first node as a child of its parent with the second node.
-        private void replaceNode(AVLNode<E> node1, AVLNode<E> node2)
+        private class AVLHeaderNode<T> : IAVLNode<T>
         {
-            if(isLeftSon(node1))
-                node1.Parent.Left = node2;
-            else if(isRightSon(node1))
-                node1.Parent.Right = node2;
-            else
-                Tree = node2;
+            public int Height => 0;
 
-            node1.Parent = null;
-        }
-
-        // Rotates the node along the edge to its parent.
-        private void rotate(AVLNode<E> node)
-        {
-            if(isRightSon(node))
+            IAVLNode<T> IAVLNode<T>.Parent
             {
-                AVLNode<E> upperNode = node.Parent;
-
-                upperNode.Right = node.Left;
-                replaceNode(upperNode, node);
-                node.Left = upperNode;
+                get => Parent;
+                set => Parent = value as AVLInnerNode<T>;
             }
-            else if(isLeftSon(node))
+
+            public IAVLNode<T> Left
             {
-                AVLNode<E> upperNode = node.Parent;
-
-                upperNode.Left = node.Right;
-                replaceNode(upperNode, node);
-                node.Right = upperNode;
+                get => null;
+                set { }
             }
-        }
 
-        // Restores balancing on a path from given node to the root.
-        private void balance(AVLNode<E> node)
-        {
-            while(node != null)
+            public IAVLNode<T> Right
             {
-                node.countHeight();
-
-                if(countBalance(node) > 1)
-                {
-                    if(countBalance(node.Left) > 0)
-                        rotate(node.Left);
-                    else if(countBalance(node.Left) < 0)
-                    {
-                        rotate(node.Left.Right);
-                        rotate(node.Left);
-                    }
-                }
-                else if(countBalance(node) < -1)
-                    if(countBalance(node.Right) < 0)
-                        rotate(node.Right);
-                    else if(countBalance(node.Right) > 0)
-                    {
-                        rotate(node.Right.Left);
-                        rotate(node.Right);
-                    }
-
-                node = node.Parent;
+                get => null;
+                set { }
             }
+
+            public AVLInnerNode<T> Parent { get; set; }
+
+            public IAVLNode<T> Minimum => this;
+
+            public IAVLNode<T> Maximum => this;
+
+            public AVLHeaderNode() => Parent = null;
         }
 
-        private int countBalance(AVLNode<E> node)
+        private class AVLInnerNode<T> : IAVLNode<T>
         {
-            int leftHeight = node.Left == null ? 0 : node.Left.Height;
-            int rightHeight = node.Right == null ? 0 : node.Right.Height;
+            private AVLInnerNode<T> left;
+            private AVLInnerNode<T> right;
 
-            return leftHeight - rightHeight;
-        }
+            public int Height { get; private set; }
 
-        private class AVLNode<T>
-        {
-            private AVLNode<T> left;
-            private AVLNode<T> right;
+            IAVLNode<T> IAVLNode<T>.Left
+            {
+                get => Left;
+                set => Left = value as AVLInnerNode<T>;
+            }
 
-            internal AVLNode<T> Minimum => left == null ? this : left.Minimum;
+            IAVLNode<T> IAVLNode<T>.Right
+            {
+                get => Right;
+                set => Right = value as AVLInnerNode<T>;
+            }
 
-            internal AVLNode<T> Maximum => right == null ? this : right.Maximum;
+            public IAVLNode<T> Parent { get; set; }
 
-            /// <summary>Value in the node</summary>
-            internal T Element { get; set; }
+            IAVLNode<T> IAVLNode<T>.Minimum => Minimum;
 
-            internal int Height { get; private set; }
+            IAVLNode<T> IAVLNode<T>.Maximum => Maximum;
 
-            internal AVLNode<T> Left
+            // Value in the node.
+            public T Element { get; set; }
+
+            public AVLInnerNode<T> Left
             {
                 get => left;
 
@@ -245,7 +167,7 @@ namespace Algolib.Structures
                 }
             }
 
-            internal AVLNode<T> Right
+            public AVLInnerNode<T> Right
             {
                 get => right;
 
@@ -260,11 +182,20 @@ namespace Algolib.Structures
                 }
             }
 
-            internal AVLNode<T> Parent { get; set; }
+            public AVLInnerNode<T> Minimum => Left == null ? this : Left.Minimum;
 
-            internal AVLNode(T element) => Element = element;
+            public AVLInnerNode<T> Maximum => Right == null ? this : Right.Maximum;
 
-            internal void countHeight()
+            public AVLInnerNode(T element)
+            {
+                left = null;
+                right = null;
+                Parent = null;
+                Height = 1;
+                Element = element;
+            }
+
+            private void countHeight()
             {
                 int leftHeight = left == null ? 0 : left.Height;
                 int rightHeight = right == null ? 0 : right.Height;
