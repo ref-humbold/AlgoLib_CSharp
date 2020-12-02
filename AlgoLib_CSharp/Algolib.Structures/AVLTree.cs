@@ -8,7 +8,7 @@ namespace Algolib.Structures
     public class AVLTree<E> : ISet<E>, IReadOnlyCollection<E>
     {
         private readonly IComparer<E> comparer;
-        private AVLHeaderNode<E> tree = new AVLHeaderNode<E>();
+        private readonly AVLHeaderNode<E> tree = new AVLHeaderNode<E>();
 
         public int Count { get; private set; }
         public bool IsReadOnly { get; }
@@ -27,7 +27,8 @@ namespace Algolib.Structures
             Count = 0;
         }
 
-        public bool Contains(E item) => throw new NotImplementedException();
+        public bool Contains(E item) =>
+            Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) != null;
 
         public void CopyTo(E[] array, int arrayIndex) => throw new NotImplementedException();
 
@@ -47,7 +48,16 @@ namespace Algolib.Structures
 
         public bool Overlaps(IEnumerable<E> other) => throw new NotImplementedException();
 
-        public bool Remove(E item) => throw new NotImplementedException();
+        public bool Remove(E item)
+        {
+            AVLInnerNode<E> node = findNode(item, (n, elem) => Equals(n.Element, elem));
+
+            if(node == null)
+                return false;
+
+            deleteNode(node);
+            return true;
+        }
 
         public bool SetEquals(IEnumerable<E> other) => throw new NotImplementedException();
 
@@ -55,9 +65,9 @@ namespace Algolib.Structures
 
         public void UnionWith(IEnumerable<E> other) => throw new NotImplementedException();
 
-        void ICollection<E>.Add(E item) => throw new NotImplementedException();
+        void ICollection<E>.Add(E item) => Add(item);
 
-        IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private bool isLeftChild(AVLInnerNode<E> node) =>
             node.Parent.Height > 0 && node.Parent.Left == node;
@@ -65,6 +75,10 @@ namespace Algolib.Structures
         private bool isRightChild(AVLInnerNode<E> node) =>
             node.Parent.Height > 0 && node.Parent.Right == node;
 
+        // Determines the subtree where given value might be present:
+        // - node if element is in it
+        // - left child if element is less than node's element
+        // - right child if element is greater than node's element
         private AVLInnerNode<E> search(AVLInnerNode<E> node, E element)
         {
             if(comparer.Compare(element, node.Element) < 0)
@@ -74,6 +88,125 @@ namespace Algolib.Structures
                 return node.Right;
 
             return node;
+        }
+
+        // Searches for node that satisfies specified predicate with specified value.
+        private AVLInnerNode<E> findNode(E element, Func<AVLInnerNode<E>, E, bool> predicate)
+        {
+            AVLInnerNode<E> node = Root;
+
+            while(node != null && !predicate(node, element))
+                node = search(node, element);
+
+            return node;
+        }
+
+        // Removes inner node from the tree.
+        private void deleteNode(AVLInnerNode<E> node)
+        {
+            if(node.Left != null && node.Right != null)
+            {
+                AVLInnerNode<E> succ = node.Right.Minimum;
+                E temp = succ.Element;
+
+                succ.Element = node.Element;
+                node.Element = temp;
+                deleteNode(succ);
+            }
+            else
+            {
+                AVLInnerNode<E> child = node.Left ?? node.Right;
+
+                if(node.Parent.Height > 0)
+                {
+                    IAVLNode<E> nodeParent = node.Parent;
+
+                    replaceNode(node, child);
+                    balance(nodeParent);
+                }
+                else
+                    Root = child;
+
+                node.Left = null;
+                node.Right = null;
+                --Count;
+            }
+        }
+
+        // Replaces the subtree rooted in one node with subtree of another node.
+        private void replaceNode(AVLInnerNode<E> node1, AVLInnerNode<E> node2)
+        {
+            if(isLeftChild(node1))
+                node1.Parent.Left = node2;
+            else if(isRightChild(node1))
+                node1.Parent.Right = node2;
+            else
+                Root = node2;
+
+            node1.Parent = null;
+        }
+
+        // Rotates the node along the edge to its parent.
+        private void rotate(AVLInnerNode<E> node)
+        {
+            if(isRightChild(node))
+            {
+                AVLInnerNode<E> upperNode = node.Parent as AVLInnerNode<E>;
+
+                upperNode.Right = node.Left;
+                replaceNode(upperNode, node);
+                node.Left = upperNode;
+            }
+            else if(isLeftChild(node))
+            {
+                AVLInnerNode<E> upperNode = node.Parent as AVLInnerNode<E>;
+
+                upperNode.Left = node.Right;
+                replaceNode(upperNode, node);
+                node.Right = upperNode;
+            }
+        }
+
+        // Restores balancing on a path from specified node to the root.
+        private void balance(IAVLNode<E> node)
+        {
+            while(node.Height > 0)
+            {
+                AVLInnerNode<E> theNode = node.Parent as AVLInnerNode<E>;
+                int newBalance = countBalance(theNode);
+
+                if(newBalance >= 2)
+                {
+                    if(countBalance(theNode.Left) > 0)
+                        rotate(theNode.Left);
+                    else if(countBalance(theNode.Left) < 0)
+                    {
+                        rotate(theNode.Left.Right);
+                        rotate(theNode.Left);
+                    }
+                }
+                else if(newBalance <= -2)
+                {
+                    if(countBalance(theNode.Right) < 0)
+                        rotate(theNode.Right);
+                    else if(countBalance(theNode.Right) > 0)
+                    {
+                        rotate(theNode.Right.Left);
+                        rotate(theNode.Right);
+                    }
+                }
+
+                node = theNode.Parent;
+            }
+        }
+
+        // Counts current node balance.
+        private int countBalance(AVLInnerNode<E> node)
+        {
+            int leftHeight = node.Left == null ? 0 : node.Left.Height;
+            int rightHeight = node.Right == null ? 0 : node.Right.Height;
+
+            return leftHeight - rightHeight;
         }
 
         private interface IAVLNode<T>
