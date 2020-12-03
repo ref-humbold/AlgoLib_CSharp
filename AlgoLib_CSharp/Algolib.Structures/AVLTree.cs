@@ -32,21 +32,25 @@ namespace Algolib.Structures
 
         public void CopyTo(E[] array, int arrayIndex) => throw new NotImplementedException();
 
-        public void ExceptWith(IEnumerable<E> other) => throw new NotImplementedException();
+        public void ExceptWith(IEnumerable<E> other)
+        {
+            foreach(E e in other)
+                _ = Remove(e);
+        }
 
         public IEnumerator<E> GetEnumerator() => throw new NotImplementedException();
 
-        public void IntersectWith(IEnumerable<E> other) => throw new NotImplementedException();
+        public void IntersectWith(IEnumerable<E> other) => ExceptWith(this.Where(e => !other.Contains(e)));
 
-        public bool IsProperSubsetOf(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool IsProperSubsetOf(IEnumerable<E> other) => IsSubsetOf(other) && !IsSupersetOf(other);
 
-        public bool IsProperSupersetOf(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool IsProperSupersetOf(IEnumerable<E> other) => IsSupersetOf(other) && !IsSubsetOf(other);
 
-        public bool IsSubsetOf(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool IsSubsetOf(IEnumerable<E> other) => this.All(e => other.Contains(e));
 
-        public bool IsSupersetOf(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool IsSupersetOf(IEnumerable<E> other) => other.All(e => Contains(e));
 
-        public bool Overlaps(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool Overlaps(IEnumerable<E> other) => other.Any(e => Contains(e));
 
         public bool Remove(E item)
         {
@@ -59,11 +63,19 @@ namespace Algolib.Structures
             return true;
         }
 
-        public bool SetEquals(IEnumerable<E> other) => throw new NotImplementedException();
+        public bool SetEquals(IEnumerable<E> other) => IsSubsetOf(other) && IsSupersetOf(other);
 
-        public void SymmetricExceptWith(IEnumerable<E> other) => throw new NotImplementedException();
+        public void SymmetricExceptWith(IEnumerable<E> other)
+        {
+            foreach(E e in other)
+                _ = Contains(e) ? Remove(e) : Add(e);
+        }
 
-        public void UnionWith(IEnumerable<E> other) => throw new NotImplementedException();
+        public void UnionWith(IEnumerable<E> other)
+        {
+            foreach(E e in other)
+                _ = Add(e);
+        }
 
         void ICollection<E>.Add(E item) => Add(item);
 
