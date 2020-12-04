@@ -38,7 +38,7 @@ namespace Algolib.Structures
                 _ = Remove(e);
         }
 
-        public IEnumerator<E> GetEnumerator() => throw new NotImplementedException();
+        public IEnumerator<E> GetEnumerator() => new AVLEnumerator(this);
 
         public void IntersectWith(IEnumerable<E> other) => ExceptWith(this.Where(e => !other.Contains(e)));
 
@@ -262,9 +262,9 @@ namespace Algolib.Structures
 
             public AVLInnerNode<T> Parent { get; set; }
 
-            public IAVLNode<T> Minimum => this;
+            public IAVLNode<T> Minimum => Parent?.Minimum;
 
-            public IAVLNode<T> Maximum => this;
+            public IAVLNode<T> Maximum => Parent?.Maximum;
 
             public AVLHeaderNode() => Parent = null;
         }
@@ -346,6 +346,58 @@ namespace Algolib.Structures
                 int rightHeight = right == null ? 0 : right.Height;
 
                 Height = Math.Max(leftHeight, rightHeight) + 1;
+            }
+        }
+
+        private class AVLEnumerator : IEnumerator<E>
+        {
+            private readonly AVLTree<E> tree;
+            private IAVLNode<E> currentNode;
+
+            public E Current =>
+                currentNode is AVLInnerNode<E> node ? node.Element : throw new InvalidOperationException();
+
+            object IEnumerator.Current => Current;
+
+            public AVLEnumerator(AVLTree<E> tree)
+            {
+                this.tree = tree;
+                currentNode = tree.tree;
+            }
+
+            public bool MoveNext()
+            {
+                if(currentNode == null)
+                    return false;
+
+                if(currentNode.Height > 0)
+                {
+                    if(currentNode.Right != null)
+                        currentNode = currentNode.Right.Minimum;
+                    else
+                    {
+                        while(currentNode.Parent.Height > 0 && currentNode.Parent.Left != currentNode)
+                            currentNode = currentNode.Parent;
+
+                        currentNode = currentNode.Parent;
+                    }
+                }
+                else
+                    currentNode = currentNode.Minimum;
+
+                if((currentNode?.Height ?? 0) == 0)
+                {
+                    currentNode = null;
+                    return false;
+                }
+
+                return true;
+            }
+
+            public void Reset() => currentNode = tree.tree;
+
+            public void Dispose()
+            {
             }
         }
     }
