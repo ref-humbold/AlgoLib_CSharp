@@ -19,7 +19,35 @@ namespace Algolib.Structures
             set => tree.Parent = value;
         }
 
-        public bool Add(E item) => throw new NotImplementedException();
+        public bool Add(E item)
+        {
+            AVLInnerNode<E> node_parent =
+                findNode(item, (n, e) => search(n, e) == null
+                                         || comparer.Compare(search(n, e).Element, e) == 0);
+
+            if(node_parent == null)
+            {
+                Root = new AVLInnerNode<E>(item);
+                ++Count;
+                return true;
+            }
+
+            AVLInnerNode<E> theNode = search(node_parent, item);
+
+            if(theNode != null)
+                return false;
+
+            AVLInnerNode<E> newNode = new AVLInnerNode<E>(item);
+
+            if(comparer.Compare(item, node_parent.Element) < 0)
+                node_parent.Left = newNode;
+            else
+                node_parent.Right = newNode;
+
+            balance(node_parent);
+            ++Count;
+            return true;
+        }
 
         public void Clear()
         {
@@ -215,8 +243,8 @@ namespace Algolib.Structures
         // Counts current node balance.
         private int countBalance(AVLInnerNode<E> node)
         {
-            int leftHeight = node.Left == null ? 0 : node.Left.Height;
-            int rightHeight = node.Right == null ? 0 : node.Right.Height;
+            int leftHeight = node.Left?.Height ?? 0;
+            int rightHeight = node.Right?.Height ?? 0;
 
             return leftHeight - rightHeight;
         }
@@ -236,37 +264,6 @@ namespace Algolib.Structures
 
             // Searches in its subtree for the node with maximal value.
             IAVLNode<T> Maximum { get; }
-        }
-
-        private class AVLHeaderNode<T> : IAVLNode<T>
-        {
-            public int Height => 0;
-
-            IAVLNode<T> IAVLNode<T>.Parent
-            {
-                get => Parent;
-                set => Parent = value as AVLInnerNode<T>;
-            }
-
-            public IAVLNode<T> Left
-            {
-                get => null;
-                set { }
-            }
-
-            public IAVLNode<T> Right
-            {
-                get => null;
-                set { }
-            }
-
-            public AVLInnerNode<T> Parent { get; set; }
-
-            public IAVLNode<T> Minimum => Parent?.Minimum;
-
-            public IAVLNode<T> Maximum => Parent?.Maximum;
-
-            public AVLHeaderNode() => Parent = null;
         }
 
         private class AVLInnerNode<T> : IAVLNode<T>
@@ -342,11 +339,42 @@ namespace Algolib.Structures
 
             private void countHeight()
             {
-                int leftHeight = left == null ? 0 : left.Height;
-                int rightHeight = right == null ? 0 : right.Height;
+                int leftHeight = left?.Height ?? 0;
+                int rightHeight = right?.Height ?? 0;
 
                 Height = Math.Max(leftHeight, rightHeight) + 1;
             }
+        }
+
+        private class AVLHeaderNode<T> : IAVLNode<T>
+        {
+            public int Height => 0;
+
+            IAVLNode<T> IAVLNode<T>.Parent
+            {
+                get => Parent;
+                set => Parent = value as AVLInnerNode<T>;
+            }
+
+            public IAVLNode<T> Left
+            {
+                get => null;
+                set { }
+            }
+
+            public IAVLNode<T> Right
+            {
+                get => null;
+                set { }
+            }
+
+            public AVLInnerNode<T> Parent { get; set; }
+
+            public IAVLNode<T> Minimum => Parent == null ? (IAVLNode<T>)this : Parent.Minimum;
+
+            public IAVLNode<T> Maximum => Parent == null ? (IAVLNode<T>)this : Parent.Maximum;
+
+            public AVLHeaderNode() => Parent = null;
         }
 
         private class AVLEnumerator : IEnumerator<E>
@@ -362,7 +390,7 @@ namespace Algolib.Structures
             public AVLEnumerator(AVLTree<E> tree)
             {
                 this.tree = tree;
-                currentNode = tree.tree;
+                Reset();
             }
 
             public bool MoveNext()
