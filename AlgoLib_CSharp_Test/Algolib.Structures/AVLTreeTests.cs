@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
@@ -37,8 +38,17 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void GetEnumerator_When_Then()
+        public void GetEnumerator_WhenNotEmpty_ThenSortedElements()
         {
+            // given
+            List<int> result = new List<int>();
+            IEnumerator<int> enumerator = testObject.GetEnumerator();
+            // when
+            while(enumerator.MoveNext())
+                result.Add(enumerator.Current);
+            // then
+            CollectionAssert.IsOrdered(result);
+            CollectionAssert.AreEquivalent(numbers, result);
         }
 
         [Test]
@@ -92,13 +102,97 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void Remove_When_Then()
+        public void Remove_WhenPresentElement_ThenTrue()
         {
+            foreach(int i in new int[] { 14, 24, 30, 45 })
+            {
+                // when
+                bool result = testObject.Remove(i);
+                // then
+                Assert.IsTrue(result);
+                CollectionAssert.DoesNotContain(testObject, i);
+            }
         }
 
         [Test]
-        public void Clear_When_Then()
+        public void Remove_WhenRootAndTwoElements1()
         {
+            // given
+            int root = 27;
+            int elem = 11;
+
+            testObject = new AVLTree<int>(new int[] { root, elem });
+            // when
+            bool result = testObject.Remove(root);
+            // then
+            Assert.IsTrue(result);
+            CollectionAssert.DoesNotContain(testObject, root);
+            CollectionAssert.Contains(testObject, elem);
+        }
+
+        [Test]
+        public void Remove_WhenRootAndTwoElements2()
+        {
+            // given
+            int root = 11;
+            int elem = 27;
+
+            testObject = new AVLTree<int>(new int[] { root, elem });
+            // when
+            bool result = testObject.Remove(root);
+            // then
+            Assert.IsTrue(result);
+            CollectionAssert.DoesNotContain(testObject, root);
+            CollectionAssert.Contains(testObject, elem);
+        }
+
+        [Test]
+        public void Remove_WhenRootAndOneElement()
+        {
+            // given
+            int root = 0;
+
+            testObject = new AVLTree<int>(new int[] { root });
+            // when
+            bool result = testObject.Remove(root);
+            // then
+            Assert.IsTrue(result);
+            CollectionAssert.DoesNotContain(testObject, root);
+            CollectionAssert.IsEmpty(testObject);
+        }
+
+        [Test]
+        public void Remove_WhenEmpty_ThenFalse()
+        {
+            // given
+            testObject = new AVLTree<int>();
+            // when
+            bool result = testObject.Remove(0);
+            // then
+            Assert.IsFalse(result);
+            CollectionAssert.IsEmpty(testObject);
+        }
+
+        [Test]
+        public void Remove_WhenAbsentElement_ThenFalse()
+        {
+            foreach(int i in new int[] { 111, 140, 187 })
+            {
+                // when
+                bool result = testObject.Remove(i);
+                // then
+                Assert.IsFalse(result);
+                CollectionAssert.DoesNotContain(testObject, i);
+            }
+        }
+
+        [Test]
+        public void Clear_ThenEmpty()
+        {
+            // when
+            testObject.Clear();
+            // then
+            CollectionAssert.IsEmpty(testObject);
         }
 
         [Test]
@@ -107,8 +201,39 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void ExceptWith_When_Then()
+        public void ExceptWith_WhenPresentElements_ThenRemoved()
         {
+            // given
+            List<int> elements = new List<int> { 14, 24, 30, 45 };
+            // when
+            testObject.ExceptWith(elements);
+            // then
+            foreach(int i in elements)
+                CollectionAssert.DoesNotContain(testObject, i);
+        }
+
+        [Test]
+        public void ExceptWith_WhenPresentAndAbsentElements_ThenRemoved()
+        {
+            // given
+            List<int> elements = new List<int> { 14, 162, 30, 195 };
+            // when
+            testObject.ExceptWith(elements);
+            // then
+            foreach(int i in elements)
+                CollectionAssert.DoesNotContain(testObject, i);
+        }
+
+        [Test]
+        public void ExceptWith_WhenAbsentElements_ThenRemoved()
+        {
+            // given
+            List<int> elements = new List<int> { 111, 140, 187 };
+            // when
+            testObject.ExceptWith(elements);
+            // then
+            foreach(int i in elements)
+                CollectionAssert.DoesNotContain(testObject, i);
         }
 
         [Test]

@@ -19,6 +19,32 @@ namespace Algolib.Structures
             set => tree.Parent = value;
         }
 
+        public AVLTree(IComparer<E> comparer = null) => this.comparer = comparer ?? Comparer<E>.Default;
+
+        public AVLTree(IEnumerable<E> enumerable, IComparer<E> comparer = null) : this(comparer)
+        {
+            foreach(E e in enumerable)
+                _ = Add(e);
+        }
+
+        public override string ToString()
+        {
+            string repr = "{|";
+            IEnumerator<E> enumerator = GetEnumerator();
+            bool hasNext = enumerator.MoveNext();
+
+            while(hasNext)
+            {
+                repr += enumerator.Current.ToString();
+                hasNext = enumerator.MoveNext();
+
+                if(hasNext)
+                    repr += ", ";
+            }
+
+            return repr + "|}";
+        }
+
         public bool Add(E item)
         {
             AVLInnerNode<E> node_parent =
@@ -212,7 +238,7 @@ namespace Algolib.Structures
         {
             while(node.Height > 0)
             {
-                AVLInnerNode<E> theNode = node.Parent as AVLInnerNode<E>;
+                AVLInnerNode<E> theNode = node as AVLInnerNode<E>;
                 int newBalance = countBalance(theNode);
 
                 if(newBalance >= 2)
@@ -342,12 +368,14 @@ namespace Algolib.Structures
                 int leftHeight = left?.Height ?? 0;
                 int rightHeight = right?.Height ?? 0;
 
-                Height = Math.Max(leftHeight, rightHeight) + 1;
+                Height = 1 + Math.Max(leftHeight, rightHeight);
             }
         }
 
         private class AVLHeaderNode<T> : IAVLNode<T>
         {
+            private AVLInnerNode<T> inner;
+
             public int Height => 0;
 
             IAVLNode<T> IAVLNode<T>.Parent
@@ -368,7 +396,18 @@ namespace Algolib.Structures
                 set { }
             }
 
-            public AVLInnerNode<T> Parent { get; set; }
+            public AVLInnerNode<T> Parent
+            {
+                get => inner;
+
+                set
+                {
+                    inner = value;
+
+                    if(inner != null)
+                        inner.Parent = this;
+                }
+            }
 
             public IAVLNode<T> Minimum => Parent == null ? (IAVLNode<T>)this : Parent.Minimum;
 
