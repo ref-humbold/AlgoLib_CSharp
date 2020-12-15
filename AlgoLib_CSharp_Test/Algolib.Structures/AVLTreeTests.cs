@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algolib.Structures
 {
@@ -13,9 +14,6 @@ namespace Algolib.Structures
 
         [SetUp]
         public void SetUp() => testObject = new AVLTree<int>(numbers);
-
-        [TearDown]
-        public void TearDown() => testObject = null;
 
         [Test]
         public void Count_WhenEmpty_ThenZero()
@@ -267,8 +265,30 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void SetEquals_When_Then()
+        public void SetEquals_WhenSameElements_ThenTrue()
         {
+            // when
+            bool result = testObject.SetEquals(numbers);
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void SetEquals_WhenMissingElements_ThenFalse()
+        {
+            // when
+            bool result = testObject.SetEquals(numbers.Take(5));
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void SetEquals_WhenAdditionalElements_ThenFalse()
+        {
+            // when
+            bool result = testObject.SetEquals(numbers.Append(1000));
+            // then
+            Assert.IsFalse(result);
         }
 
         [Test]
