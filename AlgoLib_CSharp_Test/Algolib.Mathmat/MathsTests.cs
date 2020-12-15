@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Algolib.Mathmat
 {
     [TestFixture]
-    public class MathsTest
+    public class MathsTests
     {
         [Test]
         public void GCD_WhenNumbersAreComposite_ThenReturnsGCD()
