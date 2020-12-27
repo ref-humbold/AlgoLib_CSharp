@@ -34,29 +34,29 @@ namespace Algolib.Mathmat
                                                 + $" expected to have {equations.Length}");
         }
 
-        /// <param name="i">index of equation</param>
+        /// <param name="i">Index of equation</param>
         /// <returns>i-th equation of this system</returns>
-        public Equation this[int i] => equations[i];
+        public Equation this[Index i] => equations[i];
 
         public override string ToString() =>
             $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
 
         /// <summary>Solves this equation system.</summary>
-        /// <exception cref="InfiniteSolutionsException">if there are infinitely many solutions</exception>
-        /// <exception cref="NoSolutionException">if there is no solution</exception>
+        /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions</exception>
+        /// <exception cref="NoSolutionException">If there is no solution</exception>
         public double[] Solve()
         {
             GaussianReduce();
 
-            if(equations[Count - 1][Count - 1] == 0 && equations[Count - 1].Free == 0)
+            if(equations[^1][^1] == 0 && equations[^1].Free == 0)
                 throw new InfiniteSolutionsException();
 
-            if(equations[Count - 1][Count - 1] == 0 && equations[Count - 1].Free != 0)
+            if(equations[^1][^1] == 0 && equations[^1].Free != 0)
                 throw new NoSolutionException();
 
             double[] solution = new double[Count];
 
-            solution[Count - 1] = equations[Count - 1].Free / equations[Count - 1][Count - 1];
+            solution[^1] = equations[^1].Free / equations[^1][^1];
 
             for(int i = Count - 2; i >= 0; --i)
             {
@@ -103,9 +103,9 @@ namespace Algolib.Mathmat
         }
 
         /// <summary>Swaps two equations in this system.</summary>
-        /// <param name="i">index of first equation</param>
-        /// <param name="j">index of second equation</param>
-        public void Swap(int i, int j)
+        /// <param name="i">Index of first equation</param>
+        /// <param name="j">Index of second equation</param>
+        public void Swap(Index i, Index j)
         {
             Equation temp = equations[i];
 
@@ -114,7 +114,7 @@ namespace Algolib.Mathmat
         }
 
         /// <summary>Checks whether given values solve this equation system.</summary>
-        /// <param name="solution">values to check</param>
+        /// <param name="solution">Values to check</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
         public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
     }

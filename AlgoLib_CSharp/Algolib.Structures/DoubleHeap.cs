@@ -78,13 +78,8 @@ namespace Algolib.Structures
         /// <summary>Retrieves the minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T GetMin()
-        {
-            if(Count == 0)
-                throw new InvalidOperationException("The double heap is empty");
-
-            return heap[indexMin];
-        }
+        public T GetMin() => Count == 0 ? throw new InvalidOperationException("The double heap is empty")
+                                        : heap[indexMin];
 
         /// <summary>
         /// Retrieves the minimal element from this double heap and copies it to the <c>result</c> parameter.
@@ -106,15 +101,13 @@ namespace Algolib.Structures
         /// <summary>Retrieves the maximal element from this double heap.</summary>
         /// <returns>Maximal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T GetMax()
-        {
-            return Count switch
+        public T GetMax() =>
+            Count switch
             {
                 0 => throw new InvalidOperationException("The double heap is empty"),
                 1 => heap[indexMin],
                 _ => heap[indexMax]
             };
-        }
 
         /// <summary>
         /// Retrieves the maximal element from this double heap and copies it to the <c>result</c> parameter.
@@ -194,10 +187,7 @@ namespace Algolib.Structures
             return wasPresent;
         }
 
-        private int compare(int index1, int index2)
-        {
-            return Comparer.Compare(heap[index1], heap[index2]);
-        }
+        private int compare(int index1, int index2) => Comparer.Compare(heap[index1], heap[index2]);
 
         private void doPopAt(int index)
         {

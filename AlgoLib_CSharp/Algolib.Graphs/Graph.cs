@@ -73,7 +73,7 @@ namespace Algolib.Graphs
         public override bool Equals(object obj) =>
             obj is Edge<V> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
 
-        public override int GetHashCode() => Tuple.Create(Source, Destination).GetHashCode();
+        public override int GetHashCode() => (Source, Destination).GetHashCode();
 
         public override string ToString() => $"Edge{{{Source} -- {Destination}}}";
     }

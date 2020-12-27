@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Algolib.Mathmat
 {
     [TestFixture]
-    public class PrimeTest
+    public class PrimeTests
     {
         #region TestFermat
 

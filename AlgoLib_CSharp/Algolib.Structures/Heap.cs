@@ -1,10 +1,10 @@
-﻿// Structure of heap
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
+    // Structure of heap
     public class Heap<T> : IEnumerable<T>
     {
         private readonly List<T> heap;
@@ -64,13 +64,8 @@ namespace Algolib.Structures
         /// <summary>Retrieves the least element from this heap.</summary>
         /// <returns>The least element</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty</exception>
-        public T Get()
-        {
-            if(Count == 0)
-                throw new InvalidOperationException("The heap is empty");
-
-            return heap[0];
-        }
+        public T Get() => Count == 0 ? throw new InvalidOperationException("The heap is empty")
+                                     : heap[0];
 
         /// <summary>
         /// Retrieves the least element from this heap and copies it to the <c>result</c> parameter.

@@ -11,23 +11,21 @@ namespace Algolib.Mathmat
         /// <returns>greatest common divisor</returns>
         public static long GCD(long number1, long number2)
         {
-            Tuple<long, long> numberPair = Tuple.Create(Math.Abs(Math.Min(number1, number2)),
-                                                        Math.Abs(Math.Max(number1, number2)));
+            (long Min, long Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
+                                       Math.Abs(Math.Max(number1, number2)));
 
-            while(numberPair.Item1 > 0)
-                numberPair = Tuple.Create(numberPair.Item2 % numberPair.Item1, numberPair.Item1);
+            while(numberPair.Min > 0)
+                numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
 
-            return numberPair.Item2;
+            return numberPair.Max;
         }
 
         /// <summary>Lowest common multiple of two numbers</summary>
         /// <param name="number1">first number</param>
         /// <param name="number2">second number</param>
         /// <returns>lowest common multiple</returns>
-        public static long LCM(long number1, long number2)
-        {
-            return Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
-        }
+        public static long LCM(long number1, long number2) =>
+            Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
 
         /// <summary>Fast modulo exponentiation</summary>
         /// <param name="baseNum">base</param>
