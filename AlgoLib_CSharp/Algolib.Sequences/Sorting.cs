@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algolib.Sequences
 {
     public sealed class Sorting
     {
+        private static readonly Random random = new Random();
+
         /// <summary>Mutably sorts given sequence using a heap.</summary>
         /// <param name="sequence">A sequence of elements</param>
         public static void HeapSort<T>(List<T> sequence) where T : IComparable
@@ -146,7 +149,7 @@ namespace Algolib.Sequences
             if(indexEnd - indexBegin <= 1)
                 return;
 
-            int indexPivot = indexBegin + choosePivot(indexEnd - indexBegin);
+            int indexPivot = choosePivot(indexBegin, indexEnd);
 
             swap(sequence, indexPivot, indexBegin);
             indexPivot = indexBegin;
@@ -172,23 +175,14 @@ namespace Algolib.Sequences
         }
 
         // Randomly chooses pivot for quick-sort algorithm.
-        private static int choosePivot(int count)
-        {
-            Random random = new Random();
-            int candidate1 = random.Next(count);
-            int candidate2 = random.Next(count);
-            int candidate3 = random.Next(count);
-
-            if(Math.Min(candidate2, candidate3) <= candidate1
-               && candidate1 <= Math.Max(candidate2, candidate3))
-                return candidate2;
-
-            if(Math.Min(candidate1, candidate3) <= candidate2
-               && candidate2 <= Math.Max(candidate1, candidate3))
-                return candidate2;
-
-            return candidate3;
-        }
+        private static int choosePivot(int indexBegin, int indexEnd) =>
+            Enumerable.Empty<int>()
+                .Append(random.Next(indexBegin, indexEnd))
+                .Append(random.Next(indexBegin, indexEnd))
+                .Append(random.Next(indexBegin, indexEnd))
+                .OrderBy(c => c)
+                .Skip(1)
+                .First();
 
         // Swaps two elements in given sequence.
         private static void swap<T>(List<T> sequence, int index1, int index2) where T : IComparable

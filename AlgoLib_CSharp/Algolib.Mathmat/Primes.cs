@@ -7,6 +7,9 @@ namespace Algolib.Mathmat
 {
     public sealed class Primes
     {
+        private const int attempts = 17;
+        private static readonly Random random = new Random();
+
         public static IEnumerable<int> Find(int maxNumber) => Find(0, maxNumber);
 
         public static IEnumerable<int> Find(int minNumber, int maxNumber)
@@ -54,13 +57,11 @@ namespace Algolib.Mathmat
             if(number < 2 || number % 2 == 0 || number % 3 == 0)
                 return false;
 
-            Random rd = new Random();
-
-            for(int i = 0; i < 12; ++i)
+            for(int i = 0; i < attempts; ++i)
             {
-                long rdv = rd.Next(1, number - 1);
+                long witness = random.Next(1, number - 1);
 
-                if(Maths.GCD(rdv, number) > 1 || Maths.PowerMod(rdv, number - 1, number) != 1)
+                if(Maths.GCD(witness, number) > 1 || Maths.PowerMod(witness, number - 1, number) != 1)
                     return false;
             }
 
@@ -80,29 +81,23 @@ namespace Algolib.Mathmat
             if(number < 2 || number % 2 == 0 || number % 3 == 0)
                 return false;
 
-            int multip = number - 1;
+            int multiplicand = number - 1;
 
-            while(multip % 2 == 0)
-                multip >>= 1;
+            while(multiplicand % 2 == 0)
+                multiplicand /= 2;
 
-            Random rd = new Random();
-
-            for(int i = 0; i < 12; ++i)
+            for(int i = 0; i < attempts; ++i)
             {
-                long rdv = rd.Next(1, number - 1);
+                long witness = random.Next(1, number - 1);
 
-                if(Maths.PowerMod(rdv, multip, number) != 1)
+                if(Maths.PowerMod(witness, multiplicand, number) != 1)
                 {
-                    bool isComposite = true;
+                    List<long> exponents = new List<long>();
 
-                    for(int d = multip; d <= number / 2; d <<= 1)
-                    {
-                        long pwm = Maths.PowerMod(rdv, d, number);
+                    for(int d = multiplicand; d <= number / 2; d *= 2)
+                        exponents.Add(d);
 
-                        isComposite = isComposite && pwm != number - 1;
-                    }
-
-                    if(isComposite)
+                    if(exponents.All(d => Maths.PowerMod(witness, d, number) != number - 1))
                         return false;
                 }
             }
