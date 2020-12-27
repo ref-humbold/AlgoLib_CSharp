@@ -69,12 +69,12 @@ namespace Algolib.Text
 
             foreach(int[] code in codes)
             {
-                (int, int) codeTuple = (code[0], code[1]);
+                (int, int) codePair = (code[0], code[1]);
 
-                if(!Equals(previousCode, codeTuple))
+                if(!Equals(previousCode, codePair))
                 {
                     ++codeValue;
-                    previousCode = codeTuple;
+                    previousCode = codePair;
                 }
 
                 factors[(code[2], code[3])] = codeValue;

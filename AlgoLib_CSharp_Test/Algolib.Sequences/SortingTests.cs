@@ -1,14 +1,13 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Sequences
 {
     [TestFixture]
     public class SortingTests
     {
-        private class IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
+        private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
         {
             public int First { get; set; }
             public int Second { get; set; }
@@ -20,17 +19,15 @@ namespace Algolib.Sequences
             }
 
             public int CompareTo(object obj) =>
-                obj is null && !(obj is IntPair)
-                        ? throw new ArgumentException()
-                        : CompareTo(obj as IntPair);
+                obj is IntPair pair ? CompareTo(pair) : throw new ArgumentException();
 
-            public int CompareTo([AllowNull] IntPair other) =>
-                other is null ? 1 : First.CompareTo(other.First);
+            public int CompareTo(IntPair other) => First.CompareTo(other.First);
 
-            public override bool Equals(object obj) => obj is IntPair && Equals(obj as IntPair);
+            public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
 
-            public bool Equals([AllowNull] IntPair other) =>
-                !(other is null) && First == other.First && Second == other.Second;
+            public bool Equals(IntPair other) => First == other.First && Second == other.Second;
+
+            public override int GetHashCode() => (First, Second).GetHashCode();
 
             public override string ToString() => $"IntPair({First}, {Second})";
         }
@@ -83,7 +80,7 @@ namespace Algolib.Sequences
         }
 
         [Test]
-        public void TopDownMergeSort_WhenSortingTuplesByFirst_ThenSortingIsStable()
+        public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
         {
             // given
             List<IntPair> sequence = new List<IntPair>() {
@@ -133,7 +130,7 @@ namespace Algolib.Sequences
         }
 
         [Test]
-        public void BottomUpMergeSort_WhenSortingTuplesByFirst_ThenSortingIsStable()
+        public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
         {
             // given
             List<IntPair> sequence = new List<IntPair>() {

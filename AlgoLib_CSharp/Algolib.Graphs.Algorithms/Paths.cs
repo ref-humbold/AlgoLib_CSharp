@@ -46,14 +46,14 @@ namespace Algolib.Graphs.Algorithms
             Dictionary<V, double> distances = new Dictionary<V, double>(
                 graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) { [source] = 0.0 };
             HashSet<V> visited = new HashSet<V>();
-            Heap<Tuple<double, V>> vertexHeap =
-                    new Heap<Tuple<double, V>>((pair1, pair2) => pair1.Item1.CompareTo(pair2.Item2));
+            Heap<(double Distance, V Vertex)> vertexHeap = new Heap<(double Distance, V Vertex)>(
+                        (pair1, pair2) => pair1.Distance.CompareTo(pair2.Vertex));
 
-            vertexHeap.Push(Tuple.Create(0.0, source));
+            vertexHeap.Push((0.0, source));
 
             while(vertexHeap.Count > 0)
             {
-                V v = vertexHeap.Pop().Item2;
+                V v = vertexHeap.Pop().Vertex;
 
                 if(!visited.Contains(v))
                 {
@@ -67,7 +67,7 @@ namespace Algolib.Graphs.Algorithms
                         if(distances[v] + weight < distances[neighbour])
                         {
                             distances[neighbour] = distances[v] + weight;
-                            vertexHeap.Push(Tuple.Create(distances[neighbour], neighbour));
+                            vertexHeap.Push((distances[neighbour], neighbour));
                         }
                     }
                 }
@@ -79,24 +79,24 @@ namespace Algolib.Graphs.Algorithms
         /// <summary>Floyd-Warshall algorithm</summary>
         /// <param name="graph">A directed weighted graph</param>
         /// <returns>Dictionary of distances for each pair of vertices</returns>
-        public static Dictionary<Tuple<V, V>, double> FloydWarshall<V, VP, EP>(
+        public static Dictionary<(V Source, V Destination), double> FloydWarshall<V, VP, EP>(
             IDirectedGraph<V, VP, EP> graph) where EP : IWeighted
         {
-            Dictionary<Tuple<V, V>, double> distances = new Dictionary<Tuple<V, V>, double>();
+            Dictionary<(V Source, V Destination), double> distances =
+                new Dictionary<(V Source, V Destination), double>();
 
             foreach(V v in graph.Vertices)
                 foreach(V u in graph.Vertices)
-                    distances[Tuple.Create(v, u)] = v.Equals(u) ? 0.0 : IWeighted.Infinity;
+                    distances[(v, u)] = v.Equals(u) ? 0.0 : IWeighted.Infinity;
 
             foreach(Edge<V> edge in graph.Edges)
-                distances[Tuple.Create(edge.Source, edge.Destination)] = graph[edge].Weight;
+                distances[(edge.Source, edge.Destination)] = graph[edge].Weight;
 
             foreach(V w in graph.Vertices)
                 foreach(V v in graph.Vertices)
                     foreach(V u in graph.Vertices)
-                        distances[Tuple.Create(v, u)] =
-                            Math.Min(distances[Tuple.Create(v, u)],
-                                     distances[Tuple.Create(v, w)] + distances[Tuple.Create(w, u)]);
+                        distances[(v, u)] = Math.Min(distances[(v, u)],
+                                                     distances[(v, w)] + distances[(w, u)]);
 
             return distances;
         }
