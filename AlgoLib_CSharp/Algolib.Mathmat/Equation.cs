@@ -18,9 +18,9 @@ namespace Algolib.Mathmat
             Free = free;
         }
 
-        /// <param name="i">index of a variable</param>
+        /// <param name="i">Index of a variable</param>
         /// <returns>coefficient by i-th variable</returns>
-        public double this[int i] => Coefficients[i];
+        public double this[Index i] => Coefficients[i];
 
         /// <returns>string representation of this equation</returns>
         public override string ToString()
@@ -67,10 +67,8 @@ namespace Algolib.Mathmat
         /// <summary>Checks whether specified values solve this equation.</summary>
         /// <param name="solution">values to check</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
-        public bool IsSolution(double[] solution)
-        {
-            return solution.Length == Coefficients.Length
+        public bool IsSolution(double[] solution) =>
+            solution.Length == Coefficients.Length
                 && Coefficients.Zip(solution).Select(p => p.First * p.Second).Sum() == Free;
-        }
     }
 }

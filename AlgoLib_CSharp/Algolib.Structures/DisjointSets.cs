@@ -1,9 +1,9 @@
-// Structure of disjoint sets (union-find)
 using System;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
+    // Structure of disjoint sets (union-find)
     public class DisjointSets<E>
     {
         // Map of element represents
@@ -40,10 +40,7 @@ namespace Algolib.Structures
         /// <summary>Checks whether an element belongs to any set.</summary>
         /// <param name="element">Element to be found</param>
         /// <returns><c>true</c> if element is contained, otherwise <c>false</c></returns>
-        public bool Contains(E element)
-        {
-            return represents.ContainsKey(element);
-        }
+        public bool Contains(E element) => represents.ContainsKey(element);
 
         /// <summary>Adds a new element as singleton set.</summary>
         /// <param name="element">New element</param>
@@ -119,9 +116,6 @@ namespace Algolib.Structures
         /// <param name="element2">Element from second set</param>
         /// <returns><c>true</c> if elements are in same set, otherwise <c>false</c></returns>
         /// <exception cref="KeyNotFoundException">If either element is not present</exception>
-        public bool IsSameSet(E element1, E element2)
-        {
-            return this[element1].Equals(this[element2]);
-        }
+        public bool IsSameSet(E element1, E element2) => this[element1].Equals(this[element2]);
     }
 }
