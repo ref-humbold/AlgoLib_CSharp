@@ -247,28 +247,138 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void IsProperSubsetOf_When_Then()
+        public void IsProperSubsetOf_WhenPartialSet_ThenFalse()
         {
+            // when
+            bool result = testObject.IsProperSubsetOf(presentNumbers);
+            // then
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsProperSupersetOf_When_Then()
+        public void IsProperSubsetOf_WhenWholeSet_ThenFalse()
         {
+            // when
+            bool result = testObject.IsProperSubsetOf(numbers);
+            // then
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsSubsetOf_When_Then()
+        public void IsProperSubsetOf_WhenExtendedSet_ThenTrue()
         {
+            // when
+            bool result = testObject.IsProperSubsetOf(numbers.Union(absentNumbers));
+            // then
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void IsSupersetOf_When_Then()
+        public void IsProperSupersetOf_WhenPartialSet_ThenTrue()
         {
+            // when
+            bool result = testObject.IsProperSupersetOf(presentNumbers);
+            // then
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void Overlaps_When_Then()
+        public void IsProperSupersetOf_WhenWholeSet_ThenFalse()
         {
+            // when
+            bool result = testObject.IsProperSupersetOf(numbers);
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IsProperSupersetOf_WhenExtendedSet_ThenFalse()
+        {
+            // when
+            bool result = testObject.IsProperSupersetOf(numbers.Union(absentNumbers));
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IsSubsetOf_WhenPartialSet_ThenFalse()
+        {
+            // when
+            bool result = testObject.IsSubsetOf(presentNumbers);
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IsSubsetOf_WhenWholeSet_ThenTrue()
+        {
+            // when
+            bool result = testObject.IsSubsetOf(numbers);
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsSubsetOf_WhenExtendedSet_ThenTrue()
+        {
+            // when
+            bool result = testObject.IsSubsetOf(numbers.Union(absentNumbers));
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsSupersetOf_WhenPartialSet_ThenTrue()
+        {
+            // when
+            bool result = testObject.IsSupersetOf(presentNumbers);
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsSupersetOf_WhenWholeSet_ThenTrue()
+        {
+            // when
+            bool result = testObject.IsSupersetOf(numbers);
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IsSupersetOf_WhenExtendedSet_ThenFalse()
+        {
+            // when
+            bool result = testObject.IsSupersetOf(numbers.Union(absentNumbers));
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void Overlaps_WhenPresentElements_ThenTrue()
+        {
+            // when
+            bool result = testObject.Overlaps(presentNumbers);
+            // then
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Overlaps_WhenAbsentElements_ThenFalse()
+        {
+            // when
+            bool result = testObject.Overlaps(absentNumbers);
+            // then
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void Overlaps_WhenPresentAndAbsentElements_ThenTrue()
+        {
+            // when
+            bool result = testObject.Overlaps(absentNumbers.Union(presentNumbers));
+            // then
+            Assert.IsTrue(result);
         }
 
         [Test]
