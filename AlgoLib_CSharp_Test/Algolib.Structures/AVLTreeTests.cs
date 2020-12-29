@@ -7,8 +7,9 @@ namespace Algolib.Structures
     [TestFixture]
     public class AVLTreeTests
     {
-        private readonly int[] numbers =
-            new int[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+        private readonly int[] numbers = new int[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+        private readonly int[] presentNumbers = new int[] { 14, 24, 30, 45 };
+        private readonly int[] absentNumbers = new int[] { 111, 140, 187 };
 
         private AVLTree<int> testObject;
 
@@ -64,7 +65,7 @@ namespace Algolib.Structures
         [Test]
         public void Contains_WhenAbsentElement_ThenFalse()
         {
-            foreach(int i in new int[] { 111, 140, 187 })
+            foreach(int i in absentNumbers)
             {
                 // when
                 bool result = testObject.Contains(i);
@@ -76,7 +77,7 @@ namespace Algolib.Structures
         [Test]
         public void Add_WhenNewElement_ThenTrue()
         {
-            foreach(int i in new int[] { 111, 140, 187 })
+            foreach(int i in absentNumbers)
             {
                 // when
                 bool result = testObject.Add(i);
@@ -89,7 +90,7 @@ namespace Algolib.Structures
         [Test]
         public void Add_WhenPresentElement_ThenFalse()
         {
-            foreach(int i in new int[] { 14, 24, 30, 45 })
+            foreach(int i in presentNumbers)
             {
                 // when
                 bool result = testObject.Add(i);
@@ -102,7 +103,7 @@ namespace Algolib.Structures
         [Test]
         public void Remove_WhenPresentElement_ThenTrue()
         {
-            foreach(int i in new int[] { 14, 24, 30, 45 })
+            foreach(int i in presentNumbers)
             {
                 // when
                 bool result = testObject.Remove(i);
@@ -174,7 +175,7 @@ namespace Algolib.Structures
         [Test]
         public void Remove_WhenAbsentElement_ThenFalse()
         {
-            foreach(int i in new int[] { 111, 140, 187 })
+            foreach(int i in absentNumbers)
             {
                 // when
                 bool result = testObject.Remove(i);
@@ -201,42 +202,48 @@ namespace Algolib.Structures
         [Test]
         public void ExceptWith_WhenPresentElements_ThenRemoved()
         {
-            // given
-            List<int> elements = new List<int> { 14, 24, 30, 45 };
             // when
-            testObject.ExceptWith(elements);
+            testObject.ExceptWith(presentNumbers);
             // then
-            foreach(int i in elements)
-                CollectionAssert.DoesNotContain(testObject, i);
-        }
+            foreach(int i in numbers.Except(presentNumbers))
+                CollectionAssert.Contains(testObject, i);
 
-        [Test]
-        public void ExceptWith_WhenPresentAndAbsentElements_ThenRemoved()
-        {
-            // given
-            List<int> elements = new List<int> { 14, 162, 30, 195 };
-            // when
-            testObject.ExceptWith(elements);
-            // then
-            foreach(int i in elements)
+            foreach(int i in presentNumbers)
                 CollectionAssert.DoesNotContain(testObject, i);
         }
 
         [Test]
         public void ExceptWith_WhenAbsentElements_ThenRemoved()
         {
-            // given
-            List<int> elements = new List<int> { 111, 140, 187 };
             // when
-            testObject.ExceptWith(elements);
+            testObject.ExceptWith(absentNumbers);
             // then
-            foreach(int i in elements)
+            foreach(int i in numbers)
+                CollectionAssert.Contains(testObject, i);
+
+            foreach(int i in absentNumbers)
                 CollectionAssert.DoesNotContain(testObject, i);
         }
 
         [Test]
-        public void IntersectWith_When_Then()
+        public void IntersectWith_WhenPresentElements_ThenCommonElements()
         {
+            // when
+            testObject.IntersectWith(presentNumbers);
+            // then
+            Assert.AreEqual(presentNumbers.Length, testObject.Count);
+
+            foreach(int i in presentNumbers)
+                CollectionAssert.Contains(testObject, i);
+        }
+
+        [Test]
+        public void IntersectWith_WhenAbsentElements_ThenEmpty()
+        {
+            // when
+            testObject.IntersectWith(absentNumbers);
+            // then
+            CollectionAssert.IsEmpty(testObject);
         }
 
         [Test]
@@ -292,13 +299,70 @@ namespace Algolib.Structures
         }
 
         [Test]
-        public void SymmetricExceptWith_When_Then()
+        public void SymmetricExceptWith_WhenPresentElements_ThenRemoved()
         {
+            // when
+            testObject.SymmetricExceptWith(presentNumbers);
+            // then
+            foreach(int i in numbers.Except(presentNumbers))
+                CollectionAssert.Contains(testObject, i);
+
+            foreach(int i in presentNumbers)
+                CollectionAssert.DoesNotContain(testObject, i);
         }
 
         [Test]
-        public void UnionWith_When_Then()
+        public void SymmetricExceptWith_WhenPresentAndAbsentElements_ThenPresentRemovedAndAbsentAdded()
         {
+            // given
+            List<int> elements = presentNumbers.Union(absentNumbers).ToList();
+            // when
+            testObject.SymmetricExceptWith(elements);
+            // then
+            foreach(int i in numbers.Except(presentNumbers))
+                CollectionAssert.Contains(testObject, i);
+
+            foreach(int i in presentNumbers)
+                CollectionAssert.DoesNotContain(testObject, i);
+
+            foreach(int i in absentNumbers)
+                CollectionAssert.Contains(testObject, i);
+        }
+
+        [Test]
+        public void SymmetricExceptWith_WhenAbsentElements_ThenAdded()
+        {
+            // when
+            testObject.SymmetricExceptWith(absentNumbers);
+            // then
+            foreach(int i in numbers)
+                CollectionAssert.Contains(testObject, i);
+
+            foreach(int i in absentNumbers)
+                CollectionAssert.Contains(testObject, i);
+        }
+
+        [Test]
+        public void UnionWith_WhenPresentElements_ThenCommonElements()
+        {
+            // when
+            testObject.UnionWith(presentNumbers);
+            // then
+            foreach(int i in numbers)
+                CollectionAssert.Contains(testObject, i);
+        }
+
+        [Test]
+        public void UnionWith_WhenAbsentElements_ThenAllElements()
+        {
+            // when
+            testObject.UnionWith(absentNumbers);
+            // then
+            foreach(int i in numbers)
+                CollectionAssert.Contains(testObject, i);
+
+            foreach(int i in absentNumbers)
+                CollectionAssert.Contains(testObject, i);
         }
     }
 }

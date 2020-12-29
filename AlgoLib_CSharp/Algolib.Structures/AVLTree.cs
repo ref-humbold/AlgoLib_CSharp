@@ -94,7 +94,12 @@ namespace Algolib.Structures
 
         public IEnumerator<E> GetEnumerator() => new AVLEnumerator(this);
 
-        public void IntersectWith(IEnumerable<E> other) => ExceptWith(this.Where(e => !other.Contains(e)));
+        public void IntersectWith(IEnumerable<E> other)
+        {
+            HashSet<E> otherSet = other.ToHashSet();
+
+            ExceptWith(this.Where(e => !otherSet.Contains(e)).ToList());
+        }
 
         public bool IsProperSubsetOf(IEnumerable<E> other) => IsSubsetOf(other) && !IsSupersetOf(other);
 
