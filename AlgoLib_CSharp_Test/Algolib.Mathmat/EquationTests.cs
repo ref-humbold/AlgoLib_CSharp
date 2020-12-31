@@ -1,6 +1,6 @@
 ﻿// Tests: Structure of linear equation
-using System;
 using NUnit.Framework;
+using System;
 
 namespace Algolib.Mathmat
 {
