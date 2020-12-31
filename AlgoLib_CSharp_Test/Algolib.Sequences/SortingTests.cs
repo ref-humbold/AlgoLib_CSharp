@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Algolib.Sequences
 {
+    // Tests: Algorithms for sorting
     [TestFixture]
     public class SortingTests
     {
@@ -42,7 +43,7 @@ namespace Algolib.Sequences
             // when
             Sorting.HeapSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            Assert.That(sequence, Is.Ordered);
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace Algolib.Sequences
             // when
             Sorting.HeapSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            Assert.That(sequence, Is.Empty);
         }
 
         [Test]
@@ -76,7 +77,7 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            Assert.That(sequence, Is.Ordered);
         }
 
         [Test]
@@ -90,9 +91,9 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
-            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
-            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+            Assert.That(sequence, Is.Ordered);
+            Assert.That(sequence.IndexOf(new IntPair(3, 17)), Is.LessThan(sequence.IndexOf(new IntPair(3, 4))));
+            Assert.That(sequence.IndexOf(new IntPair(9, 12)), Is.LessThan(sequence.IndexOf(new IntPair(9, -14))));
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            Assert.That(sequence, Is.Empty);
         }
 
         [Test]
@@ -112,7 +113,7 @@ namespace Algolib.Sequences
             // when
             TestDelegate testDelegate = () => Sorting.TopDownMergeSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            Assert.That(testDelegate, Throws.TypeOf<ArgumentNullException>());
         }
 
         #endregion
@@ -126,7 +127,7 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            Assert.That(sequence, Is.Ordered);
         }
 
         [Test]
@@ -140,9 +141,9 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
-            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
-            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+            Assert.That(sequence, Is.Ordered);
+            Assert.That(sequence.IndexOf(new IntPair(3, 17)), Is.LessThan(sequence.IndexOf(new IntPair(3, 4))));
+            Assert.That(sequence.IndexOf(new IntPair(9, 12)), Is.LessThan(sequence.IndexOf(new IntPair(9, -14))));
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            Assert.That(sequence, Is.Empty);
         }
 
         [Test]
@@ -162,7 +163,7 @@ namespace Algolib.Sequences
             // when
             TestDelegate testDelegate = () => Sorting.BottomUpMergeSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            Assert.That(testDelegate, Throws.TypeOf<ArgumentNullException>());
         }
 
         #endregion
@@ -176,7 +177,7 @@ namespace Algolib.Sequences
             // when
             Sorting.QuickSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            Assert.That(sequence, Is.Ordered);
         }
 
         [Test]
@@ -187,7 +188,7 @@ namespace Algolib.Sequences
             // when
             Sorting.QuickSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            Assert.That(sequence, Is.Empty);
         }
 
         [Test]
@@ -196,7 +197,7 @@ namespace Algolib.Sequences
             // when
             TestDelegate testDelegate = () => Sorting.QuickSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            Assert.That(testDelegate, Throws.TypeOf<ArgumentNullException>());
         }
 
         #endregion
