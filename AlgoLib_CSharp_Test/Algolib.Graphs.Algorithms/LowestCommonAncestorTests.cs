@@ -24,12 +24,6 @@ namespace Algolib.Graphs.Algorithms
             testObject = new LowestCommonAncestor<int, object, object>(tree, 0);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
-
         [Test]
         public void Find_WhenSameVertex_ThenVertexIsLCA()
         {

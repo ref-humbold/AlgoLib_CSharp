@@ -6,67 +6,55 @@ namespace Algolib.Mathmat
     [TestFixture]
     public class EquationSystemTests
     {
-        protected EquationSystem TestObject;
-
-        [SetUp]
-        public void SetUp()
+        [Test]
+        public void Solve_WhenSingleSolution_ThenSolution()
         {
-            TestObject = new EquationSystem(new Equation[] {
+            //given
+            EquationSystem testObject = new EquationSystem(new Equation[] {
                 new Equation(new double [] { 2, 3, -2 }, 15),
                 new Equation(new double [] { 7, -1, 0 }, 4),
                 new Equation(new double[] { -1, 6, 4 }, 9)
             });
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            TestObject = null;
-        }
-
-        [Test]
-        public void Solve_WhenSingleSolution_ThenSolution()
-        {
             // when
-            double[] result = TestObject.Solve();
+            double[] result = testObject.Solve();
             // then
-            Assert.AreEqual(new double[] { 1, 3, -2 }, result);
-            Assert.IsTrue(TestObject.IsSolution(result));
-            Assert.IsFalse(TestObject.IsSolution(new double[] { -2, -18, -36.5 }));
+            Assert.That(result, Is.EqualTo(new double[] { 1, 3, -2 }));
+            Assert.That(testObject.IsSolution(result), Is.True);
+            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.False);
         }
 
         [Test]
         public void Solve_WhenNoSolution_ThenNoSolutionException()
         {
             // given
-            TestObject = new EquationSystem(new Equation[] {
+            EquationSystem testObject = new EquationSystem(new Equation[] {
                 new Equation(new double [] { 2, 3, -2 }, 15),
                 new Equation(new double [] { 7, -1, 0 }, 4),
                 new Equation(new double[] { -1, -1.5, 1 }, -1)
             });
             // when
-            TestDelegate testDelegate = () => TestObject.Solve();
+            TestDelegate testDelegate = () => testObject.Solve();
             // then
-            Assert.Throws<NoSolutionException>(testDelegate);
-            Assert.IsFalse(TestObject.IsSolution(new double[] { 1, 3, -2 }));
-            Assert.IsFalse(TestObject.IsSolution(new double[] { -2, -18, -36.5 }));
+            Assert.That(testDelegate, Throws.TypeOf<NoSolutionException>());
+            Assert.That(testObject.IsSolution(new double[] { 1, 3, -2 }), Is.False);
+            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.False);
         }
 
         [Test]
         public void Solve_WhenInfiniteSolutions_ThenInfiniteSolutionsException()
         {
             // given
-            TestObject = new EquationSystem(new Equation[] {
+            EquationSystem testObject = new EquationSystem(new Equation[] {
                 new Equation(new double [] { 2, 3, -2 }, 15),
                 new Equation(new double [] { 7, -1, 0 }, 4),
                 new Equation(new double[] { 4, 6, -4 }, 30)
             });
             // when
-            TestDelegate testDelegate = () => TestObject.Solve();
+            TestDelegate testDelegate = () => testObject.Solve();
             // then
-            Assert.Throws<InfiniteSolutionsException>(testDelegate);
-            Assert.IsTrue(TestObject.IsSolution(new double[] { 1, 3, -2 }));
-            Assert.IsTrue(TestObject.IsSolution(new double[] { -2, -18, -36.5 }));
+            Assert.That(testDelegate, Throws.TypeOf<InfiniteSolutionsException>());
+            Assert.That(testObject.IsSolution(new double[] { 1, 3, -2 }), Is.True);
+            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.True);
         }
     }
 }

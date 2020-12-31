@@ -22,16 +22,7 @@ namespace Algolib.Structures
         }
 
         [SetUp]
-        public void SetUp()
-        {
-            testObject = new DoubleHeap<int>(numbers);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
+        public void SetUp() => testObject = new DoubleHeap<int>(numbers);
 
         [Test]
         public void Count_WhenEmpty_ThenZero()

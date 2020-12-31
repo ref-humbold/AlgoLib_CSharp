@@ -11,16 +11,8 @@ namespace Algolib.Graphs
         private DirectedSimpleGraph<int, string, string> testObject;
 
         [SetUp]
-        public void SetUp()
-        {
+        public void SetUp() =>
             testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
 
         [Test]
         public void IndexerGetSet_WhenSettingProperty_ThenProperty()

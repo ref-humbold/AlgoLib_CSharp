@@ -21,12 +21,6 @@ namespace Algolib.Graphs
             testObject.AddVertex(7, 2);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
-
         [Test]
         public void IndexerGetSet_WhenSettingProperty_ThenProperty()
         {

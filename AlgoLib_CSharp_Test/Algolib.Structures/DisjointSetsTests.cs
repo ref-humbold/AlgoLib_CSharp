@@ -12,16 +12,7 @@ namespace Algolib.Structures
         private DisjointSets<int> testObject;
 
         [SetUp]
-        public void SetUp()
-        {
-            testObject = new DisjointSets<int>(Enumerable.Range(0, 10));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
+        public void SetUp() => testObject = new DisjointSets<int>(Enumerable.Range(0, 10));
 
         [Test]
         public void Count_WhenElements_ThenSetsCount()

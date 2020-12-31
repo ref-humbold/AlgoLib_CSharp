@@ -11,16 +11,8 @@ namespace Algolib.Graphs
         private UndirectedSimpleGraph<int, string, string> testObject;
 
         [SetUp]
-        public void SetUp()
-        {
+        public void SetUp() =>
             testObject = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
 
         [Test]
         public void IndexerGetSet_WhenSettingProperty_ThenProperty()
