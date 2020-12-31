@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using FluentAssertions;
+using System.Collections.Generic;
 
 namespace Algolib.Geometry
 {
@@ -17,11 +18,11 @@ namespace Algolib.Geometry
             // when
             List<Point2D> result = PointsSorting.SortByX(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point2D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point2D> {
                     Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-2.0, 3.0),
                     Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                    Point2D.Of(3.0, 2.0) }));
+                    Point2D.Of(3.0, 2.0) });
         }
 
         [Test]
@@ -35,11 +36,11 @@ namespace Algolib.Geometry
             // when
             List<Point2D> result = PointsSorting.SortByY(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point2D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point2D> {
                     Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
                     Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0) }));
+                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0) });
         }
 
         [Test]
@@ -53,11 +54,11 @@ namespace Algolib.Geometry
             // when
             List<Point3D> result = PointsSorting.SortByX(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point3D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point3D> {
                 Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(-2.0, -3.0, -5.0),
                     Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                    Point3D.Of(3.0, 2.0, 5.0) }));
+                    Point3D.Of(3.0, 2.0, 5.0) });
         }
 
         [Test]
@@ -71,11 +72,11 @@ namespace Algolib.Geometry
             // when
             List<Point3D> result = PointsSorting.SortByY(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point3D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point3D> {
                     Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
                     Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
-                    Point3D.Of(2.0, 3.0, -5.0) }));
+                    Point3D.Of(2.0, 3.0, -5.0) });
         }
 
         [Test]
@@ -89,11 +90,11 @@ namespace Algolib.Geometry
             // when
             List<Point3D> result = PointsSorting.SortByZ(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point3D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point3D> {
                     Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
                     Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
-                    Point3D.Of(-3.0, 2.0, 5.0) }));
+                    Point3D.Of(-3.0, 2.0, 5.0) });
         }
 
         [Test]
@@ -107,11 +108,11 @@ namespace Algolib.Geometry
             // when
             List<Point2D> result = PointsSorting.SortByAngle(sequence);
             // then
-            Assert.That(result, Is.Not.SameAs(sequence));
-            Assert.That(result, Is.EqualTo(new List<Point2D> {
+            result.Should().NotBeSameAs(sequence);
+            result.Should().Equal(new List<Point2D> {
                     Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
                     Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0) }));
+                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0) });
         }
     }
 }

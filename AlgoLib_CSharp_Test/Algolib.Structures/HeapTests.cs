@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Algolib.Structures
             // when
             testObject.Push(19);
             // then
-            Assert.That(testObject, Has.Count.EqualTo(1));
+            testObject.Should().HaveCount(1);
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace Algolib.Structures
                 result.Add(testObject.Pop());
             // then
             elements.Sort(comparison);
-            Assert.That(result, Is.EqualTo(elements));
+            result.Should().Equal(elements);
         }
 
         [Test]
@@ -50,17 +51,17 @@ namespace Algolib.Structures
             // when
             int result = testObject.Get();
             // then
-            Assert.That(result, Is.EqualTo(elements.Max()));
-            Assert.That(testObject, Has.Count.EqualTo(elements.Count));
+            result.Should().Be(elements.Max());
+            testObject.Should().HaveSameCount(elements);
         }
 
         [Test]
         public void Get_WhenEmpty_ThenInvalidOperationException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject.Get();
+            Action action = () => _ = testObject.Get();
             // then
-            Assert.That(testDelegate, Throws.TypeOf<InvalidOperationException>());
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -73,9 +74,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGet(out int resultValue);
             // then
-            Assert.That(result, Is.True);
-            Assert.That(resultValue, Is.EqualTo(elements.Max()));
-            Assert.That(testObject, Has.Count.EqualTo(elements.Count));
+            result.Should().BeTrue();
+            resultValue.Should().Be(elements.Max());
+            testObject.Should().HaveSameCount(elements);
         }
 
         [Test]
@@ -84,9 +85,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGet(out int resultValue);
             // then
-            Assert.That(result, Is.False);
-            Assert.That(resultValue, Is.EqualTo(default(int)));
-            Assert.That(testObject, Has.Count.EqualTo(0));
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+            testObject.Should().HaveCount(0);
         }
 
         [Test]
@@ -99,17 +100,18 @@ namespace Algolib.Structures
             // when
             int result = testObject.Pop();
             // then
-            Assert.That(result, Is.EqualTo(elements.Max()));
-            Assert.That(testObject, Has.Count.EqualTo(elements.Count - 1));
+            result.Should().Be(elements.Max());
+            testObject.Should().HaveCountLessThan(elements.Count)
+                .And.HaveCount(elements.Count - 1);
         }
 
         [Test]
         public void Pop_WhenEmpty_ThenInvalidOperationException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject.Pop();
+            Action action = () => _ = testObject.Pop();
             // then then
-            Assert.That(testDelegate, Throws.TypeOf<InvalidOperationException>());
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -122,9 +124,10 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
-            Assert.That(result, Is.True);
-            Assert.That(resultValue, Is.EqualTo(elements.Max()));
-            Assert.That(testObject, Has.Count.EqualTo(elements.Count - 1));
+            result.Should().BeTrue();
+            resultValue.Should().Be(elements.Max());
+            testObject.Should().HaveCountLessThan(elements.Count)
+                .And.HaveCount(elements.Count - 1);
         }
 
         [Test]
@@ -133,9 +136,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
-            Assert.That(result, Is.False);
-            Assert.That(resultValue, Is.EqualTo(default(int)));
-            Assert.That(testObject, Has.Count.EqualTo(0));
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+            testObject.Should().HaveCount(0);
         }
     }
 }

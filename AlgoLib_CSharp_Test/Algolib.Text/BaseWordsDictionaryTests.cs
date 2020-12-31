@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using FluentAssertions;
 using System;
 
 namespace Algolib.Text
@@ -18,7 +19,7 @@ namespace Algolib.Text
             // when
             (int, int) result = testObject[4..4];
             // then
-            Assert.That(result, Is.EqualTo((0, 0)));
+            result.Should().Be((0, 0));
         }
 
         [Test]
@@ -27,7 +28,7 @@ namespace Algolib.Text
             // when
             (int, int) result = testObject[6..2];
             // then
-            Assert.That(result, Is.EqualTo((0, 0)));
+            result.Should().Be((0, 0));
         }
 
         [Test]
@@ -39,10 +40,10 @@ namespace Algolib.Text
             (int, int) result3 = testObject[8..9];  // p
             (int, int) result4 = testObject[3..4];  // s
             // then
-            Assert.That(result1, Is.EqualTo((1, 0)));
-            Assert.That(result2, Is.EqualTo((2, 0)));
-            Assert.That(result3, Is.EqualTo((3, 0)));
-            Assert.That(result4, Is.EqualTo((4, 0)));
+            result1.Should().Be((1, 0));
+            result2.Should().Be((2, 0));
+            result3.Should().Be((3, 0));
+            result4.Should().Be((4, 0));
         }
 
         [Test]
@@ -55,11 +56,11 @@ namespace Algolib.Text
             (int, int) result4 = testObject[7..];  // ippi
             (int, int) result5 = testObject[3..7];  // siss
             // then
-            Assert.That(result1, Is.EqualTo((2, 0)));
-            Assert.That(result2, Is.EqualTo((6, 0)));
-            Assert.That(result3, Is.EqualTo((9, 0)));
-            Assert.That(result4, Is.EqualTo((12, 0)));
-            Assert.That(result5, Is.EqualTo((16, 0)));
+            result1.Should().Be((2, 0));
+            result2.Should().Be((6, 0));
+            result3.Should().Be((9, 0));
+            result4.Should().Be((12, 0));
+            result5.Should().Be((16, 0));
         }
 
         [Test]
@@ -68,25 +69,25 @@ namespace Algolib.Text
             // when
             (int, int) result1 = testObject[..3];  // mis
             // then
-            Assert.That(result1, Is.EqualTo((7, 6)));
+            result1.Should().Be((7, 6));
         }
 
         [Test]
         public void Indexer_WhenInvalidStartIndex_ThenIndexOutOfRangeException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject[15..17];
+            Action action = () => _ = testObject[15..17];
             // then
-            Assert.That(testDelegate, Throws.TypeOf<IndexOutOfRangeException>());
+            action.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Test]
         public void Indexer_WhenInvalidEndIndex_ThenIndexOutOfRangeException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject[5..15];
+            Action action = () => _ = testObject[5..15];
             // then
-            Assert.That(testDelegate, Throws.TypeOf<IndexOutOfRangeException>());
+            action.Should().Throw<IndexOutOfRangeException>();
         }
     }
 }

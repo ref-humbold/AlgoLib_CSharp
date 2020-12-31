@@ -1,9 +1,10 @@
-﻿// Tests: Structure of linear equation
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using FluentAssertions;
 using System;
 
 namespace Algolib.Mathmat
 {
+    // Tests: Structure of linear equation
     [TestFixture]
     public class EquationTests
     {
@@ -18,7 +19,7 @@ namespace Algolib.Mathmat
             // when
             string result = testObject.ToString();
             // then
-            Assert.That(result, Is.EqualTo("2 x_0 + 3 x_1 + -2 x_3 = 15"));
+            result.Should().Be("2 x_0 + 3 x_1 + -2 x_3 = 15");
         }
 
         [Test]
@@ -27,17 +28,17 @@ namespace Algolib.Mathmat
             // when
             testObject.Multiply(2);
             // then
-            Assert.AreEqual(new double[] { 4, 6, 0, -4 }, testObject.Coefficients);
-            Assert.AreEqual(30, testObject.Free);
+            testObject.Coefficients.Should().Equal(new double[] { 4, 6, 0, -4 });
+            testObject.Free.Should().Be(30);
         }
 
         [Test]
         public void Multiply_WhenConstantIsZero_ThenArithmeticException()
         {
             // when
-            TestDelegate testDelegate = () => testObject.Multiply(0);
+            Action action = () => testObject.Multiply(0);
             // then
-            Assert.Throws<ArithmeticException>(testDelegate);
+            action.Should().Throw<ArithmeticException>();
         }
 
         [Test]
@@ -46,18 +47,18 @@ namespace Algolib.Mathmat
             // when
             testObject.Combine(new Equation(new double[] { 1, -1, 4, 10 }, 5), -2);
             // then
-            Assert.AreEqual(new double[] { 0, 5, -8, -22 }, testObject.Coefficients);
-            Assert.AreEqual(5, testObject.Free);
+            testObject.Coefficients.Should().Equal(new double[] { 0, 5, -8, -22 });
+            testObject.Free.Should().Be(5);
         }
 
         [Test]
         public void Combine_WhenConstantIsZero_ThenArithmeticException()
         {
             // when
-            TestDelegate testDelegate =
+            Action action =
                 () => testObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0);
             // then
-            Assert.Throws<ArithmeticException>(testDelegate);
+            action.Should().Throw<ArithmeticException>();
         }
     }
 }

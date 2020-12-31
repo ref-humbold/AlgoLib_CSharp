@@ -1,8 +1,10 @@
-﻿// Tests: Structure of linear equations system
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using FluentAssertions;
+using System;
 
 namespace Algolib.Mathmat
 {
+    // Tests: Structure of linear equations system
     [TestFixture]
     public class EquationSystemTests
     {
@@ -18,9 +20,9 @@ namespace Algolib.Mathmat
             // when
             double[] result = testObject.Solve();
             // then
-            Assert.That(result, Is.EqualTo(new double[] { 1, 3, -2 }));
-            Assert.That(testObject.IsSolution(result), Is.True);
-            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.False);
+            result.Should().Equal(new double[] { 1, 3, -2 });
+            testObject.IsSolution(result).Should().BeTrue();
+            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -33,11 +35,11 @@ namespace Algolib.Mathmat
                 new Equation(new double[] { -1, -1.5, 1 }, -1)
             });
             // when
-            TestDelegate testDelegate = () => testObject.Solve();
+            Action action = () => testObject.Solve();
             // then
-            Assert.That(testDelegate, Throws.TypeOf<NoSolutionException>());
-            Assert.That(testObject.IsSolution(new double[] { 1, 3, -2 }), Is.False);
-            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.False);
+            action.Should().Throw<NoSolutionException>();
+            testObject.IsSolution(new double[] { 1, 3, -2 }).Should().BeFalse();
+            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -50,11 +52,11 @@ namespace Algolib.Mathmat
                 new Equation(new double[] { 4, 6, -4 }, 30)
             });
             // when
-            TestDelegate testDelegate = () => testObject.Solve();
+            Action action = () => testObject.Solve();
             // then
-            Assert.That(testDelegate, Throws.TypeOf<InfiniteSolutionsException>());
-            Assert.That(testObject.IsSolution(new double[] { 1, 3, -2 }), Is.True);
-            Assert.That(testObject.IsSolution(new double[] { -2, -18, -36.5 }), Is.True);
+            action.Should().Throw<InfiniteSolutionsException>();
+            testObject.IsSolution(new double[] { 1, 3, -2 }).Should().BeTrue();
+            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeTrue();
         }
     }
 }
