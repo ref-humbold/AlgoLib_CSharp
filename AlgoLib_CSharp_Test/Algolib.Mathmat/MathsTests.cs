@@ -1,8 +1,9 @@
-﻿// Tests: Algorithms for basic mathematics
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using FluentAssertions;
 
 namespace Algolib.Mathmat
 {
+    // Tests: Algorithms for basic mathematics
     [TestFixture]
     public class MathsTests
     {
@@ -12,7 +13,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.GCD(161, 46);
             // then
-            Assert.AreEqual(23, result);
+            result.Should().Be(23);
         }
 
         [Test]
@@ -21,7 +22,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.GCD(127, 41);
             // then
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.GCD(119, 57);
             // then
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.GCD(number1, number2);
             // then
-            Assert.AreEqual(number2, result);
+            result.Should().Be(number2);
         }
 
         [Test]
@@ -54,7 +55,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.GCD(number1, number2);
             // then
-            Assert.AreEqual(number1, result);
+            result.Should().Be(number1);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.LCM(161, 46);
             // then
-            Assert.AreEqual(322, result);
+            result.Should().Be(322);
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.LCM(127, 41);
             // then
-            Assert.AreEqual(5207, result);
+            result.Should().Be(5207);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.LCM(119, 57);
             // then
-            Assert.AreEqual(6783, result);
+            result.Should().Be(6783);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.LCM(number1, number2);
             // then
-            Assert.AreEqual(number1, result);
+            result.Should().Be(number1);
         }
 
         [Test]
@@ -105,7 +106,7 @@ namespace Algolib.Mathmat
             // when
             long result = Maths.LCM(number1, number2);
             // then
-            Assert.AreEqual(0, result);
+            result.Should().Be(0);
         }
     }
 }

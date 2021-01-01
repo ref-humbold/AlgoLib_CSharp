@@ -1,8 +1,9 @@
-﻿// Tests: Algorithms for prime numbers
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using FluentAssertions;
 
 namespace Algolib.Mathmat
 {
+    // Tests: Algorithms for prime numbers
     [TestFixture]
     public class PrimeTests
     {
@@ -13,7 +14,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(0);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -21,7 +22,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(1);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(2);
 
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(1013);
 
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(1001);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestFermat(1105);  // 1105 = 5 * 13 * 17 is a Carmichael number
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         #endregion
@@ -64,7 +65,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(0);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -72,7 +73,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(1);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(2);
 
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -88,7 +89,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(1013);
 
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -96,7 +97,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(1001);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace Algolib.Mathmat
         {
             bool result = Primes.TestMiller(1105);
 
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         #endregion

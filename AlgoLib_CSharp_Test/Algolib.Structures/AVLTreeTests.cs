@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using FluentAssertions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Count;
             // then
-            Assert.Zero(result);
+            result.Should().Be(0);
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Count;
             // then
-            Assert.AreEqual(numbers.Length, result);
+            result.Should().Be(numbers.Length);
         }
 
         [Test]
@@ -46,8 +47,8 @@ namespace Algolib.Structures
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            CollectionAssert.IsOrdered(result);
-            CollectionAssert.AreEquivalent(numbers, result);
+            result.Should().BeInAscendingOrder();
+            result.Should().BeEquivalentTo(numbers);
         }
 
         [Test]
@@ -58,7 +59,7 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Contains(i);
                 // then
-                Assert.IsTrue(result);
+                result.Should().BeTrue();
             }
         }
 
@@ -70,7 +71,7 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Contains(i);
                 // then
-                Assert.IsFalse(result);
+                result.Should().BeFalse();
             }
         }
 
@@ -82,8 +83,8 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Add(i);
                 // then
-                Assert.IsTrue(result);
-                CollectionAssert.Contains(testObject, i);
+                result.Should().BeTrue();
+                testObject.Should().Contain(i);
             }
         }
 
@@ -95,8 +96,8 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Add(i);
                 // then
-                Assert.IsFalse(result);
-                CollectionAssert.Contains(testObject, i);
+                result.Should().BeFalse();
+                testObject.Should().Contain(i);
             }
         }
 
@@ -108,8 +109,8 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Remove(i);
                 // then
-                Assert.IsTrue(result);
-                CollectionAssert.DoesNotContain(testObject, i);
+                result.Should().BeTrue();
+                testObject.Should().NotContain(i);
             }
         }
 
@@ -124,9 +125,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Remove(root);
             // then
-            Assert.IsTrue(result);
-            CollectionAssert.DoesNotContain(testObject, root);
-            CollectionAssert.Contains(testObject, elem);
+            result.Should().BeTrue();
+            testObject.Should().NotContain(root);
+            testObject.Should().Contain(elem);
         }
 
         [Test]
@@ -140,9 +141,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Remove(root);
             // then
-            Assert.IsTrue(result);
-            CollectionAssert.DoesNotContain(testObject, root);
-            CollectionAssert.Contains(testObject, elem);
+            result.Should().BeTrue();
+            testObject.Should().NotContain(root);
+            testObject.Should().Contain(elem);
         }
 
         [Test]
@@ -155,9 +156,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Remove(root);
             // then
-            Assert.IsTrue(result);
-            CollectionAssert.DoesNotContain(testObject, root);
-            CollectionAssert.IsEmpty(testObject);
+            result.Should().BeTrue();
+            testObject.Should().NotContain(root);
+            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -168,8 +169,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Remove(0);
             // then
-            Assert.IsFalse(result);
-            CollectionAssert.IsEmpty(testObject);
+            result.Should().BeFalse();
+            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -180,8 +181,8 @@ namespace Algolib.Structures
                 // when
                 bool result = testObject.Remove(i);
                 // then
-                Assert.IsFalse(result);
-                CollectionAssert.DoesNotContain(testObject, i);
+                result.Should().BeFalse();
+                testObject.Should().NotContain(i);
             }
         }
 
@@ -191,7 +192,7 @@ namespace Algolib.Structures
             // when
             testObject.Clear();
             // then
-            CollectionAssert.IsEmpty(testObject);
+            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -206,10 +207,10 @@ namespace Algolib.Structures
             testObject.ExceptWith(presentNumbers);
             // then
             foreach(int i in numbers.Except(presentNumbers))
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in presentNumbers)
-                CollectionAssert.DoesNotContain(testObject, i);
+                testObject.Should().NotContain(i);
         }
 
         [Test]
@@ -219,10 +220,10 @@ namespace Algolib.Structures
             testObject.ExceptWith(absentNumbers);
             // then
             foreach(int i in numbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in absentNumbers)
-                CollectionAssert.DoesNotContain(testObject, i);
+                testObject.Should().NotContain(i);
         }
 
         [Test]
@@ -231,10 +232,10 @@ namespace Algolib.Structures
             // when
             testObject.IntersectWith(presentNumbers);
             // then
-            Assert.AreEqual(presentNumbers.Length, testObject.Count);
+            testObject.Should().HaveSameCount(presentNumbers);
 
             foreach(int i in presentNumbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
         }
 
         [Test]
@@ -243,7 +244,7 @@ namespace Algolib.Structures
             // when
             testObject.IntersectWith(absentNumbers);
             // then
-            CollectionAssert.IsEmpty(testObject);
+            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -252,7 +253,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSubsetOf(presentNumbers);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -261,7 +262,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSubsetOf(numbers);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -270,7 +271,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSubsetOf(numbers.Union(absentNumbers));
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -279,7 +280,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSupersetOf(presentNumbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -288,7 +289,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSupersetOf(numbers);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -297,7 +298,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsProperSupersetOf(numbers.Union(absentNumbers));
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -306,7 +307,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSubsetOf(presentNumbers);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -315,7 +316,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSubsetOf(numbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -324,7 +325,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSubsetOf(numbers.Union(absentNumbers));
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -333,7 +334,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSupersetOf(presentNumbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -342,7 +343,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSupersetOf(numbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -351,7 +352,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSupersetOf(numbers.Union(absentNumbers));
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -360,7 +361,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Overlaps(presentNumbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -369,7 +370,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Overlaps(absentNumbers);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -378,7 +379,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Overlaps(absentNumbers.Union(presentNumbers));
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -387,7 +388,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.SetEquals(numbers);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -396,7 +397,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.SetEquals(numbers.Take(5));
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -405,7 +406,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.SetEquals(numbers.Append(1000));
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -415,10 +416,10 @@ namespace Algolib.Structures
             testObject.SymmetricExceptWith(presentNumbers);
             // then
             foreach(int i in numbers.Except(presentNumbers))
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in presentNumbers)
-                CollectionAssert.DoesNotContain(testObject, i);
+                testObject.Should().NotContain(i);
         }
 
         [Test]
@@ -430,13 +431,13 @@ namespace Algolib.Structures
             testObject.SymmetricExceptWith(elements);
             // then
             foreach(int i in numbers.Except(presentNumbers))
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in presentNumbers)
-                CollectionAssert.DoesNotContain(testObject, i);
+                testObject.Should().NotContain(i);
 
             foreach(int i in absentNumbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
         }
 
         [Test]
@@ -446,10 +447,10 @@ namespace Algolib.Structures
             testObject.SymmetricExceptWith(absentNumbers);
             // then
             foreach(int i in numbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in absentNumbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
         }
 
         [Test]
@@ -459,7 +460,7 @@ namespace Algolib.Structures
             testObject.UnionWith(presentNumbers);
             // then
             foreach(int i in numbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
         }
 
         [Test]
@@ -469,10 +470,10 @@ namespace Algolib.Structures
             testObject.UnionWith(absentNumbers);
             // then
             foreach(int i in numbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
 
             foreach(int i in absentNumbers)
-                CollectionAssert.Contains(testObject, i);
+                testObject.Should().Contain(i);
         }
     }
 }

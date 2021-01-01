@@ -1,11 +1,12 @@
-﻿// Tests: Structure of disjoint sets (union-find)
+﻿using NUnit.Framework;
+using FluentAssertions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
 
 namespace Algolib.Structures
 {
+    // Tests: Structure of disjoint sets (union-find)
     [TestFixture]
     public class DisjointSetsTests
     {
@@ -20,7 +21,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Count;
             // then
-            Assert.AreEqual(10, result);
+            result.Should().Be(10);
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Contains(4);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -38,7 +39,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.Contains(12);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -49,17 +50,17 @@ namespace Algolib.Structures
             // when
             testObject.Add(24);
             // then
-            Assert.IsTrue(testObject.Contains(elem));
-            Assert.AreEqual(elem, testObject[elem]);
+            testObject.Contains(elem).Should().BeTrue();
+            testObject[elem].Should().Be(elem);
         }
 
         [Test]
         public void Add_WhenPresentElement_ThenArgumentException()
         {
             // when
-            TestDelegate testDelegate = () => testObject.Add(6);
+            Action action = () => testObject.Add(6);
             // then
-            Assert.Throws<ArgumentException>(testDelegate);
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]
@@ -72,8 +73,8 @@ namespace Algolib.Structures
             // then
             foreach(int e in elems)
             {
-                Assert.IsTrue(testObject.Contains(e));
-                Assert.AreEqual(e, testObject[e]);
+                testObject.Contains(e).Should().BeTrue();
+                testObject[e].Should().Be(e);
             }
         }
 
@@ -81,9 +82,9 @@ namespace Algolib.Structures
         public void AddAll_WhenPresentElements_ThenArgumentException()
         {
             // when
-            TestDelegate testDelegate = () => testObject.AddRange(new List<int> { 20, 7, 35 });
+            Action action = () => testObject.AddRange(new List<int> { 20, 7, 35 });
             // then
-            Assert.Throws<ArgumentException>(testDelegate);
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]
@@ -94,16 +95,16 @@ namespace Algolib.Structures
             // when
             int result = testObject[elem];
             // then
-            Assert.AreEqual(elem, result);
+            result.Should().Be(elem);
         }
 
         [Test]
         public void IndexerGet_WhenAbsentElement_Then()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject[17];
+            Action action = () => _ = testObject[17];
             // then
-            Assert.Throws<KeyNotFoundException>(testDelegate);
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         [Test]
@@ -114,8 +115,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryFindSet(elem, out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(elem, resultValue);
+            result.Should().BeTrue();
+            resultValue.Should().Be(elem);
         }
 
         [Test]
@@ -124,8 +125,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryFindSet(22, out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
         }
 
         [Test]
@@ -137,8 +138,8 @@ namespace Algolib.Structures
             // when
             testObject.UnionSet(elem1, elem2);
             // then
-            Assert.IsTrue(testObject.IsSameSet(elem1, elem2));
-            Assert.AreEqual(testObject[elem1], testObject[elem2]);
+            testObject.IsSameSet(elem1, elem2).Should().BeTrue();
+            testObject[elem2].Should().Be(testObject[elem1]);
         }
 
         [Test]
@@ -149,8 +150,8 @@ namespace Algolib.Structures
             // when
             testObject.UnionSet(elem, elem);
             // then
-            Assert.IsTrue(testObject.IsSameSet(elem, elem));
-            Assert.AreEqual(testObject[elem], testObject[elem]);
+            testObject.IsSameSet(elem, elem).Should().BeTrue();
+            testObject[elem].Should().Be(testObject[elem]);
         }
 
         [Test]
@@ -163,8 +164,8 @@ namespace Algolib.Structures
             // when
             testObject.UnionSet(elem2, elem1);
             // then
-            Assert.IsTrue(testObject.IsSameSet(elem1, elem2));
-            Assert.AreEqual(testObject[elem1], testObject[elem2]);
+            testObject.IsSameSet(elem1, elem2).Should().BeTrue();
+            testObject[elem2].Should().Be(testObject[elem1]);
         }
 
         [Test]
@@ -177,8 +178,8 @@ namespace Algolib.Structures
                       .UnionSet(elems[0], elems[1])
                       .UnionSet(elems[1], elems[2]);
             // then
-            Assert.IsTrue(testObject.IsSameSet(elems[0], elems[2]));
-            Assert.AreEqual(testObject[elems[0]], testObject[elems[2]]);
+            testObject.IsSameSet(elems[0], elems[2]).Should().BeTrue();
+            testObject[elems[2]].Should().Be(testObject[elems[0]]);
         }
 
         [Test]
@@ -190,7 +191,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSameSet(elem1, elem2);
             // then
-            Assert.IsFalse(result);
+            result.Should().BeFalse();
         }
 
         [Test]
@@ -201,7 +202,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSameSet(elem, elem);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
 
         [Test]
@@ -214,7 +215,7 @@ namespace Algolib.Structures
             // when
             bool result = testObject.IsSameSet(elem2, elem1);
             // then
-            Assert.IsTrue(result);
+            result.Should().BeTrue();
         }
     }
 }

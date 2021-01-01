@@ -12,17 +12,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point2D> sequence = new List<Point2D> {
-                    Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+                Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+                Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
+                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
             // when
             List<Point2D> result = PointsSorting.SortByX(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point2D> {
-                    Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-2.0, 3.0),
-                    Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                    Point2D.Of(3.0, 2.0) });
+                Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-2.0, 3.0),
+                Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+                Point2D.Of(3.0, 2.0) });
         }
 
         [Test]
@@ -30,17 +30,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point2D> sequence = new List<Point2D> {
-                    Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+                Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+                Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
+                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
             // when
             List<Point2D> result = PointsSorting.SortByY(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point2D> {
-                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                    Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0) });
+                Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+                Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
+                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0) });
         }
 
         [Test]
@@ -48,17 +48,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point3D> sequence = new List<Point3D> {
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
-                    Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-                    Point3D.Of(-3.0, 2.0, 5.0) };
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+                Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
+                Point3D.Of(-3.0, 2.0, 5.0) };
             // when
             List<Point3D> result = PointsSorting.SortByX(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point3D> {
                 Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                    Point3D.Of(3.0, 2.0, 5.0) });
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
+                Point3D.Of(3.0, 2.0, 5.0) });
         }
 
         [Test]
@@ -66,17 +66,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point3D> sequence = new List<Point3D> {
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
-                    Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-                    Point3D.Of(-3.0, 2.0, 5.0) };
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+                Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
+                Point3D.Of(-3.0, 2.0, 5.0) };
             // when
             List<Point3D> result = PointsSorting.SortByY(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point3D> {
-                    Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
-                    Point3D.Of(2.0, 3.0, -5.0) });
+                Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
+                Point3D.Of(2.0, 3.0, -5.0) });
         }
 
         [Test]
@@ -84,17 +84,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point3D> sequence = new List<Point3D> {
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
-                    Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-                    Point3D.Of(-3.0, 2.0, 5.0) };
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+                Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
+                Point3D.Of(-3.0, 2.0, 5.0) };
             // when
             List<Point3D> result = PointsSorting.SortByZ(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point3D> {
-                    Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                    Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
-                    Point3D.Of(-3.0, 2.0, 5.0) });
+                Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
+                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
+                Point3D.Of(-3.0, 2.0, 5.0) });
         }
 
         [Test]
@@ -102,17 +102,17 @@ namespace Algolib.Geometry
         {
             // given
             List<Point2D> sequence = new List<Point2D> {
-                    Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+                Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+                Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
+                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
             // when
             List<Point2D> result = PointsSorting.SortByAngle(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
             result.Should().Equal(new List<Point2D> {
-                    Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-                    Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0) });
+                Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+                Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
+                Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0) });
         }
     }
 }
