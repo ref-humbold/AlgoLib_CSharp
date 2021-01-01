@@ -16,21 +16,19 @@ namespace Algolib.Graphs
 
         public IEnumerable<Edge<V>> Edges => graph.Edges;
 
-        public TreeGraph(V vertex)
-        {
+        public TreeGraph(V vertex) =>
             graph = new UndirectedSimpleGraph<V, VP, EP>(Enumerable.Repeat(vertex, 1));
-        }
 
         public VP this[V vertex]
         {
-            get { return graph[vertex]; }
-            set { graph[vertex] = value; }
+            get => graph[vertex];
+            set => graph[vertex] = value;
         }
 
         public EP this[Edge<V> edge]
         {
-            get { return graph[edge]; }
-            set { graph[edge] = value; }
+            get => graph[edge];
+            set => graph[edge] = value;
         }
 
         public Edge<V> GetEdge(V source, V destination) => graph.GetEdge(source, destination);

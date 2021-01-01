@@ -7,16 +7,28 @@ namespace Algolib.Graphs
     public interface IGraph<V, VP, EP>
     {
         /// <summary>number of vertices</summary>
-        int VerticesCount { get; }
+        int VerticesCount
+        {
+            get;
+        }
 
         /// <summary>number of edges</summary>
-        int EdgesCount { get; }
+        int EdgesCount
+        {
+            get;
+        }
 
         /// <summary>enumerable of all vertices sorted by index</summary>
-        IEnumerable<V> Vertices { get; }
+        IEnumerable<V> Vertices
+        {
+            get;
+        }
 
         /// <summary>enumerable of all edges sorted first by source then by destination</summary>
-        IEnumerable<Edge<V>> Edges { get; }
+        IEnumerable<Edge<V>> Edges
+        {
+            get;
+        }
 
         /// <summary>property of a vertex from this graph</summary>
         VP this[V vertex] { get; set; }
