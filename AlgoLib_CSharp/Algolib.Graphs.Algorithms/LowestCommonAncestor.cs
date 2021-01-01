@@ -10,9 +10,15 @@ namespace Algolib.Graphs.Algorithms
         private readonly LcaStrategy strategy = new LcaStrategy();
         private bool empty = true;
 
-        public TreeGraph<V, VP, EP> Graph { get; }
+        public TreeGraph<V, VP, EP> Graph
+        {
+            get;
+        }
 
-        public V Root { get; }
+        public V Root
+        {
+            get;
+        }
 
         public LowestCommonAncestor(TreeGraph<V, VP, EP> graph, V root)
         {

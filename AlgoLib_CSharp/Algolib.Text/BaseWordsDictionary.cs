@@ -9,7 +9,10 @@ namespace Algolib.Text
     {
         private readonly Dictionary<(int, int), int> factors = new Dictionary<(int, int), int>();
 
-        public string Text { get; }
+        public string Text
+        {
+            get;
+        }
 
         public BaseWordsDictionary(string text)
         {

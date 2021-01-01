@@ -1,6 +1,6 @@
 ﻿// Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm
-using NUnit.Framework;
 using System;
+using NUnit.Framework;
 
 namespace Algolib.Text
 {

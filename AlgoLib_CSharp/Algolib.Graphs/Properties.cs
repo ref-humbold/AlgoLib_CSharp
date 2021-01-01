@@ -4,6 +4,9 @@
     {
         static double Infinity => double.PositiveInfinity;
 
-        double Weight { get; }
+        double Weight
+        {
+            get;
+        }
     }
 }

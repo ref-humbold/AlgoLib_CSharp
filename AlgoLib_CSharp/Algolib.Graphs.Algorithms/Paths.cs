@@ -15,7 +15,9 @@ namespace Algolib.Graphs.Algorithms
             IDirectedGraph<V, VP, EP> graph, V source) where EP : IWeighted
         {
             Dictionary<V, double> distances = new Dictionary<V, double>(
-                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) { [source] = 0.0 };
+                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
+                [source] = 0.0
+            };
 
             for(int i = 0; i < graph.VerticesCount - 1; ++i)
                 foreach(V vertex in graph.Vertices)
@@ -44,7 +46,9 @@ namespace Algolib.Graphs.Algorithms
                     throw new InvalidOperationException("Graph contains an edge with negative weight");
 
             Dictionary<V, double> distances = new Dictionary<V, double>(
-                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) { [source] = 0.0 };
+                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
+                [source] = 0.0
+            };
             HashSet<V> visited = new HashSet<V>();
             Heap<(double Distance, V Vertex)> vertexHeap = new Heap<(double Distance, V Vertex)>(
                         (pair1, pair2) => pair1.Distance.CompareTo(pair2.Vertex));

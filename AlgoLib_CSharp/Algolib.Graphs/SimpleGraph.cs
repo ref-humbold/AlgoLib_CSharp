@@ -10,11 +10,17 @@ namespace Algolib.Graphs
 
         public int VerticesCount => representation.Count;
 
-        public abstract int EdgesCount { get; }
+        public abstract int EdgesCount
+        {
+            get;
+        }
 
         public IEnumerable<V> Vertices => representation.Vertices;
 
-        public abstract IEnumerable<Edge<V>> Edges { get; }
+        public abstract IEnumerable<Edge<V>> Edges
+        {
+            get;
+        }
 
         public SimpleGraph()
         {
@@ -28,14 +34,26 @@ namespace Algolib.Graphs
 
         public VP this[V vertex]
         {
-            get { return representation[vertex]; }
-            set { representation[vertex] = value; }
+            get
+            {
+                return representation[vertex];
+            }
+            set
+            {
+                representation[vertex] = value;
+            }
         }
 
         public EP this[Edge<V> edge]
         {
-            get { return representation[edge]; }
-            set { representation[edge] = value; }
+            get
+            {
+                return representation[edge];
+            }
+            set
+            {
+                representation[edge] = value;
+            }
         }
 
         public Edge<V> GetEdge(V source, V destination) =>

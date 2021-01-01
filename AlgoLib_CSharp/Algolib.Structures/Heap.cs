@@ -10,7 +10,10 @@ namespace Algolib.Structures
         private readonly List<T> heap;
 
         /// <summary>The comparer.</summary>
-        public IComparer<T> Comparer { get; }
+        public IComparer<T> Comparer
+        {
+            get;
+        }
 
         /// <summary>Number of elements.</summary>
         public int Count => heap.Count;

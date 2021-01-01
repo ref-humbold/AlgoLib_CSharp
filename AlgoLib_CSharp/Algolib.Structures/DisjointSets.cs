@@ -10,7 +10,10 @@ namespace Algolib.Structures
         private readonly Dictionary<E, E> represents;
 
         /// <summary>Number of sets</summary>
-        public int Count { get; private set; }
+        public int Count
+        {
+            get; private set;
+        }
 
         public DisjointSets(IEnumerable<E> universe)
         {

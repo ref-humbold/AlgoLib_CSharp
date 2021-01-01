@@ -10,8 +10,15 @@ namespace Algolib.Structures
         private readonly IComparer<E> comparer;
         private readonly AVLHeaderNode<E> tree = new AVLHeaderNode<E>();
 
-        public int Count { get; private set; }
-        public bool IsReadOnly { get; }
+        public int Count
+        {
+            get; private set;
+        }
+
+        public bool IsReadOnly
+        {
+            get;
+        }
 
         private AVLInnerNode<E> Root
         {
@@ -282,19 +289,37 @@ namespace Algolib.Structures
 
         private interface IAVLNode<T>
         {
-            int Height { get; }
+            int Height
+            {
+                get;
+            }
 
-            IAVLNode<T> Left { get; set; }
+            IAVLNode<T> Left
+            {
+                get; set;
+            }
 
-            IAVLNode<T> Right { get; set; }
+            IAVLNode<T> Right
+            {
+                get; set;
+            }
 
-            IAVLNode<T> Parent { get; set; }
+            IAVLNode<T> Parent
+            {
+                get; set;
+            }
 
             // Searches in its subtree for the node with minimal value.
-            IAVLNode<T> Minimum { get; }
+            IAVLNode<T> Minimum
+            {
+                get;
+            }
 
             // Searches in its subtree for the node with maximal value.
-            IAVLNode<T> Maximum { get; }
+            IAVLNode<T> Maximum
+            {
+                get;
+            }
         }
 
         private class AVLInnerNode<T> : IAVLNode<T>
@@ -302,7 +327,10 @@ namespace Algolib.Structures
             private AVLInnerNode<T> left;
             private AVLInnerNode<T> right;
 
-            public int Height { get; private set; }
+            public int Height
+            {
+                get; private set;
+            }
 
             IAVLNode<T> IAVLNode<T>.Left
             {
@@ -316,14 +344,20 @@ namespace Algolib.Structures
                 set => Right = value as AVLInnerNode<T>;
             }
 
-            public IAVLNode<T> Parent { get; set; }
+            public IAVLNode<T> Parent
+            {
+                get; set;
+            }
 
             IAVLNode<T> IAVLNode<T>.Minimum => Minimum;
 
             IAVLNode<T> IAVLNode<T>.Maximum => Maximum;
 
             // Value in the node.
-            public T Element { get; set; }
+            public T Element
+            {
+                get; set;
+            }
 
             public AVLInnerNode<T> Left
             {
@@ -392,13 +426,17 @@ namespace Algolib.Structures
             public IAVLNode<T> Left
             {
                 get => null;
-                set { }
+                set
+                {
+                }
             }
 
             public IAVLNode<T> Right
             {
                 get => null;
-                set { }
+                set
+                {
+                }
             }
 
             public AVLInnerNode<T> Parent

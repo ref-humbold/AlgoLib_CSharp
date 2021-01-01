@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Algolib.Sequences
 {
@@ -9,8 +9,15 @@ namespace Algolib.Sequences
     {
         private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
         {
-            public int First { get; set; }
-            public int Second { get; set; }
+            public int First
+            {
+                get; set;
+            }
+
+            public int Second
+            {
+                get; set;
+            }
 
             public IntPair(int first, int second)
             {
