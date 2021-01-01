@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
 using FluentAssertions;
-using System;
+using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {
