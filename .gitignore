@@ -1,11 +1,11 @@
 # [ CSharp ]
 # CSharp output
-**/bin
-**/doc
-**/obj
+bin/
+doc/
+obj/
 
 # Visual Studio
 .vs
 
 # NuGet
-packages
+packages/
