@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs.Algorithms
@@ -18,7 +19,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = TopologicalSorting.SortUsingInputs(graph);
             // then
-            CollectionAssert.AreEqual(graph.Vertices, result);
+            result.Should().Equal(graph.Vertices);
         }
 
         #endregion
@@ -33,7 +34,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = TopologicalSorting.SortUsingDfs(graph);
             // then
-            CollectionAssert.AreEqual(graph.Vertices, result);
+            result.Should().Equal(graph.Vertices);
         }
 
         #endregion

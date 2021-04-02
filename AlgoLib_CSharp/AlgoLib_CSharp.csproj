@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon/>
-    <Win32Resource/>
+    <ApplicationIcon />
+    <Win32Resource />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>doc\AlgoLib_CSharp.xml</DocumentationFile>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>IDE0058;1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="doc\**"/>
-    <EmbeddedResource Remove="doc\**"/>
-    <None Remove="doc\**"/>
+    <Compile Remove="doc\**" />
+    <EmbeddedResource Remove="doc\**" />
+    <None Remove="doc\**" />
   </ItemGroup>
 
   <ItemGroup>

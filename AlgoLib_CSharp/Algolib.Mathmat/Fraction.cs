@@ -10,10 +10,10 @@ namespace Algolib.Mathmat
 
         private readonly long denominator;
 
-        public Fraction(long numerator = 0, long denominator = 1)
+        private Fraction(long numerator, long denominator)
         {
             if(denominator == 0)
-                throw new DivideByZeroException("Denominator cannot be equal to zero");
+                throw new ArithmeticException("Denominator cannot be equal to zero");
 
             if(denominator < 0)
             {
@@ -28,6 +28,8 @@ namespace Algolib.Mathmat
         }
 
         public static Fraction Of(long numerator, long denominator = 1) => new Fraction(numerator, denominator);
+
+        public static Fraction Zero() => Of(0);
 
         public static Fraction operator +(Fraction f1, Fraction f2) =>
            Of(f1.numerator * f2.denominator + f2.numerator * f1.denominator,
@@ -47,7 +49,7 @@ namespace Algolib.Mathmat
 
         public static Fraction operator ~(Fraction f) =>
             f.numerator == 0
-                ? throw new DivideByZeroException("Value of zero cannot be inverted")
+                ? throw new InvalidOperationException("Value of zero cannot be inverted")
                 : Of(f.denominator, f.numerator);
 
         public static bool operator ==(Fraction f1, Fraction f2) => f1.Equals(f2);

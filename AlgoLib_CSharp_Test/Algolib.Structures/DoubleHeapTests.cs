@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Structures
@@ -15,23 +16,13 @@ namespace Algolib.Structures
 
         public DoubleHeapTests()
         {
-            numbers =
-               new List<int>() { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+            numbers = new List<int>() { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
             minimum = numbers.Min();
             maximum = numbers.Max();
         }
 
         [SetUp]
-        public void SetUp()
-        {
-            testObject = new DoubleHeap<int>(numbers);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
+        public void SetUp() => testObject = new DoubleHeap<int>(numbers);
 
         [Test]
         public void Count_WhenEmpty_ThenZero()
@@ -41,7 +32,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Count;
             // then
-            Assert.AreEqual(0, result);
+            result.Should().Be(0);
         }
 
         [Test]
@@ -50,8 +41,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.Count;
             // then
-
-            Assert.AreEqual(numbers.Count, result);
+            result.Should().Be(numbers.Count);
         }
 
         [Test]
@@ -64,8 +54,8 @@ namespace Algolib.Structures
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            Assert.AreEqual(minimum, result[0]);
-            Assert.AreEqual(maximum, result[^1]);
+            result.Should().HaveElementAt(0, minimum);
+            result.Should().HaveElementAt(result.Count - 1, maximum);
         }
 
         [Test]
@@ -80,7 +70,7 @@ namespace Algolib.Structures
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
 
         [Test]
@@ -89,9 +79,9 @@ namespace Algolib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
-            TestDelegate testDelegate = () => testObject.GetMin();
+            Action action = () => testObject.GetMin();
             // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -100,7 +90,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.GetMin();
             // then
-            Assert.AreEqual(minimum, result);
+            result.Should().Be(minimum);
         }
 
         [Test]
@@ -111,8 +101,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGetMin(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
         }
 
         [Test]
@@ -121,8 +111,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGetMin(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(minimum, resultValue);
+            result.Should().BeTrue();
+            resultValue.Should().Be(minimum);
         }
 
         [Test]
@@ -131,9 +121,9 @@ namespace Algolib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
-            TestDelegate testDelegate = () => testObject.GetMax();
+            Action action = () => testObject.GetMax();
             // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -145,7 +135,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.GetMax();
             // then
-            Assert.AreEqual(element, result);
+            result.Should().Be(element);
         }
 
         [Test]
@@ -154,7 +144,7 @@ namespace Algolib.Structures
             // when
             int result = testObject.GetMax();
             // then
-            Assert.AreEqual(maximum, result);
+            result.Should().Be(maximum);
         }
 
         [Test]
@@ -165,8 +155,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGetMax(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
         }
 
         [Test]
@@ -175,8 +165,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGetMax(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(maximum, resultValue);
+            result.Should().BeTrue();
+            resultValue.Should().Be(maximum);
         }
 
         [Test]
@@ -187,9 +177,9 @@ namespace Algolib.Structures
             // when
             testObject.Push(element);
             // then
-            Assert.AreEqual(numbers.Count + 1, testObject.Count);
-            Assert.AreEqual(minimum, testObject.GetMin());
-            Assert.AreEqual(maximum, testObject.GetMax());
+            testObject.Should().HaveCount(numbers.Count + 1);
+            testObject.GetMin().Should().Be(minimum);
+            testObject.GetMax().Should().Be(maximum);
         }
 
         [Test]
@@ -198,9 +188,9 @@ namespace Algolib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
-            TestDelegate testDelegate = () => testObject.PopMin();
+            Action action = () => testObject.PopMin();
             // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -209,8 +199,8 @@ namespace Algolib.Structures
             // when
             int result = testObject.PopMin();
             // then
-            Assert.AreEqual(numbers.Count - 1, testObject.Count);
-            Assert.AreEqual(minimum, result);
+            testObject.Should().HaveCount(numbers.Count - 1);
+            result.Should().Be(minimum);
         }
 
         [Test]
@@ -221,8 +211,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPopMin(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
         }
 
         [Test]
@@ -231,9 +221,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPopMin(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(numbers.Count - 1, testObject.Count);
-            Assert.AreEqual(minimum, resultValue);
+            result.Should().BeTrue();
+            testObject.Should().HaveCount(numbers.Count - 1);
+            resultValue.Should().Be(minimum);
         }
 
         [Test]
@@ -242,9 +232,9 @@ namespace Algolib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
-            TestDelegate testDelegate = () => testObject.PopMax();
+            Action action = () => testObject.PopMax();
             // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -256,8 +246,8 @@ namespace Algolib.Structures
             // when
             int result = testObject.PopMax();
             // then
-            CollectionAssert.IsEmpty(testObject);
-            Assert.AreEqual(element, result);
+            testObject.Should().BeEmpty();
+            result.Should().Be(element);
         }
 
         [Test]
@@ -266,8 +256,8 @@ namespace Algolib.Structures
             // when
             int result = testObject.PopMax();
             // then
-            Assert.AreEqual(numbers.Count - 1, testObject.Count);
-            Assert.AreEqual(maximum, result);
+            testObject.Should().HaveCount(numbers.Count - 1);
+            result.Should().Be(maximum);
         }
 
         [Test]
@@ -278,8 +268,8 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPopMax(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
         }
 
         [Test]
@@ -288,9 +278,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPopMax(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(numbers.Count - 1, testObject.Count);
-            Assert.AreEqual(maximum, resultValue);
+            result.Should().BeTrue();
+            testObject.Should().HaveCount(numbers.Count - 1);
+            resultValue.Should().Be(maximum);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 
 namespace Algolib.Graphs.Algorithms
 {
@@ -24,12 +25,6 @@ namespace Algolib.Graphs.Algorithms
             testObject = new LowestCommonAncestor<int, object, object>(tree, 0);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
-
         [Test]
         public void Find_WhenSameVertex_ThenVertexIsLCA()
         {
@@ -38,7 +33,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             int result = testObject.Find(vertex, vertex);
             // then
-            Assert.AreEqual(vertex, result);
+            result.Should().Be(vertex);
         }
 
         [Test]
@@ -47,7 +42,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             int result = testObject.Find(5, 7);
             // then
-            Assert.AreEqual(1, result);
+            result.Should().Be(1);
         }
 
         [Test]
@@ -57,8 +52,8 @@ namespace Algolib.Graphs.Algorithms
             int result1 = testObject.Find(5, 7);
             int result2 = testObject.Find(7, 5);
             // then
-            Assert.AreEqual(1, result1);
-            Assert.AreEqual(result1, result2);
+            result1.Should().Be(1);
+            result2.Should().Be(result1);
         }
 
         [Test]
@@ -67,7 +62,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             int result = testObject.Find(3, 9);
             // then
-            Assert.AreEqual(testObject.Root, result);
+            result.Should().Be(testObject.Root);
         }
 
         [Test]
@@ -79,7 +74,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             int result = testObject.Find(vertex1, vertex2);
             // then
-            Assert.AreEqual(vertex2, result);
+            result.Should().Be(vertex2);
         }
 
         [Test]
@@ -88,7 +83,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             int result = testObject.Find(4, testObject.Root);
             // then
-            Assert.AreEqual(testObject.Root, result);
+            result.Should().Be(testObject.Root);
         }
     }
 }

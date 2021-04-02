@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Sequences
 {
+    // Tests: Algorithms for sorting
     [TestFixture]
     public class SortingTests
     {
@@ -49,7 +51,7 @@ namespace Algolib.Sequences
             // when
             Sorting.HeapSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            sequence.Should().BeInAscendingOrder();
         }
 
         [Test]
@@ -60,16 +62,16 @@ namespace Algolib.Sequences
             // when
             Sorting.HeapSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            sequence.Should().BeEmpty();
         }
 
         [Test]
         public void HeapSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.HeapSort<int>(null);
+            Action action = () => Sorting.HeapSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            action.Should().Throw<ArgumentNullException>();
         }
 
         #endregion
@@ -83,7 +85,7 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            sequence.Should().BeInAscendingOrder();
         }
 
         [Test]
@@ -97,9 +99,9 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
-            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
-            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+            sequence.Should().BeInAscendingOrder();
+            sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
+            sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
         }
 
         [Test]
@@ -110,16 +112,16 @@ namespace Algolib.Sequences
             // when
             Sorting.TopDownMergeSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            sequence.Should().BeEmpty();
         }
 
         [Test]
         public void TopDownMergeSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.TopDownMergeSort<int>(null);
+            Action action = () => Sorting.TopDownMergeSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            action.Should().Throw<ArgumentNullException>();
         }
 
         #endregion
@@ -133,7 +135,7 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            sequence.Should().BeInAscendingOrder();
         }
 
         [Test]
@@ -147,9 +149,9 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
-            Assert.Less(sequence.IndexOf(new IntPair(3, 17)), sequence.IndexOf(new IntPair(3, 4)));
-            Assert.Less(sequence.IndexOf(new IntPair(9, 12)), sequence.IndexOf(new IntPair(9, -14)));
+            sequence.Should().BeInAscendingOrder();
+            sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
+            sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
         }
 
         [Test]
@@ -160,16 +162,16 @@ namespace Algolib.Sequences
             // when
             Sorting.BottomUpMergeSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            sequence.Should().BeEmpty();
         }
 
         [Test]
         public void BottomUpMergeSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.BottomUpMergeSort<int>(null);
+            Action action = () => Sorting.BottomUpMergeSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            action.Should().Throw<ArgumentNullException>();
         }
 
         #endregion
@@ -183,7 +185,7 @@ namespace Algolib.Sequences
             // when
             Sorting.QuickSort(sequence);
             // then
-            CollectionAssert.IsOrdered(sequence);
+            sequence.Should().BeInAscendingOrder();
         }
 
         [Test]
@@ -194,16 +196,16 @@ namespace Algolib.Sequences
             // when
             Sorting.QuickSort(sequence);
             // then
-            CollectionAssert.IsEmpty(sequence);
+            sequence.Should().BeEmpty();
         }
 
         [Test]
         public void QuickSort_WhenNull_ThenNullPointerException()
         {
             // when
-            TestDelegate testDelegate = () => Sorting.QuickSort<int>(null);
+            Action action = () => Sorting.QuickSort<int>(null);
             // then
-            Assert.Throws<ArgumentNullException>(testDelegate);
+            action.Should().Throw<ArgumentNullException>();
         }
 
         #endregion

@@ -1,72 +1,64 @@
-﻿// Tests: Structure of linear equation
-using System;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {
+    // Tests: Structure of linear equation
     [TestFixture]
     public class EquationTests
     {
-        protected Equation TestObject;
+        private Equation testObject;
 
         [SetUp]
-        public void SetUp()
-        {
-            TestObject = new Equation(new double[] { 2, 3, 0, -2 }, 15);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            TestObject = null;
-        }
+        public void SetUp() => testObject = new Equation(new double[] { 2, 3, 0, -2 }, 15);
 
         [Test]
         public void ToString_ThenStringRepresentation()
         {
             // when
-            string result = TestObject.ToString();
+            string result = testObject.ToString();
             // then
-            Assert.AreEqual("2 x_0 + 3 x_1 + -2 x_3 = 15", result);
+            result.Should().Be("2 x_0 + 3 x_1 + -2 x_3 = 15");
         }
 
         [Test]
         public void Multiply_WhenConstantIsNonZero_ThenMultiplied()
         {
             // when
-            TestObject.Multiply(2);
+            testObject.Multiply(2);
             // then
-            Assert.AreEqual(new double[] { 4, 6, 0, -4 }, TestObject.Coefficients);
-            Assert.AreEqual(30, TestObject.Free);
+            testObject.Coefficients.Should().Equal(new double[] { 4, 6, 0, -4 });
+            testObject.Free.Should().Be(30);
         }
 
         [Test]
         public void Multiply_WhenConstantIsZero_ThenArithmeticException()
         {
             // when
-            TestDelegate testDelegate = () => TestObject.Multiply(0);
+            Action action = () => testObject.Multiply(0);
             // then
-            Assert.Throws<ArithmeticException>(testDelegate);
+            action.Should().Throw<ArithmeticException>();
         }
 
         [Test]
         public void Combine_WhenConstantIsNonZero_ThenCombined()
         {
             // when
-            TestObject.Combine(new Equation(new double[] { 1, -1, 4, 10 }, 5), -2);
+            testObject.Combine(new Equation(new double[] { 1, -1, 4, 10 }, 5), -2);
             // then
-            Assert.AreEqual(new double[] { 0, 5, -8, -22 }, TestObject.Coefficients);
-            Assert.AreEqual(5, TestObject.Free);
+            testObject.Coefficients.Should().Equal(new double[] { 0, 5, -8, -22 });
+            testObject.Free.Should().Be(5);
         }
 
         [Test]
         public void Combine_WhenConstantIsZero_ThenArithmeticException()
         {
             // when
-            TestDelegate testDelegate =
-                () => TestObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0);
+            Action action =
+                () => testObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0);
             // then
-            Assert.Throws<ArithmeticException>(testDelegate);
+            action.Should().Throw<ArithmeticException>();
         }
     }
 }

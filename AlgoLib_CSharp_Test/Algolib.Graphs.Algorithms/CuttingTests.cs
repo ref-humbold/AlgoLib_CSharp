@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs.Algorithms
@@ -32,8 +33,8 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
             // then
-            CollectionAssert.AreEquivalent(
-                new List<Edge<int>>() { graph.GetEdge(0, 7), graph.GetEdge(5, 6) }, result);
+            result.Should().BeEquivalentTo(
+                new List<Edge<int>>() { graph.GetEdge(0, 7), graph.GetEdge(5, 6) });
         }
 
         [Test]
@@ -52,7 +53,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Cutting.FindVertexCut(graph);
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 0, 1, 5, 7 }, result);
+            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 5, 7 });
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Cutting.FindVertexCut(graph);
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
     }
 }

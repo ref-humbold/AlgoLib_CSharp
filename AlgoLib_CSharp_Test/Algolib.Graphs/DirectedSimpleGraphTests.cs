@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs
@@ -11,16 +12,8 @@ namespace Algolib.Graphs
         private DirectedSimpleGraph<int, string, string> testObject;
 
         [SetUp]
-        public void SetUp()
-        {
+        public void SetUp() =>
             testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
 
         [Test]
         public void IndexerGetSet_WhenSettingProperty_ThenProperty()
@@ -37,8 +30,8 @@ namespace Algolib.Graphs
             string resultVertex = testObject[vertex];
             string resultEdge = testObject[edge];
             // then
-            Assert.AreEqual(vertexProperty, resultVertex);
-            Assert.AreEqual(edgeProperty, resultEdge);
+            resultVertex.Should().Be(vertexProperty);
+            resultEdge.Should().Be(edgeProperty);
         }
 
         [Test]
@@ -50,17 +43,17 @@ namespace Algolib.Graphs
             string resultVertex = testObject[4];
             string resultEdge = testObject[edge];
             // then
-            Assert.AreEqual(default(string), resultVertex);
-            Assert.AreEqual(default(string), resultEdge);
+            resultVertex.Should().Be(default);
+            resultEdge.Should().Be(default);
         }
 
         [Test]
         public void IndexerGet_WhenNotExistingEdge_ThenIllegalArgumentException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject[new Edge<int>(2, 8)];
+            Action action = () => _ = testObject[new Edge<int>(2, 8)];
             // then
-            Assert.Throws<ArgumentException>(testDelegate);
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]
@@ -69,7 +62,7 @@ namespace Algolib.Graphs
             // when
             int result = testObject.VerticesCount;
             // then
-            Assert.AreEqual(10, result);
+            result.Should().Be(10);
         }
 
         [Test]
@@ -78,7 +71,7 @@ namespace Algolib.Graphs
             // when
             IEnumerable<int> result = testObject.Vertices;
             // then
-            CollectionAssert.AreEquivalent(Enumerable.Range(0, 10), result);
+            result.Should().BeEquivalentTo(Enumerable.Range(0, 10));
         }
 
         [Test]
@@ -90,10 +83,10 @@ namespace Algolib.Graphs
             // when
             bool result = testObject.AddVertex(newVertex, property);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(11, testObject.VerticesCount);
-            CollectionAssert.IsEmpty(testObject.GetNeighbours(newVertex));
-            Assert.AreEqual(property, testObject[newVertex]);
+            result.Should().BeTrue();
+            testObject.VerticesCount.Should().Be(11);
+            testObject.GetNeighbours(newVertex).Should().BeEmpty();
+            testObject[newVertex].Should().Be(property);
         }
 
         [Test]
@@ -107,9 +100,9 @@ namespace Algolib.Graphs
             // when
             bool result = testObject.AddVertex(vertex, "abcdefg");
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(10, testObject.VerticesCount);
-            Assert.AreEqual(property, testObject[vertex]);
+            result.Should().BeFalse();
+            testObject.VerticesCount.Should().Be(10);
+            testObject[vertex].Should().Be(property);
         }
 
         [Test]
@@ -127,7 +120,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.EdgesCount;
             // then
-            Assert.AreEqual(7, result);
+            result.Should().Be(7);
         }
 
         [Test]
@@ -145,10 +138,10 @@ namespace Algolib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
-            CollectionAssert.AreEquivalent(
+            result.Should().BeEquivalentTo(
                 new List<Edge<int>>() { new Edge<int>(1, 5), new Edge<int>(2, 4), new Edge<int>(3, 6),
                                         new Edge<int>(6, 3), new Edge<int>(7, 7), new Edge<int>(8, 0),
-                                        new Edge<int>(9, 3) }, result);
+                                        new Edge<int>(9, 3) });
         }
 
         [Test]
@@ -162,8 +155,8 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.GetEdge(source, destination);
             // then
-            Assert.AreEqual(source, result.Source);
-            Assert.AreEqual(destination, result.Destination);
+            result.Source.Should().Be(source);
+            result.Destination.Should().Be(destination);
         }
 
         [Test]
@@ -177,7 +170,7 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.GetEdge(destination, source);
             // then
-            Assert.IsNull(result);
+            result.Should().BeNull();
         }
 
         [Test]
@@ -186,7 +179,7 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.GetEdge(1, 2);
             // then
-            Assert.IsNull(result);
+            result.Should().BeNull();
         }
 
         [Test]
@@ -198,11 +191,11 @@ namespace Algolib.Graphs
             Edge<int> result = testObject.AddEdgeBetween(1, 5, property);
             testObject.AddEdgeBetween(1, 1);
             // then
-            Assert.AreEqual(1, result.Source);
-            Assert.AreEqual(5, result.Destination);
-            Assert.AreEqual(property, testObject[result]);
-            CollectionAssert.AreEquivalent(new List<int>() { 1, 5 }, testObject.GetNeighbours(1));
-            CollectionAssert.IsEmpty(testObject.GetNeighbours(5));
+            result.Source.Should().Be(1);
+            result.Destination.Should().Be(5);
+            testObject[result].Should().Be(property);
+            testObject.GetNeighbours(1).Should().BeEquivalentTo(new List<int>() { 1, 5 });
+            testObject.GetNeighbours(5).Should().BeEmpty();
         }
 
         [Test]
@@ -215,7 +208,7 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.AddEdgeBetween(source, destination);
             // then
-            Assert.AreSame(expected, result);
+            result.Should().BeSameAs(expected);
         }
 
         [Test]
@@ -232,7 +225,7 @@ namespace Algolib.Graphs
             // when
             IEnumerable<int> result = testObject.GetNeighbours(1);
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 1, 3, 4, 7, 9 }, result);
+            result.Should().BeEquivalentTo(new List<int>() { 1, 3, 4, 7, 9 });
         }
 
         [Test]
@@ -249,9 +242,9 @@ namespace Algolib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(1);
             // then
-            CollectionAssert.AreEquivalent(
+            result.Should().BeEquivalentTo(
                 new List<Edge<int>>() { new Edge<int>(1, 1), new Edge<int>(1, 3), new Edge<int>(1, 4),
-                                        new Edge<int>(1, 7), new Edge<int>(1, 9) }, result);
+                                        new Edge<int>(1, 7), new Edge<int>(1, 9) });
         }
 
         [Test]
@@ -268,7 +261,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetOutputDegree(1);
             // then
-            Assert.AreEqual(5, result);
+            result.Should().Be(5);
         }
 
         [Test]
@@ -285,7 +278,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetInputDegree(1);
             // then
-            Assert.AreEqual(5, result);
+            result.Should().Be(5);
         }
 
         [Test]
@@ -310,15 +303,15 @@ namespace Algolib.Graphs
             // when
             testObject.Reverse();
             // then
-            CollectionAssert.AreEquivalent(
+            testObject.Edges.Should().BeEquivalentTo(
                 new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
                                         new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
                                         new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
-                                        new Edge<int>(9, 4) }, testObject.Edges);
-            Assert.AreEqual(vertexProperty, testObject[vertex]);
-            Assert.IsNull(testObject[9]);
-            Assert.AreEqual(edgeProperty, testObject[testObject.GetEdge(2, 1)]);
-            Assert.IsNull(testObject[testObject.GetEdge(5, 3)]);
+                                        new Edge<int>(9, 4) });
+            testObject[vertex].Should().Be(vertexProperty);
+            testObject[9].Should().BeNull();
+            testObject[testObject.GetEdge(2, 1)].Should().Be(edgeProperty);
+            testObject[testObject.GetEdge(5, 3)].Should().BeNull();
         }
 
         [Test]
@@ -343,16 +336,16 @@ namespace Algolib.Graphs
             // when
             IDirectedGraph<int, string, string> result = testObject.ReversedCopy();
             // then
-            CollectionAssert.AreEquivalent(testObject.Vertices, result.Vertices);
-            CollectionAssert.AreEquivalent(
+            result.Vertices.Should().BeEquivalentTo(testObject.Vertices);
+            result.Edges.Should().BeEquivalentTo(
                 new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
                                         new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
                                         new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
-                                        new Edge<int>(9, 4) }, result.Edges);
-            Assert.AreEqual(vertexProperty, result[vertex]);
-            Assert.IsNull(result[9]);
-            Assert.AreEqual(edgeProperty, result[result.GetEdge(2, 1)]);
-            Assert.IsNull(result[result.GetEdge(5, 3)]);
+                                        new Edge<int>(9, 4) });
+            result[vertex].Should().Be(vertexProperty);
+            result[9].Should().BeNull();
+            result[result.GetEdge(2, 1)].Should().Be(edgeProperty);
+            result[result.GetEdge(5, 3)].Should().BeNull();
         }
     }
 }

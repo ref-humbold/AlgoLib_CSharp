@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Structures
@@ -12,16 +13,7 @@ namespace Algolib.Structures
         private Heap<int> testObject;
 
         [SetUp]
-        public void SetUp()
-        {
-            testObject = new Heap<int>(comparison);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            testObject = null;
-        }
+        public void SetUp() => testObject = new Heap<int>(comparison);
 
         [Test]
         public void Push_WhenNewElement_ThenAddedToHeap()
@@ -29,7 +21,7 @@ namespace Algolib.Structures
             // when
             testObject.Push(19);
             // then
-            Assert.AreEqual(1, testObject.Count);
+            testObject.Should().HaveCount(1);
         }
 
         [Test]
@@ -38,15 +30,16 @@ namespace Algolib.Structures
             // given
             List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
             // when
-            List<int> result = new List<int>();
-
             elements.ForEach(e => testObject.Push(e));
+
+            List<int> result = new List<int>();
 
             while(testObject.Count > 0)
                 result.Add(testObject.Pop());
             // then
             elements.Sort(comparison);
-            Assert.AreEqual(elements, result);
+            result.Should().BeInDescendingOrder();
+            result.Should().Equal(elements);
         }
 
         [Test]
@@ -59,17 +52,17 @@ namespace Algolib.Structures
             // when
             int result = testObject.Get();
             // then
-            Assert.AreEqual(elements.Max(), result);
-            Assert.AreEqual(elements.Count, testObject.Count);
+            result.Should().Be(elements.Max());
+            testObject.Should().HaveSameCount(elements);
         }
 
         [Test]
         public void Get_WhenEmpty_ThenInvalidOperationException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject.Get();
+            Action action = () => _ = testObject.Get();
             // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -82,9 +75,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGet(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(elements.Max(), resultValue);
-            Assert.AreEqual(elements.Count, testObject.Count);
+            result.Should().BeTrue();
+            resultValue.Should().Be(elements.Max());
+            testObject.Should().HaveSameCount(elements);
         }
 
         [Test]
@@ -93,9 +86,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryGet(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
-            Assert.AreEqual(0, testObject.Count);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+            testObject.Should().HaveCount(0);
         }
 
         [Test]
@@ -108,17 +101,18 @@ namespace Algolib.Structures
             // when
             int result = testObject.Pop();
             // then
-            Assert.AreEqual(elements.Max(), result);
-            Assert.AreEqual(elements.Count - 1, testObject.Count);
+            result.Should().Be(elements.Max());
+            testObject.Should().HaveCountLessThan(elements.Count)
+                .And.HaveCount(elements.Count - 1);
         }
 
         [Test]
         public void Pop_WhenEmpty_ThenInvalidOperationException()
         {
             // when
-            TestDelegate testDelegate = () => _ = testObject.Pop();
-            // then
-            Assert.Throws<InvalidOperationException>(testDelegate);
+            Action action = () => _ = testObject.Pop();
+            // then then
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -131,9 +125,10 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
-            Assert.IsTrue(result);
-            Assert.AreEqual(elements.Max(), resultValue);
-            Assert.AreEqual(elements.Count - 1, testObject.Count);
+            result.Should().BeTrue();
+            resultValue.Should().Be(elements.Max());
+            testObject.Should().HaveCountLessThan(elements.Count)
+                .And.HaveCount(elements.Count - 1);
         }
 
         [Test]
@@ -142,9 +137,9 @@ namespace Algolib.Structures
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
-            Assert.IsFalse(result);
-            Assert.AreEqual(default(int), resultValue);
-            Assert.AreEqual(0, testObject.Count);
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+            testObject.Should().HaveCount(0);
         }
     }
 }
