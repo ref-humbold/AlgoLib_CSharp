@@ -43,7 +43,7 @@ namespace Algolib.Structures
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
         /// <summary>Adds a new element to this heap.</summary>
-        /// <param name="element">New element</param>
+        /// <param name="element">Element to add</param>
         public void Push(T element)
         {
             heap.Add(element);
@@ -54,13 +54,11 @@ namespace Algolib.Structures
             {
                 int nextIndex = (index - 1) / 2;
 
-                if(Comparer.Compare(heap[index], heap[nextIndex]) < 0)
-                {
-                    swap(index, nextIndex);
-                    index = nextIndex;
-                }
-                else
+                if(Comparer.Compare(heap[index], heap[nextIndex]) >= 0)
                     break;
+
+                swap(index, nextIndex);
+                index = nextIndex;
             }
         }
 
@@ -129,13 +127,11 @@ namespace Algolib.Structures
                             ? index + index + 1
                             : index + index + 2;
 
-                if(Comparer.Compare(heap[childIndex], heap[index]) < 0)
-                {
-                    swap(index, childIndex);
-                    index = childIndex;
-                }
-                else
+                if(Comparer.Compare(heap[childIndex], heap[index]) >= 0)
                     break;
+
+                swap(index, childIndex);
+                index = childIndex;
             }
         }
 

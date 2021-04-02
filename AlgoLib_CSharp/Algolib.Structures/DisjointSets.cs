@@ -41,7 +41,7 @@ namespace Algolib.Structures
         }
 
         /// <summary>Checks whether an element belongs to any set.</summary>
-        /// <param name="element">Element to be found</param>
+        /// <param name="element">Element to check</param>
         /// <returns><c>true</c> if element is contained, otherwise <c>false</c></returns>
         public bool Contains(E element) => represents.ContainsKey(element);
 
