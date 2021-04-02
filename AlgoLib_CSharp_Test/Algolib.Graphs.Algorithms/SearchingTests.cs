@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs.Algorithms
@@ -44,7 +45,7 @@ namespace Algolib.Graphs.Algorithms
             undirectedGraph = null;
         }
 
-        // region Bfs
+        #region Bfs
 
         [Test]
         public void Bfs_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
@@ -53,10 +54,10 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.Bfs(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
             // then
-            CollectionAssert.IsSubsetOf(result, undirectedGraph.Vertices);
-            CollectionAssert.DoesNotContain(result, 2);
-            CollectionAssert.DoesNotContain(result, 6);
-            CollectionAssert.DoesNotContain(result, 9);
+            result.Should().BeSubsetOf(undirectedGraph.Vertices);
+            result.Should().NotContain(2);
+            result.Should().NotContain(6);
+            result.Should().NotContain(9);
         }
 
         [Test]
@@ -67,9 +68,9 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Searching.Bfs(undirectedGraph, strategy, new List<int>() { 0, 6 });
             // then
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.Bfs(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
 
         [Test]
@@ -89,7 +90,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.Bfs(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 0, 1, 3, 4, 7 }, result);
+            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
         }
 
         [Test]
@@ -100,12 +101,14 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Searching.Bfs(directedGraph, strategy, new List<int>() { 8, 6 });
             // then
-            CollectionAssert.AreEquivalent(directedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(directedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
-        // endregion region DfsIterative
+        #endregion
+
+        #region DfsIterative
 
         [Test]
         public void DfsIterative_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
@@ -114,10 +117,10 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsIterative(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
             // then
-            CollectionAssert.IsSubsetOf(result, undirectedGraph.Vertices);
-            CollectionAssert.DoesNotContain(result, 2);
-            CollectionAssert.DoesNotContain(result, 6);
-            CollectionAssert.DoesNotContain(result, 9);
+            result.Should().BeSubsetOf(undirectedGraph.Vertices);
+            result.Should().NotContain(2);
+            result.Should().NotContain(6);
+            result.Should().NotContain(9);
         }
 
         [Test]
@@ -129,9 +132,9 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsIterative(undirectedGraph, strategy, new List<int>() { 0, 6 });
             // then
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -141,7 +144,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsIterative(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
 
         [Test]
@@ -151,7 +154,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsIterative(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 0, 1, 3, 4, 7 }, result);
+            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
         }
 
         [Test]
@@ -162,12 +165,14 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Searching.DfsIterative(directedGraph, strategy, new List<int>() { 8, 6 });
             // then
-            CollectionAssert.AreEquivalent(directedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(directedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
-        // endregion region DfsRecursive
+        #endregion
+
+        #region DfsRecursive
 
         [Test]
         public void DfsRecursive_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
@@ -176,10 +181,10 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsRecursive(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
             // then
-            CollectionAssert.IsSubsetOf(result, undirectedGraph.Vertices);
-            CollectionAssert.DoesNotContain(result, 2);
-            CollectionAssert.DoesNotContain(result, 6);
-            CollectionAssert.DoesNotContain(result, 9);
+            result.Should().BeSubsetOf(undirectedGraph.Vertices);
+            result.Should().NotContain(2);
+            result.Should().NotContain(6);
+            result.Should().NotContain(9);
         }
 
         [Test]
@@ -191,9 +196,9 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsRecursive(undirectedGraph, strategy, new List<int>() { 0, 6 });
             // then
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -203,7 +208,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsRecursive(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
             // then
-            CollectionAssert.IsEmpty(result);
+            result.Should().BeEmpty();
         }
 
         [Test]
@@ -213,7 +218,7 @@ namespace Algolib.Graphs.Algorithms
             IEnumerable<int> result =
                     Searching.DfsRecursive(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
             // then
-            CollectionAssert.AreEquivalent(new List<int>() { 0, 1, 3, 4, 7 }, result);
+            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
         }
 
         [Test]
@@ -224,12 +229,12 @@ namespace Algolib.Graphs.Algorithms
             // when
             IEnumerable<int> result = Searching.DfsRecursive(directedGraph, strategy, new List<int>() { 8, 6 });
             // then
-            CollectionAssert.AreEquivalent(directedGraph.Vertices, result);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.entries);
-            CollectionAssert.AreEquivalent(undirectedGraph.Vertices, strategy.exits);
+            result.Should().BeEquivalentTo(directedGraph.Vertices);
+            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
-        // endregion
+        #endregion
 
         private class TestingStrategy<V> : IDfsStrategy<V>
         {
@@ -240,19 +245,13 @@ namespace Algolib.Graphs.Algorithms
             {
             }
 
-            public void OnEntry(V vertex)
-            {
-                entries.Add(vertex);
-            }
+            public void OnEntry(V vertex) => entries.Add(vertex);
 
             public void OnNextVertex(V vertex, V neighbour)
             {
             }
 
-            public void OnExit(V vertex)
-            {
-                exits.Add(vertex);
-            }
+            public void OnExit(V vertex) => exits.Add(vertex);
 
             public void OnEdgeToVisited(V vertex, V neighbour)
             {

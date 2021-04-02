@@ -18,13 +18,13 @@ namespace Algolib.Graphs
             get;
         }
 
-        /// <summary>enumerable of all vertices sorted by index</summary>
+        /// <summary>enumerable of all vertices</summary>
         IEnumerable<V> Vertices
         {
             get;
         }
 
-        /// <summary>enumerable of all edges sorted first by source then by destination</summary>
+        /// <summary>enumerable of all edges</summary>
         IEnumerable<Edge<V>> Edges
         {
             get;

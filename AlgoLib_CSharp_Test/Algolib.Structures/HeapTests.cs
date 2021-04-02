@@ -38,6 +38,7 @@ namespace Algolib.Structures
                 result.Add(testObject.Pop());
             // then
             elements.Sort(comparison);
+            result.Should().BeInDescendingOrder();
             result.Should().Equal(elements);
         }
 

@@ -7,8 +7,10 @@ namespace Algolib.Mathmat
     [TestFixture]
     public class MathsTests
     {
+        #region GCD
+
         [Test]
-        public void GCD_WhenNumbersAreComposite_ThenReturnsGCD()
+        public void GCD_WhenNumbersAreComposite_ThenGCD()
         {
             // when
             long result = Maths.GCD(161, 46);
@@ -17,7 +19,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void GCD_WhenNumbersArePrime_ThenReturnsOne()
+        public void GCD_WhenNumbersArePrime_ThenOne()
         {
             // when
             long result = Maths.GCD(127, 41);
@@ -26,7 +28,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void GCD_WhenNumbersAreMutuallyPrime_ThenReturnsOne()
+        public void GCD_WhenNumbersAreMutuallyPrime_ThenOne()
         {
             // when
             long result = Maths.GCD(119, 57);
@@ -35,7 +37,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void GCD_WhenNumber1IsMultipleOfNumber2_ThenReturnsNumber2()
+        public void GCD_WhenOneNumberIsMultipleOfAnother_ThenLessNumber()
         {
             // given
             long number1 = 272;
@@ -47,19 +49,21 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void GCD_WhenNumber2IsZero_ThenReturnsNumber1()
+        public void GCD_WhenOneNumberIsZero_ThenAnother()
         {
             // given
-            long number1 = 96;
-            long number2 = 0;
+            long number = 96;
             // when
-            long result = Maths.GCD(number1, number2);
+            long result = Maths.GCD(number, 0);
             // then
-            result.Should().Be(number1);
+            result.Should().Be(number);
         }
 
+        #endregion
+        #region LCM
+
         [Test]
-        public void LCM_WhenNumbersAreComposite_ThenReturnsLCM()
+        public void LCM_WhenNumbersAreComposite_ThenLCM()
         {
             // when
             long result = Maths.LCM(161, 46);
@@ -68,7 +72,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void LCM_WhenNumbersArePrime_ThenReturnsProduct()
+        public void LCM_WhenNumbersArePrime_ThenProduct()
         {
             // when
             long result = Maths.LCM(127, 41);
@@ -77,7 +81,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void LCM_WhenNumbersAreMutuallyPrime_ThenReturnsProduct()
+        public void LCM_WhenNumbersAreMutuallyPrime_ThenProduct()
         {
             // when
             long result = Maths.LCM(119, 57);
@@ -86,7 +90,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void LCM_WhenNumber1IsMultipleOfNumber2_ThenReturnsNumber1()
+        public void LCM_WhenOneNumberIsMultipleOfAnother_ThenGreaterNumber()
         {
             // given
             long number1 = 272;
@@ -98,15 +102,14 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void LCM_WhenOneOfNumbersIsZero_ThenReturnsZero()
+        public void LCM_WhenOneOfNumbersIsZero_ThenZero()
         {
-            // given
-            long number1 = 96;
-            long number2 = 0;
             // when
-            long result = Maths.LCM(number1, number2);
+            long result = Maths.LCM(96, 0);
             // then
             result.Should().Be(0);
         }
+
+        #endregion
     }
 }

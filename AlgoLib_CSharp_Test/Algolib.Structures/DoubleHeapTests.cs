@@ -16,8 +16,7 @@ namespace Algolib.Structures
 
         public DoubleHeapTests()
         {
-            numbers =
-               new List<int>() { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+            numbers = new List<int>() { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
             minimum = numbers.Min();
             maximum = numbers.Max();
         }
