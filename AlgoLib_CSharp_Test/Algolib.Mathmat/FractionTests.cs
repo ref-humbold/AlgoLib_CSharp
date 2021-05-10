@@ -40,7 +40,7 @@ namespace Algolib.Mathmat
             // when
             Fraction result = Fraction.Of(-4, 11);
             // then
-            result.As<IComparable<long>>().Should().BeLessThan(0);
+            result.As<IComparable<double>>().Should().BeLessThan(0);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Algolib.Mathmat
             // when
             Fraction result = Fraction.Of(4, -11);
             // then
-            result.As<IComparable<long>>().Should().BeLessThan(0);
+            result.As<IComparable<double>>().Should().BeLessThan(0);
         }
 
         [Test]
@@ -58,11 +58,11 @@ namespace Algolib.Mathmat
             // when
             Fraction result = Fraction.Of(-4, -11);
             // then
-            result.As<IComparable<long>>().Should().BeGreaterThan(0);
+            result.As<IComparable<double>>().Should().BeGreaterThan(0);
         }
 
         [Test]
-        public void OperatorAddition_WhenFraction_ThenDenominatorEqualsLCM()
+        public void OperatorPlus_WhenFraction_ThenDenominatorEqualsLCM()
         {
             // when
             Fraction result = Fraction.Of(1, 2) + Fraction.Of(5, 7);
@@ -71,7 +71,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorSubtraction_WhenFraction_ThenNormalized()
+        public void OperatorMinus_WhenFraction_ThenNormalized()
         {
             // when
             Fraction result = Fraction.Of(1, 2) - Fraction.Of(3, 10);
@@ -80,7 +80,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorMultiplication_WhenFraction_ThenNormalized()
+        public void OperatorAsterisk_WhenFraction_ThenNormalized()
         {
             // when
             Fraction result = Fraction.Of(3, 7) * Fraction.Of(5, 12);
@@ -89,7 +89,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorDivision_WhenFraction_ThenNormalized()
+        public void OperatorSlash_WhenFraction_ThenNormalized()
         {
             // when
             Fraction result = Fraction.Of(9, 14) / Fraction.Of(2, 5);
@@ -98,7 +98,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorDivision_WhenByZero_ThenDivideByZeroException()
+        public void OperatorSlash_WhenByZero_ThenDivideByZeroException()
         {
             // when
             Action action = () => _ = Fraction.Of(9, 14) / 0;
@@ -107,7 +107,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorInversion_WhenProperFraction_ThenInverted()
+        public void OperatorTilde_WhenProperFraction_ThenInverted()
         {
             // when
             Fraction result = ~Fraction.Of(23, 18);
@@ -116,12 +116,30 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorInversion_WhenZero_ThenInvalidOperationException()
+        public void OperatorTilde_WhenZero_ThenInvalidOperationException()
         {
             // when
             Action action = () => _ = ~Fraction.Of(0);
             // then
             action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
+        public void CompareTo_WhenDouble_ThenCompared()
+        {
+            // when
+            int result = Fraction.Of(25, 7).CompareTo(1.5);
+            // then
+            result.Should().BeGreaterThan(0);
+        }
+
+        [Test]
+        public void CompareTo_WhenInteger_ThenCompared()
+        {
+            // when
+            int result = Fraction.Of(-25, 7).CompareTo(-2);
+            // then
+            result.Should().BeLessThan(0);
         }
     }
 }

@@ -3,12 +3,9 @@
 namespace Algolib.Mathmat
 {
     // Structure of fraction
-    public struct Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable<long>,
-                             IComparable<double>
+    public struct Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable<double>
     {
-        private readonly long numerator;
-
-        private readonly long denominator;
+        private readonly long numerator, denominator;
 
         private Fraction(long numerator, long denominator)
         {
@@ -28,8 +25,6 @@ namespace Algolib.Mathmat
         }
 
         public static Fraction Of(long numerator, long denominator = 1) => new Fraction(numerator, denominator);
-
-        public static Fraction Zero() => Of(0);
 
         public static Fraction operator +(Fraction f1, Fraction f2) =>
            Of(f1.numerator * f2.denominator + f2.numerator * f1.denominator,
@@ -64,29 +59,21 @@ namespace Algolib.Mathmat
 
         public static bool operator >=(Fraction f1, Fraction f2) => f1.CompareTo(f2) >= 0;
 
-        public static bool operator <(Fraction f, long n) => f.CompareTo(n) < 0;
+        public static bool operator <(Fraction f, double d) => f.CompareTo(d) < 0;
 
-        public static bool operator <=(Fraction f, long n) => f.CompareTo(n) <= 0;
+        public static bool operator <=(Fraction f, double d) => f.CompareTo(d) <= 0;
 
-        public static bool operator >(Fraction f, long n) => f.CompareTo(n) > 0;
+        public static bool operator >(Fraction f, double d) => f.CompareTo(d) > 0;
 
-        public static bool operator >=(Fraction f, long n) => f.CompareTo(n) >= 0;
-
-        public static bool operator <(Fraction f, double n) => f.CompareTo(n) < 0;
-
-        public static bool operator <=(Fraction f, double n) => f.CompareTo(n) <= 0;
-
-        public static bool operator >(Fraction f, double n) => f.CompareTo(n) > 0;
-
-        public static bool operator >=(Fraction f, double n) => f.CompareTo(n) >= 0;
+        public static bool operator >=(Fraction f, double d) => f.CompareTo(d) >= 0;
 
         public static explicit operator int(Fraction f) => (int)(f.numerator / f.denominator);
 
         public static explicit operator long(Fraction f) => f.numerator / f.denominator;
 
-        public static explicit operator float(Fraction f) => (1.0f * f.numerator) / f.denominator;
+        public static implicit operator float(Fraction f) => (1.0f * f.numerator) / f.denominator;
 
-        public static explicit operator double(Fraction f) => (1.0 * f.numerator) / f.denominator;
+        public static implicit operator double(Fraction f) => (1.0 * f.numerator) / f.denominator;
 
         public static implicit operator Fraction(int n) => Of(n);
 
@@ -110,8 +97,6 @@ namespace Algolib.Mathmat
             return thisNumerator.CompareTo(otherNumerator);
         }
 
-        public int CompareTo(long other) => CompareTo(Of(other));
-
-        public int CompareTo(double other) => other.CompareTo(this);
+        public int CompareTo(double other) => ((double)this).CompareTo(other);
     }
 }
