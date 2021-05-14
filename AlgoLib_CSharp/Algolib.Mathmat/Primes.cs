@@ -44,7 +44,7 @@ namespace Algolib.Mathmat
             return primes;
         }
 
-        /// <summary>Fermat primality test</summary>
+        /// <summary>Fermat primality test.</summary>
         /// <param name="number">number to test</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
         public static bool TestFermat(int number)
@@ -59,16 +59,16 @@ namespace Algolib.Mathmat
 
             for(int i = 0; i < attempts; ++i)
             {
-                long witness = random.Next(1, number - 1);
+                int witness = random.Next(1, number - 1);
 
-                if(Maths.GCD(witness, number) > 1 || Maths.PowerMod(witness, number - 1, number) != 1)
+                if(Maths.GCD(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
                     return false;
             }
 
             return true;
         }
 
-        /// <summary>Miller–Rabin primality test</summary>
+        /// <summary>Miller–Rabin primality test.</summary>
         /// <param name="number">number to test</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
         public static bool TestMiller(int number)
@@ -88,16 +88,16 @@ namespace Algolib.Mathmat
 
             for(int i = 0; i < attempts; ++i)
             {
-                long witness = random.Next(1, number - 1);
+                int witness = random.Next(1, number - 1);
 
-                if(Maths.PowerMod(witness, multiplicand, number) != 1)
+                if(Maths.Power(witness, multiplicand, number) != 1)
                 {
-                    List<long> exponents = new List<long>();
+                    List<int> exponents = new List<int>();
 
                     for(int d = multiplicand; d <= number / 2; d *= 2)
                         exponents.Add(d);
 
-                    if(exponents.All(d => Maths.PowerMod(witness, d, number) != number - 1))
+                    if(exponents.All(d => Maths.Power(witness, d, number) != number - 1))
                         return false;
                 }
             }

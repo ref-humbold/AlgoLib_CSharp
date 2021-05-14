@@ -91,7 +91,7 @@ namespace Algolib.Graphs.Algorithms
             return reached.Keys;
         }
 
-        /// <summary>Recursive deph-first-search algorithm</summary>
+        /// <summary>Recursive deph-first-search algorithm.</summary>
         /// <param name="graph">a graph</param>
         /// <param name="strategy">a searching strategy</param>
         /// <param name="roots">starting vertices</param>

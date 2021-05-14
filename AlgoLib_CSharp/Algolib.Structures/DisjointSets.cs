@@ -9,7 +9,7 @@ namespace Algolib.Structures
         // Map of element represents
         private readonly Dictionary<E, E> represents;
 
-        /// <summary>Number of sets</summary>
+        /// <summary>Number of sets.</summary>
         public int Count
         {
             get; private set;

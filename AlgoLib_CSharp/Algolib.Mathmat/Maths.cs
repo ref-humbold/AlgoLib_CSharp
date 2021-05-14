@@ -5,29 +5,16 @@ namespace Algolib.Mathmat
 {
     public sealed class Maths
     {
-        /// <summary>Greatest common divisor of two numbers</summary>
-        /// <param name="number1">first number</param>
-        /// <param name="number2">second number</param>
-        /// <returns>greatest common divisor</returns>
-        public static long GCD(long number1, long number2)
-        {
-            (long Min, long Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
-                                       Math.Abs(Math.Max(number1, number2)));
+        #region GCD
 
-            while(numberPair.Min > 0)
-                numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
-
-            return numberPair.Max;
-        }
-
-        /// <summary>Greatest common divisor of two numbers</summary>
+        /// <summary>Counts a greatest common divisor of two numbers.</summary>
         /// <param name="number1">first number</param>
         /// <param name="number2">second number</param>
         /// <returns>greatest common divisor</returns>
         public static int GCD(int number1, int number2)
         {
             (int Min, int Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
-                                       Math.Abs(Math.Max(number1, number2)));
+                                             Math.Abs(Math.Max(number1, number2)));
 
             while(numberPair.Min > 0)
                 numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
@@ -35,98 +22,176 @@ namespace Algolib.Mathmat
             return numberPair.Max;
         }
 
-        /// <summary>Lowest common multiple of two numbers</summary>
+        /// <summary>Counts a greatest common divisor of two numbers.</summary>
         /// <param name="number1">first number</param>
         /// <param name="number2">second number</param>
-        /// <returns>lowest common multiple</returns>
-        public static long LCM(long number1, long number2) =>
-            Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
+        /// <returns>greatest common divisor</returns>
+        public static long GCD(long number1, long number2)
+        {
+            (long Min, long Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
+                                               Math.Abs(Math.Max(number1, number2)));
 
-        /// <summary>Lowest common multiple of two numbers</summary>
+            while(numberPair.Min > 0)
+                numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
+
+            return numberPair.Max;
+        }
+
+        #endregion
+        #region LCM
+
+        /// <summary>Counts a lowest common multiple of two numbers.</summary>
         /// <param name="number1">first number</param>
         /// <param name="number2">second number</param>
         /// <returns>lowest common multiple</returns>
         public static int LCM(int number1, int number2) =>
             Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
 
-        /// <summary>Fast modulo multiplication</summary>
+        /// <summary>Counts a lowest common multiple of two numbers.</summary>
+        /// <param name="number1">first number</param>
+        /// <param name="number2">second number</param>
+        /// <returns>lowest common multiple</returns>
+        public static long LCM(long number1, long number2) =>
+            Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
+
+        #endregion
+        #region Multiply
+
+        /// <summary>Performs a fast multiplication of two numbers.</summary>
         /// <param name="factor1">multiplier</param>
         /// <param name="factor2">multiplicand</param>
-        /// <param name="modulo">modulo</param>
-        /// <returns>multiplication result taken modulo</returns>
-        public static int MultMod(int factor1, int factor2, int modulo)
+        /// <returns>multiplication result</returns>
+        public static int Multiply(int factor1, int factor2)
         {
             int result = 0;
 
-            if(modulo < 0)
-                throw new ArithmeticException("Negative modulo");
-
             if(factor1 < 0 && factor2 < 0)
-                return MultMod(-factor1, -factor2, modulo);
+                return Multiply(-factor1, -factor2);
 
             if(factor1 < 0)
-                return modulo - MultMod(-factor1, factor2, modulo);
+                return -Multiply(-factor1, factor2);
 
             if(factor2 < 0)
-                return modulo - MultMod(factor1, -factor2, modulo);
+                return -Multiply(factor1, -factor2);
 
             while(factor2 > 0)
             {
                 if(factor2 % 2 == 1)
-                    result = modulo == 0 ? factor1 + result : (factor1 + result) % modulo;
+                    result += factor1;
 
-                factor1 = modulo == 0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
-                factor2 >>= 1;
+                factor1 += factor1;
+                factor2 /= 2;
             }
 
             return result;
         }
 
-        /// <summary>Fast modulo multiplication</summary>
+        /// <summary>Performs a fast multiplication of two numbers.</summary>
         /// <param name="factor1">multiplier</param>
         /// <param name="factor2">multiplicand</param>
-        /// <param name="modulo">modulo</param>
-        /// <returns>multiplication result taken modulo</returns>
-        public static long MultMod(long factor1, long factor2, long modulo)
+        /// <returns>multiplication result</returns>
+        public static long Multiply(long factor1, long factor2)
         {
             long result = 0;
 
-            if(modulo < 0)
-                throw new ArithmeticException("Negative modulo");
-
             if(factor1 < 0 && factor2 < 0)
-                return MultMod(-factor1, -factor2, modulo);
+                return Multiply(-factor1, -factor2);
 
             if(factor1 < 0)
-                return modulo - MultMod(-factor1, factor2, modulo);
+                return -Multiply(-factor1, factor2);
 
             if(factor2 < 0)
-                return modulo - MultMod(factor1, -factor2, modulo);
+                return -Multiply(factor1, -factor2);
 
             while(factor2 > 0)
             {
                 if(factor2 % 2 == 1)
-                    result = modulo == 0 ? factor1 + result : (factor1 + result) % modulo;
+                    result += factor1;
 
-                factor1 = modulo == 0 ? factor1 + factor1 : (factor1 + factor1) % modulo;
-                factor2 >>= 1;
+                factor1 += factor1;
+                factor2 /= 2;
             }
 
             return result;
         }
 
-        /// <summary>Fast modulo exponentiation</summary>
+        /// <summary>Performs a fast multiplication of two numbers with modulo taken.</summary>
+        /// <param name="factor1">multiplier</param>
+        /// <param name="factor2">multiplicand</param>
+        /// <param name="modulo">modulo</param>
+        /// <returns>multiplication result with modulo taken</returns>
+        public static int Multiply(int factor1, int factor2, int modulo)
+        {
+            int result = 0;
+
+            if(modulo <= 0)
+                throw new ArithmeticException("Non-positive modulo");
+
+            if(factor1 < 0 && factor2 < 0)
+                return Multiply(-factor1, -factor2, modulo);
+
+            if(factor1 < 0)
+                return modulo - Multiply(-factor1, factor2, modulo);
+
+            if(factor2 < 0)
+                return modulo - Multiply(factor1, -factor2, modulo);
+
+            while(factor2 > 0)
+            {
+                if(factor2 % 2 == 1)
+                    result = (factor1 + result) % modulo;
+
+                factor1 = (factor1 + factor1) % modulo;
+                factor2 /= 2;
+            }
+
+            return result;
+        }
+
+        /// <summary>Performs a fast multiplication of two numbers with modulo taken.</summary>
+        /// <param name="factor1">multiplier</param>
+        /// <param name="factor2">multiplicand</param>
+        /// <param name="modulo">modulo</param>
+        /// <returns>multiplication result with modulo taken</returns>
+        public static long Multiply(long factor1, long factor2, long modulo)
+        {
+            long result = 0;
+
+            if(modulo <= 0)
+                throw new ArithmeticException("Non-positive modulo");
+
+            if(factor1 < 0 && factor2 < 0)
+                return Multiply(-factor1, -factor2, modulo);
+
+            if(factor1 < 0)
+                return modulo - Multiply(-factor1, factor2, modulo);
+
+            if(factor2 < 0)
+                return modulo - Multiply(factor1, -factor2, modulo);
+
+            while(factor2 > 0)
+            {
+                if(factor2 % 2 == 1)
+                    result = (factor1 + result) % modulo;
+
+                factor1 = (factor1 + factor1) % modulo;
+                factor2 /= 2;
+            }
+
+            return result;
+        }
+
+        #endregion
+        #region Power
+
+        /// <summary>Performs a fast exponentiation of two numbers.</summary>
         /// <param name="baseNum">base</param>
         /// <param name="exponent">exponent</param>
-        /// <param name="modulo">modulo</param>
-        /// <returns>exponentiation result taken modulo</returns>
-        public static int PowerMod(int baseNum, int exponent, int modulo)
+        /// <returns>exponentiation result</returns>
+        public static int Power(int baseNum, int exponent)
         {
             int result = 1;
 
-            if(modulo < 0)
-                throw new ArithmeticException("Negative modulo");
-
             if(exponent < 0)
                 throw new ArithmeticException("Negative exponent");
 
@@ -136,26 +201,52 @@ namespace Algolib.Mathmat
             while(exponent > 0)
             {
                 if(exponent % 2 == 1)
-                    result = MultMod(result, baseNum, modulo);
+                    result = Multiply(result, baseNum);
 
-                baseNum = MultMod(baseNum, baseNum, modulo);
-                exponent >>= 1;
+                baseNum = Multiply(baseNum, baseNum);
+                exponent /= 2;
             }
 
             return result;
         }
 
-        /// <summary>Fast modulo exponentiation</summary>
+        /// <summary>Performs a fast exponentiation of two numbers.</summary>
         /// <param name="baseNum">base</param>
         /// <param name="exponent">exponent</param>
-        /// <param name="modulo">modulo</param>
-        /// <returns>exponentiation result taken modulo</returns>
-        public static long PowerMod(long baseNum, long exponent, long modulo)
+        /// <returns>exponentiation result</returns>
+        public static long Power(long baseNum, long exponent)
         {
             long result = 1;
 
-            if(modulo < 0)
-                throw new ArithmeticException("Negative modulo");
+            if(exponent < 0)
+                throw new ArithmeticException("Negative exponent");
+
+            if(baseNum == 0 && exponent == 0)
+                throw new NotFiniteNumberException("Zero to the power of zero is NaN");
+
+            while(exponent > 0)
+            {
+                if(exponent % 2 == 1)
+                    result = Multiply(result, baseNum);
+
+                baseNum = Multiply(baseNum, baseNum);
+                exponent /= 2;
+            }
+
+            return result;
+        }
+
+        /// <summary>Performs a fast exponentiation of two numbers with modulo taken.</summary>
+        /// <param name="baseNum">base</param>
+        /// <param name="exponent">exponent</param>
+        /// <param name="modulo">modulo</param>
+        /// <returns>exponentiation result with modulo taken</returns>
+        public static int Power(int baseNum, int exponent, int modulo)
+        {
+            int result = 1;
+
+            if(modulo <= 0)
+                throw new ArithmeticException("Non-positive modulo");
 
             if(exponent < 0)
                 throw new ArithmeticException("Negative exponent");
@@ -166,13 +257,45 @@ namespace Algolib.Mathmat
             while(exponent > 0)
             {
                 if(exponent % 2 == 1)
-                    result = MultMod(result, baseNum, modulo);
+                    result = Multiply(result, baseNum, modulo);
 
-                baseNum = MultMod(baseNum, baseNum, modulo);
-                exponent >>= 1;
+                baseNum = Multiply(baseNum, baseNum, modulo);
+                exponent /= 2;
             }
 
             return result;
         }
+
+        /// <summary>Performs a fast exponentiation of two numbers with modulo taken.</summary>
+        /// <param name="baseNum">base</param>
+        /// <param name="exponent">exponent</param>
+        /// <param name="modulo">modulo</param>
+        /// <returns>exponentiation result with modulo taken</returns>
+        public static long Power(long baseNum, long exponent, long modulo)
+        {
+            long result = 1;
+
+            if(modulo <= 0)
+                throw new ArithmeticException("Non-positive modulo");
+
+            if(exponent < 0)
+                throw new ArithmeticException("Negative exponent");
+
+            if(baseNum == 0 && exponent == 0)
+                throw new NotFiniteNumberException("Zero to the power of zero is NaN");
+
+            while(exponent > 0)
+            {
+                if(exponent % 2 == 1)
+                    result = Multiply(result, baseNum, modulo);
+
+                baseNum = Multiply(baseNum, baseNum, modulo);
+                exponent /= 2;
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }

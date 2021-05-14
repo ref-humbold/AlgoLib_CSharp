@@ -6,35 +6,43 @@ namespace Algolib.Graphs
 {
     public interface IGraph<V, VP, EP>
     {
-        /// <summary>number of vertices</summary>
+        /// <summary>Number of vertices.</summary>
         int VerticesCount
         {
             get;
         }
 
-        /// <summary>number of edges</summary>
+        /// <summary>Number of edges.</summary>
         int EdgesCount
         {
             get;
         }
 
-        /// <summary>enumerable of all vertices</summary>
+        /// <summary>Enumerable of all vertices.</summary>
         IEnumerable<V> Vertices
         {
             get;
         }
 
-        /// <summary>enumerable of all edges</summary>
+        /// <summary>Enumerable of all edges.</summary>
         IEnumerable<Edge<V>> Edges
         {
             get;
         }
 
-        /// <summary>property of a vertex from this graph</summary>
-        VP this[V vertex] { get; set; }
+        /// <summary>Property of a vertex from this graph.</summary>
+        VP this[V vertex]
+        {
+            get;
+            set;
+        }
 
-        /// <summary>property of an edge from this graph</summary>
-        EP this[Edge<V> edge] { get; set; }
+        /// <summary>Property of an edge from this graph.</summary>
+        EP this[Edge<V> edge]
+        {
+            get;
+            set;
+        }
 
         /// <param name="source">source vertex</param>
         /// <param name="destination">destination vertex</param>

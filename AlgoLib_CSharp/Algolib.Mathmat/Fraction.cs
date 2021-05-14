@@ -1,8 +1,8 @@
-﻿using System;
+﻿// Structure of fraction
+using System;
 
 namespace Algolib.Mathmat
 {
-    // Structure of fraction
     public struct Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable<double>
     {
         private readonly long numerator, denominator;

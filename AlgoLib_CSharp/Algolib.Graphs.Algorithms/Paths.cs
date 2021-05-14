@@ -7,7 +7,7 @@ namespace Algolib.Graphs.Algorithms
 {
     public sealed class Paths
     {
-        /// <summary>Bellman-Ford algorithm</summary>
+        /// <summary>Bellman-Ford algorithm.</summary>
         /// <param name="graph">A directed weighted graph</param>
         /// <param name="source">A source vertex</param>
         /// <returns>Dictionary of distances for vertices</returns>
@@ -80,7 +80,7 @@ namespace Algolib.Graphs.Algorithms
             return distances;
         }
 
-        /// <summary>Floyd-Warshall algorithm</summary>
+        /// <summary>Floyd-Warshall algorithm.</summary>
         /// <param name="graph">A directed weighted graph</param>
         /// <returns>Dictionary of distances for each pair of vertices</returns>
         public static Dictionary<(V Source, V Destination), double> FloydWarshall<V, VP, EP>(
