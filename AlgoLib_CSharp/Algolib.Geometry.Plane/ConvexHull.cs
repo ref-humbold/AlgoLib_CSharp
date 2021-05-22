@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Geometry
+namespace Algolib.Geometry.Plane
 {
     // Algorithm for convex hull on a plane (monotone chain)
     public sealed class ConvexHull
@@ -14,7 +14,7 @@ namespace Algolib.Geometry
             if(points.Count < 3)
                 return Enumerable.Empty<Point2D>();
 
-            List<Point2D> sorted = PointsSorting.SortByX(points);
+            List<Point2D> sorted = Geometry2D.SortByX(points);
             List<Point2D> lowerHull = createHalfHull(sorted);
             List<Point2D> upperHull = createHalfHull(Enumerable.Reverse(sorted));
 
