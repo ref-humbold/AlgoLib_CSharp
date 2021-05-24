@@ -12,7 +12,8 @@ namespace Algolib.Structures
         /// <summary>Number of sets.</summary>
         public int Count
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public DisjointSets(IEnumerable<E> universe)

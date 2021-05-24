@@ -10,6 +10,7 @@ namespace Algolib.Mathmat
         public double[] Coefficients;
         public double Free;
 
+        /// <summary>Number of coefficients.</summary>
         public int Count => Coefficients.Length;
 
         public Equation(double[] coefficients, double free)
@@ -19,10 +20,10 @@ namespace Algolib.Mathmat
         }
 
         /// <param name="i">Index of a variable</param>
-        /// <returns>coefficient by i-th variable</returns>
+        /// <returns>Coefficient by i-th variable</returns>
         public double this[Index i] => Coefficients[i];
 
-        /// <returns>string representation of this equation</returns>
+        /// <returns>String representation of this equation</returns>
         public override string ToString()
         {
             IEnumerable<string> terms = Coefficients.Select((c, i) => c != 0 ? $"{c} x_{i}" : "")
@@ -31,9 +32,9 @@ namespace Algolib.Mathmat
             return $"{string.Join(" + ", terms)} = {Free}";
         }
 
-        /// <summary>Multiplies equation by a constant.</summary>
-        /// <param name="constant">constant</param>
-        /// <exception cref="ArithmeticException">if the constant is equal to zero</exception>
+        /// <summary>Multiplies this equation by a constant.</summary>
+        /// <param name="constant">Constant</param>
+        /// <exception cref="ArithmeticException">If the constant is equal to zero</exception>
         public void Multiply(double constant)
         {
             if(constant == 0)
@@ -45,14 +46,14 @@ namespace Algolib.Mathmat
             Free *= constant;
         }
 
-        /// <summary>Transforms equation through a linear combination with another equation.</summary>
-        /// <param name="equation">equation</param>
-        /// <param name="constant">linear combination constant</param>
-        /// <exception cref="ArgumentException">if equations sizes differ</exception>
-        /// <exception cref="ArithmeticException">if the constant is equal to zero</exception>
+        /// <summary>Transforms this equation through a linear combination with another equation.</summary>
+        /// <param name="equation">Equation</param>
+        /// <param name="constant">Linear combination constant</param>
+        /// <exception cref="ArgumentException">If equations sizes differ</exception>
+        /// <exception cref="ArithmeticException">If the constant is equal to zero</exception>
         public void Combine(Equation equation, double constant = 1)
         {
-            if(equation.Count != this.Count)
+            if(equation.Count != Count)
                 throw new ArgumentException("Equation has different number of variables");
 
             if(constant == 0)
@@ -64,8 +65,8 @@ namespace Algolib.Mathmat
             Free += equation.Free * constant;
         }
 
-        /// <summary>Checks whether specified values solve this equation.</summary>
-        /// <param name="solution">values to check</param>
+        /// <summary>Checks whether given values solve this equation.</summary>
+        /// <param name="solution">Values to check</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
         public bool IsSolution(double[] solution) =>
             solution.Length == Coefficients.Length

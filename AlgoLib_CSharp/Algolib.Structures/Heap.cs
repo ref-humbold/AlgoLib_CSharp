@@ -62,16 +62,16 @@ namespace Algolib.Structures
             }
         }
 
-        /// <summary>Retrieves the least element from this heap.</summary>
-        /// <returns>The least element</returns>
+        /// <summary>Retrieves minimal element from this heap.</summary>
+        /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty</exception>
         public T Get() => Count == 0 ? throw new InvalidOperationException("The heap is empty")
                                      : heap[0];
 
         /// <summary>
-        /// Retrieves the least element from this heap and copies it to the <c>result</c> parameter.
+        /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">Minimal element if it's present, otherwise the default value</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryGet(out T result)
         {
@@ -85,8 +85,8 @@ namespace Algolib.Structures
             return true;
         }
 
-        /// <summary>Retrieves and removes the least element from this heap.</summary>
-        /// <returns>Removed element</returns>
+        /// <summary>Retrieves and removes minimal element from this heap.</summary>
+        /// <returns>Removed minimal element</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty</exception>
         public T Pop()
         {
@@ -97,9 +97,11 @@ namespace Algolib.Structures
         }
 
         /// <summary>
-        /// Removes the least element from this heap and copies it to the <c>result</c> parameter.
+        /// Removes minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">
+        /// Removed minimal element if it's present, otherwise the default value
+        /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryPop(out T result)
         {
@@ -111,7 +113,7 @@ namespace Algolib.Structures
             return wasPresent;
         }
 
-        // Removes the least element
+        // Removes minimal element
         private void doPop()
         {
             heap[0] = heap[^1];
@@ -135,6 +137,7 @@ namespace Algolib.Structures
             }
         }
 
+        // Swaps two elements in the heap.
         private void swap(int indexFirst, int indexSecond)
         {
             T temp = heap[indexFirst];

@@ -34,10 +34,18 @@ namespace Algolib.Geometry.Space
             points == null ? throw new ArgumentNullException("Points list is null")
                            : points.OrderBy(pt => pt.Z).ToList();
 
+        /// <summary>Counts distance between points.</summary>
+        /// <param name="p1">First point</param>
+        /// <param name="p2">Second point</param>
+        /// <returns>Distance between points</returns>
         public static double Distance(Point3D p1, Point3D p2) =>
             Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y)
                       + (p2.Z - p1.Z) * (p2.Z - p1.Z));
 
+        /// <summary>Translates a point by a vector.</summary>
+        /// <param name="p">Point</param>
+        /// <param name="v">Vector of translation</param>
+        /// <returns>Translated point</returns>
         public static Point3D Translate(Point3D p, Vector3D v) =>
             new Point3D(p.X + v.X, p.Y + v.Y, p.Z + v.Z);
     }

@@ -78,16 +78,16 @@ namespace Algolib.Structures
             }
         }
 
-        /// <summary>Retrieves the minimal element from this double heap.</summary>
+        /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
         public T GetMin() => Count == 0 ? throw new InvalidOperationException("The double heap is empty")
                                         : heap[indexMin];
 
         /// <summary>
-        /// Retrieves the minimal element from this double heap and copies it to the <c>result</c> parameter.
+        /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">Minimal element if it's present, otherwise the default value</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryGetMin(out T result)
         {
@@ -101,7 +101,7 @@ namespace Algolib.Structures
             return true;
         }
 
-        /// <summary>Retrieves the maximal element from this double heap.</summary>
+        /// <summary>Retrieves maximal element from this double heap.</summary>
         /// <returns>Maximal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
         public T GetMax() =>
@@ -113,9 +113,9 @@ namespace Algolib.Structures
             };
 
         /// <summary>
-        /// Retrieves the maximal element from this double heap and copies it to the <c>result</c> parameter.
+        /// Retrieves maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">Maximal element if it's present, otherwise the default value</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryGetMax(out T result)
         {
@@ -135,8 +135,8 @@ namespace Algolib.Structures
             }
         }
 
-        /// <summary>Retrieves and removes the minimal element from this double heap.</summary>
-        /// <returns>Removed element</returns>
+        /// <summary>Retrieves and removes minimal element from this double heap.</summary>
+        /// <returns>Removed minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
         public T PopMin()
         {
@@ -147,9 +147,11 @@ namespace Algolib.Structures
         }
 
         /// <summary>
-        /// Removes the minimal element from this double heap and copies it to the <c>result</c> parameter.
+        /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">
+        /// Removed minimal element if it's present, otherwise the default value
+        /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryPopMin(out T result)
         {
@@ -161,8 +163,8 @@ namespace Algolib.Structures
             return wasPresent;
         }
 
-        /// <summary>Retrieves and removes the maximal element from this double heap.</summary>
-        /// <returns>Removed element</returns>
+        /// <summary>Retrieves and removes maximal element from this double heap.</summary>
+        /// <returns>Removed maximal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
         public T PopMax()
         {
@@ -176,9 +178,11 @@ namespace Algolib.Structures
         }
 
         /// <summary>
-        /// Removes the maximal element from this double heap and copies it to the <c>result</c> parameter.
+        /// Removes maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">The least element if it's present, otherwise the default value</param>
+        /// <param name="result">
+        /// Removed maximal element if it's present, otherwise the default value
+        /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryPopMax(out T result)
         {
@@ -192,6 +196,7 @@ namespace Algolib.Structures
 
         private int compare(int index1, int index2) => Comparer.Compare(heap[index1], heap[index2]);
 
+        // Removes element from given index.
         private void doPopAt(int index)
         {
             heap[index] = heap[^1];
@@ -199,6 +204,7 @@ namespace Algolib.Structures
             moveToMax(index);
         }
 
+        // Moves element from given index towards minimum.
         private void moveToMin(int index)
         {
             if(index == indexMin)
@@ -224,6 +230,7 @@ namespace Algolib.Structures
             }
         }
 
+        // Performs a single step of movement towards minimum.
         private void stepToMin(int index, int nextIndex)
         {
             if(compare(index, nextIndex) < 0)
@@ -233,6 +240,7 @@ namespace Algolib.Structures
             }
         }
 
+        // Moves element from given index towards maximum.
         private void moveToMax(int index)
         {
             if(index == indexMax)
@@ -258,6 +266,7 @@ namespace Algolib.Structures
             }
         }
 
+        // Performs a single step of movement towards maximum.
         private void stepToMax(int index, int nextIndex)
         {
             if(compare(index, nextIndex) > 0)
@@ -267,6 +276,7 @@ namespace Algolib.Structures
             }
         }
 
+        // Swaps two elements in the double heap.
         private void swap(int index1, int index2)
         {
             T temp = heap[index1];

@@ -10,7 +10,7 @@ namespace Algolib.Sequences
         private static readonly Random random = new Random();
 
         /// <summary>Mutably sorts given sequence using a heap.</summary>
-        /// <param name="sequence">A sequence of elements</param>
+        /// <param name="sequence">Sequence of elements</param>
         public static void HeapSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
@@ -38,7 +38,7 @@ namespace Algolib.Sequences
         /// Mutably sorts given sequence using a top-down merge-sort algorithm. Sorting is
         /// guaranteed to be stable.
         /// </summary>
-        /// <param name="sequence">A sequence of elements</param>
+        /// <param name="sequence">Sequence of elements</param>
         public static void TopDownMergeSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
@@ -51,7 +51,7 @@ namespace Algolib.Sequences
         /// Mutably sorts given sequence using a bottom-up merge-sort algorithm. Sorting is
         /// guaranteed to be stable.
         /// </summary>
-        /// <param name="sequence">A sequence of elements</param>
+        /// <param name="sequence">Sequence of elements</param>
         public static void BottomUpMergeSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)
@@ -67,7 +67,7 @@ namespace Algolib.Sequences
         }
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
-        /// <param name="sequence">A sequence of elements</param>
+        /// <param name="sequence">Sequence of elements</param>
         public static void QuickSort<T>(List<T> sequence) where T : IComparable
         {
             if(sequence == null)

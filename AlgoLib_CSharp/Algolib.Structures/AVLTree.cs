@@ -168,7 +168,7 @@ namespace Algolib.Structures
             return node;
         }
 
-        // Searches for node that satisfies specified predicate with specified value.
+        // Searches for node that satisfies given predicate with given value.
         private AVLInnerNode<E> findNode(E element, Func<AVLInnerNode<E>, E, bool> predicate)
         {
             AVLInnerNode<E> node = Root;
@@ -245,7 +245,7 @@ namespace Algolib.Structures
             }
         }
 
-        // Restores balancing on a path from specified node to the root.
+        // Restores balancing on a path from given node to the root.
         private void balance(IAVLNode<E> node)
         {
             while(node.Height > 0)

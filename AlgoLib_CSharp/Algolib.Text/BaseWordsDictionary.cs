@@ -20,7 +20,7 @@ namespace Algolib.Text
             create();
         }
 
-        /// <summary>Retrieves code of a substring denoted by specified range.</summary>
+        /// <summary>Retrieves code of a substring denoted by given range.</summary>
         /// <param name="range">Range in the text</param>
         /// <returns>Code of the substring</returns>
         /// <exception cref="IndexOutOfRangeException">If start or end of the range are invalid</exception>

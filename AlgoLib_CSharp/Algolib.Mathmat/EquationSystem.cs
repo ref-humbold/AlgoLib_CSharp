@@ -22,6 +22,7 @@ namespace Algolib.Mathmat
     {
         private readonly Equation[] equations;
 
+        /// <summary>Number of equations.</summary>
         public int Count => equations.Length;
 
         public EquationSystem(Equation[] equations)

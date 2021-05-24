@@ -44,8 +44,8 @@ namespace Algolib.Mathmat
             return primes;
         }
 
-        /// <summary>Fermat primality test.</summary>
-        /// <param name="number">number to test</param>
+        /// <summary>Performs Fermat primality test.</summary>
+        /// <param name="number">Number to test</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
         public static bool TestFermat(int number)
         {
@@ -68,8 +68,8 @@ namespace Algolib.Mathmat
             return true;
         }
 
-        /// <summary>Miller–Rabin primality test.</summary>
-        /// <param name="number">number to test</param>
+        /// <summary>Performs Miller–Rabin primality test.</summary>
+        /// <param name="number">Number to test</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
         public static bool TestMiller(int number)
         {
