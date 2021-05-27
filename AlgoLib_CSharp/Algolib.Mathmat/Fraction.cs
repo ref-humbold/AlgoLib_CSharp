@@ -79,10 +79,10 @@ namespace Algolib.Mathmat
 
         public static implicit operator Fraction(long n) => Of(n);
 
-        public override bool Equals(object obj) => obj is Fraction f && Equals(f);
-
         public bool Equals(Fraction other) =>
             numerator == other.numerator && denominator == other.denominator;
+
+        public override bool Equals(object obj) => obj is Fraction f && Equals(f);
 
         public override int GetHashCode() => (numerator, denominator).GetHashCode();
 

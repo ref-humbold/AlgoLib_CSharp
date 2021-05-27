@@ -4,21 +4,7 @@ using System.Linq;
 
 namespace Algolib.Mathmat
 {
-    public class NoSolutionException : Exception
-    {
-        public NoSolutionException() : base()
-        {
-        }
-    }
-
-    public class InfiniteSolutionsException : Exception
-    {
-        public InfiniteSolutionsException() : base()
-        {
-        }
-    }
-
-    public class EquationSystem
+    public struct EquationSystem
     {
         private readonly Equation[] equations;
 
@@ -118,5 +104,19 @@ namespace Algolib.Mathmat
         /// <param name="solution">Values to check</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
         public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
+    }
+
+    public class NoSolutionException : Exception
+    {
+        public NoSolutionException() : base()
+        {
+        }
+    }
+
+    public class InfiniteSolutionsException : Exception
+    {
+        public InfiniteSolutionsException() : base()
+        {
+        }
     }
 }
