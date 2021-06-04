@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using FluentAssertions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algolib.Text
 {
@@ -67,6 +68,20 @@ namespace Algolib.Text
             // then
             testObject.Contains(text).Should().BeTrue();
             testObject.Count.Should().Be(texts.Count + 1);
+        }
+
+        [Test]
+        public void AddRange_WhenPresentAndAbsent_ThenAbsentAdded()
+        {
+            // given
+            List<string> textsToAdd = new List<string> { "abxx", "x", "abcdef", "xyz" };
+            // when
+            testObject.AddRange(textsToAdd);
+            // then
+            foreach(string text in textsToAdd)
+                testObject.Contains(text).Should().BeTrue();
+
+            testObject.Count.Should().Be(texts.Concat(textsToAdd).Distinct().Count());
         }
 
         [Test]
@@ -140,6 +155,20 @@ namespace Algolib.Text
             testObject.Contains("xyz").Should().BeTrue();
             testObject.Contains(text).Should().BeFalse();
             testObject.Count.Should().Be(texts.Count);
+        }
+
+        [Test]
+        public void RemoveRange_WhenPresentAndAbsent_ThenPresentRemoved()
+        {
+            // given
+            List<string> textsToRemove = new List<string> { "abxx", "x", "abcdef", "xyz" };
+            // when
+            testObject.RemoveRange(textsToRemove);
+            // then
+            foreach(string text in textsToRemove)
+                testObject.Contains(text).Should().BeFalse();
+
+            testObject.Count.Should().Be(texts.Where(t => !textsToRemove.Contains(t)).Count());
         }
     }
 }

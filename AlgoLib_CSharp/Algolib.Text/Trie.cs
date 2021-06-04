@@ -15,11 +15,7 @@ namespace Algolib.Text
 
         public Trie() => Count = 0;
 
-        public Trie(IEnumerable<string> texts) : this()
-        {
-            foreach(string text in texts)
-                Add(text);
-        }
+        public Trie(IEnumerable<string> texts) : this() => AddRange(texts);
 
         public void Add(string text)
         {
@@ -36,6 +32,12 @@ namespace Algolib.Text
                 ++Count;
                 node.Terminus = true;
             }
+        }
+
+        public void AddRange(IEnumerable<string> texts)
+        {
+            foreach(string text in texts)
+                Add(text);
         }
 
         public void Clear()
@@ -63,6 +65,12 @@ namespace Algolib.Text
         {
             if(text.Length > 0)
                 removeNode(text, tree, 0);
+        }
+
+        public void RemoveRange(IEnumerable<string> texts)
+        {
+            foreach(string text in texts)
+                Remove(text);
         }
 
         private bool removeNode(string text, TrieNode node, int i)

@@ -1,10 +1,10 @@
-﻿using System;
+﻿// Structure of heap
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
-    // Structure of heap
     public class Heap<T> : IEnumerable<T>
     {
         private readonly List<T> heap;
