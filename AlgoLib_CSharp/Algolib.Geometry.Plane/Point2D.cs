@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Geometry.Plane
 {
-    public struct Point2D : IEquatable<Point2D>
+    public class Point2D : GeometryObject
     {
         public readonly double X;
         public readonly double Y;
@@ -22,13 +22,7 @@ namespace Algolib.Geometry.Plane
 
         public static Point2D Of(double x, double y) => new Point2D(x, y);
 
-        public static bool operator ==(Point2D p1, Point2D p2) => p1.Equals(p2);
-
-        public static bool operator !=(Point2D p1, Point2D p2) => !(p1 == p2);
-
-        public override bool Equals(object obj) => obj is Point2D p && Equals(p);
-
-        public bool Equals(Point2D p) => X == p.X && Y == p.Y;
+        public override bool Equals(object obj) => obj is Point2D p && AreEqual(X, p.X) && AreEqual(Y, p.Y);
 
         public override int GetHashCode() => HashCode.Combine(X, Y);
 

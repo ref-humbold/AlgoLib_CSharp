@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Geometry.Plane
 {
-    public struct Vector2D : IEquatable<Vector2D>
+    public class Vector2D : GeometryObject
     {
         public readonly double X;
         public readonly double Y;
@@ -17,10 +17,6 @@ namespace Algolib.Geometry.Plane
         }
 
         public static Vector2D Of(double x, double y) => new Vector2D(x, y);
-
-        public static bool operator ==(Vector2D v1, Vector2D v2) => v1.Equals(v2);
-
-        public static bool operator !=(Vector2D v1, Vector2D v2) => !(v1 == v2);
 
         public static Vector2D operator +(Vector2D v1, Vector2D v2) =>
             new Vector2D(v1.X + v2.X, v1.Y + v2.Y);
@@ -42,9 +38,7 @@ namespace Algolib.Geometry.Plane
 
         public static double Area(Vector2D v1, Vector2D v2) => v1.X * v2.Y - v1.Y * v2.X;
 
-        public override bool Equals(object obj) => obj is Vector2D v && Equals(v);
-
-        public bool Equals(Vector2D v) => X == v.X && Y == v.Y;
+        public override bool Equals(object obj) => obj is Vector2D v && AreEqual(X, v.X) && AreEqual(Y, v.Y);
 
         public override int GetHashCode() => HashCode.Combine(X, Y);
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Geometry.Space
 {
-    public struct Vector3D : IEquatable<Vector3D>
+    public class Vector3D : GeometryObject
     {
         public readonly double X;
         public readonly double Y;
@@ -19,10 +19,6 @@ namespace Algolib.Geometry.Space
         }
 
         public static Vector3D Of(double x, double y, double z) => new Vector3D(x, y, z);
-
-        public static bool operator ==(Vector3D v1, Vector3D v2) => v1.Equals(v2);
-
-        public static bool operator !=(Vector3D v1, Vector3D v2) => !(v1 == v2);
 
         public static Vector3D operator +(Vector3D v1, Vector3D v2) =>
             new Vector3D(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
@@ -52,9 +48,8 @@ namespace Algolib.Geometry.Space
 
         public static double Volume(Vector3D v1, Vector3D v2, Vector3D v3) => Dot(v1, Cross(v2, v3));
 
-        public override bool Equals(object obj) => obj is Vector3D v && Equals(v);
-
-        public bool Equals(Vector3D v) => X == v.X && Y == v.Y && Z == v.Z;
+        public override bool Equals(object obj) =>
+            obj is Vector3D v && AreEqual(X, v.X) && AreEqual(Y, v.Y) && AreEqual(Z, v.Z);
 
         public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 

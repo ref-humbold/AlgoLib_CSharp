@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Geometry.Space
 {
-    public struct Point3D : IEquatable<Point3D>
+    public class Point3D : GeometryObject
     {
         public readonly double X;
         public readonly double Y;
@@ -20,13 +20,8 @@ namespace Algolib.Geometry.Space
 
         public static Point3D Of(double x, double y, double z) => new Point3D(x, y, z);
 
-        public static bool operator ==(Point3D p1, Point3D p2) => p1.Equals(p2);
-
-        public static bool operator !=(Point3D p1, Point3D p2) => !(p1 == p2);
-
-        public override bool Equals(object obj) => obj is Point3D p && Equals(p);
-
-        public bool Equals(Point3D p) => X == p.X && Y == p.Y && Z == p.Z;
+        public override bool Equals(object obj) =>
+            obj is Point3D p && AreEqual(X, p.X) && AreEqual(Y, p.Y) && AreEqual(Z, p.Z);
 
         public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
