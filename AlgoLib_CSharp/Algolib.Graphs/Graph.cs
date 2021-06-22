@@ -1,7 +1,6 @@
 // Structure of basic graph
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Algolib.Graphs
 {
@@ -67,7 +66,7 @@ namespace Algolib.Graphs
         int GetInputDegree(V vertex);
     }
 
-    public class Edge<V> : IEquatable<Edge<V>>
+    public class Edge<V>
     {
         public readonly V Source;
         public readonly V Destination;
@@ -91,10 +90,8 @@ namespace Algolib.Graphs
 
         public Edge<V> Reversed() => new Edge<V>(Destination, Source);
 
-        public bool Equals(Edge<V> other) =>
-            Source.Equals(other.Source) && Destination.Equals(other.Destination);
-
-        public override bool Equals(object obj) => obj is Edge<V> other && Equals(other);
+        public override bool Equals(object obj) =>
+            obj is Edge<V> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
 
         public override int GetHashCode() => (Source, Destination).GetHashCode();
 

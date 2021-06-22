@@ -18,7 +18,7 @@ namespace Algolib.Graphs.Algorithms
         void OnEdgeToVisited(V vertex, V neighbour);
     }
 
-    public class EmptyStrategy<V> : IDfsStrategy<V>
+    public struct EmptyStrategy<V> : IDfsStrategy<V>
     {
         public void ForRoot(V root)
         {

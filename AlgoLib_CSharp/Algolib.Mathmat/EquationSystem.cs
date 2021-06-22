@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Mathmat
 {
-    public struct EquationSystem
+    public class EquationSystem
     {
         private readonly Equation[] equations;
 

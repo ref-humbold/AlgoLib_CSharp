@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Mathmat
 {
-    public struct Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable<double>
+    public class Fraction : IComparable<Fraction>, IComparable<double>
     {
         private readonly long numerator, denominator;
 
@@ -79,10 +79,8 @@ namespace Algolib.Mathmat
 
         public static implicit operator Fraction(long n) => Of(n);
 
-        public bool Equals(Fraction other) =>
-            numerator == other.numerator && denominator == other.denominator;
-
-        public override bool Equals(object obj) => obj is Fraction f && Equals(f);
+        public override bool Equals(object obj) =>
+            obj is Fraction f && numerator == f.numerator && denominator == f.denominator;
 
         public override int GetHashCode() => (numerator, denominator).GetHashCode();
 

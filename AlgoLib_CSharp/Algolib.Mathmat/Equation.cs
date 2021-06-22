@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algolib.Mathmat
 {
-    public struct Equation
+    public class Equation
     {
         public double[] Coefficients;
         public double Free;

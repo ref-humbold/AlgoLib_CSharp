@@ -22,38 +22,21 @@ namespace Algolib.Graphs
             get;
         }
 
-        public SimpleGraph()
-        {
-            representation = new GraphRepresentation<V, VP, EP>();
-        }
+        public SimpleGraph() => representation = new GraphRepresentation<V, VP, EP>();
 
-        public SimpleGraph(IEnumerable<V> vertices)
-        {
+        public SimpleGraph(IEnumerable<V> vertices) =>
             representation = new GraphRepresentation<V, VP, EP>(vertices);
-        }
 
         public VP this[V vertex]
         {
-            get
-            {
-                return representation[vertex];
-            }
-            set
-            {
-                representation[vertex] = value;
-            }
+            get => representation[vertex];
+            set => representation[vertex] = value;
         }
 
         public EP this[Edge<V> edge]
         {
-            get
-            {
-                return representation[edge];
-            }
-            set
-            {
-                representation[edge] = value;
-            }
+            get => representation[edge];
+            set => representation[edge] = value;
         }
 
         public Edge<V> GetEdge(V source, V destination) =>
@@ -89,10 +72,8 @@ namespace Algolib.Graphs
         /// <param name="destination">destination vertex</param>
         /// <param name="property">an edge property</param>
         /// <returns>the new edge if added, otherwise existing edge</returns>
-        public Edge<V> AddEdgeBetween(V source, V destination, EP property = default)
-        {
-            return AddEdge(new Edge<V>(source, destination), property);
-        }
+        public Edge<V> AddEdgeBetween(V source, V destination, EP property = default) =>
+            AddEdge(new Edge<V>(source, destination), property);
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
         /// <param name="edge">a new edge</param>
