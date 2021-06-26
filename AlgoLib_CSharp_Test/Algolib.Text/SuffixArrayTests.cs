@@ -1,6 +1,7 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
+﻿// Tests: Structure of suffix array
 using System;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace Algolib.Text
 {

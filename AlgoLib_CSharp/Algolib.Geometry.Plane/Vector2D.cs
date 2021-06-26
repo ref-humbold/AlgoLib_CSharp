@@ -1,4 +1,4 @@
-﻿// Structure of vector on a plane
+﻿// Structure of vector in 2D
 using System;
 
 namespace Algolib.Geometry.Plane

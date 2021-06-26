@@ -1,4 +1,4 @@
-﻿// Structure of vector in a space
+﻿// Structure of vector in 3D
 using System;
 
 namespace Algolib.Geometry.Space

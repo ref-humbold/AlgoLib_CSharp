@@ -1,9 +1,9 @@
+// Structure of disjoint sets (union-find)
 using System;
 using System.Collections.Generic;
 
 namespace Algolib.Structures
 {
-    // Structure of disjoint sets (union-find)
     public class DisjointSets<E>
     {
         // Map of element represents

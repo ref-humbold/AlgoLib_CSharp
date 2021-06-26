@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
+﻿// Tests: Structure of tree graph
+using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs

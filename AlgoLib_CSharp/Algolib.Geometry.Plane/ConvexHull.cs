@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿// Algorithm for convex hull in 2D (monotone chain)
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Geometry.Plane
 {
-    // Algorithm for convex hull on a plane (monotone chain)
     public sealed class ConvexHull
     {
         /// <summary>Constructs a convex hull of given points.</summary>

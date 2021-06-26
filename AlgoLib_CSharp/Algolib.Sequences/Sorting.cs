@@ -1,10 +1,10 @@
-﻿using System;
+﻿// Algorithms for sorting
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Sequences
 {
-    // Algorithms for sorting
     public sealed class Sorting
     {
         private static readonly Random random = new Random();

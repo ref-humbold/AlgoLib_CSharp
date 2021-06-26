@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Structure of fraction
+using System;
 using FluentAssertions;
 using NUnit.Framework;
 

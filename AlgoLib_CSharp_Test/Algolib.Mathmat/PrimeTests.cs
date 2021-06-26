@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
+﻿// Tests: Algorithms for prime numbers
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {
-    // Tests: Algorithms for prime numbers
     [TestFixture]
     public class PrimeTests
     {

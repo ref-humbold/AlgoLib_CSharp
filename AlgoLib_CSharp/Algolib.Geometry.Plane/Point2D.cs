@@ -1,4 +1,4 @@
-﻿// Structure of point on a plane
+﻿// Structure of point in 2D
 using System;
 
 namespace Algolib.Geometry.Plane

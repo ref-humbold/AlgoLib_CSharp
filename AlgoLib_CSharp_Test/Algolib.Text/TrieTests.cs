@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
-using FluentAssertions;
+﻿// Tests: Structure of trie tree
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
+using NUnit.Framework;
 
 namespace Algolib.Text
 {

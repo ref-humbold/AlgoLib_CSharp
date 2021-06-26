@@ -1,4 +1,4 @@
-﻿// Basic geometric operations on a plane
+﻿// Algorithms for basic geometrical operations in 2D
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Tests: Algorithms for basic geometrical operations in 3D
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 

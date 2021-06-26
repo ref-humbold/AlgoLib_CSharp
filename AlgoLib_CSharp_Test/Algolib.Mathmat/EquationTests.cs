@@ -1,10 +1,10 @@
-﻿using System;
+﻿// Tests: Structure of linear equation
+using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Mathmat
 {
-    // Tests: Structure of linear equation
     [TestFixture]
     public class EquationTests
     {

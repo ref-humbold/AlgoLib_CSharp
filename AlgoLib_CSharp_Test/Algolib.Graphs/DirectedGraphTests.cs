@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Structures of directed graphs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,13 +8,13 @@ using NUnit.Framework;
 namespace Algolib.Graphs
 {
     [TestFixture]
-    public class UndirectedSimpleGraphTest
+    public class DirectedGraphTests
     {
-        private UndirectedSimpleGraph<int, string, string> testObject;
+        private DirectedSimpleGraph<int, string, string> testObject;
 
         [SetUp]
         public void SetUp() =>
-            testObject = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
+            testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
 
         [Test]
         public void IndexerGetSet_WhenSettingProperty_ThenProperty()
@@ -35,7 +36,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void IndexerGet_WhenNoProperty_ThenNull()
+        public void IndexerGet_WhenNoProperty_ThenDefault()
         {
             // given
             Edge<int> edge = testObject.AddEdgeBetween(6, 7);
@@ -43,8 +44,8 @@ namespace Algolib.Graphs
             string resultVertex = testObject[4];
             string resultEdge = testObject[edge];
             // then
-            resultVertex.Should().BeNull();
-            resultEdge.Should().BeNull();
+            resultVertex.Should().Be(default);
+            resultEdge.Should().Be(default);
         }
 
         [Test]
@@ -60,13 +61,13 @@ namespace Algolib.Graphs
         public void VerticesCount_ThenNumberOfVertices()
         {
             // when
-            long result = testObject.VerticesCount;
+            int result = testObject.VerticesCount;
             // then
             result.Should().Be(10);
         }
 
         [Test]
-        public void Vertices_ThenAllVertices()
+        public void GetVertices_ThenAllVertices()
         {
             // when
             IEnumerable<int> result = testObject.Vertices;
@@ -120,7 +121,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.EdgesCount;
             // then
-            result.Should().Be(6);
+            result.Should().Be(7);
         }
 
         [Test]
@@ -139,8 +140,9 @@ namespace Algolib.Graphs
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
             result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(7, 7), new Edge<int>(1, 5), new Edge<int>(2, 4),
-                                        new Edge<int>(8, 0), new Edge<int>(6, 3), new Edge<int>(9, 3) });
+                new List<Edge<int>>() { new Edge<int>(1, 5), new Edge<int>(2, 4), new Edge<int>(3, 6),
+                                        new Edge<int>(6, 3), new Edge<int>(7, 7), new Edge<int>(8, 0),
+                                        new Edge<int>(9, 3) });
         }
 
         [Test]
@@ -159,7 +161,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenReversedDirection_ThenEdge()
+        public void GetEdge_WhenReversedDirection_ThenNull()
         {
             // given
             int source = 9;
@@ -169,8 +171,7 @@ namespace Algolib.Graphs
             // when
             Edge<int> result = testObject.GetEdge(destination, source);
             // then
-            result.Source.Should().Be(source);
-            result.Destination.Should().Be(destination);
+            result.Should().BeNull();
         }
 
         [Test]
@@ -195,7 +196,7 @@ namespace Algolib.Graphs
             result.Destination.Should().Be(5);
             testObject[result].Should().Be(property);
             testObject.GetNeighbours(1).Should().BeEquivalentTo(new List<int>() { 1, 5 });
-            testObject.GetNeighbours(5).Should().BeEquivalentTo(new List<int>() { 1 });
+            testObject.GetNeighbours(5).Should().BeEmpty();
         }
 
         [Test]
@@ -212,19 +213,6 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void AddEdgeBetween_WhenReversed_ThenExistingEdge()
-        {
-            // given
-            int source = 3;
-            int destination = 7;
-            Edge<int> expected = testObject.AddEdgeBetween(source, destination);
-            // when
-            Edge<int> result = testObject.AddEdgeBetween(destination, source);
-            // then
-            result.Should().Be(expected);
-        }
-
-        [Test]
         public void GetNeighbours_ThenDestinationVerticesOfOutgoingEdges()
         {
             // given
@@ -238,7 +226,7 @@ namespace Algolib.Graphs
             // when
             IEnumerable<int> result = testObject.GetNeighbours(1);
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 1, 2, 3, 4, 6, 7, 9 });
+            result.Should().BeEquivalentTo(new List<int>() { 1, 3, 4, 7, 9 });
         }
 
         [Test]
@@ -256,9 +244,8 @@ namespace Algolib.Graphs
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(1);
             // then
             result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(1, 1), new Edge<int>(2, 1), new Edge<int>(1, 3),
-                                        new Edge<int>(1, 4), new Edge<int>(6, 1), new Edge<int>(1, 7),
-                                        new Edge<int>(1, 9) });
+                new List<Edge<int>>() { new Edge<int>(1, 1), new Edge<int>(1, 3), new Edge<int>(1, 4),
+                                        new Edge<int>(1, 7), new Edge<int>(1, 9) });
         }
 
         [Test]
@@ -275,7 +262,7 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetOutputDegree(1);
             // then
-            result.Should().Be(7);
+            result.Should().Be(5);
         }
 
         [Test]
@@ -292,40 +279,74 @@ namespace Algolib.Graphs
             // when
             long result = testObject.GetInputDegree(1);
             // then
-            result.Should().Be(7);
+            result.Should().Be(5);
         }
 
         [Test]
-        public void AsDirected_ThenDirectedGraph()
+        public void Reverse_ThenAllEdgesHaveReversedDirection()
         {
             // given
             int vertex = 5;
             string vertexProperty = "123456";
             string edgeProperty = "zxcvb";
-            Edge<int> edge = testObject.AddEdgeBetween(1, 5);
-            testObject.AddEdgeBetween(7, 7);
-            testObject.AddEdgeBetween(2, 4);
-            testObject.AddEdgeBetween(8, 0);
-            testObject.AddEdgeBetween(6, 3);
-            testObject.AddEdgeBetween(3, 6);
-            testObject.AddEdgeBetween(9, 3);
-            testObject.AddEdgeBetween(8, 0);
+            Edge<int> edge = testObject.AddEdgeBetween(1, 2);
+            testObject.AddEdgeBetween(3, 5);
+            testObject.AddEdgeBetween(4, 9);
+            testObject.AddEdgeBetween(5, 4);
+            testObject.AddEdgeBetween(5, 7);
+            testObject.AddEdgeBetween(6, 2);
+            testObject.AddEdgeBetween(6, 6);
+            testObject.AddEdgeBetween(7, 8);
+            testObject.AddEdgeBetween(9, 1);
+            testObject.AddEdgeBetween(9, 6);
             testObject[vertex] = vertexProperty;
             testObject[edge] = edgeProperty;
             // when
-            DirectedSimpleGraph<int, string, string> result = testObject.AsDirected();
+            testObject.Reverse();
+            // then
+            testObject.Edges.Should().BeEquivalentTo(
+                new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
+                                        new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
+                                        new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
+                                        new Edge<int>(9, 4) });
+            testObject[vertex].Should().Be(vertexProperty);
+            testObject[9].Should().BeNull();
+            testObject[testObject.GetEdge(2, 1)].Should().Be(edgeProperty);
+            testObject[testObject.GetEdge(5, 3)].Should().BeNull();
+        }
+
+        [Test]
+        public void ReversedCopy_ThenNewGraphWithReversedEdges()
+        {
+            // given
+            int vertex = 5;
+            string vertexProperty = "123456";
+            string edgeProperty = "zxcvb";
+            Edge<int> edge = testObject.AddEdgeBetween(1, 2);
+            testObject.AddEdgeBetween(3, 5);
+            testObject.AddEdgeBetween(4, 9);
+            testObject.AddEdgeBetween(5, 4);
+            testObject.AddEdgeBetween(5, 7);
+            testObject.AddEdgeBetween(6, 2);
+            testObject.AddEdgeBetween(6, 6);
+            testObject.AddEdgeBetween(7, 8);
+            testObject.AddEdgeBetween(9, 1);
+            testObject.AddEdgeBetween(9, 6);
+            testObject[vertex] = vertexProperty;
+            testObject[edge] = edgeProperty;
+            // when
+            IDirectedGraph<int, string, string> result = testObject.ReversedCopy();
             // then
             result.Vertices.Should().BeEquivalentTo(testObject.Vertices);
             result.Edges.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(0, 8), new Edge<int>(1, 5), new Edge<int>(2, 4),
-                                        new Edge<int>(3, 6), new Edge<int>(3, 9), new Edge<int>(4, 2),
-                                        new Edge<int>(5, 1), new Edge<int>(6, 3), new Edge<int>(7, 7),
-                                        new Edge<int>(8, 0), new Edge<int>(9, 3) });
+                new List<Edge<int>>() { new Edge<int>(1, 9), new Edge<int>(2, 1), new Edge<int>(2, 6),
+                                        new Edge<int>(4, 5), new Edge<int>(5, 3), new Edge<int>(6, 6),
+                                        new Edge<int>(6, 9), new Edge<int>(7, 5), new Edge<int>(8, 7),
+                                        new Edge<int>(9, 4) });
             result[vertex].Should().Be(vertexProperty);
             result[9].Should().BeNull();
-            result[result.GetEdge(1, 5)].Should().Be(edgeProperty);
-            result[result.GetEdge(5, 1)].Should().Be(edgeProperty);
-            result[result.GetEdge(8, 0)].Should().BeNull();
+            result[result.GetEdge(2, 1)].Should().Be(edgeProperty);
+            result[result.GetEdge(5, 3)].Should().BeNull();
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// Tests: Algorithms for graph searching
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Algolib.Graphs.Algorithms
 {
-    [TestFixture()]
+    [TestFixture]
     public class SearchingTests
     {
         private DirectedSimpleGraph<int, object, object> directedGraph;
@@ -36,13 +37,6 @@ namespace Algolib.Graphs.Algorithms
             undirectedGraph.AddEdgeBetween(4, 5);
             undirectedGraph.AddEdgeBetween(5, 8);
             undirectedGraph.AddEdgeBetween(6, 9);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            directedGraph = null;
-            undirectedGraph = null;
         }
 
         #region Bfs

@@ -1,4 +1,4 @@
-﻿// Basic geometric operations in a space
+﻿// Algorithms for basic geometrical operations in 3D
 using System;
 using System.Collections.Generic;
 using System.Linq;

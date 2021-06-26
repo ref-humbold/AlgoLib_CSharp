@@ -1,4 +1,4 @@
-﻿// Structure of point in a space
+﻿// Structure of point in 3D
 using System;
 
 namespace Algolib.Geometry.Space
