@@ -1,7 +1,7 @@
 ﻿// Structure of point in 2D
 using System;
 
-namespace Algolib.Geometry.Plane
+namespace Algolib.Geometry.Dim2
 {
     public class Point2D : GeometryObject
     {

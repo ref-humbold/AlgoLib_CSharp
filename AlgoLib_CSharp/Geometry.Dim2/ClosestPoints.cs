@@ -1,7 +1,7 @@
 ﻿// Algorithm for pair of closest points in 2D
 using System.Collections.Generic;
 
-namespace Algolib.Geometry.Plane
+namespace Algolib.Geometry.Dim2
 {
     public sealed class ClosestPoints
     {

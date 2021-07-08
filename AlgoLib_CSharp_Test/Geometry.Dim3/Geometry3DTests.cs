@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Geometry.Space
+namespace Algolib.Geometry.Dim3
 {
     [TestFixture]
     public class Geometry3DTests

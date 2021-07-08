@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Geometry.Plane
+namespace Algolib.Geometry.Dim2
 {
     [TestFixture]
-    public class Geometry3DTests
+    public class Geometry2DTests
     {
         [Test]
         public void SortByX_ThenSortedStablyAscendingByXCoordinate()

@@ -1,7 +1,7 @@
 ﻿// Structure of point in 3D
 using System;
 
-namespace Algolib.Geometry.Space
+namespace Algolib.Geometry.Dim3
 {
     public class Point3D : GeometryObject
     {

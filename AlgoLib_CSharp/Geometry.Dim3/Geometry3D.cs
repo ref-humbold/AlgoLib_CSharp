@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Geometry.Space
+namespace Algolib.Geometry.Dim3
 {
     public sealed class Geometry3D
     {

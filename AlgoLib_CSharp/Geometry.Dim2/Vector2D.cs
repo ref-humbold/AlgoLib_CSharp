@@ -1,7 +1,7 @@
 ﻿// Structure of vector in 2D
 using System;
 
-namespace Algolib.Geometry.Plane
+namespace Algolib.Geometry.Dim2
 {
     public class Vector2D : GeometryObject
     {
