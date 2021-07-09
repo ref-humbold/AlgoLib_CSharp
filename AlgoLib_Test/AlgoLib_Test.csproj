@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlgoLib_CSharp\AlgoLib.csproj"/>
+    <ProjectReference Include="..\AlgoLib\AlgoLib.csproj"/>
   </ItemGroup>
 </Project>
