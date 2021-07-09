@@ -3,10 +3,12 @@ using System;
 
 namespace Algolib.Geometry.Dim2
 {
-    public class Point2D : GeometryObject
+    public struct Point2D : IGeometryObject, IEquatable<Point2D>
     {
         public readonly double X;
         public readonly double Y;
+
+        public double[] Coordinates => new double[] { X, Y };
 
         public double Radius => Math.Sqrt(X * X + Y * Y);
 
@@ -22,7 +24,10 @@ namespace Algolib.Geometry.Dim2
 
         public static Point2D Of(double x, double y) => new Point2D(x, y);
 
-        public override bool Equals(object obj) => obj is Point2D p && AreEqual(X, p.X) && AreEqual(Y, p.Y);
+        public override bool Equals(object obj) => obj is Point2D p && Equals(p);
+
+        public bool Equals(Point2D p) =>
+            IGeometryObject.AreEqual(X, p.X) && IGeometryObject.AreEqual(Y, p.Y);
 
         public override int GetHashCode() => HashCode.Combine(X, Y);
 

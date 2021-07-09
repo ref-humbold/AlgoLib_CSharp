@@ -3,11 +3,13 @@ using System;
 
 namespace Algolib.Geometry.Dim3
 {
-    public class Vector3D : GeometryObject
+    public struct Vector3D : IGeometryObject, IEquatable<Vector3D>
     {
         public readonly double X;
         public readonly double Y;
         public readonly double Z;
+
+        public double[] Coordinates => new double[] { X, Y, Z };
 
         public double Length => Math.Sqrt(X * X + Y * Y + Z * Z);
 
@@ -48,8 +50,11 @@ namespace Algolib.Geometry.Dim3
 
         public static double Volume(Vector3D v1, Vector3D v2, Vector3D v3) => Dot(v1, Cross(v2, v3));
 
-        public override bool Equals(object obj) =>
-            obj is Vector3D v && AreEqual(X, v.X) && AreEqual(Y, v.Y) && AreEqual(Z, v.Z);
+        public override bool Equals(object obj) => obj is Vector3D v && Equals(v);
+
+        public bool Equals(Vector3D v) =>
+            IGeometryObject.AreEqual(X, v.X) && IGeometryObject.AreEqual(Y, v.Y)
+                && IGeometryObject.AreEqual(Z, v.Z);
 
         public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
