@@ -75,7 +75,7 @@ namespace Algolib.Graphs
             result.Source.Should().Be(newVertex);
             result.Destination.Should().Be(neighbour);
             testObject.VerticesCount.Should().Be(9);
-            testObject.GetNeighbours(newVertex).Should().Equal(new List<int>() { neighbour });
+            testObject.GetNeighbours(newVertex).Should().Equal(neighbour);
             testObject[newVertex].Should().Be(vertexProperty);
             testObject[result].Should().Be(edgeProperty);
         }

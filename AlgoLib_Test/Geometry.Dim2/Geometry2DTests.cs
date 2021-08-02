@@ -20,10 +20,9 @@ namespace Algolib.Geometry.Dim2
             List<Point2D> result = Geometry2D.SortByX(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point2D> {
-                Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-2.0, 3.0),
-                Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                Point2D.Of(3.0, 2.0) });
+            result.Should().Equal(Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
+                                  Point2D.Of(-2.0, 3.0), Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0),
+                                  Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0));
         }
 
         [Test]
@@ -38,10 +37,9 @@ namespace Algolib.Geometry.Dim2
             List<Point2D> result = Geometry2D.SortByY(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point2D> {
-                Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
-                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0) });
+            result.Should().Equal(Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+                                  Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
+                                  Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0));
         }
 
         [Test]
@@ -56,10 +54,9 @@ namespace Algolib.Geometry.Dim2
             List<Point2D> result = Geometry2D.SortByAngle(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point2D> {
-                Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-                Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-                Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0) });
+            result.Should().Equal(Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+                                  Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
+                                  Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0));
         }
     }
 }

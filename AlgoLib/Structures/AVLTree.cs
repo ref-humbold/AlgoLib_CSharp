@@ -15,10 +15,7 @@ namespace Algolib.Structures
             get; private set;
         }
 
-        public bool IsReadOnly
-        {
-            get;
-        }
+        public bool IsReadOnly => false;
 
         private AVLInnerNode<E> Root
         {

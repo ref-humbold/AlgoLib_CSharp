@@ -20,10 +20,10 @@ namespace Algolib.Geometry.Dim3
             List<Point3D> result = Geometry3D.SortByX(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point3D> {
-                Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                Point3D.Of(3.0, 2.0, 5.0) });
+            result.Should().Equal(Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
+                                  Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                                  Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
+                                  Point3D.Of(3.0, 2.0, 5.0));
         }
 
         [Test]
@@ -38,10 +38,10 @@ namespace Algolib.Geometry.Dim3
             List<Point3D> result = Geometry3D.SortByY(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point3D> {
-                Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
-                Point3D.Of(2.0, 3.0, -5.0) });
+            result.Should().Equal(Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
+                                  Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                                  Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
+                                  Point3D.Of(2.0, 3.0, -5.0));
         }
 
         [Test]
@@ -56,10 +56,10 @@ namespace Algolib.Geometry.Dim3
             List<Point3D> result = Geometry3D.SortByZ(sequence);
             // then
             result.Should().NotBeSameAs(sequence);
-            result.Should().Equal(new List<Point3D> {
-                Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0),
-                Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
-                Point3D.Of(-3.0, 2.0, 5.0) });
+            result.Should().Equal(Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
+                                  Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                                  Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
+                                  Point3D.Of(-3.0, 2.0, 5.0));
         }
     }
 }
