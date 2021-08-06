@@ -31,5 +31,12 @@ namespace Algolib.Geometry.Dim3
         public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
         public override string ToString() => $"({X}, {Y}, {Z})";
+
+        public void Deconstruct(out double x, out double y, out double z)
+        {
+            x = X;
+            y = Y;
+            z = Z;
+        }
     }
 }

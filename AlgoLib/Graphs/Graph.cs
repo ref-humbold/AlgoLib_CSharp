@@ -96,5 +96,11 @@ namespace Algolib.Graphs
         public override int GetHashCode() => (Source, Destination).GetHashCode();
 
         public override string ToString() => $"Edge{{{Source} -- {Destination}}}";
+
+        public void Deconstruct(out V source, out V destination)
+        {
+            source = Source;
+            destination = Destination;
+        }
     }
 }

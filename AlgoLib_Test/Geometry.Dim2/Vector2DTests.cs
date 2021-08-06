@@ -126,5 +126,15 @@ namespace Algolib.Geometry.Dim2
             // then
             action.Should().Throw<DivideByZeroException>();
         }
+
+        [Test]
+        public void Deconstruct_ThenCoordinates()
+        {
+            // when
+            (double x, double y) = Vector2D.Of(5.0, -19.0);
+            // then
+            x.Should().Be(5.0);
+            y.Should().Be(-19.0);
+        }
     }
 }

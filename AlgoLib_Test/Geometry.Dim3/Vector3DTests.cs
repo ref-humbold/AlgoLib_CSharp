@@ -175,5 +175,16 @@ namespace Algolib.Geometry.Dim3
             // then
             action.Should().Throw<DivideByZeroException>();
         }
+
+        [Test]
+        public void Deconstruct_ThenCoordinates()
+        {
+            // when
+            (double x, double y, double z) = Vector3D.Of(5.0, -19.0, 14.2);
+            // then
+            x.Should().Be(5.0);
+            y.Should().Be(-19.0);
+            z.Should().Be(14.2);
+        }
     }
 }

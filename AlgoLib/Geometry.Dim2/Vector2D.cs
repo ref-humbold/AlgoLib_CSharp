@@ -48,5 +48,11 @@ namespace Algolib.Geometry.Dim2
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
         public override string ToString() => $"[{X}, {Y}]";
+
+        public void Deconstruct(out double x, out double y)
+        {
+            x = X;
+            y = Y;
+        }
     }
 }
