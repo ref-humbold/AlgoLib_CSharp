@@ -11,21 +11,30 @@ namespace Algolib.Geometry.Dim2
         private const double offset = IGeometryObject.Epsilon;
 
         [Test]
-        public void Between_ThenVectorFromBeginToEnd()
-        {
-            // when
-            Vector2D result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
-            // then
-            result.Should().Be(Vector2D.Of(-3.9, 5.4));
-        }
-
-        [Test]
         public void Coordinates_ThenArray()
         {
             // when
             double[] result = Vector2D.Of(5.0, -19.0).Coordinates;
             // then
             result.Should().Equal(5.0, -19.0);
+        }
+
+        [Test]
+        public void Length_ThenLengthOfVector()
+        {
+            // when
+            double result = Vector2D.Of(8.0, -6.0).Length;
+            // then
+            result.Should().BeApproximately(10.0, offset);
+        }
+
+        [Test]
+        public void Between_ThenVectorFromBeginToEnd()
+        {
+            // when
+            Vector2D result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
+            // then
+            result.Should().Be(Vector2D.Of(-3.9, 5.4));
         }
 
         [Test]
@@ -65,12 +74,24 @@ namespace Algolib.Geometry.Dim2
         }
 
         [Test]
-        public void Length_ThenLengthOfVector()
+        public void OperatorUnaryPlus_ThenCopied()
+        {
+            // given
+            Vector2D vector = Vector2D.Of(5.4, 9.0);
+            // when
+            Vector2D result = +vector;
+            // then
+            result.Should().NotBeSameAs(vector);
+            result.Should().Be(Vector2D.Of(5.4, 9.0));
+        }
+
+        [Test]
+        public void OperatorUnaryMinus_ThenNegateEachCoordinate()
         {
             // when
-            double result = Vector2D.Of(8.0, -6.0).Length;
+            Vector2D result = -Vector2D.Of(5.4, 9.0);
             // then
-            result.Should().BeApproximately(10.0, offset);
+            result.Should().Be(Vector2D.Of(-5.4, -9.0));
         }
 
         [Test]

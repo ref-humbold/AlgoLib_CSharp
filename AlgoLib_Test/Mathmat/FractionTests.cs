@@ -9,7 +9,7 @@ namespace Algolib.Mathmat
     public class FractionTests
     {
         [Test]
-        public void Constructor_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
+        public void Of_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
         {
             // when
             Fraction result = Fraction.Of(32, 104);
@@ -18,7 +18,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void Constructor_WhenOnlyNumerator_ThenDenominatorEqualsOne()
+        public void Of_WhenOnlyNumerator_ThenDenominatorEqualsOne()
         {
             // when
             Fraction result = Fraction.Of(29);
@@ -27,7 +27,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void Constructor_WhenDenominatorIsZero_ThenArithmeticException()
+        public void Of_WhenDenominatorIsZero_ThenArithmeticException()
         {
             // when
             Action action = () => _ = Fraction.Of(1, 0);
@@ -36,7 +36,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void Constructor_WhenNumeratorIsNegative_ThenNegativeFraction()
+        public void Of_WhenNumeratorIsNegative_ThenNegativeFraction()
         {
             // when
             Fraction result = Fraction.Of(-4, 11);
@@ -45,7 +45,7 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void Constructor_WhenDenominatorIsNegative_ThenNegativeFraction()
+        public void Of_WhenDenominatorIsNegative_ThenNegativeFraction()
         {
             // when
             Fraction result = Fraction.Of(4, -11);
@@ -54,12 +54,60 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void Constructor_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
+        public void Of_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
         {
             // when
             Fraction result = Fraction.Of(-4, -11);
             // then
             result.As<IComparable<double>>().Should().BeGreaterThan(0);
+        }
+
+        [Test]
+        public void OperatorEqual_WhenSameButNormalization_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(20, 12) == Fraction.Of(5, 3);
+            // then
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorUnaryPlus_ThenCopied()
+        {
+            // given
+            Fraction fraction = Fraction.Of(23, 18);
+            // when
+            Fraction result = +fraction;
+            // then
+            result.Should().NotBeSameAs(fraction);
+            result.Should().Be(Fraction.Of(23, 18));
+        }
+
+        [Test]
+        public void OperatorUnaryMinus_ThenNegated()
+        {
+            // when
+            Fraction result = -Fraction.Of(23, 18);
+            // then
+            result.Should().Be(Fraction.Of(-23, 18));
+        }
+
+        [Test]
+        public void OperatorTilde_WhenProperFraction_ThenInverted()
+        {
+            // when
+            Fraction result = ~Fraction.Of(23, 18);
+            // then
+            result.Should().Be(Fraction.Of(18, 23));
+        }
+
+        [Test]
+        public void OperatorTilde_WhenZero_ThenInvalidOperationException()
+        {
+            // when
+            Action action = () => _ = ~Fraction.Of(0);
+            // then
+            action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
@@ -108,21 +156,12 @@ namespace Algolib.Mathmat
         }
 
         [Test]
-        public void OperatorTilde_WhenProperFraction_ThenInverted()
+        public void CompareTo_WhenFraction_ThenCompared()
         {
             // when
-            Fraction result = ~Fraction.Of(23, 18);
+            int result = Fraction.Of(25, 7).CompareTo(Fraction.Of(3, 2));
             // then
-            result.Should().Be(Fraction.Of(18, 23));
-        }
-
-        [Test]
-        public void OperatorTilde_WhenZero_ThenInvalidOperationException()
-        {
-            // when
-            Action action = () => _ = ~Fraction.Of(0);
-            // then
-            action.Should().Throw<InvalidOperationException>();
+            result.Should().BeGreaterThan(0);
         }
 
         [Test]

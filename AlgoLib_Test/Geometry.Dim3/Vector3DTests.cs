@@ -11,6 +11,24 @@ namespace Algolib.Geometry.Dim3
         private const double offset = IGeometryObject.Epsilon;
 
         [Test]
+        public void Coordinates_ThenArray()
+        {
+            // when
+            double[] result = Vector3D.Of(5.0, -19.0, 14.2).Coordinates;
+            // then
+            result.Should().Equal(5.0, -19.0, 14.2);
+        }
+
+        [Test]
+        public void Length_ThenLengthOfVector()
+        {
+            // when
+            double result = Vector3D.Of(18.0, -6.0, 13.0).Length;
+            // then
+            result.Should().BeApproximately(23.0, offset);
+        }
+
+        [Test]
         public void Between_ThenVectorFromBeginToEnd()
         {
             // when
@@ -18,15 +36,6 @@ namespace Algolib.Geometry.Dim3
                     Vector3D.Between(Point3D.Of(2.4, 7.8, -10.3), Point3D.Of(-1.5, 13.2, 15.8));
             // then
             result.Should().Be(Vector3D.Of(-3.9, 5.4, 26.1));
-        }
-
-        [Test]
-        public void Coordinates_ThenArray()
-        {
-            // when
-            double[] result = Vector3D.Of(5.0, -19.0, 14.2).Coordinates;
-            // then
-            result.Should().Equal(5.0, -19.0, 14.2);
         }
 
         [Test]
@@ -114,12 +123,24 @@ namespace Algolib.Geometry.Dim3
         }
 
         [Test]
-        public void Length_ThenLengthOfVector()
+        public void OperatorUnaryPlus_ThenCopied()
+        {
+            // given
+            Vector3D vector = Vector3D.Of(5.4, 9.0, -12.3);
+            // when
+            Vector3D result = +vector;
+            // then
+            result.Should().NotBeSameAs(vector);
+            result.Should().Be(Vector3D.Of(5.4, 9.0, -12.3));
+        }
+
+        [Test]
+        public void OperatorUnaryMinus_ThenNegateEachCoordinate()
         {
             // when
-            double result = Vector3D.Of(18.0, -6.0, 13.0).Length;
+            Vector3D result = -Vector3D.Of(5.4, 9.0, -12.3);
             // then
-            result.Should().BeApproximately(23.0, offset);
+            result.Should().Be(Vector3D.Of(-5.4, -9.0, 12.3));
         }
 
         [Test]
