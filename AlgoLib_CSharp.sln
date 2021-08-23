@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoLib_Test", "AlgoLib_Test\AlgoLib_Test.csproj", "{18A7AAAB-A26A-439E-B963-501091BD4440}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoLib.Tests", "AlgoLib.Tests\AlgoLib.Tests.csproj", "{18A7AAAB-A26A-439E-B963-501091BD4440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
