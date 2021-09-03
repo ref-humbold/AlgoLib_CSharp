@@ -4,20 +4,20 @@ using System.Linq;
 
 namespace Algolib.Sequences
 {
-    public sealed class Subsequences
+    public static class Subsequences
     {
         /// <summary>Constructs longest increasing subsequence according to a comparer.</summary>
         /// <param name="sequence">Sequence of elements</param>
         /// <param name="comparer">Comparer of elements in subsequence</param>
         /// <returns>Least lexicographically longest increasing subsequence</returns>
-        public static IEnumerable<T> LongestOrdered<T>(List<T> sequence, IComparer<T> comparer) =>
+        public static IEnumerable<T> LongestOrdered<T>(this IList<T> sequence, IComparer<T> comparer) =>
             LongestOrdered(sequence, comparer.Compare);
 
         /// <summary>Constructs longest increasing subsequence according to a comparison function.</summary>
         /// <param name="sequence">Sequence of elements</param>
         /// <param name="comparison">Comparison function of elements in subsequence</param>
         /// <returns>Least lexicographically longest increasing subsequence</returns>
-        public static IEnumerable<T> LongestOrdered<T>(List<T> sequence, Comparison<T> comparison)
+        public static IEnumerable<T> LongestOrdered<T>(this IList<T> sequence, Comparison<T> comparison)
         {
             List<int?> previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
             List<int> subseqLast = new List<int> { 0 };
@@ -33,7 +33,7 @@ namespace Algolib.Sequences
                 }
                 else
                 {
-                    int index = searchOrd(comparison, sequence, subseqLast, 0, subseqLast.Count - 1, i);
+                    int index = searchOrd(sequence, comparison, subseqLast, 0, subseqLast.Count - 1, i);
 
                     subseqLast[index] = i;
                     previousElem[i] = index > 0 ? (int?)subseqLast[index - 1] : null;
@@ -55,7 +55,7 @@ namespace Algolib.Sequences
         /// <summary>Dynamically constructs coherent subarray with maximal sum.</summary>
         /// <param name="sequence">Sequence of numbers</param>
         /// <returns>Maximum subarray</returns>
-        public static List<double> MaximumSubarray(IEnumerable<double> sequence)
+        public static List<double> MaximumSubarray(this IEnumerable<double> sequence)
         {
             (double sum, List<double> subarray) actual = (0.0, new List<double>());
             (double sum, List<double> subarray) maximal = (0.0, new List<double>());
@@ -78,7 +78,7 @@ namespace Algolib.Sequences
         /// <summary>Counts maximal sum from all coherent subarrays using interval tree.</summary>
         /// <param name="sequence">Sequence of numbers</param>
         /// <returns>The sum of maximum subarray</returns>
-        public static double MaximalSubsum(IEnumerable<double> sequence)
+        public static double MaximalSubsum(this IEnumerable<double> sequence)
         {
             int size = 1;
 
@@ -125,7 +125,7 @@ namespace Algolib.Sequences
         }
 
         // Searches for place of element in list of subsequences.
-        private static int searchOrd<T>(Comparison<T> comparison, List<T> sequence,
+        private static int searchOrd<T>(IList<T> sequence, Comparison<T> comparison,
                                         List<int> subseqLast, int indexBegin, int indexEnd,
                                         int indexElem)
         {
@@ -135,8 +135,8 @@ namespace Algolib.Sequences
             int indexMiddle = (indexBegin + indexEnd) / 2;
 
             return comparison.Invoke(sequence[indexElem], sequence[subseqLast[indexMiddle]]) > 0
-                ? searchOrd(comparison, sequence, subseqLast, indexMiddle + 1, indexEnd, indexElem)
-                : searchOrd(comparison, sequence, subseqLast, indexBegin, indexMiddle, indexElem);
+                ? searchOrd(sequence, comparison, subseqLast, indexMiddle + 1, indexEnd, indexElem)
+                : searchOrd(sequence, comparison, subseqLast, indexBegin, indexMiddle, indexElem);
         }
     }
 }

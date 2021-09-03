@@ -5,7 +5,7 @@ using Algolib.Structures;
 
 namespace Algolib.Graphs.Algorithms
 {
-    public sealed class Paths
+    public static class Paths
     {
         /// <summary>Bellman-Ford algorithm.</summary>
         /// <param name="graph">A directed weighted graph</param>

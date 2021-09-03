@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algolib.Mathmat
 {
-    public sealed class Primes
+    public static class Primes
     {
         private const int attempts = 17;
         private static readonly Random random = new Random();

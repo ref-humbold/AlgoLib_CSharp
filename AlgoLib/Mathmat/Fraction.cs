@@ -76,9 +76,11 @@ namespace Algolib.Mathmat
 
         public static explicit operator long(Fraction f) => f.numerator / f.denominator;
 
-        public static explicit operator float(Fraction f) => (1.0f * f.numerator) / f.denominator;
+        public static explicit operator float(Fraction f) => 1.0f * f.numerator / f.denominator;
 
-        public static explicit operator double(Fraction f) => (1.0 * f.numerator) / f.denominator;
+        public static explicit operator double(Fraction f) => 1.0 * f.numerator / f.denominator;
+
+        public static explicit operator decimal(Fraction f) => 1.0m * f.numerator / f.denominator;
 
         public static implicit operator Fraction(int n) => Of(n);
 

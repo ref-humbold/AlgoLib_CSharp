@@ -49,7 +49,7 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.HeapSort(sequence);
+            sequence.HeapSort();
             // then
             sequence.Should().BeInAscendingOrder();
         }
@@ -60,13 +60,13 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.HeapSort(sequence);
+            sequence.HeapSort();
             // then
             sequence.Should().BeEmpty();
         }
 
         [Test]
-        public void HeapSort_WhenNull_ThenNullPointerException()
+        public void HeapSort_WhenNull_ThenArgumentNullException()
         {
             // when
             Action action = () => Sorting.HeapSort<int>(null);
@@ -83,7 +83,7 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.TopDownMergeSort(sequence);
+            sequence.TopDownMergeSort();
             // then
             sequence.Should().BeInAscendingOrder();
         }
@@ -97,7 +97,7 @@ namespace Algolib.Sequences
                 new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
             };
             // when
-            Sorting.TopDownMergeSort(sequence);
+            sequence.TopDownMergeSort();
             // then
             sequence.Should().BeInAscendingOrder();
             sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
@@ -110,13 +110,13 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.TopDownMergeSort(sequence);
+            sequence.TopDownMergeSort();
             // then
             sequence.Should().BeEmpty();
         }
 
         [Test]
-        public void TopDownMergeSort_WhenNull_ThenNullPointerException()
+        public void TopDownMergeSort_WhenNull_ThenArgumentNullException()
         {
             // when
             Action action = () => Sorting.TopDownMergeSort<int>(null);
@@ -133,7 +133,7 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.BottomUpMergeSort(sequence);
+            sequence.BottomUpMergeSort();
             // then
             sequence.Should().BeInAscendingOrder();
         }
@@ -147,7 +147,7 @@ namespace Algolib.Sequences
                 new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
             };
             // when
-            Sorting.BottomUpMergeSort(sequence);
+            sequence.BottomUpMergeSort();
             // then
             sequence.Should().BeInAscendingOrder();
             sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
@@ -160,13 +160,13 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.BottomUpMergeSort(sequence);
+            sequence.BottomUpMergeSort();
             // then
             sequence.Should().BeEmpty();
         }
 
         [Test]
-        public void BottomUpMergeSort_WhenNull_ThenNullPointerException()
+        public void BottomUpMergeSort_WhenNull_ThenArgumentNullException()
         {
             // when
             Action action = () => Sorting.BottomUpMergeSort<int>(null);
@@ -183,7 +183,7 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
-            Sorting.QuickSort(sequence);
+            sequence.QuickSort();
             // then
             sequence.Should().BeInAscendingOrder();
         }
@@ -194,13 +194,13 @@ namespace Algolib.Sequences
             // given
             List<int> sequence = new List<int>();
             // when
-            Sorting.QuickSort(sequence);
+            sequence.QuickSort();
             // then
             sequence.Should().BeEmpty();
         }
 
         [Test]
-        public void QuickSort_WhenNull_ThenNullPointerException()
+        public void QuickSort_WhenNull_ThenArgumentNullException()
         {
             // when
             Action action = () => Sorting.QuickSort<int>(null);

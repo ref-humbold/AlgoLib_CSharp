@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
-    public sealed class Cutting
+    public static class Cutting
     {
         /// <summary>Finds an edge cut of given graph.</summary>
         /// <param name="graph">an undirected graph</param>

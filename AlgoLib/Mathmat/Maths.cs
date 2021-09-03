@@ -3,7 +3,7 @@ using System;
 
 namespace Algolib.Mathmat
 {
-    public sealed class Maths
+    public static class Maths
     {
         #region GCD
 

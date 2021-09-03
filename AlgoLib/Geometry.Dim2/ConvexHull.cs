@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Algolib.Geometry.Dim2
 {
-    public sealed class ConvexHull
+    public static class ConvexHull
     {
         /// <summary>Constructs a convex hull of given points.</summary>
         /// <param name="points">A list of points</param>

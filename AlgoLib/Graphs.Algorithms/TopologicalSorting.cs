@@ -13,7 +13,7 @@ namespace Algolib.Graphs.Algorithms
         }
     }
 
-    public sealed class TopologicalSorting
+    public static class TopologicalSorting
     {
         public static IEnumerable<V> SortUsingInputs<V, VP, EP>(IDirectedGraph<V, VP, EP> graph)
         {

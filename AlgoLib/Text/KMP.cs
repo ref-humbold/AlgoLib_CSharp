@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Algolib.Text
 {
-    public sealed class KMP
+    public static class KMP
     {
         /// <summary>
         /// Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
@@ -13,7 +13,7 @@ namespace Algolib.Text
         /// <param name="text">Text to search in</param>
         /// <param name="pattern">Pattern to search for</param>
         /// <returns>Enumerable of pattern occurrence positions</returns>
-        public static IEnumerable<int> Kmp(string text, string pattern)
+        public static IEnumerable<int> Kmp(this string text, string pattern)
         {
             if(text == null)
                 throw new ArgumentNullException("Text is null");

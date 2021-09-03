@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Algolib.Geometry.Dim2
 {
-    public sealed class ClosestPoints
+    public static class ClosestPoints
     {
         /// <summary>Searches for a pair closest of points among given points.</summary>
         /// <param name="points">A list of points</param>

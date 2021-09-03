@@ -7,13 +7,15 @@ namespace Algolib.Sequences
     [TestFixture]
     public class SubsequencesTests
     {
+        #region MaximumSubarray
+
         [Test]
         public void MaximumSubarray_WhenNegativeElementIsLessThenCurrentSum_ThenCounted()
         {
             // given
             List<double> sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
             // when
-            List<double> result = Subsequences.MaximumSubarray(sequence);
+            List<double> result = sequence.MaximumSubarray();
             // then
             result.Should().Equal(3.5, 4.8, -1.6, 7.7, 2.1);
         }
@@ -24,7 +26,7 @@ namespace Algolib.Sequences
             // given
             List<double> sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
             // when
-            List<double> result = Subsequences.MaximumSubarray(sequence);
+            List<double> result = sequence.MaximumSubarray();
             // then
             result.Should().Equal(7.7, 2.1, 0.8, 4.0);
         }
@@ -35,10 +37,13 @@ namespace Algolib.Sequences
             // given
             List<double> sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
             // when
-            List<double> result = Subsequences.MaximumSubarray(sequence);
+            List<double> result = sequence.MaximumSubarray();
             // then
             result.Should().BeEmpty();
         }
+
+        #endregion
+        #region MaximalSubsum
 
         [Test]
         public void MaximalSubsum_WhenNegativeElementIsLessThenCurrentSum_ThenCounted()
@@ -46,7 +51,7 @@ namespace Algolib.Sequences
             // given
             List<double> sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
             // when
-            double result = Subsequences.MaximalSubsum(sequence);
+            double result = sequence.MaximalSubsum();
             // then
             result.Should().BeApproximately(16.5, 0.000001);
         }
@@ -57,7 +62,7 @@ namespace Algolib.Sequences
             // given
             List<double> sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
             // when
-            double result = Subsequences.MaximalSubsum(sequence);
+            double result = sequence.MaximalSubsum();
             // then
             result.Should().BeApproximately(14.6, 0.000001);
         }
@@ -68,9 +73,11 @@ namespace Algolib.Sequences
             // given
             List<double> sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
             // when
-            double result = Subsequences.MaximalSubsum(sequence);
+            double result = sequence.MaximalSubsum();
             // then
             result.Should().Be(0.0);
         }
+
+        #endregion
     }
 }

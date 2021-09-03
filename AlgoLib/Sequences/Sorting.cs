@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Algolib.Sequences
 {
-    public sealed class Sorting
+    public static class Sorting
     {
         private static readonly Random random = new Random();
 
         /// <summary>Mutably sorts given sequence using a heap.</summary>
         /// <param name="sequence">Sequence of elements</param>
-        public static void HeapSort<T>(List<T> sequence) where T : IComparable
+        public static void HeapSort<T>(this List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -39,7 +39,7 @@ namespace Algolib.Sequences
         /// guaranteed to be stable.
         /// </summary>
         /// <param name="sequence">Sequence of elements</param>
-        public static void TopDownMergeSort<T>(List<T> sequence) where T : IComparable
+        public static void TopDownMergeSort<T>(this List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -52,7 +52,7 @@ namespace Algolib.Sequences
         /// guaranteed to be stable.
         /// </summary>
         /// <param name="sequence">Sequence of elements</param>
-        public static void BottomUpMergeSort<T>(List<T> sequence) where T : IComparable
+        public static void BottomUpMergeSort<T>(this List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
@@ -68,7 +68,7 @@ namespace Algolib.Sequences
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
         /// <param name="sequence">Sequence of elements</param>
-        public static void QuickSort<T>(List<T> sequence) where T : IComparable
+        public static void QuickSort<T>(this List<T> sequence) where T : IComparable
         {
             if(sequence == null)
                 throw new ArgumentNullException("Sequence is null");
