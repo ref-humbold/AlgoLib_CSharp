@@ -7,6 +7,66 @@ namespace Algolib.Sequences
     [TestFixture]
     public class SubsequencesTests
     {
+        #region longestIncreasing
+
+        [Test]
+        public void LongestIncreasing_WhenIncreasing_ThenAllElements()
+        {
+            // given
+            List<int> sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing(Comparer<int>.Default);
+            // then
+            result.Should().BeEquivalentTo(sequence);
+            result.Should().BeInAscendingOrder();
+        }
+
+        [Test]
+        public void LongestIncreasing_WhenDecreasing_ThenLastElementOnly()
+        {
+            // given
+            List<int> sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing(Comparer<int>.Default);
+            // then
+            result.Should().Equal(2);
+        }
+
+        [Test]
+        public void LongestIncreasing_WhenMultipleSubsequences_ThenLeastLexicographically()
+        {
+            // given
+            List<int> sequence = new List<int> { 2, 1, 4, 3, 6, 5, 8, 7, 10 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing(Comparer<int>.Default);
+            // then
+            result.Should().Equal(1, 3, 5, 7, 10);
+        }
+
+        [Test]
+        public void LongestIncreasing_WhenIncreasingAndReversedComparator_ThenLastElementOnly()
+        {
+            // given
+            List<int> sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing((i1, i2) => i2.CompareTo(i1));
+            // then
+            result.Should().Equal(15);
+        }
+
+        [Test]
+        public void LongestIncreasing_WhenDecreasingAndReversedComparator_ThenAllElements()
+        {
+            // given
+            List<int> sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing((i1, i2) => i2.CompareTo(i1));
+            // then
+            result.Should().BeEquivalentTo(sequence);
+            result.Should().BeInDescendingOrder();
+        }
+
+        #endregion
         #region MaximumSubarray
 
         [Test]
@@ -53,7 +113,7 @@ namespace Algolib.Sequences
             // when
             double result = sequence.MaximalSubsum();
             // then
-            result.Should().BeApproximately(16.5, 0.000001);
+            result.Should().BeApproximately(16.5, 1e-6);
         }
 
         [Test]
@@ -64,7 +124,7 @@ namespace Algolib.Sequences
             // when
             double result = sequence.MaximalSubsum();
             // then
-            result.Should().BeApproximately(14.6, 0.000001);
+            result.Should().BeApproximately(14.6, 1e-6);
         }
 
         [Test]

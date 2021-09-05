@@ -10,14 +10,14 @@ namespace Algolib.Sequences
         /// <param name="sequence">Sequence of elements</param>
         /// <param name="comparer">Comparer of elements in subsequence</param>
         /// <returns>Least lexicographically longest increasing subsequence</returns>
-        public static IEnumerable<T> LongestOrdered<T>(this IList<T> sequence, IComparer<T> comparer) =>
-            LongestOrdered(sequence, comparer.Compare);
+        public static IEnumerable<T> LongestIncreasing<T>(this IList<T> sequence, IComparer<T> comparer) =>
+            LongestIncreasing(sequence, comparer.Compare);
 
         /// <summary>Constructs longest increasing subsequence according to a comparison function.</summary>
         /// <param name="sequence">Sequence of elements</param>
         /// <param name="comparison">Comparison function of elements in subsequence</param>
         /// <returns>Least lexicographically longest increasing subsequence</returns>
-        public static IEnumerable<T> LongestOrdered<T>(this IList<T> sequence, Comparison<T> comparison)
+        public static IEnumerable<T> LongestIncreasing<T>(this IList<T> sequence, Comparison<T> comparison)
         {
             List<int?> previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
             List<int> subseqLast = new List<int> { 0 };
@@ -33,7 +33,7 @@ namespace Algolib.Sequences
                 }
                 else
                 {
-                    int index = searchOrd(sequence, comparison, subseqLast, 0, subseqLast.Count - 1, i);
+                    int index = searchIndex(sequence, comparison, subseqLast, i, 0, subseqLast.Count - 1);
 
                     subseqLast[index] = i;
                     previousElem[i] = index > 0 ? (int?)subseqLast[index - 1] : null;
@@ -125,9 +125,9 @@ namespace Algolib.Sequences
         }
 
         // Searches for place of element in list of subsequences.
-        private static int searchOrd<T>(IList<T> sequence, Comparison<T> comparison,
-                                        List<int> subseqLast, int indexBegin, int indexEnd,
-                                        int indexElem)
+        private static int searchIndex<T>(in IList<T> sequence, in Comparison<T> comparison,
+                                          in List<int> subseqLast, in int indexElem, int indexBegin,
+                                          int indexEnd)
         {
             if(indexBegin == indexEnd)
                 return indexBegin;
@@ -135,8 +135,8 @@ namespace Algolib.Sequences
             int indexMiddle = (indexBegin + indexEnd) / 2;
 
             return comparison.Invoke(sequence[indexElem], sequence[subseqLast[indexMiddle]]) > 0
-                ? searchOrd(sequence, comparison, subseqLast, indexMiddle + 1, indexEnd, indexElem)
-                : searchOrd(sequence, comparison, subseqLast, indexBegin, indexMiddle, indexElem);
+                ? searchIndex(sequence, comparison, subseqLast, indexElem, indexMiddle + 1, indexEnd)
+                : searchIndex(sequence, comparison, subseqLast, indexElem, indexBegin, indexMiddle);
         }
     }
 }
