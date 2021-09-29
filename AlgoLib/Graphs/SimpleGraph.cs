@@ -1,12 +1,14 @@
 ﻿// Structure of simple graph
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public abstract class SimpleGraph<V, VP, EP> : IGraph<V, VP, EP>
+    public abstract class SimpleGraph<VertexId, VertexProperty, EdgeProperty> :
+        IGraph<VertexId, VertexProperty, EdgeProperty>
     {
-        internal GraphRepresentation<V, VP, EP> representation;
+        internal GraphRepresentation<VertexId, VertexProperty, EdgeProperty> representation;
 
         public int VerticesCount => representation.Count;
 
@@ -15,56 +17,63 @@ namespace Algolib.Graphs
             get;
         }
 
-        public IEnumerable<V> Vertices => representation.Vertices;
+        public IEnumerable<Vertex<VertexId>> Vertices => representation.Vertices;
 
-        public abstract IEnumerable<Edge<V>> Edges
+        public abstract IEnumerable<Edge<VertexId>> Edges
         {
             get;
         }
 
-        public SimpleGraph() => representation = new GraphRepresentation<V, VP, EP>();
+        public SimpleGraph() => representation =
+            new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>();
 
-        public SimpleGraph(IEnumerable<V> vertices) =>
-            representation = new GraphRepresentation<V, VP, EP>(vertices);
+        public SimpleGraph(IEnumerable<VertexId> vertexIds) =>
+            representation = new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>(vertexIds);
 
-        public VP this[V vertex]
+        public Vertex<VertexId> this[VertexId vertexId] => representation.FindVertex(vertexId);
+
+        public VertexProperty this[Vertex<VertexId> vertex]
         {
             get => representation[vertex];
             set => representation[vertex] = value;
         }
 
-        public EP this[Edge<V> edge]
+        public EdgeProperty this[Edge<VertexId> edge]
         {
             get => representation[edge];
             set => representation[edge] = value;
         }
 
-        public Edge<V> GetEdge(V source, V destination) =>
-            representation.GetAdjacentEdges(source)
-                          .Where(edge => edge.GetNeighbour(source).Equals(destination))
-                          .FirstOrDefault();
+        public Vertex<VertexId> GetVertex(VertexId vertexId) =>
+            representation.FindVertex(vertexId);
 
-        public IEnumerable<V> GetNeighbours(V vertex) =>
+        public Edge<VertexId> GetEdge(Vertex<VertexId> source, Vertex<VertexId> destination) =>
+            representation.FindEdge(source, destination);
+
+        public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
             representation.GetAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
 
-        public IEnumerable<Edge<V>> GetAdjacentEdges(V vertex) => representation.GetAdjacentEdges(vertex);
+        public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
+            representation.GetAdjacentEdges(vertex);
 
-        public abstract int GetOutputDegree(V vertex);
+        public abstract int GetOutputDegree(Vertex<VertexId> vertex);
 
-        public abstract int GetInputDegree(V vertex);
+        public abstract int GetInputDegree(Vertex<VertexId> vertex);
 
         /// <summary>Adds new vertex with given property to this graph.</summary>
-        /// <param name="vertex">a new vertex</param>
-        /// <param name="property">a vertex property</param>
-        /// <returns><c>true</c> if vertex was added, otherwise <c>false</c></returns>
-        public bool AddVertex(V vertex, VP property = default)
+        /// <param name="vertexId">Vertex identifier</param>
+        /// <param name="property">Vertex property</param>
+        /// <returns>New vertex</returns>
+        /// <exception cref="ArgumentException">If</exception>
+        public Vertex<VertexId> AddVertex(VertexId vertexId, VertexProperty property = default)
         {
+            Vertex<VertexId> vertex = new Vertex<VertexId>(vertexId);
             bool wasAdded = representation.AddVertex(vertex);
 
             if(wasAdded)
                 this[vertex] = property;
 
-            return wasAdded;
+            return wasAdded ? vertex : null;
         }
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
@@ -72,13 +81,15 @@ namespace Algolib.Graphs
         /// <param name="destination">destination vertex</param>
         /// <param name="property">an edge property</param>
         /// <returns>the new edge if added, otherwise existing edge</returns>
-        public Edge<V> AddEdgeBetween(V source, V destination, EP property = default) =>
-            AddEdge(new Edge<V>(source, destination), property);
+        public Edge<VertexId> AddEdgeBetween(Vertex<VertexId> source,
+                                             Vertex<VertexId> destination,
+                                             EdgeProperty property = default) =>
+            AddEdge(new Edge<VertexId>(source, destination), property);
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
         /// <param name="edge">a new edge</param>
         /// <param name="property">an edge property</param>
         /// <returns>the new edge if added, otherwise existing edge</returns>
-        public abstract Edge<V> AddEdge(Edge<V> edge, EP property = default);
+        public abstract Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default);
     }
 }

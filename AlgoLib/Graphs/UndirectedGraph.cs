@@ -4,31 +4,34 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IUndirectedGraph<V, VP, EP> : IGraph<V, VP, EP>
+    public interface IUndirectedGraph<VertexId, VertexProperty, EdgeProperty> :
+        IGraph<VertexId, VertexProperty, EdgeProperty>
     {
     }
 
-    public class UndirectedSimpleGraph<V, VP, EP> : SimpleGraph<V, VP, EP>, IUndirectedGraph<V, VP, EP>
+    public class UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> :
+        SimpleGraph<VertexId, VertexProperty, EdgeProperty>,
+        IUndirectedGraph<VertexId, VertexProperty, EdgeProperty>
     {
         public override int EdgesCount => representation.Edges.Distinct().Count();
 
-        public override IEnumerable<Edge<V>> Edges => representation.Edges.Distinct();
+        public override IEnumerable<Edge<VertexId>> Edges => representation.Edges.Distinct();
 
         public UndirectedSimpleGraph() : base()
         {
         }
 
-        public UndirectedSimpleGraph(IEnumerable<V> vertices) : base(vertices)
+        public UndirectedSimpleGraph(IEnumerable<VertexId> vertexIds) : base(vertexIds)
         {
         }
 
-        public override int GetOutputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
+        public override int GetOutputDegree(Vertex<VertexId> vertex) => representation.GetAdjacentEdges(vertex).Count;
 
-        public override int GetInputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
+        public override int GetInputDegree(Vertex<VertexId> vertex) => representation.GetAdjacentEdges(vertex).Count;
 
-        public override Edge<V> AddEdge(Edge<V> edge, EP property = default)
+        public override Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default)
         {
-            Edge<V> existingEdge = GetEdge(edge.Source, edge.Destination);
+            Edge<VertexId> existingEdge = GetEdge(edge.Source, edge.Destination);
 
             if(existingEdge != null)
                 return existingEdge;
@@ -41,15 +44,15 @@ namespace Algolib.Graphs
 
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
         /// <returns>directed graph</returns>
-        public DirectedSimpleGraph<V, VP, EP> AsDirected()
+        public DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> AsDirected()
         {
-            DirectedSimpleGraph<V, VP, EP> directedSimpleGraph =
-                new DirectedSimpleGraph<V, VP, EP>(Vertices);
+            DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> directedSimpleGraph =
+                new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
 
-            foreach(V vertex in Vertices)
+            foreach(Vertex<VertexId> vertex in Vertices)
                 directedSimpleGraph[vertex] = this[vertex];
 
-            foreach(Edge<V> edge in Edges)
+            foreach(Edge<VertexId> edge in Edges)
             {
                 directedSimpleGraph.AddEdge(edge, this[edge]);
                 directedSimpleGraph.AddEdge(edge.Reversed(), this[edge]);
