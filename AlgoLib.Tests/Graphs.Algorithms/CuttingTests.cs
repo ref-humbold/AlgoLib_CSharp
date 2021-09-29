@@ -14,27 +14,27 @@ namespace Algolib.Graphs.Algorithms
             // given
             UndirectedSimpleGraph<int, object, object> graph =
                 new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
-            graph.AddEdgeBetween(0, 1);
-            graph.AddEdgeBetween(0, 2);
-            graph.AddEdgeBetween(0, 7);
-            graph.AddEdgeBetween(1, 2);
-            graph.AddEdgeBetween(1, 3);
-            graph.AddEdgeBetween(1, 4);
-            graph.AddEdgeBetween(3, 5);
-            graph.AddEdgeBetween(4, 5);
-            graph.AddEdgeBetween(5, 6);
-            graph.AddEdgeBetween(7, 8);
-            graph.AddEdgeBetween(7, 9);
-            graph.AddEdgeBetween(7, 11);
-            graph.AddEdgeBetween(8, 9);
-            graph.AddEdgeBetween(9, 10);
-            graph.AddEdgeBetween(9, 11);
-            graph.AddEdgeBetween(10, 11);
+            graph.AddEdgeBetween(graph[0], graph[1]);
+            graph.AddEdgeBetween(graph[0], graph[2]);
+            graph.AddEdgeBetween(graph[0], graph[7]);
+            graph.AddEdgeBetween(graph[1], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[3]);
+            graph.AddEdgeBetween(graph[1], graph[4]);
+            graph.AddEdgeBetween(graph[3], graph[5]);
+            graph.AddEdgeBetween(graph[4], graph[5]);
+            graph.AddEdgeBetween(graph[5], graph[6]);
+            graph.AddEdgeBetween(graph[7], graph[8]);
+            graph.AddEdgeBetween(graph[7], graph[9]);
+            graph.AddEdgeBetween(graph[7], graph[11]);
+            graph.AddEdgeBetween(graph[8], graph[9]);
+            graph.AddEdgeBetween(graph[9], graph[10]);
+            graph.AddEdgeBetween(graph[9], graph[11]);
+            graph.AddEdgeBetween(graph[10], graph[11]);
             // when
             IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
             // then
             result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { graph.GetEdge(0, 7), graph.GetEdge(5, 6) });
+                new List<Edge<int>>() { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
         }
 
         [Test]
@@ -43,13 +43,13 @@ namespace Algolib.Graphs.Algorithms
             // given
             UndirectedSimpleGraph<int, object, object> graph =
                 new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
-            graph.AddEdgeBetween(0, 1);
-            graph.AddEdgeBetween(0, 2);
-            graph.AddEdgeBetween(1, 2);
-            graph.AddEdgeBetween(1, 3);
-            graph.AddEdgeBetween(1, 4);
-            graph.AddEdgeBetween(3, 5);
-            graph.AddEdgeBetween(4, 5);
+            graph.AddEdgeBetween(graph[0], graph[1]);
+            graph.AddEdgeBetween(graph[0], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[3]);
+            graph.AddEdgeBetween(graph[1], graph[4]);
+            graph.AddEdgeBetween(graph[3], graph[5]);
+            graph.AddEdgeBetween(graph[4], graph[5]);
             // when
             IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
             // then
@@ -62,26 +62,26 @@ namespace Algolib.Graphs.Algorithms
             // given
             UndirectedSimpleGraph<int, object, object> graph =
                 new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
-            graph.AddEdgeBetween(0, 1);
-            graph.AddEdgeBetween(0, 2);
-            graph.AddEdgeBetween(0, 7);
-            graph.AddEdgeBetween(1, 2);
-            graph.AddEdgeBetween(1, 3);
-            graph.AddEdgeBetween(1, 4);
-            graph.AddEdgeBetween(3, 5);
-            graph.AddEdgeBetween(4, 5);
-            graph.AddEdgeBetween(5, 6);
-            graph.AddEdgeBetween(7, 8);
-            graph.AddEdgeBetween(7, 9);
-            graph.AddEdgeBetween(7, 11);
-            graph.AddEdgeBetween(8, 9);
-            graph.AddEdgeBetween(9, 10);
-            graph.AddEdgeBetween(9, 11);
-            graph.AddEdgeBetween(10, 11);
+            graph.AddEdgeBetween(graph[0], graph[1]);
+            graph.AddEdgeBetween(graph[0], graph[2]);
+            graph.AddEdgeBetween(graph[0], graph[7]);
+            graph.AddEdgeBetween(graph[1], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[3]);
+            graph.AddEdgeBetween(graph[1], graph[4]);
+            graph.AddEdgeBetween(graph[3], graph[5]);
+            graph.AddEdgeBetween(graph[4], graph[5]);
+            graph.AddEdgeBetween(graph[5], graph[6]);
+            graph.AddEdgeBetween(graph[7], graph[8]);
+            graph.AddEdgeBetween(graph[7], graph[9]);
+            graph.AddEdgeBetween(graph[7], graph[11]);
+            graph.AddEdgeBetween(graph[8], graph[9]);
+            graph.AddEdgeBetween(graph[9], graph[10]);
+            graph.AddEdgeBetween(graph[9], graph[11]);
+            graph.AddEdgeBetween(graph[10], graph[11]);
             // when
-            IEnumerable<int> result = Cutting.FindVertexCut(graph);
+            IEnumerable<Vertex<int>> result = Cutting.FindVertexCut(graph);
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 5, 7 });
+            result.Should().BeEquivalentTo(new List<Vertex<int>>() { graph[0], graph[1], graph[5], graph[7] });
         }
 
         [Test]
@@ -90,16 +90,16 @@ namespace Algolib.Graphs.Algorithms
             // given
             UndirectedSimpleGraph<int, object, object> graph =
                 new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
-            graph.AddEdgeBetween(0, 1);
-            graph.AddEdgeBetween(0, 2);
-            graph.AddEdgeBetween(1, 2);
-            graph.AddEdgeBetween(1, 3);
-            graph.AddEdgeBetween(1, 4);
-            graph.AddEdgeBetween(2, 3);
-            graph.AddEdgeBetween(3, 5);
-            graph.AddEdgeBetween(4, 5);
+            graph.AddEdgeBetween(graph[0], graph[1]);
+            graph.AddEdgeBetween(graph[0], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[2]);
+            graph.AddEdgeBetween(graph[1], graph[3]);
+            graph.AddEdgeBetween(graph[1], graph[4]);
+            graph.AddEdgeBetween(graph[2], graph[3]);
+            graph.AddEdgeBetween(graph[3], graph[5]);
+            graph.AddEdgeBetween(graph[4], graph[5]);
             // when
-            IEnumerable<int> result = Cutting.FindVertexCut(graph);
+            IEnumerable<Vertex<int>> result = Cutting.FindVertexCut(graph);
             // then
             result.Should().BeEmpty();
         }

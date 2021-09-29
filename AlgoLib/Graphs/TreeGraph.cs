@@ -19,6 +19,10 @@ namespace Algolib.Graphs
         public TreeGraph(VertexId vertexId) =>
             graph = new UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(new[] { vertexId });
 
+        public Vertex<VertexId> this[VertexId vertexId] => graph[vertexId];
+
+        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] => graph[source, destination];
+
         public VertexProperty this[Vertex<VertexId> vertex]
         {
             get => graph[vertex];
@@ -30,10 +34,6 @@ namespace Algolib.Graphs
             get => graph[edge];
             set => graph[edge] = value;
         }
-
-        public Vertex<VertexId> GetVertex(VertexId vertexId) => graph.GetVertex(vertexId);
-
-        public Edge<VertexId> GetEdge(Vertex<VertexId> source, Vertex<VertexId> destination) => graph.GetEdge(source, destination);
 
         public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) => graph.GetAdjacentEdges(vertex);
 

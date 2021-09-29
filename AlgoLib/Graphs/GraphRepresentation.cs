@@ -41,6 +41,38 @@ namespace Algolib.Graphs
             }
         }
 
+        internal Vertex<VertexId> this[VertexId vertexId]
+        {
+            get
+            {
+                try
+                {
+                    return graphDict.Keys.First(v => v.Id.Equals(vertexId));
+                }
+                catch(InvalidOperationException)
+                {
+                    throw new KeyNotFoundException($"No vertex with ID {vertexId}");
+                }
+            }
+        }
+
+        internal Edge<VertexId> this[Vertex<VertexId> vertexId1, Vertex<VertexId> vertexId2]
+        {
+            get
+            {
+                try
+                {
+                    return graphDict.First(pair => pair.Key.Equals(vertexId1))
+                                    .Value
+                                    .First(edge => edge.Destination.Equals(vertexId2));
+                }
+                catch(InvalidOperationException)
+                {
+                    throw new KeyNotFoundException($"No edge between vertices {vertexId1} and {vertexId2}");
+                }
+            }
+        }
+
         internal VertexProperty this[Vertex<VertexId> vertex]
         {
             get
@@ -73,48 +105,22 @@ namespace Algolib.Graphs
             }
         }
 
-        internal Vertex<VertexId> FindVertex(VertexId vertexId)
-        {
-            try
-            {
-                return graphDict.Keys.First(v => v.Id.Equals(vertexId));
-            }
-            catch(InvalidOperationException)
-            {
-                throw new KeyNotFoundException($"No vertex with ID {vertexId}");
-            }
-        }
-
-        internal Edge<VertexId> FindEdge(Vertex<VertexId> vertexId1, Vertex<VertexId> vertexId2)
-        {
-            try
-            {
-                return graphDict.First(pair => pair.Key.Equals(vertexId1))
-                                .Value
-                                .First(edge => edge.Destination.Equals(vertexId2));
-            }
-            catch(InvalidOperationException)
-            {
-                throw new KeyNotFoundException($"No edge between vertices {vertexId1} and {vertexId2}");
-            }
-        }
-
-        internal HashSet<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex)
+        internal HashSet<Edge<VertexId>> getAdjacentEdges(Vertex<VertexId> vertex)
         {
             validate(vertex);
             return graphDict[vertex];
         }
 
-        internal bool AddVertex(Vertex<VertexId> vertex) =>
+        internal bool addVertex(Vertex<VertexId> vertex) =>
             graphDict.TryAdd(vertex, new HashSet<Edge<VertexId>>());
 
-        internal void AddEdgeToSource(Edge<VertexId> edge)
+        internal void addEdgeToSource(Edge<VertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Source].Add(edge);
         }
 
-        internal void AddEdgeToDestination(Edge<VertexId> edge)
+        internal void addEdgeToDestination(Edge<VertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Destination].Add(edge);

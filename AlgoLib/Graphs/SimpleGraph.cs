@@ -30,7 +30,10 @@ namespace Algolib.Graphs
         public SimpleGraph(IEnumerable<VertexId> vertexIds) =>
             representation = new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>(vertexIds);
 
-        public Vertex<VertexId> this[VertexId vertexId] => representation.FindVertex(vertexId);
+        public Vertex<VertexId> this[VertexId vertexId] => representation[vertexId];
+
+        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+            representation[source, destination];
 
         public VertexProperty this[Vertex<VertexId> vertex]
         {
@@ -44,17 +47,11 @@ namespace Algolib.Graphs
             set => representation[edge] = value;
         }
 
-        public Vertex<VertexId> GetVertex(VertexId vertexId) =>
-            representation.FindVertex(vertexId);
-
-        public Edge<VertexId> GetEdge(Vertex<VertexId> source, Vertex<VertexId> destination) =>
-            representation.FindEdge(source, destination);
-
         public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
-            representation.GetAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
+            representation.getAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
 
         public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
-            representation.GetAdjacentEdges(vertex);
+            representation.getAdjacentEdges(vertex);
 
         public abstract int GetOutputDegree(Vertex<VertexId> vertex);
 
@@ -68,7 +65,7 @@ namespace Algolib.Graphs
         public Vertex<VertexId> AddVertex(VertexId vertexId, VertexProperty property = default)
         {
             Vertex<VertexId> vertex = new Vertex<VertexId>(vertexId);
-            bool wasAdded = representation.AddVertex(vertex);
+            bool wasAdded = representation.addVertex(vertex);
 
             if(wasAdded)
                 this[vertex] = property;

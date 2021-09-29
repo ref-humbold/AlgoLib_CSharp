@@ -29,7 +29,7 @@ namespace Algolib.Graphs
         {
         }
 
-        public override int GetOutputDegree(Vertex<VertexId> vertex) => representation.GetAdjacentEdges(vertex).Count;
+        public override int GetOutputDegree(Vertex<VertexId> vertex) => representation.getAdjacentEdges(vertex).Count;
 
         public override int GetInputDegree(Vertex<VertexId> vertex) =>
             representation.EdgesSet
@@ -38,12 +38,12 @@ namespace Algolib.Graphs
 
         public override Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default)
         {
-            Edge<VertexId> existingEdge = GetEdge(edge.Source, edge.Destination);
+            Edge<VertexId> existingEdge = this[edge.Source, edge.Destination];
 
             if(existingEdge != null)
                 return existingEdge;
 
-            representation.AddEdgeToSource(edge);
+            representation.addEdgeToSource(edge);
             representation[edge] = property;
             return edge;
         }
@@ -60,7 +60,7 @@ namespace Algolib.Graphs
             {
                 Edge<VertexId> newEdge = edge.Reversed();
 
-                newRepresentation.AddEdgeToSource(newEdge);
+                newRepresentation.addEdgeToSource(newEdge);
                 newRepresentation[newEdge] = representation[edge];
             }
 

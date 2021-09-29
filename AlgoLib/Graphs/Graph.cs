@@ -30,6 +30,20 @@ namespace Algolib.Graphs
             get;
         }
 
+        /// <summary>Vertex with given identifier.</summary>
+        /// <exception cref="KeyNotFoundException">If no such vertex in this graph</exception>
+        Vertex<VertexId> this[VertexId vertexId]
+        {
+            get;
+        }
+
+        /// <summary>Edge between given vertices.</summary>
+        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination]
+        {
+            get;
+        }
+
         /// <summary>Property of a vertex from this graph.</summary>
         VertexProperty this[Vertex<VertexId> vertex]
         {
@@ -43,17 +57,6 @@ namespace Algolib.Graphs
             get;
             set;
         }
-
-        /// <param name="vertexId">Vertex identifier.</param>
-        /// <returns>Vertex with given identifier</returns>
-        /// <exception cref="KeyNotFoundException">If no vertex with given identifier</exception>
-        Vertex<VertexId> GetVertex(VertexId vertexId);
-
-        /// <param name="source">Source vertex</param>
-        /// <param name="destination">Destination vertex</param>
-        /// <returns>Edge between the given vertices</returns>
-        /// <exception cref="KeyNotFoundException">If no edge between given vertices</exception>
-        Edge<VertexId> GetEdge(Vertex<VertexId> source, Vertex<VertexId> destination);
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Enumerable of neighbouring vertices</returns>
