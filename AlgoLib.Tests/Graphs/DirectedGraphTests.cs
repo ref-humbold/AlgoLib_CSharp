@@ -17,7 +17,7 @@ namespace Algolib.Graphs
             testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
 
         [Test]
-        public void IndexerGetSet_WhenSettingProperty_ThenProperty()
+        public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
         {
             // given
             string vertexProperty = "x";
@@ -25,34 +25,34 @@ namespace Algolib.Graphs
             Vertex<int> vertex = testObject[2];
             Edge<int> edge = testObject.AddEdgeBetween(testObject[0], testObject[1]);
             // when
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
+            testObject.Properties[vertex] = vertexProperty;
+            testObject.Properties[edge] = edgeProperty;
 
-            string resultVertex = testObject[vertex];
-            string resultEdge = testObject[edge];
+            string resultVertex = testObject.Properties[vertex];
+            string resultEdge = testObject.Properties[edge];
             // then
             resultVertex.Should().Be(vertexProperty);
             resultEdge.Should().Be(edgeProperty);
         }
 
         [Test]
-        public void IndexerGet_WhenNoProperty_ThenDefault()
+        public void PropertiesIndexerGet_WhenNoProperty_ThenDefault()
         {
             // given
             Edge<int> edge = testObject.AddEdgeBetween(testObject[6], testObject[7]);
             // when
-            string resultVertex = testObject[testObject[4]];
-            string resultEdge = testObject[edge];
+            string resultVertex = testObject.Properties[testObject[4]];
+            string resultEdge = testObject.Properties[edge];
             // then
             resultVertex.Should().Be(default);
             resultEdge.Should().Be(default);
         }
 
         [Test]
-        public void IndexerGet_WhenNotExistingEdge_ThenIllegalArgumentException()
+        public void PropertiesIndexerGet_WhenNotExistingEdge_ThenIllegalArgumentException()
         {
             // when
-            Action action = () => _ = testObject[new Edge<int>(testObject[2], testObject[8])];
+            Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
             // then
             action.Should().Throw<ArgumentException>();
         }
@@ -87,7 +87,7 @@ namespace Algolib.Graphs
             result.Should().BeTrue();
             testObject.VerticesCount.Should().Be(11);
             testObject.GetNeighbours(testObject[newVertexId]).Should().BeEmpty();
-            testObject[testObject[newVertexId]].Should().Be(property);
+            testObject.Properties[testObject[newVertexId]].Should().Be(property);
         }
 
         [Test]
@@ -97,13 +97,13 @@ namespace Algolib.Graphs
             Vertex<int> vertex = testObject[6];
             string property = "qwerty";
 
-            testObject[vertex] = property;
+            testObject.Properties[vertex] = property;
             // when
             bool result = testObject.AddVertex(vertex.Id, "abcdefg");
             // then
             result.Should().BeFalse();
             testObject.VerticesCount.Should().Be(10);
-            testObject[vertex].Should().Be(property);
+            testObject.Properties[vertex].Should().Be(property);
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenInDirection_ThenEdge()
+        public void IndexerGetEdge_WhenInDirection_ThenEdge()
         {
             // given
             Vertex<int> source = testObject[9];
@@ -165,7 +165,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenReversedDirection_ThenNull()
+        public void IndexerGetEdge_WhenReversedDirection_ThenNull()
         {
             // given
             Vertex<int> source = testObject[9];
@@ -179,10 +179,10 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenNotExists_ThenNull()
+        public void IndexerGetEdge_WhenNotExists_ThenNull()
         {
             // when
-            Edge<int> result = testObject[testObject[1], testObject[2]];
+            Edge<int> result = testObject[1, 2];
             // then
             result.Should().BeNull();
         }
@@ -198,7 +198,7 @@ namespace Algolib.Graphs
             // then
             result.Source.Should().Be(1);
             result.Destination.Should().Be(5);
-            testObject[result].Should().Be(property);
+            testObject.Properties[result].Should().Be(property);
             testObject.GetNeighbours(testObject[1]).Should().BeEquivalentTo(
                 new[] { new Vertex<int>(1), new Vertex<int>(5) });
             testObject.GetNeighbours(testObject[5]).Should().BeEmpty();
@@ -308,8 +308,8 @@ namespace Algolib.Graphs
             testObject.AddEdgeBetween(testObject[7], testObject[8]);
             testObject.AddEdgeBetween(testObject[9], testObject[1]);
             testObject.AddEdgeBetween(testObject[9], testObject[6]);
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
+            testObject.Properties[vertex] = vertexProperty;
+            testObject.Properties[edge] = edgeProperty;
             // when
             testObject.Reverse();
             // then
@@ -323,10 +323,10 @@ namespace Algolib.Graphs
                                                              new Edge<int>(new Vertex<int>(7), new Vertex<int>(5)),
                                                              new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                                                              new Edge<int>(new Vertex<int>(9), new Vertex<int>(4)) });
-            testObject[vertex].Should().Be(vertexProperty);
-            testObject[testObject[9]].Should().BeNull();
-            testObject[testObject[testObject[2], testObject[1]]].Should().Be(edgeProperty);
-            testObject[testObject[testObject[5], testObject[3]]].Should().BeNull();
+            testObject.Properties[vertex].Should().Be(vertexProperty);
+            testObject.Properties[testObject[9]].Should().BeNull();
+            testObject.Properties[testObject[2, 1]].Should().Be(edgeProperty);
+            testObject.Properties[testObject[5, 3]].Should().BeNull();
         }
 
         [Test]
@@ -346,8 +346,8 @@ namespace Algolib.Graphs
             testObject.AddEdgeBetween(testObject[7], testObject[8]);
             testObject.AddEdgeBetween(testObject[9], testObject[1]);
             testObject.AddEdgeBetween(testObject[9], testObject[6]);
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
+            testObject.Properties[vertex] = vertexProperty;
+            testObject.Properties[edge] = edgeProperty;
             // when
             IDirectedGraph<int, string, string> result = testObject.ReversedCopy();
             // then
@@ -362,10 +362,10 @@ namespace Algolib.Graphs
                                                          new Edge<int>(new Vertex<int>(7), new Vertex<int>(5)),
                                                          new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                                                          new Edge<int>(new Vertex<int>(9), new Vertex<int>(4)) });
-            result[vertex].Should().Be(vertexProperty);
-            result[testObject[9]].Should().BeNull();
-            result[result[testObject[2], testObject[1]]].Should().Be(edgeProperty);
-            result[result[testObject[5], testObject[3]]].Should().BeNull();
+            result.Properties[vertex].Should().Be(vertexProperty);
+            result.Properties[result[9]].Should().BeNull();
+            result.Properties[result[2, 1]].Should().Be(edgeProperty);
+            result.Properties[result[5, 3]].Should().BeNull();
         }
     }
 }

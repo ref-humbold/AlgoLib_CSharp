@@ -50,12 +50,12 @@ namespace Algolib.Graphs
                 new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
 
             foreach(Vertex<VertexId> vertex in Vertices)
-                directedSimpleGraph.SetProperty(vertex, GetProperty(vertex));
+                directedSimpleGraph.Properties[vertex] = Properties[vertex];
 
             foreach(Edge<VertexId> edge in Edges)
             {
-                directedSimpleGraph.AddEdge(edge, GetProperty(edge));
-                directedSimpleGraph.AddEdge(edge.Reversed(), GetProperty(edge));
+                directedSimpleGraph.AddEdge(edge, Properties[edge]);
+                directedSimpleGraph.AddEdge(edge.Reversed(), Properties[edge]);
             }
 
             return directedSimpleGraph;

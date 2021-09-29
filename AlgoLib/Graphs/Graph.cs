@@ -6,6 +6,11 @@ namespace Algolib.Graphs
 {
     public interface IGraph<VertexId, VertexProperty, EdgeProperty>
     {
+        IProperties Properties
+        {
+            get;
+        }
+
         /// <summary>Number of vertices.</summary>
         int VerticesCount
         {
@@ -39,28 +44,15 @@ namespace Algolib.Graphs
 
         /// <summary>Edge between given vertices.</summary>
         /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
-        Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination]
+        Edge<VertexId> this[VertexId sourceId, VertexId destinationId]
         {
             get;
         }
 
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <return>Property of the vertex</return>
-        VertexProperty GetProperty(Vertex<VertexId> vertex);
-
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <param name="property">Property for given vertex</param>
-        /// <return>Property of the vertex</return>
-        void SetProperty(Vertex<VertexId> vertex, VertexProperty property);
-
-        /// <param name="edge">Edge from this graph</param>
-        /// <return>Property of the edge</return>
-        EdgeProperty GetProperty(Edge<VertexId> edge);
-
-        /// <param name="edge">Edge from this graph</param>
-        /// <param name="property">Property for given edge</param>
-        /// <return>Property of the edge</return>
-        void SetProperty(Edge<VertexId> edge, EdgeProperty property);
+        /// <summary>Edge between given vertices.</summary>
+        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+            this[source.Id, destination.Id];
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Enumerable of neighbouring vertices</returns>
@@ -77,6 +69,23 @@ namespace Algolib.Graphs
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Input degree of the vertex</returns>
         int GetInputDegree(Vertex<VertexId> vertex);
+
+        public interface IProperties
+        {
+            /// <summary>Property of a vertex from this graph.</summary>
+            VertexProperty this[Vertex<VertexId> vertex]
+            {
+                get;
+                set;
+            }
+
+            /// <summary>Property of an edge from this graph.</summary>
+            EdgeProperty this[Edge<VertexId> edge]
+            {
+                get;
+                set;
+            }
+        }
     }
 
     public class Vertex<VertexId>

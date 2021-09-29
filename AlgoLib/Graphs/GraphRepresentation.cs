@@ -56,19 +56,19 @@ namespace Algolib.Graphs
             }
         }
 
-        internal Edge<VertexId> this[Vertex<VertexId> vertex1, Vertex<VertexId> vertex2]
+        internal Edge<VertexId> this[VertexId vertexId1, VertexId vertexId2]
         {
             get
             {
                 try
                 {
-                    return graphDict.First(pair => pair.Key.Equals(vertex1))
+                    return graphDict.First(pair => pair.Key.Id.Equals(vertexId1))
                                     .Value
-                                    .First(edge => edge.Destination.Equals(vertex2));
+                                    .First(edge => edge.Destination.Id.Equals(vertexId2));
                 }
                 catch(InvalidOperationException)
                 {
-                    throw new KeyNotFoundException($"No edge between vertices {vertex1} and {vertex2}");
+                    throw new KeyNotFoundException($"No edge between vertices {vertexId1} and {vertexId2}");
                 }
             }
         }

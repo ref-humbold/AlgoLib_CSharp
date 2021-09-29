@@ -24,12 +24,12 @@ namespace Algolib.Graphs.Algorithms
                 foreach(Vertex<VertexId> vertex in graph.Vertices)
                     foreach(Edge<VertexId> edge in graph.GetAdjacentEdges(vertex))
                         distances[edge.Destination] = Math.Min(distances[edge.Destination],
-                                                               distances[vertex] + graph[edge].Weight);
+                                                               distances[vertex] + graph.Properties[edge].Weight);
 
             foreach(Vertex<VertexId> vertex in graph.Vertices)
                 foreach(Edge<VertexId> edge in graph.GetAdjacentEdges(vertex))
                     if(distances[vertex] < IWeighted.Infinity
-                       && distances[vertex] + graph[edge].Weight < distances[edge.Destination])
+                       && distances[vertex] + graph.Properties[edge].Weight < distances[edge.Destination])
                         throw new InvalidOperationException("Graph contains a negative cycle");
 
             return distances;
@@ -44,7 +44,7 @@ namespace Algolib.Graphs.Algorithms
                 where EdgeProperty : IWeighted
         {
             foreach(Edge<VertexId> edge in graph.Edges)
-                if(graph[edge].Weight < 0.0)
+                if(graph.Properties[edge].Weight < 0.0)
                     throw new InvalidOperationException("Graph contains an edge with negative weight");
 
             Dictionary<Vertex<VertexId>, double> distances = new Dictionary<Vertex<VertexId>, double>(
@@ -60,20 +60,20 @@ namespace Algolib.Graphs.Algorithms
 
             while(vertexHeap.Count > 0)
             {
-                Vertex<VertexId> v = vertexHeap.Pop().Vertex;
+                Vertex<VertexId> vertex = vertexHeap.Pop().Vertex;
 
-                if(!visited.Contains(v))
+                if(!visited.Contains(vertex))
                 {
-                    visited.Add(v);
+                    visited.Add(vertex);
 
-                    foreach(Edge<VertexId> e in graph.GetAdjacentEdges(v))
+                    foreach(Edge<VertexId> edge in graph.GetAdjacentEdges(vertex))
                     {
-                        Vertex<VertexId> neighbour = e.GetNeighbour(v);
-                        double weight = graph[e].Weight;
+                        Vertex<VertexId> neighbour = edge.GetNeighbour(vertex);
+                        double weight = graph.Properties[edge].Weight;
 
-                        if(distances[v] + weight < distances[neighbour])
+                        if(distances[vertex] + weight < distances[neighbour])
                         {
-                            distances[neighbour] = distances[v] + weight;
+                            distances[neighbour] = distances[vertex] + weight;
                             vertexHeap.Push((distances[neighbour], neighbour));
                         }
                     }
@@ -99,7 +99,7 @@ namespace Algolib.Graphs.Algorithms
                     distances[(v, u)] = v.Equals(u) ? 0.0 : IWeighted.Infinity;
 
             foreach(Edge<VertexId> edge in graph.Edges)
-                distances[(edge.Source, edge.Destination)] = graph[edge].Weight;
+                distances[(edge.Source, edge.Destination)] = graph.Properties[edge].Weight;
 
             foreach(Vertex<VertexId> w in graph.Vertices)
                 foreach(Vertex<VertexId> v in graph.Vertices)

@@ -8,6 +8,8 @@ namespace Algolib.Graphs
     {
         private readonly UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> graph;
 
+        public IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties Properties => graph.Properties;
+
         public int VerticesCount => graph.VerticesCount;
 
         public int EdgesCount => graph.EdgesCount;
@@ -21,18 +23,11 @@ namespace Algolib.Graphs
 
         public Vertex<VertexId> this[VertexId vertexId] => graph[vertexId];
 
+        public Edge<VertexId> this[VertexId sourceId, VertexId destinationId] =>
+            graph[sourceId, destinationId];
+
         public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
-            graph[source, destination];
-
-        public VertexProperty GetProperty(Vertex<VertexId> vertex) => graph.GetProperty(vertex);
-
-        public void SetProperty(Vertex<VertexId> vertex, VertexProperty property) =>
-            graph.SetProperty(vertex, property);
-
-        public EdgeProperty GetProperty(Edge<VertexId> edge) => graph.GetProperty(edge);
-
-        public void SetProperty(Edge<VertexId> edge, EdgeProperty property) =>
-            graph.SetProperty(edge, property);
+            this[source.Id, destination.Id];
 
         public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
             graph.GetAdjacentEdges(vertex);

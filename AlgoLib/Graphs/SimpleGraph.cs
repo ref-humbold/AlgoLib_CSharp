@@ -10,6 +10,9 @@ namespace Algolib.Graphs
     {
         internal GraphRepresentation<VertexId, VertexProperty, EdgeProperty> representation;
 
+        public IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties Properties =>
+            new GraphProperties(this);
+
         public int VerticesCount => representation.Count;
 
         public abstract int EdgesCount
@@ -32,18 +35,11 @@ namespace Algolib.Graphs
 
         public Vertex<VertexId> this[VertexId vertexId] => representation[vertexId];
 
+        public Edge<VertexId> this[VertexId sourceId, VertexId destinationId] =>
+            representation[sourceId, destinationId];
+
         public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
-            representation[source, destination];
-
-        public VertexProperty GetProperty(Vertex<VertexId> vertex) => representation.getProperty(vertex);
-
-        public void SetProperty(Vertex<VertexId> vertex, VertexProperty property) =>
-            representation.setProperty(vertex, property);
-
-        public EdgeProperty GetProperty(Edge<VertexId> edge) => representation.getProperty(edge);
-
-        public void SetProperty(Edge<VertexId> edge, EdgeProperty property) =>
-            representation.setProperty(edge, property);
+            this[source.Id, destination.Id];
 
         public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
             representation.getAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
@@ -66,7 +62,7 @@ namespace Algolib.Graphs
             bool wasAdded = representation.addVertex(vertex);
 
             if(wasAdded)
-                SetProperty(vertex, property);
+                Properties[vertex] = property;
 
             return wasAdded ? vertex : null;
         }
@@ -86,5 +82,25 @@ namespace Algolib.Graphs
         /// <param name="property">an edge property</param>
         /// <returns>the new edge if added, otherwise existing edge</returns>
         public abstract Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default);
+
+        private struct GraphProperties : IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties
+        {
+            private readonly SimpleGraph<VertexId, VertexProperty, EdgeProperty> graph;
+
+            public GraphProperties(SimpleGraph<VertexId, VertexProperty, EdgeProperty> graph) =>
+                this.graph = graph;
+
+            public VertexProperty this[Vertex<VertexId> vertex]
+            {
+                get => graph.representation.getProperty(vertex);
+                set => graph.representation.setProperty(vertex, value);
+            }
+
+            public EdgeProperty this[Edge<VertexId> edge]
+            {
+                get => graph.representation.getProperty(edge);
+                set => graph.representation.setProperty(edge, value);
+            }
+        }
     }
 }

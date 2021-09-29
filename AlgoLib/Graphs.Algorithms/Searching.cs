@@ -122,7 +122,7 @@ namespace Algolib.Graphs.Algorithms
             DfsRecursiveState<VertexId> state)
         {
             Vertex<VertexId> vertex = state.vertex;
-            state.OnEntry(vertex);
+            state.onEntry(vertex);
             strategy.OnEntry(vertex);
 
             foreach(Vertex<VertexId> neighbour in graph.GetNeighbours(vertex))
@@ -136,7 +136,7 @@ namespace Algolib.Graphs.Algorithms
                     strategy.OnEdgeToVisited(vertex, neighbour);
 
             strategy.OnExit(vertex);
-            state.OnExit(vertex);
+            state.onExit(vertex);
         }
 
         private class DfsRecursiveState<VertexId>
@@ -145,9 +145,9 @@ namespace Algolib.Graphs.Algorithms
             internal Vertex<VertexId> vertex;
             internal int iteration = 1;
 
-            internal void OnEntry(Vertex<VertexId> vertex) => reached[vertex] = iteration;
+            internal void onEntry(Vertex<VertexId> vertex) => reached[vertex] = iteration;
 
-            internal void OnExit(Vertex<VertexId> vertex) => reached[vertex] = -iteration;
+            internal void onExit(Vertex<VertexId> vertex) => reached[vertex] = -iteration;
         }
     }
 }

@@ -25,19 +25,19 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void IndexerGetSet_WhenSettingProperty_ThenProperty()
+        public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
         {
             // given
             string vertexProperty = "x";
             string edgeProperty = "y";
             Vertex<int> vertex = testObject[2];
-            Edge<int> edge = testObject[testObject[6], testObject[2]];
+            Edge<int> edge = testObject[6, 2];
             // when
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
+            testObject.Properties[vertex] = vertexProperty;
+            testObject.Properties[edge] = edgeProperty;
 
-            string resultVertex = testObject[vertex];
-            string resultEdge = testObject[edge];
+            string resultVertex = testObject.Properties[vertex];
+            string resultEdge = testObject.Properties[edge];
             // then
             resultVertex.Should().Be(vertexProperty);
             resultEdge.Should().Be(edgeProperty);
@@ -76,8 +76,8 @@ namespace Algolib.Graphs
             result.Destination.Should().Be(neighbour);
             testObject.VerticesCount.Should().Be(9);
             testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
-            testObject[testObject[newVertexId]].Should().Be(vertexProperty);
-            testObject[result].Should().Be(edgeProperty);
+            testObject.Properties[testObject[newVertexId]].Should().Be(vertexProperty);
+            testObject.Properties[result].Should().Be(edgeProperty);
         }
 
         [Test]
@@ -87,13 +87,13 @@ namespace Algolib.Graphs
             Vertex<int> vertex = testObject[6];
             string property = "qwerty";
 
-            testObject[vertex] = property;
+            testObject.Properties[vertex] = property;
             // when
             Edge<int> result = testObject.AddVertex(vertex.Id, testObject[2], "abcdefg", "xyz");
             // then
             result.Should().BeNull();
             testObject.VerticesCount.Should().Be(8);
-            testObject[vertex].Should().Be(property);
+            testObject.Properties[vertex].Should().Be(property);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetEdge_WhenExists_ThenEdge()
+        public void IndexerGetEdge_WhenExists_ThenEdge()
         {
             // given
             Vertex<int> source = testObject[5];

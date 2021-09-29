@@ -16,7 +16,7 @@ namespace Algolib.Graphs.Algorithms
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return graph.Vertices
-                        .Where(vertex => strategy.HasBridge(vertex))
+                        .Where(vertex => strategy.hasBridge(vertex))
                         .Select(vertex => graph[vertex, strategy.dfsParents[vertex]]);
         }
 
@@ -29,7 +29,7 @@ namespace Algolib.Graphs.Algorithms
             CuttingStrategy<VertexId> strategy = new CuttingStrategy<VertexId>();
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
-            return graph.Vertices.Where(vertex => strategy.IsSeparator(vertex));
+            return graph.Vertices.Where(vertex => strategy.isSeparator(vertex));
         }
 
         private class CuttingStrategy<VertexId> : IDfsStrategy<VertexId>
@@ -77,15 +77,15 @@ namespace Algolib.Graphs.Algorithms
                     lowValues[vertex] = Math.Min(lowValues[vertex], dfsDepths[neighbour]);
             }
 
-            internal bool HasBridge(Vertex<VertexId> vertex) =>
-                !IsDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
+            internal bool hasBridge(Vertex<VertexId> vertex) =>
+                !isDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
 
-            internal bool IsSeparator(Vertex<VertexId> vertex) =>
-                IsDfsRoot(vertex) ? dfsChildren[vertex].Count > 1
+            internal bool isSeparator(Vertex<VertexId> vertex) =>
+                isDfsRoot(vertex) ? dfsChildren[vertex].Count > 1
                                   : dfsChildren[vertex].Any(
                                           child => lowValues[child] >= dfsDepths[vertex]);
 
-            internal bool IsDfsRoot(Vertex<VertexId> vertex) => dfsDepths[vertex] == 0;
+            internal bool isDfsRoot(Vertex<VertexId> vertex) => dfsDepths[vertex] == 0;
         }
     }
 }

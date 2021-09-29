@@ -73,10 +73,10 @@ namespace Algolib.Graphs
                 new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
 
             foreach(Vertex<VertexId> vertex in Vertices)
-                reversedGraph.SetProperty(vertex, GetProperty(vertex));
+                reversedGraph.Properties[vertex] = Properties[vertex];
 
             foreach(Edge<VertexId> edge in Edges)
-                reversedGraph.AddEdge(edge.Reversed(), GetProperty(edge));
+                reversedGraph.AddEdge(edge.Reversed(), Properties[edge]);
 
             return reversedGraph;
         }
