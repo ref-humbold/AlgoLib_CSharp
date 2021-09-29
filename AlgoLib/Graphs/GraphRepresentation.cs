@@ -56,53 +56,47 @@ namespace Algolib.Graphs
             }
         }
 
-        internal Edge<VertexId> this[Vertex<VertexId> vertexId1, Vertex<VertexId> vertexId2]
+        internal Edge<VertexId> this[Vertex<VertexId> vertex1, Vertex<VertexId> vertex2]
         {
             get
             {
                 try
                 {
-                    return graphDict.First(pair => pair.Key.Equals(vertexId1))
+                    return graphDict.First(pair => pair.Key.Equals(vertex1))
                                     .Value
-                                    .First(edge => edge.Destination.Equals(vertexId2));
+                                    .First(edge => edge.Destination.Equals(vertex2));
                 }
                 catch(InvalidOperationException)
                 {
-                    throw new KeyNotFoundException($"No edge between vertices {vertexId1} and {vertexId2}");
+                    throw new KeyNotFoundException($"No edge between vertices {vertex1} and {vertex2}");
                 }
             }
         }
 
-        internal VertexProperty this[Vertex<VertexId> vertex]
+        internal VertexProperty getProperty(Vertex<VertexId> vertex)
         {
-            get
-            {
-                validate(vertex);
-                vertexProperties.TryGetValue(vertex, out VertexProperty val);
-                return val;
-            }
-
-            set
-            {
-                validate(vertex);
-                vertexProperties[vertex] = value;
-            }
+            validate(vertex);
+            vertexProperties.TryGetValue(vertex, out VertexProperty val);
+            return val;
         }
 
-        internal EdgeProperty this[Edge<VertexId> edge]
+        internal void setProperty(Vertex<VertexId> vertex, VertexProperty property)
         {
-            get
-            {
-                validate(edge, true);
-                edgeProperties.TryGetValue(edge, out EdgeProperty val);
-                return val;
-            }
+            validate(vertex);
+            vertexProperties[vertex] = property;
+        }
 
-            set
-            {
-                validate(edge, true);
-                edgeProperties[edge] = value;
-            }
+        internal EdgeProperty getProperty(Edge<VertexId> edge)
+        {
+            validate(edge, true);
+            edgeProperties.TryGetValue(edge, out EdgeProperty val);
+            return val;
+        }
+
+        internal void setProperty(Edge<VertexId> edge, EdgeProperty property)
+        {
+            validate(edge, true);
+            edgeProperties[edge] = property;
         }
 
         internal HashSet<Edge<VertexId>> getAdjacentEdges(Vertex<VertexId> vertex)

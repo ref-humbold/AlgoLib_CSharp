@@ -44,19 +44,23 @@ namespace Algolib.Graphs
             get;
         }
 
-        /// <summary>Property of a vertex from this graph.</summary>
-        VertexProperty this[Vertex<VertexId> vertex]
-        {
-            get;
-            set;
-        }
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <return>Property of the vertex</return>
+        VertexProperty GetProperty(Vertex<VertexId> vertex);
 
-        /// <summary>Property of an edge from this graph.</summary>
-        EdgeProperty this[Edge<VertexId> edge]
-        {
-            get;
-            set;
-        }
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <param name="property">Property for given vertex</param>
+        /// <return>Property of the vertex</return>
+        void SetProperty(Vertex<VertexId> vertex, VertexProperty property);
+
+        /// <param name="edge">Edge from this graph</param>
+        /// <return>Property of the edge</return>
+        EdgeProperty GetProperty(Edge<VertexId> edge);
+
+        /// <param name="edge">Edge from this graph</param>
+        /// <param name="property">Property for given edge</param>
+        /// <return>Property of the edge</return>
+        void SetProperty(Edge<VertexId> edge, EdgeProperty property);
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Enumerable of neighbouring vertices</returns>

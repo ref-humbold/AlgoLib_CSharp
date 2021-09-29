@@ -35,17 +35,15 @@ namespace Algolib.Graphs
         public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
             representation[source, destination];
 
-        public VertexProperty this[Vertex<VertexId> vertex]
-        {
-            get => representation[vertex];
-            set => representation[vertex] = value;
-        }
+        public VertexProperty GetProperty(Vertex<VertexId> vertex) => representation.getProperty(vertex);
 
-        public EdgeProperty this[Edge<VertexId> edge]
-        {
-            get => representation[edge];
-            set => representation[edge] = value;
-        }
+        public void SetProperty(Vertex<VertexId> vertex, VertexProperty property) =>
+            representation.setProperty(vertex, property);
+
+        public EdgeProperty GetProperty(Edge<VertexId> edge) => representation.getProperty(edge);
+
+        public void SetProperty(Edge<VertexId> edge, EdgeProperty property) =>
+            representation.setProperty(edge, property);
 
         public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
             representation.getAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
@@ -68,7 +66,7 @@ namespace Algolib.Graphs
             bool wasAdded = representation.addVertex(vertex);
 
             if(wasAdded)
-                this[vertex] = property;
+                SetProperty(vertex, property);
 
             return wasAdded ? vertex : null;
         }

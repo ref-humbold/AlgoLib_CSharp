@@ -21,23 +21,24 @@ namespace Algolib.Graphs
 
         public Vertex<VertexId> this[VertexId vertexId] => graph[vertexId];
 
-        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] => graph[source, destination];
+        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+            graph[source, destination];
 
-        public VertexProperty this[Vertex<VertexId> vertex]
-        {
-            get => graph[vertex];
-            set => graph[vertex] = value;
-        }
+        public VertexProperty GetProperty(Vertex<VertexId> vertex) => graph.GetProperty(vertex);
 
-        public EdgeProperty this[Edge<VertexId> edge]
-        {
-            get => graph[edge];
-            set => graph[edge] = value;
-        }
+        public void SetProperty(Vertex<VertexId> vertex, VertexProperty property) =>
+            graph.SetProperty(vertex, property);
 
-        public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) => graph.GetAdjacentEdges(vertex);
+        public EdgeProperty GetProperty(Edge<VertexId> edge) => graph.GetProperty(edge);
 
-        public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) => graph.GetNeighbours(vertex);
+        public void SetProperty(Edge<VertexId> edge, EdgeProperty property) =>
+            graph.SetProperty(edge, property);
+
+        public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
+            graph.GetAdjacentEdges(vertex);
+
+        public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
+            graph.GetNeighbours(vertex);
 
         public int GetOutputDegree(Vertex<VertexId> vertex) => graph.GetOutputDegree(vertex);
 

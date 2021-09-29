@@ -44,7 +44,7 @@ namespace Algolib.Graphs
                 return existingEdge;
 
             representation.addEdgeToSource(edge);
-            representation[edge] = property;
+            representation.setProperty(edge, property);
             return edge;
         }
 
@@ -54,14 +54,14 @@ namespace Algolib.Graphs
                 new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
 
             foreach(Vertex<VertexId> vertex in Vertices)
-                newRepresentation[vertex] = representation[vertex];
+                newRepresentation.setProperty(vertex, representation.getProperty(vertex));
 
             foreach(Edge<VertexId> edge in Edges)
             {
                 Edge<VertexId> newEdge = edge.Reversed();
 
                 newRepresentation.addEdgeToSource(newEdge);
-                newRepresentation[newEdge] = representation[edge];
+                newRepresentation.setProperty(newEdge, representation.getProperty(edge));
             }
 
             representation = newRepresentation;
@@ -73,10 +73,10 @@ namespace Algolib.Graphs
                 new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
 
             foreach(Vertex<VertexId> vertex in Vertices)
-                reversedGraph[vertex] = this[vertex];
+                reversedGraph.SetProperty(vertex, GetProperty(vertex));
 
             foreach(Edge<VertexId> edge in Edges)
-                reversedGraph.AddEdge(edge.Reversed(), this[edge]);
+                reversedGraph.AddEdge(edge.Reversed(), GetProperty(edge));
 
             return reversedGraph;
         }
