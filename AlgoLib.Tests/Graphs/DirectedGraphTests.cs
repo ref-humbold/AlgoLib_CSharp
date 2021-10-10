@@ -49,7 +49,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void PropertiesIndexerGet_WhenNotExistingEdge_ThenIllegalArgumentException()
+        public void PropertiesIndexerGet_WhenNotExistingEdge_ThenArgumentException()
         {
             // when
             Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
@@ -67,43 +67,16 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void GetVertices_ThenAllVertices()
+        public void Vertices_ThenAllVertices()
         {
             // when
             IEnumerable<Vertex<int>> result = testObject.Vertices;
             // then
-            result.Should().BeEquivalentTo(Enumerable.Range(0, 10));
-        }
-
-        [Test]
-        public void AddVertex_WhenNewVertex_ThenTrue()
-        {
-            // given
-            int newVertexId = 13;
-            string property = "qwerty";
-            // when
-            bool result = testObject.AddVertex(newVertexId, property);
-            // then
-            result.Should().BeTrue();
-            testObject.VerticesCount.Should().Be(11);
-            testObject.GetNeighbours(testObject[newVertexId]).Should().BeEmpty();
-            testObject.Properties[testObject[newVertexId]].Should().Be(property);
-        }
-
-        [Test]
-        public void AddVertex_WhenExistingVertex_ThenFalse()
-        {
-            // given
-            Vertex<int> vertex = testObject[6];
-            string property = "qwerty";
-
-            testObject.Properties[vertex] = property;
-            // when
-            bool result = testObject.AddVertex(vertex.Id, "abcdefg");
-            // then
-            result.Should().BeFalse();
-            testObject.VerticesCount.Should().Be(10);
-            testObject.Properties[vertex].Should().Be(property);
+            result.Should().BeEquivalentTo(
+                new Vertex<int>[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
+                                    new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
+                                    new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
+                                    new Vertex<int>(9) });
         }
 
         [Test]
@@ -117,7 +90,6 @@ namespace Algolib.Graphs
             testObject.AddEdgeBetween(testObject[6], testObject[3]);
             testObject.AddEdgeBetween(testObject[3], testObject[6]);
             testObject.AddEdgeBetween(testObject[9], testObject[3]);
-            testObject.AddEdgeBetween(testObject[8], testObject[0]);
             // when
             long result = testObject.EdgesCount;
             // then
@@ -135,18 +107,37 @@ namespace Algolib.Graphs
             testObject.AddEdgeBetween(testObject[6], testObject[3]);
             testObject.AddEdgeBetween(testObject[3], testObject[6]);
             testObject.AddEdgeBetween(testObject[9], testObject[3]);
-            testObject.AddEdgeBetween(testObject[8], testObject[0]);
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
             result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
-                                        new Edge<int>(new Vertex<int>(2), new Vertex<int>(4)),
-                                        new Edge<int>(new Vertex<int>(3), new Vertex<int>(6)),
-                                        new Edge<int>(new Vertex<int>(6), new Vertex<int>(3)),
-                                        new Edge<int>(new Vertex<int>(7), new Vertex<int>(7)),
-                                        new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
-                                        new Edge<int>(new Vertex<int>(9), new Vertex<int>(3)) });
+                new Edge<int>[] { new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
+                                  new Edge<int>(new Vertex<int>(2), new Vertex<int>(4)),
+                                  new Edge<int>(new Vertex<int>(3), new Vertex<int>(6)),
+                                  new Edge<int>(new Vertex<int>(6), new Vertex<int>(3)),
+                                  new Edge<int>(new Vertex<int>(7), new Vertex<int>(7)),
+                                  new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
+                                  new Edge<int>(new Vertex<int>(9), new Vertex<int>(3)) });
+        }
+
+        [Test]
+        public void IndexerGetVertex_WhenExisting_ThenVertex()
+        {
+            // given
+            int vertexId = 4;
+            // when
+            Vertex<int> result = testObject[vertexId];
+            // then
+            result.Id.Should().Be(vertexId);
+        }
+
+        [Test]
+        public void IndexerGetVertex_WhenNotExists_ThenKeyNotFoundException()
+        {
+            // when
+            Action action = () => _ = testObject[12];
+            // then
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         [Test]
@@ -165,7 +156,7 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void IndexerGetEdge_WhenReversedDirection_ThenNull()
+        public void IndexerGetEdge_WhenReversedDirection_ThenKeyNotFoundException()
         {
             // given
             Vertex<int> source = testObject[9];
@@ -173,18 +164,49 @@ namespace Algolib.Graphs
 
             testObject.AddEdgeBetween(source, destination);
             // when
-            Edge<int> result = testObject[destination, source];
+            Action action = () => _ = testObject[destination, source];
             // then
-            result.Should().BeNull();
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         [Test]
-        public void IndexerGetEdge_WhenNotExists_ThenNull()
+        public void IndexerGetEdge_WhenNotExists_ThenKeyNotFoundException()
         {
             // when
-            Edge<int> result = testObject[1, 2];
+            Action action = () => _ = testObject[1, 2];
             // then
-            result.Should().BeNull();
+            action.Should().Throw<KeyNotFoundException>();
+        }
+
+        [Test]
+        public void AddVertex_WhenNewVertexId_ThenCreatedVertex()
+        {
+            // given
+            int newVertexId = 13;
+            string property = "qwerty";
+            // when
+            Vertex<int> result = testObject.AddVertex(newVertexId, property);
+            // then
+            result.Id.Should().Be(newVertexId);
+            testObject.VerticesCount.Should().Be(11);
+            testObject.GetNeighbours(result).Should().BeEmpty();
+            testObject.Properties[result].Should().Be(property);
+        }
+
+        [Test]
+        public void AddVertex_WhenExistingVertex_ThenArgumentException()
+        {
+            // given
+            Vertex<int> vertex = testObject[6];
+            string property = "qwerty";
+
+            testObject.Properties[vertex] = property;
+            // when
+            Action action = () => testObject.AddVertex(vertex.Id, "abcdefg");
+            // then
+            action.Should().Throw<ArgumentException>();
+            testObject.VerticesCount.Should().Be(10);
+            testObject.Properties[vertex].Should().Be(property);
         }
 
         [Test]
@@ -196,8 +218,8 @@ namespace Algolib.Graphs
             Edge<int> result = testObject.AddEdgeBetween(testObject[1], testObject[5], property);
             testObject.AddEdgeBetween(testObject[1], testObject[1]);
             // then
-            result.Source.Should().Be(1);
-            result.Destination.Should().Be(5);
+            result.Source.Should().Be(new Vertex<int>(1));
+            result.Destination.Should().Be(new Vertex<int>(5));
             testObject.Properties[result].Should().Be(property);
             testObject.GetNeighbours(testObject[1]).Should().BeEquivalentTo(
                 new[] { new Vertex<int>(1), new Vertex<int>(5) });
@@ -205,16 +227,16 @@ namespace Algolib.Graphs
         }
 
         [Test]
-        public void AddEdgeBetween_WhenDuplicatedEdge_ThenExistingEdge()
+        public void AddEdgeBetween_WhenDuplicatedEdge_ThenArgumentException()
         {
             // given
             Vertex<int> source = testObject[3];
             Vertex<int> destination = testObject[7];
             Edge<int> expected = testObject.AddEdgeBetween(source, destination);
             // when
-            Edge<int> result = testObject.AddEdgeBetween(source, destination);
+            Action action = () => testObject.AddEdgeBetween(source, destination);
             // then
-            result.Should().BeSameAs(expected);
+            action.Should().Throw<ArgumentException>();
         }
 
         [Test]

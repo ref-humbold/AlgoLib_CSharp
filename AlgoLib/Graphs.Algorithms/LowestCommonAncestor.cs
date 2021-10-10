@@ -4,32 +4,32 @@ using System.Linq;
 
 namespace Algolib.Graphs.Algorithms
 {
-    public sealed class LowestCommonAncestor<VertexId, VertexProperty, EdgeProperty>
+    public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        private readonly Dictionary<Vertex<VertexId>, List<Vertex<VertexId>>> paths =
-            new Dictionary<Vertex<VertexId>, List<Vertex<VertexId>>>();
+        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths =
+            new Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>>();
 
         private readonly LcaStrategy strategy = new LcaStrategy();
         private bool empty = true;
 
-        public TreeGraph<VertexId, VertexProperty, EdgeProperty> Graph
+        public TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> Graph
         {
             get;
         }
 
-        public Vertex<VertexId> Root
+        public Vertex<TVertexId> Root
         {
             get;
         }
 
-        public LowestCommonAncestor(TreeGraph<VertexId, VertexProperty, EdgeProperty> graph,
-                                    Vertex<VertexId> root)
+        public LowestCommonAncestor(TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+                                    Vertex<TVertexId> root)
         {
             Graph = graph;
             Root = root;
         }
 
-        public Vertex<VertexId> Find(Vertex<VertexId> vertex1, Vertex<VertexId> vertex2)
+        public Vertex<TVertexId> Find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(empty)
                 initialize();
@@ -41,7 +41,7 @@ namespace Algolib.Graphs.Algorithms
         /// <param name="vertex1">first vertex</param>
         /// <param name="vertex2">second vertex</param>
         /// <returns>lowest common ancestor of given vertices</returns>
-        private Vertex<VertexId> doFind(Vertex<VertexId> vertex1, Vertex<VertexId> vertex2)
+        private Vertex<TVertexId> doFind(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(isOffspring(vertex1, vertex2))
                 return vertex2;
@@ -49,8 +49,8 @@ namespace Algolib.Graphs.Algorithms
             if(isOffspring(vertex2, vertex1))
                 return vertex1;
 
-            List<Vertex<VertexId>> candidates =
-                paths[vertex1].Reverse<Vertex<VertexId>>()
+            List<Vertex<TVertexId>> candidates =
+                paths[vertex1].Reverse<Vertex<TVertexId>>()
                               .Where(candidate => !isOffspring(vertex2, candidate))
                               .ToList();
 
@@ -60,52 +60,52 @@ namespace Algolib.Graphs.Algorithms
 
         private void initialize()
         {
-            Searching.DfsRecursive(Graph, strategy, new List<Vertex<VertexId>> { Root });
+            Searching.DfsRecursive(Graph, strategy, new List<Vertex<TVertexId>> { Root });
 
-            foreach(Vertex<VertexId> vertex in Graph.Vertices)
-                paths[vertex] = new List<Vertex<VertexId>> { strategy.parents[vertex] };
+            foreach(Vertex<TVertexId> vertex in Graph.Vertices)
+                paths[vertex] = new List<Vertex<TVertexId>> { strategy.parents[vertex] };
 
             for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
-                foreach(Vertex<VertexId> vertex in Graph.Vertices)
+                foreach(Vertex<TVertexId> vertex in Graph.Vertices)
                     paths[vertex].Add(paths[paths[vertex][i]][i]);
 
             empty = false;
         }
 
-        private bool isOffspring(Vertex<VertexId> vertex1, Vertex<VertexId> vertex2) =>
+        private bool isOffspring(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2) =>
             strategy.preTimes[vertex1] >= strategy.preTimes[vertex2]
                 && strategy.postTimes[vertex1] <= strategy.postTimes[vertex2];
 
-        private class LcaStrategy : IDfsStrategy<VertexId>
+        private class LcaStrategy : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<Vertex<VertexId>, Vertex<VertexId>> parents =
-                new Dictionary<Vertex<VertexId>, Vertex<VertexId>>();
+            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> parents =
+                new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
 
-            internal readonly Dictionary<Vertex<VertexId>, int> preTimes =
-                new Dictionary<Vertex<VertexId>, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, int> preTimes =
+                new Dictionary<Vertex<TVertexId>, int>();
 
-            internal readonly Dictionary<Vertex<VertexId>, int> postTimes =
-                new Dictionary<Vertex<VertexId>, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes =
+                new Dictionary<Vertex<TVertexId>, int>();
 
             private int timer = 0;
 
-            public void ForRoot(Vertex<VertexId> root) => parents[root] = root;
+            public void ForRoot(Vertex<TVertexId> root) => parents[root] = root;
 
-            public void OnEntry(Vertex<VertexId> vertex)
+            public void OnEntry(Vertex<TVertexId> vertex)
             {
                 preTimes[vertex] = timer;
                 ++timer;
             }
 
-            public void OnNextVertex(Vertex<VertexId> vertex, Vertex<VertexId> neighbour) => parents[neighbour] = vertex;
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) => parents[neighbour] = vertex;
 
-            public void OnExit(Vertex<VertexId> vertex)
+            public void OnExit(Vertex<TVertexId> vertex)
             {
                 postTimes[vertex] = timer;
                 ++timer;
             }
 
-            public void OnEdgeToVisited(Vertex<VertexId> vertex, Vertex<VertexId> neighbour)
+            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
         }

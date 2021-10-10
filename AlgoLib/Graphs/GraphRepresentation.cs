@@ -5,43 +5,43 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    internal class GraphRepresentation<VertexId, VertexProperty, EdgeProperty>
+    internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
     {
         // Adjacency list
-        private readonly Dictionary<Vertex<VertexId>, HashSet<Edge<VertexId>>> graphDict =
-            new Dictionary<Vertex<VertexId>, HashSet<Edge<VertexId>>>();
+        private readonly Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> graphDict =
+            new Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>>();
 
         // Vertex properties
-        private readonly Dictionary<Vertex<VertexId>, VertexProperty> vertexProperties =
-            new Dictionary<Vertex<VertexId>, VertexProperty>();
+        private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties =
+            new Dictionary<Vertex<TVertexId>, TVertexProperty>();
 
         // Edge properties
-        private readonly Dictionary<Edge<VertexId>, EdgeProperty> edgeProperties =
-            new Dictionary<Edge<VertexId>, EdgeProperty>();
+        private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties =
+            new Dictionary<Edge<TVertexId>, TEdgeProperty>();
 
         internal int Count => graphDict.Count;
 
-        internal IEnumerable<Vertex<VertexId>> Vertices => graphDict.Keys;
+        internal IEnumerable<Vertex<TVertexId>> Vertices => graphDict.Keys;
 
-        internal IEnumerable<Edge<VertexId>> Edges => graphDict.Values.SelectMany(edges => edges);
+        internal IEnumerable<Edge<TVertexId>> Edges => graphDict.Values.SelectMany(edges => edges);
 
-        internal IEnumerable<HashSet<Edge<VertexId>>> EdgesSet => graphDict.Values;
+        internal IEnumerable<HashSet<Edge<TVertexId>>> EdgesSet => graphDict.Values;
 
         internal GraphRepresentation()
         {
         }
 
-        internal GraphRepresentation(IEnumerable<VertexId> vertexIds)
+        internal GraphRepresentation(IEnumerable<TVertexId> vertexIds)
         {
-            foreach(VertexId vertexId in vertexIds)
+            foreach(TVertexId vertexId in vertexIds)
             {
-                Vertex<VertexId> vertex = new Vertex<VertexId>(vertexId);
+                Vertex<TVertexId> vertex = new Vertex<TVertexId>(vertexId);
 
-                graphDict[vertex] = new HashSet<Edge<VertexId>>();
+                graphDict[vertex] = new HashSet<Edge<TVertexId>>();
             }
         }
 
-        internal Vertex<VertexId> this[VertexId vertexId]
+        internal Vertex<TVertexId> this[TVertexId vertexId]
         {
             get
             {
@@ -51,82 +51,83 @@ namespace Algolib.Graphs
                 }
                 catch(InvalidOperationException)
                 {
-                    throw new KeyNotFoundException($"No vertex with ID {vertexId}");
+                    throw new KeyNotFoundException($"Vertex not found for ID {vertexId}");
                 }
             }
         }
 
-        internal Edge<VertexId> this[VertexId vertexId1, VertexId vertexId2]
+        internal Edge<TVertexId> this[TVertexId vertexId1, TVertexId vertexId2]
         {
             get
             {
                 try
                 {
-                    return graphDict.First(pair => pair.Key.Id.Equals(vertexId1))
-                                    .Value
-                                    .First(edge => edge.Destination.Id.Equals(vertexId2));
+                    KeyValuePair<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> entry =
+                        graphDict.First(pair => pair.Key.Id.Equals(vertexId1));
+
+                    return entry.Value.First(edge => edge.GetNeighbour(entry.Key).Id.Equals(vertexId2));
                 }
                 catch(InvalidOperationException)
                 {
-                    throw new KeyNotFoundException($"No edge between vertices {vertexId1} and {vertexId2}");
+                    throw new KeyNotFoundException($"Edge not found for vertex IDs {vertexId1} and {vertexId2}");
                 }
             }
         }
 
-        internal VertexProperty getProperty(Vertex<VertexId> vertex)
+        internal TVertexProperty getProperty(Vertex<TVertexId> vertex)
         {
             validate(vertex);
-            vertexProperties.TryGetValue(vertex, out VertexProperty val);
+            vertexProperties.TryGetValue(vertex, out TVertexProperty val);
             return val;
         }
 
-        internal void setProperty(Vertex<VertexId> vertex, VertexProperty property)
+        internal void setProperty(Vertex<TVertexId> vertex, TVertexProperty property)
         {
             validate(vertex);
             vertexProperties[vertex] = property;
         }
 
-        internal EdgeProperty getProperty(Edge<VertexId> edge)
+        internal TEdgeProperty getProperty(Edge<TVertexId> edge)
         {
             validate(edge, true);
-            edgeProperties.TryGetValue(edge, out EdgeProperty val);
+            edgeProperties.TryGetValue(edge, out TEdgeProperty val);
             return val;
         }
 
-        internal void setProperty(Edge<VertexId> edge, EdgeProperty property)
+        internal void setProperty(Edge<TVertexId> edge, TEdgeProperty property)
         {
             validate(edge, true);
             edgeProperties[edge] = property;
         }
 
-        internal HashSet<Edge<VertexId>> getAdjacentEdges(Vertex<VertexId> vertex)
+        internal IEnumerable<Edge<TVertexId>> getAdjacentEdges(Vertex<TVertexId> vertex)
         {
             validate(vertex);
             return graphDict[vertex];
         }
 
-        internal bool addVertex(Vertex<VertexId> vertex) =>
-            graphDict.TryAdd(vertex, new HashSet<Edge<VertexId>>());
+        internal bool addVertex(Vertex<TVertexId> vertex) =>
+            graphDict.TryAdd(vertex, new HashSet<Edge<TVertexId>>());
 
-        internal void addEdgeToSource(Edge<VertexId> edge)
+        internal void addEdgeToSource(Edge<TVertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Source].Add(edge);
         }
 
-        internal void addEdgeToDestination(Edge<VertexId> edge)
+        internal void addEdgeToDestination(Edge<TVertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Destination].Add(edge);
         }
 
-        private void validate(Vertex<VertexId> vertex)
+        private void validate(Vertex<TVertexId> vertex)
         {
             if(!graphDict.ContainsKey(vertex))
                 throw new ArgumentException($"Vertex {vertex} does not belong to this graph");
         }
 
-        private void validate(Edge<VertexId> edge, bool existing)
+        private void validate(Edge<TVertexId> edge, bool existing)
         {
             if(!graphDict.ContainsKey(edge.Source) || !graphDict.ContainsKey(edge.Destination))
                 throw new ArgumentException($"Edge {edge} does not belong to this graph");

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Algolib.Graphs
 {
-    public interface IGraph<VertexId, VertexProperty, EdgeProperty>
+    public interface IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        IProperties Properties
+        IGraphProperties Properties
         {
             get;
         }
@@ -24,63 +24,63 @@ namespace Algolib.Graphs
         }
 
         /// <summary>Enumerable of all vertices.</summary>
-        IEnumerable<Vertex<VertexId>> Vertices
+        IEnumerable<Vertex<TVertexId>> Vertices
         {
             get;
         }
 
         /// <summary>Enumerable of all edges.</summary>
-        IEnumerable<Edge<VertexId>> Edges
+        IEnumerable<Edge<TVertexId>> Edges
         {
             get;
         }
 
         /// <summary>Vertex with given identifier.</summary>
         /// <exception cref="KeyNotFoundException">If no such vertex in this graph</exception>
-        Vertex<VertexId> this[VertexId vertexId]
+        Vertex<TVertexId> this[TVertexId vertexId]
         {
             get;
         }
 
         /// <summary>Edge between given vertices.</summary>
         /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
-        Edge<VertexId> this[VertexId sourceId, VertexId destinationId]
+        Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId]
         {
             get;
         }
 
         /// <summary>Edge between given vertices.</summary>
         /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
-        Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+        Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Enumerable of neighbouring vertices</returns>
-        IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex);
+        IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex);
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Enumerable of edges adjacent to the vertex</returns>
-        IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex);
+        IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex);
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Output degree of the vertex</returns>
-        int GetOutputDegree(Vertex<VertexId> vertex);
+        int GetOutputDegree(Vertex<TVertexId> vertex);
 
         /// <param name="vertex">Vertex from this graph</param>
         /// <returns>Input degree of the vertex</returns>
-        int GetInputDegree(Vertex<VertexId> vertex);
+        int GetInputDegree(Vertex<TVertexId> vertex);
 
-        public interface IProperties
+        public interface IGraphProperties
         {
             /// <summary>Property of a vertex from this graph.</summary>
-            VertexProperty this[Vertex<VertexId> vertex]
+            TVertexProperty this[Vertex<TVertexId> vertex]
             {
                 get;
                 set;
             }
 
             /// <summary>Property of an edge from this graph.</summary>
-            EdgeProperty this[Edge<VertexId> edge]
+            TEdgeProperty this[Edge<TVertexId> edge]
             {
                 get;
                 set;

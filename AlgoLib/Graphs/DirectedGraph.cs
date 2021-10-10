@@ -1,64 +1,70 @@
 // Structures of directed graphs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IDirectedGraph<VertexId, VertexProperty, EdgeProperty> : IGraph<VertexId, VertexProperty, EdgeProperty>
+    public interface IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         /// <summary>Reverses directions of edges in this graph.</summary>
         void Reverse();
 
         /// <returns>the copy of this graph with reversed directions of edges</returns>
-        IDirectedGraph<VertexId, VertexProperty, EdgeProperty> ReversedCopy();
+        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy();
     }
 
-    public class DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> :
-        SimpleGraph<VertexId, VertexProperty, EdgeProperty>,
-        IDirectedGraph<VertexId, VertexProperty, EdgeProperty>
+    public class DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
+        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         public override int EdgesCount => representation.EdgesSet.Sum(edges => edges.Count);
 
-        public override IEnumerable<Edge<VertexId>> Edges => representation.Edges;
+        public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges;
 
         public DirectedSimpleGraph() : base()
         {
         }
 
-        public DirectedSimpleGraph(IEnumerable<VertexId> vertexIds) : base(vertexIds)
+        public DirectedSimpleGraph(IEnumerable<TVertexId> vertexIds) : base(vertexIds)
         {
         }
 
-        public override int GetOutputDegree(Vertex<VertexId> vertex) => representation.getAdjacentEdges(vertex).Count;
+        public override int GetOutputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
 
-        public override int GetInputDegree(Vertex<VertexId> vertex) =>
+        public override int GetInputDegree(Vertex<TVertexId> vertex) =>
             representation.EdgesSet
                           .SelectMany(edges => edges.Where(edge => edge.Destination.Equals(vertex)))
                           .Count();
 
-        public override Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default)
+        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
         {
-            Edge<VertexId> existingEdge = this[edge.Source, edge.Destination];
+            try
+            {
+                Edge<TVertexId> existingEdge = this[edge.Source, edge.Destination];
 
-            if(existingEdge != null)
-                return existingEdge;
-
-            representation.addEdgeToSource(edge);
-            representation.setProperty(edge, property);
-            return edge;
+                throw new ArgumentException($"Edge {existingEdge} already exists in the graph");
+            }
+            catch(KeyNotFoundException)
+            {
+                representation.addEdgeToSource(edge);
+                representation.setProperty(edge, property);
+                return edge;
+            }
         }
 
         public void Reverse()
         {
-            GraphRepresentation<VertexId, VertexProperty, EdgeProperty> newRepresentation =
-                new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
+            GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty> newRepresentation =
+                new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
 
-            foreach(Vertex<VertexId> vertex in Vertices)
+            foreach(Vertex<TVertexId> vertex in Vertices)
                 newRepresentation.setProperty(vertex, representation.getProperty(vertex));
 
-            foreach(Edge<VertexId> edge in Edges)
+            foreach(Edge<TVertexId> edge in Edges)
             {
-                Edge<VertexId> newEdge = edge.Reversed();
+                Edge<TVertexId> newEdge = edge.Reversed();
 
                 newRepresentation.addEdgeToSource(newEdge);
                 newRepresentation.setProperty(newEdge, representation.getProperty(edge));
@@ -67,15 +73,15 @@ namespace Algolib.Graphs
             representation = newRepresentation;
         }
 
-        public IDirectedGraph<VertexId, VertexProperty, EdgeProperty> ReversedCopy()
+        public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy()
         {
-            DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> reversedGraph =
-                new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
+            DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph =
+                new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
 
-            foreach(Vertex<VertexId> vertex in Vertices)
+            foreach(Vertex<TVertexId> vertex in Vertices)
                 reversedGraph.Properties[vertex] = Properties[vertex];
 
-            foreach(Edge<VertexId> edge in Edges)
+            foreach(Edge<TVertexId> edge in Edges)
                 reversedGraph.AddEdge(edge.Reversed(), Properties[edge]);
 
             return reversedGraph;

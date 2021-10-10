@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public abstract class SimpleGraph<VertexId, VertexProperty, EdgeProperty> :
-        IGraph<VertexId, VertexProperty, EdgeProperty>
+    public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        internal GraphRepresentation<VertexId, VertexProperty, EdgeProperty> representation;
+        internal GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty> representation;
 
-        public IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties Properties =>
-            new GraphProperties(this);
+        public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties =>
+            new GraphPropertiesImpl(this);
 
         public int VerticesCount => representation.Count;
 
@@ -20,83 +20,95 @@ namespace Algolib.Graphs
             get;
         }
 
-        public IEnumerable<Vertex<VertexId>> Vertices => representation.Vertices;
+        public IEnumerable<Vertex<TVertexId>> Vertices => representation.Vertices;
 
-        public abstract IEnumerable<Edge<VertexId>> Edges
+        public abstract IEnumerable<Edge<TVertexId>> Edges
         {
             get;
         }
 
         public SimpleGraph() => representation =
-            new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>();
+            new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>();
 
-        public SimpleGraph(IEnumerable<VertexId> vertexIds) =>
-            representation = new GraphRepresentation<VertexId, VertexProperty, EdgeProperty>(vertexIds);
+        public SimpleGraph(IEnumerable<TVertexId> vertexIds) =>
+            representation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(vertexIds);
 
-        public Vertex<VertexId> this[VertexId vertexId] => representation[vertexId];
+        public Vertex<TVertexId> this[TVertexId vertexId] => representation[vertexId];
 
-        public Edge<VertexId> this[VertexId sourceId, VertexId destinationId] =>
+        public Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId] =>
             representation[sourceId, destinationId];
 
-        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+        public Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
-        public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
+        public IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex) =>
             representation.getAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
 
-        public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
+        public IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex) =>
             representation.getAdjacentEdges(vertex);
 
-        public abstract int GetOutputDegree(Vertex<VertexId> vertex);
+        public abstract int GetOutputDegree(Vertex<TVertexId> vertex);
 
-        public abstract int GetInputDegree(Vertex<VertexId> vertex);
+        public abstract int GetInputDegree(Vertex<TVertexId> vertex);
 
         /// <summary>Adds new vertex with given property to this graph.</summary>
         /// <param name="vertexId">Vertex identifier</param>
         /// <param name="property">Vertex property</param>
         /// <returns>New vertex</returns>
-        /// <exception cref="ArgumentException">If</exception>
-        public Vertex<VertexId> AddVertex(VertexId vertexId, VertexProperty property = default)
+        /// <exception cref="ArgumentException">If vertex exists in the graph</exception>
+        public Vertex<TVertexId> AddVertex(TVertexId vertexId, TVertexProperty property = default) =>
+            AddVertex(new Vertex<TVertexId>(vertexId), property);
+
+        /// <summary>Adds new vertex with given property to this graph.</summary>
+        /// <param name="vertex">New vertex</param>
+        /// <param name="property">Vertex property</param>
+        /// <returns>New vertex</returns>
+        /// <exception cref="ArgumentException">If vertex exists in the graph</exception>
+        public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex, TVertexProperty property = default)
         {
-            Vertex<VertexId> vertex = new Vertex<VertexId>(vertexId);
             bool wasAdded = representation.addVertex(vertex);
 
             if(wasAdded)
+            {
                 Properties[vertex] = property;
+                return vertex;
+            }
 
-            return wasAdded ? vertex : null;
+            throw new ArgumentException($"Vertex {vertex} already exists");
         }
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="source">source vertex</param>
-        /// <param name="destination">destination vertex</param>
-        /// <param name="property">an edge property</param>
-        /// <returns>the new edge if added, otherwise existing edge</returns>
-        public Edge<VertexId> AddEdgeBetween(Vertex<VertexId> source,
-                                             Vertex<VertexId> destination,
-                                             EdgeProperty property = default) =>
-            AddEdge(new Edge<VertexId>(source, destination), property);
+        /// <param name="source">Source vertex</param>
+        /// <param name="destination">Destination vertex</param>
+        /// <param name="property">Edge property</param>
+        /// <returns>New edge</returns>
+        /// <exception cref="ArgumentException">If edge exists in the graph</exception>
+        public Edge<TVertexId> AddEdgeBetween(Vertex<TVertexId> source,
+                                              Vertex<TVertexId> destination,
+                                              TEdgeProperty property = default) =>
+            AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="edge">a new edge</param>
-        /// <param name="property">an edge property</param>
-        /// <returns>the new edge if added, otherwise existing edge</returns>
-        public abstract Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default);
+        /// <param name="edge">New edge</param>
+        /// <param name="property">Edge property</param>
+        /// <returns>New edge</returns>
+        /// <exception cref="ArgumentException">If edge exists in the graph</exception>
+        public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default);
 
-        private struct GraphProperties : IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties
+        private class GraphPropertiesImpl : IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties
         {
-            private readonly SimpleGraph<VertexId, VertexProperty, EdgeProperty> graph;
+            private readonly SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-            public GraphProperties(SimpleGraph<VertexId, VertexProperty, EdgeProperty> graph) =>
+            public GraphPropertiesImpl(SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
                 this.graph = graph;
 
-            public VertexProperty this[Vertex<VertexId> vertex]
+            public TVertexProperty this[Vertex<TVertexId> vertex]
             {
                 get => graph.representation.getProperty(vertex);
                 set => graph.representation.setProperty(vertex, value);
             }
 
-            public EdgeProperty this[Edge<VertexId> edge]
+            public TEdgeProperty this[Edge<TVertexId> edge]
             {
                 get => graph.representation.getProperty(edge);
                 set => graph.representation.setProperty(edge, value);

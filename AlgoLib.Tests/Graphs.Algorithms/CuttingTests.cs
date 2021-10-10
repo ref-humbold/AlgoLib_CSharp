@@ -31,7 +31,7 @@ namespace Algolib.Graphs.Algorithms
             graph.AddEdgeBetween(graph[9], graph[11]);
             graph.AddEdgeBetween(graph[10], graph[11]);
             // when
-            IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
+            IEnumerable<Edge<int>> result = graph.FindEdgeCut();
             // then
             result.Should().BeEquivalentTo(
                 new List<Edge<int>>() { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
@@ -51,7 +51,7 @@ namespace Algolib.Graphs.Algorithms
             graph.AddEdgeBetween(graph[3], graph[5]);
             graph.AddEdgeBetween(graph[4], graph[5]);
             // when
-            IEnumerable<Edge<int>> result = Cutting.FindEdgeCut(graph);
+            IEnumerable<Edge<int>> result = graph.FindEdgeCut();
             // then
             result.Should().BeEmpty();
         }
@@ -79,7 +79,7 @@ namespace Algolib.Graphs.Algorithms
             graph.AddEdgeBetween(graph[9], graph[11]);
             graph.AddEdgeBetween(graph[10], graph[11]);
             // when
-            IEnumerable<Vertex<int>> result = Cutting.FindVertexCut(graph);
+            IEnumerable<Vertex<int>> result = graph.FindVertexCut();
             // then
             result.Should().BeEquivalentTo(new List<Vertex<int>>() { graph[0], graph[1], graph[5], graph[7] });
         }
@@ -99,7 +99,7 @@ namespace Algolib.Graphs.Algorithms
             graph.AddEdgeBetween(graph[3], graph[5]);
             graph.AddEdgeBetween(graph[4], graph[5]);
             // when
-            IEnumerable<Vertex<int>> result = Cutting.FindVertexCut(graph);
+            IEnumerable<Vertex<int>> result = graph.FindVertexCut();
             // then
             result.Should().BeEmpty();
         }

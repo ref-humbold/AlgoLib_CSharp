@@ -3,41 +3,41 @@ using System.Collections.Generic;
 
 namespace Algolib.Graphs
 {
-    public class TreeGraph<VertexId, VertexProperty, EdgeProperty> :
-        IUndirectedGraph<VertexId, VertexProperty, EdgeProperty>
+    public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        private readonly UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> graph;
+        private readonly UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-        public IGraph<VertexId, VertexProperty, EdgeProperty>.IProperties Properties => graph.Properties;
+        public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties => graph.Properties;
 
         public int VerticesCount => graph.VerticesCount;
 
         public int EdgesCount => graph.EdgesCount;
 
-        public IEnumerable<Vertex<VertexId>> Vertices => graph.Vertices;
+        public IEnumerable<Vertex<TVertexId>> Vertices => graph.Vertices;
 
-        public IEnumerable<Edge<VertexId>> Edges => graph.Edges;
+        public IEnumerable<Edge<TVertexId>> Edges => graph.Edges;
 
-        public TreeGraph(VertexId vertexId) =>
-            graph = new UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(new[] { vertexId });
+        public TreeGraph(TVertexId vertexId) =>
+            graph = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(new[] { vertexId });
 
-        public Vertex<VertexId> this[VertexId vertexId] => graph[vertexId];
+        public Vertex<TVertexId> this[TVertexId vertexId] => graph[vertexId];
 
-        public Edge<VertexId> this[VertexId sourceId, VertexId destinationId] =>
+        public Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId] =>
             graph[sourceId, destinationId];
 
-        public Edge<VertexId> this[Vertex<VertexId> source, Vertex<VertexId> destination] =>
+        public Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
-        public IEnumerable<Edge<VertexId>> GetAdjacentEdges(Vertex<VertexId> vertex) =>
+        public IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex) =>
             graph.GetAdjacentEdges(vertex);
 
-        public IEnumerable<Vertex<VertexId>> GetNeighbours(Vertex<VertexId> vertex) =>
+        public IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex) =>
             graph.GetNeighbours(vertex);
 
-        public int GetOutputDegree(Vertex<VertexId> vertex) => graph.GetOutputDegree(vertex);
+        public int GetOutputDegree(Vertex<TVertexId> vertex) => graph.GetOutputDegree(vertex);
 
-        public int GetInputDegree(Vertex<VertexId> vertex) => graph.GetInputDegree(vertex);
+        public int GetInputDegree(Vertex<TVertexId> vertex) => graph.GetInputDegree(vertex);
 
         /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
         /// <param name="vertexId">Vertex identifier</param>
@@ -45,12 +45,12 @@ namespace Algolib.Graphs
         /// <param name="vertexProperty">Vertex property</param>
         /// <param name="edgeProperty">Edge property</param>
         /// <returns>Edge between the vertices</returns>
-        public Edge<VertexId> AddVertex(VertexId vertexId,
-                                        Vertex<VertexId> neighbour,
-                                        VertexProperty vertexProperty = default,
-                                        EdgeProperty edgeProperty = default)
+        public Edge<TVertexId> AddVertex(TVertexId vertexId,
+                                        Vertex<TVertexId> neighbour,
+                                        TVertexProperty vertexProperty = default,
+                                        TEdgeProperty edgeProperty = default)
         {
-            Vertex<VertexId> vertex = graph.AddVertex(vertexId, vertexProperty);
+            Vertex<TVertexId> vertex = graph.AddVertex(vertexId, vertexProperty);
             return vertex != null ? graph.AddEdgeBetween(vertex, neighbour, edgeProperty) : null;
         }
     }

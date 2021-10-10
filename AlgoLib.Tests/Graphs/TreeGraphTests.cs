@@ -1,6 +1,6 @@
 ﻿// Tests: Structure of tree testObject
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -58,42 +58,9 @@ namespace Algolib.Graphs
             // when
             IEnumerable<Vertex<int>> result = testObject.Vertices;
             // then
-            result.Should().BeEquivalentTo(Enumerable.Range(0, 8));
-        }
-
-        [Test]
-        public void AddVertex_WhenNewVertex_ThenCreatedEdge()
-        {
-            // given
-            int newVertexId = 13;
-            Vertex<int> neighbour = testObject[5];
-            string vertexProperty = "qwerty";
-            string edgeProperty = "asdfgh";
-            // when
-            Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
-            // then
-            result.Source.Should().Be(newVertexId);
-            result.Destination.Should().Be(neighbour);
-            testObject.VerticesCount.Should().Be(9);
-            testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
-            testObject.Properties[testObject[newVertexId]].Should().Be(vertexProperty);
-            testObject.Properties[result].Should().Be(edgeProperty);
-        }
-
-        [Test]
-        public void AddVertex_WhenExistingVertex_ThenNull()
-        {
-            // given
-            Vertex<int> vertex = testObject[6];
-            string property = "qwerty";
-
-            testObject.Properties[vertex] = property;
-            // when
-            Edge<int> result = testObject.AddVertex(vertex.Id, testObject[2], "abcdefg", "xyz");
-            // then
-            result.Should().BeNull();
-            testObject.VerticesCount.Should().Be(8);
-            testObject.Properties[vertex].Should().Be(property);
+            result.Should().BeEquivalentTo(
+                new[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
+                        new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7) });
         }
 
         [Test]
@@ -118,6 +85,17 @@ namespace Algolib.Graphs
                                                    new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
                                                    new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
                                                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(2)) });
+        }
+
+        [Test]
+        public void IndexerGetVertex_WhenExists_ThenVertex()
+        {
+            // given
+            int vertexId = 4;
+            // when
+            Vertex<int> result = testObject[vertexId];
+            // then
+            result.Id.Should().Be(vertexId);
         }
 
         [Test]
@@ -170,6 +148,41 @@ namespace Algolib.Graphs
             long result = testObject.GetInputDegree(testObject[1]);
             // then
             result.Should().Be(3);
+        }
+
+        [Test]
+        public void AddVertex_WhenNewVertex_ThenCreatedEdge()
+        {
+            // given
+            int newVertexId = 13;
+            Vertex<int> neighbour = testObject[5];
+            string vertexProperty = "qwerty";
+            string edgeProperty = "asdfgh";
+            // when
+            Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
+            // then
+            result.Source.Id.Should().Be(newVertexId);
+            result.Destination.Should().Be(neighbour);
+            testObject.VerticesCount.Should().Be(9);
+            testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
+            testObject.Properties[testObject[newVertexId]].Should().Be(vertexProperty);
+            testObject.Properties[result].Should().Be(edgeProperty);
+        }
+
+        [Test]
+        public void AddVertex_WhenExistingVertex_ThenArgumentException()
+        {
+            // given
+            Vertex<int> vertex = testObject[6];
+            string property = "qwerty";
+
+            testObject.Properties[vertex] = property;
+            // when
+            Action action = () => testObject.AddVertex(vertex.Id, testObject[2], "abcdefg", "xyz");
+            // then
+            action.Should().Throw<ArgumentException>();
+            testObject.VerticesCount.Should().Be(8);
+            testObject.Properties[vertex].Should().Be(property);
         }
     }
 }

@@ -1,61 +1,68 @@
 ﻿// Structures of undirected graphs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IUndirectedGraph<VertexId, VertexProperty, EdgeProperty> :
-        IGraph<VertexId, VertexProperty, EdgeProperty>
+    public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
     }
 
-    public class UndirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> :
-        SimpleGraph<VertexId, VertexProperty, EdgeProperty>,
-        IUndirectedGraph<VertexId, VertexProperty, EdgeProperty>
+    public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
+        IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         public override int EdgesCount => representation.Edges.Distinct().Count();
 
-        public override IEnumerable<Edge<VertexId>> Edges => representation.Edges.Distinct();
+        public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges.Distinct();
 
         public UndirectedSimpleGraph() : base()
         {
         }
 
-        public UndirectedSimpleGraph(IEnumerable<VertexId> vertexIds) : base(vertexIds)
+        public UndirectedSimpleGraph(IEnumerable<TVertexId> vertexIds) : base(vertexIds)
         {
         }
 
-        public override int GetOutputDegree(Vertex<VertexId> vertex) => representation.getAdjacentEdges(vertex).Count;
+        public override int GetOutputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
 
-        public override int GetInputDegree(Vertex<VertexId> vertex) => representation.getAdjacentEdges(vertex).Count;
+        public override int GetInputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
 
-        public override Edge<VertexId> AddEdge(Edge<VertexId> edge, EdgeProperty property = default)
+        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
         {
-            Edge<VertexId> existingEdge = this[edge.Source, edge.Destination];
+            try
+            {
+                Edge<TVertexId> existingEdge = this[edge.Source, edge.Destination];
 
-            if(existingEdge != null)
-                return existingEdge;
-
-            representation.addEdgeToSource(edge);
-            representation.addEdgeToDestination(edge);
-            representation.setProperty(edge, property);
-            return edge;
+                throw new ArgumentException($"Edge {existingEdge} already exists in the graph");
+            }
+            catch(KeyNotFoundException)
+            {
+                representation.addEdgeToSource(edge);
+                representation.addEdgeToDestination(edge);
+                representation.setProperty(edge, property);
+                return edge;
+            }
         }
 
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
         /// <returns>directed graph</returns>
-        public DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> AsDirected()
+        public DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected()
         {
-            DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty> directedSimpleGraph =
-                new DirectedSimpleGraph<VertexId, VertexProperty, EdgeProperty>(Vertices.Select(v => v.Id));
+            DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> directedSimpleGraph =
+                new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
 
-            foreach(Vertex<VertexId> vertex in Vertices)
+            foreach(Vertex<TVertexId> vertex in Vertices)
                 directedSimpleGraph.Properties[vertex] = Properties[vertex];
 
-            foreach(Edge<VertexId> edge in Edges)
+            foreach(Edge<TVertexId> edge in Edges)
             {
                 directedSimpleGraph.AddEdge(edge, Properties[edge]);
-                directedSimpleGraph.AddEdge(edge.Reversed(), Properties[edge]);
+
+                if(edge.Source != edge.Destination)
+                    directedSimpleGraph.AddEdge(edge.Reversed(), Properties[edge]);
             }
 
             return directedSimpleGraph;
