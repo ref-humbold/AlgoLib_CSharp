@@ -1,8 +1,13 @@
 # [ CSharp ]
 # CSharp output
 bin/
-doc/
 obj/
+
+# Test output
+TestResults/
+
+# Doxygen output
+doc/
 
 # Visual Studio
 .vs
