@@ -88,31 +88,31 @@ namespace Algolib.Graphs
         }
     }
 
-    public class Vertex<VertexId>
+    public class Vertex<TVertexId>
     {
-        public readonly VertexId Id;
+        public readonly TVertexId Id;
 
-        internal Vertex(VertexId id) => Id = id;
+        public Vertex(TVertexId id) => Id = id;
 
-        public override bool Equals(object obj) => obj is Vertex<VertexId> vertex && Id.Equals(vertex.Id);
+        public override bool Equals(object obj) => obj is Vertex<TVertexId> vertex && Id.Equals(vertex.Id);
 
         public override int GetHashCode() => Id.GetHashCode();
 
         public override string ToString() => $"Vertex({Id})";
     }
 
-    public class Edge<VertexId>
+    public class Edge<TVertexId>
     {
-        public readonly Vertex<VertexId> Source;
-        public readonly Vertex<VertexId> Destination;
+        public readonly Vertex<TVertexId> Source;
+        public readonly Vertex<TVertexId> Destination;
 
-        internal Edge(Vertex<VertexId> source, Vertex<VertexId> destination)
+        public Edge(Vertex<TVertexId> source, Vertex<TVertexId> destination)
         {
             Source = source;
             Destination = destination;
         }
 
-        public Vertex<VertexId> GetNeighbour(Vertex<VertexId> vertex)
+        public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
             if(Source.Equals(vertex))
                 return Destination;
@@ -123,16 +123,16 @@ namespace Algolib.Graphs
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
         }
 
-        public Edge<VertexId> Reversed() => new Edge<VertexId>(Destination, Source);
+        public Edge<TVertexId> Reversed() => new Edge<TVertexId>(Destination, Source);
 
         public override bool Equals(object obj) =>
-            obj is Edge<VertexId> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
+            obj is Edge<TVertexId> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
 
         public override int GetHashCode() => HashCode.Combine(Source, Destination);
 
         public override string ToString() => $"Edge{{{Source} -- {Destination}}}";
 
-        public void Deconstruct(out Vertex<VertexId> source, out Vertex<VertexId> destination)
+        public void Deconstruct(out Vertex<TVertexId> source, out Vertex<TVertexId> destination)
         {
             source = Source;
             destination = Destination;
