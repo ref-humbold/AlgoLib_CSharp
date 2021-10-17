@@ -44,10 +44,10 @@ namespace Algolib.Structures
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Adds a new value to this double heap.</summary>
-        /// <param name="element">Value to add</param>
-        public void Push(T element)
+        /// <param name="item">Value to add</param>
+        public void Push(T item)
         {
-            heap.Add(element);
+            heap.Add(item);
 
             if(heap.Count > 1)
             {

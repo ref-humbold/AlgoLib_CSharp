@@ -43,10 +43,10 @@ namespace Algolib.Structures
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
         /// <summary>Adds a new element to this heap.</summary>
-        /// <param name="element">Element to add</param>
-        public void Push(T element)
+        /// <param name="item">Element to add</param>
+        public void Push(T item)
         {
-            heap.Add(element);
+            heap.Add(item);
 
             int index = heap.Count - 1;
 

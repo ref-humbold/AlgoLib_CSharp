@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace Algolib.Structures
 {
-    public class AVLTree<E> : ISet<E>, IReadOnlyCollection<E>
+    public class AVLTree<T> : ISet<T>, IReadOnlyCollection<T>
     {
-        private readonly IComparer<E> comparer;
-        private readonly AVLHeaderNode<E> tree = new AVLHeaderNode<E>();
+        private readonly IComparer<T> comparer;
+        private readonly AVLHeaderNode<T> tree = new AVLHeaderNode<T>();
 
         public int Count
         {
@@ -17,24 +17,24 @@ namespace Algolib.Structures
 
         public bool IsReadOnly => false;
 
-        private AVLInnerNode<E> Root
+        private AVLInnerNode<T> Root
         {
             get => tree.Parent;
             set => tree.Parent = value;
         }
 
-        public AVLTree(IComparer<E> comparer = null) => this.comparer = comparer ?? Comparer<E>.Default;
+        public AVLTree(IComparer<T> comparer = null) => this.comparer = comparer ?? Comparer<T>.Default;
 
-        public AVLTree(IEnumerable<E> enumerable, IComparer<E> comparer = null) : this(comparer)
+        public AVLTree(IEnumerable<T> enumerable, IComparer<T> comparer = null) : this(comparer)
         {
-            foreach(E e in enumerable)
-                _ = Add(e);
+            foreach(T item in enumerable)
+                _ = Add(item);
         }
 
         public override string ToString()
         {
             string repr = "{|";
-            IEnumerator<E> enumerator = GetEnumerator();
+            IEnumerator<T> enumerator = GetEnumerator();
             bool hasNext = enumerator.MoveNext();
 
             while(hasNext)
@@ -49,25 +49,25 @@ namespace Algolib.Structures
             return repr + "|}";
         }
 
-        public bool Add(E item)
+        public bool Add(T item)
         {
-            AVLInnerNode<E> node_parent =
+            AVLInnerNode<T> node_parent =
                 findNode(item, (n, e) => search(n, e) == null
                                          || comparer.Compare(search(n, e).Element, e) == 0);
 
             if(node_parent == null)
             {
-                Root = new AVLInnerNode<E>(item);
+                Root = new AVLInnerNode<T>(item);
                 ++Count;
                 return true;
             }
 
-            AVLInnerNode<E> theNode = search(node_parent, item);
+            AVLInnerNode<T> theNode = search(node_parent, item);
 
             if(theNode != null)
                 return false;
 
-            AVLInnerNode<E> newNode = new AVLInnerNode<E>(item);
+            AVLInnerNode<T> newNode = new AVLInnerNode<T>(item);
 
             if(comparer.Compare(item, node_parent.Element) < 0)
                 node_parent.Left = newNode;
@@ -85,39 +85,39 @@ namespace Algolib.Structures
             Count = 0;
         }
 
-        public bool Contains(E item) =>
+        public bool Contains(T item) =>
             Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) != null;
 
-        public void CopyTo(E[] array, int arrayIndex) => throw new NotImplementedException();
+        public void CopyTo(T[] array, int arrayIndex) => throw new NotImplementedException();
 
-        public void ExceptWith(IEnumerable<E> other)
+        public void ExceptWith(IEnumerable<T> other)
         {
-            foreach(E e in other)
+            foreach(T e in other)
                 _ = Remove(e);
         }
 
-        public IEnumerator<E> GetEnumerator() => new AVLEnumerator(this);
+        public IEnumerator<T> GetEnumerator() => new AVLEnumerator(this);
 
-        public void IntersectWith(IEnumerable<E> other)
+        public void IntersectWith(IEnumerable<T> other)
         {
-            HashSet<E> otherSet = other.ToHashSet();
+            HashSet<T> otherSet = other.ToHashSet();
 
             ExceptWith(this.Where(e => !otherSet.Contains(e)).ToList());
         }
 
-        public bool IsProperSubsetOf(IEnumerable<E> other) => IsSubsetOf(other) && !IsSupersetOf(other);
+        public bool IsProperSubsetOf(IEnumerable<T> other) => IsSubsetOf(other) && !IsSupersetOf(other);
 
-        public bool IsProperSupersetOf(IEnumerable<E> other) => IsSupersetOf(other) && !IsSubsetOf(other);
+        public bool IsProperSupersetOf(IEnumerable<T> other) => IsSupersetOf(other) && !IsSubsetOf(other);
 
-        public bool IsSubsetOf(IEnumerable<E> other) => this.All(e => other.Contains(e));
+        public bool IsSubsetOf(IEnumerable<T> other) => this.All(e => other.Contains(e));
 
-        public bool IsSupersetOf(IEnumerable<E> other) => other.All(e => Contains(e));
+        public bool IsSupersetOf(IEnumerable<T> other) => other.All(e => Contains(e));
 
-        public bool Overlaps(IEnumerable<E> other) => other.Any(e => Contains(e));
+        public bool Overlaps(IEnumerable<T> other) => other.Any(e => Contains(e));
 
-        public bool Remove(E item)
+        public bool Remove(T item)
         {
-            AVLInnerNode<E> node = findNode(item, (n, elem) => Equals(n.Element, elem));
+            AVLInnerNode<T> node = findNode(item, (n, elem) => Equals(n.Element, elem));
 
             if(node == null)
                 return false;
@@ -126,49 +126,45 @@ namespace Algolib.Structures
             return true;
         }
 
-        public bool SetEquals(IEnumerable<E> other) => IsSubsetOf(other) && IsSupersetOf(other);
+        public bool SetEquals(IEnumerable<T> other) => IsSubsetOf(other) && IsSupersetOf(other);
 
-        public void SymmetricExceptWith(IEnumerable<E> other)
+        public void SymmetricExceptWith(IEnumerable<T> other)
         {
-            foreach(E e in other)
+            foreach(T e in other)
                 _ = Contains(e) ? Remove(e) : Add(e);
         }
 
-        public void UnionWith(IEnumerable<E> other)
+        public void UnionWith(IEnumerable<T> other)
         {
-            foreach(E e in other)
+            foreach(T e in other)
                 _ = Add(e);
         }
 
-        void ICollection<E>.Add(E item) => Add(item);
+        void ICollection<T>.Add(T item) => Add(item);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private bool isLeftChild(AVLInnerNode<E> node) =>
+        private bool isLeftChild(AVLInnerNode<T> node) =>
             node.Parent.Height > 0 && node.Parent.Left == node;
 
-        private bool isRightChild(AVLInnerNode<E> node) =>
+        private bool isRightChild(AVLInnerNode<T> node) =>
             node.Parent.Height > 0 && node.Parent.Right == node;
 
         // Determines the subtree where given value might be present:
         // - node if element is in it
         // - left child if element is less than node's element
         // - right child if element is greater than node's element
-        private AVLInnerNode<E> search(AVLInnerNode<E> node, E element)
+        private AVLInnerNode<T> search(AVLInnerNode<T> node, T element)
         {
-            if(comparer.Compare(element, node.Element) < 0)
-                return node.Left;
+            int comparison = comparer.Compare(element, node.Element);
 
-            if(comparer.Compare(element, node.Element) > 0)
-                return node.Right;
-
-            return node;
+            return comparison < 0 ? node.Left : comparison > 0 ? node.Right : node;
         }
 
         // Searches for node that satisfies given predicate with given value.
-        private AVLInnerNode<E> findNode(E element, Func<AVLInnerNode<E>, E, bool> predicate)
+        private AVLInnerNode<T> findNode(T element, Func<AVLInnerNode<T>, T, bool> predicate)
         {
-            AVLInnerNode<E> node = Root;
+            AVLInnerNode<T> node = Root;
 
             while(node != null && !predicate(node, element))
                 node = search(node, element);
@@ -177,12 +173,12 @@ namespace Algolib.Structures
         }
 
         // Removes inner node from the tree.
-        private void deleteNode(AVLInnerNode<E> node)
+        private void deleteNode(AVLInnerNode<T> node)
         {
             if(node.Left != null && node.Right != null)
             {
-                AVLInnerNode<E> succ = node.Right.Minimum;
-                E temp = succ.Element;
+                AVLInnerNode<T> succ = node.Right.Minimum;
+                T temp = succ.Element;
 
                 succ.Element = node.Element;
                 node.Element = temp;
@@ -190,11 +186,11 @@ namespace Algolib.Structures
             }
             else
             {
-                AVLInnerNode<E> child = node.Left ?? node.Right;
+                AVLInnerNode<T> child = node.Left ?? node.Right;
 
                 if(node.Parent.Height > 0)
                 {
-                    IAVLNode<E> nodeParent = node.Parent;
+                    IAVLNode<T> nodeParent = node.Parent;
 
                     replaceNode(node, child);
                     balance(nodeParent);
@@ -209,7 +205,7 @@ namespace Algolib.Structures
         }
 
         // Replaces the subtree rooted in one node with subtree of another node.
-        private void replaceNode(AVLInnerNode<E> node1, AVLInnerNode<E> node2)
+        private void replaceNode(AVLInnerNode<T> node1, AVLInnerNode<T> node2)
         {
             if(isLeftChild(node1))
                 node1.Parent.Left = node2;
@@ -222,11 +218,11 @@ namespace Algolib.Structures
         }
 
         // Rotates the node along the edge to its parent.
-        private void rotate(AVLInnerNode<E> node)
+        private void rotate(AVLInnerNode<T> node)
         {
             if(isRightChild(node))
             {
-                AVLInnerNode<E> upperNode = node.Parent as AVLInnerNode<E>;
+                AVLInnerNode<T> upperNode = node.Parent as AVLInnerNode<T>;
 
                 upperNode.Right = node.Left;
                 replaceNode(upperNode, node);
@@ -234,7 +230,7 @@ namespace Algolib.Structures
             }
             else if(isLeftChild(node))
             {
-                AVLInnerNode<E> upperNode = node.Parent as AVLInnerNode<E>;
+                AVLInnerNode<T> upperNode = node.Parent as AVLInnerNode<T>;
 
                 upperNode.Left = node.Right;
                 replaceNode(upperNode, node);
@@ -243,11 +239,11 @@ namespace Algolib.Structures
         }
 
         // Restores balancing on a path from given node to the root.
-        private void balance(IAVLNode<E> node)
+        private void balance(IAVLNode<T> node)
         {
             while(node.Height > 0)
             {
-                AVLInnerNode<E> theNode = node as AVLInnerNode<E>;
+                AVLInnerNode<T> theNode = node as AVLInnerNode<T>;
                 int newBalance = countBalance(theNode);
 
                 if(newBalance >= 2)
@@ -276,7 +272,7 @@ namespace Algolib.Structures
         }
 
         // Counts current node balance.
-        private int countBalance(AVLInnerNode<E> node)
+        private int countBalance(AVLInnerNode<T> node)
         {
             int leftHeight = node.Left?.Height ?? 0;
             int rightHeight = node.Right?.Height ?? 0;
@@ -284,79 +280,79 @@ namespace Algolib.Structures
             return leftHeight - rightHeight;
         }
 
-        private interface IAVLNode<T>
+        private interface IAVLNode<TItem>
         {
             int Height
             {
                 get;
             }
 
-            IAVLNode<T> Left
+            IAVLNode<TItem> Left
             {
                 get; set;
             }
 
-            IAVLNode<T> Right
+            IAVLNode<TItem> Right
             {
                 get; set;
             }
 
-            IAVLNode<T> Parent
+            IAVLNode<TItem> Parent
             {
                 get; set;
             }
 
             // Searches in its subtree for the node with minimal value.
-            IAVLNode<T> Minimum
+            IAVLNode<TItem> Minimum
             {
                 get;
             }
 
             // Searches in its subtree for the node with maximal value.
-            IAVLNode<T> Maximum
+            IAVLNode<TItem> Maximum
             {
                 get;
             }
         }
 
-        private class AVLInnerNode<T> : IAVLNode<T>
+        private class AVLInnerNode<TItem> : IAVLNode<TItem>
         {
-            private AVLInnerNode<T> left;
-            private AVLInnerNode<T> right;
+            private AVLInnerNode<TItem> left;
+            private AVLInnerNode<TItem> right;
 
             public int Height
             {
                 get; private set;
             }
 
-            IAVLNode<T> IAVLNode<T>.Left
+            IAVLNode<TItem> IAVLNode<TItem>.Left
             {
                 get => Left;
-                set => Left = value as AVLInnerNode<T>;
+                set => Left = value as AVLInnerNode<TItem>;
             }
 
-            IAVLNode<T> IAVLNode<T>.Right
+            IAVLNode<TItem> IAVLNode<TItem>.Right
             {
                 get => Right;
-                set => Right = value as AVLInnerNode<T>;
+                set => Right = value as AVLInnerNode<TItem>;
             }
 
-            public IAVLNode<T> Parent
+            public IAVLNode<TItem> Parent
             {
                 get; set;
             }
 
-            IAVLNode<T> IAVLNode<T>.Minimum => Minimum;
+            IAVLNode<TItem> IAVLNode<TItem>.Minimum => Minimum;
 
-            IAVLNode<T> IAVLNode<T>.Maximum => Maximum;
+            IAVLNode<TItem> IAVLNode<TItem>.Maximum => Maximum;
 
             // Value in the node.
-            public T Element
+            public TItem Element
             {
                 get; set;
             }
 
-            public AVLInnerNode<T> Left
+            public AVLInnerNode<TItem> Left
             {
                 get => left;
 
@@ -371,7 +367,7 @@ namespace Algolib.Structures
                 }
             }
 
-            public AVLInnerNode<T> Right
+            public AVLInnerNode<TItem> Right
             {
                 get => right;
 
@@ -386,11 +382,11 @@ namespace Algolib.Structures
                 }
             }
 
-            public AVLInnerNode<T> Minimum => Left == null ? this : Left.Minimum;
+            public AVLInnerNode<TItem> Minimum => Left == null ? this : Left.Minimum;
 
-            public AVLInnerNode<T> Maximum => Right == null ? this : Right.Maximum;
+            public AVLInnerNode<TItem> Maximum => Right == null ? this : Right.Maximum;
 
-            public AVLInnerNode(T element)
+            public AVLInnerNode(TItem element)
             {
                 left = null;
                 right = null;
@@ -408,19 +404,19 @@ namespace Algolib.Structures
             }
         }
 
-        private class AVLHeaderNode<T> : IAVLNode<T>
+        private class AVLHeaderNode<TItem> : IAVLNode<TItem>
         {
-            private AVLInnerNode<T> inner;
+            private AVLInnerNode<TItem> inner;
 
             public int Height => 0;
 
-            IAVLNode<T> IAVLNode<T>.Parent
+            IAVLNode<TItem> IAVLNode<TItem>.Parent
             {
                 get => Parent;
-                set => Parent = value as AVLInnerNode<T>;
+                set => Parent = value as AVLInnerNode<TItem>;
             }
 
-            public IAVLNode<T> Left
+            public IAVLNode<TItem> Left
             {
                 get => null;
                 set
@@ -428,7 +424,7 @@ namespace Algolib.Structures
                 }
             }
 
-            public IAVLNode<T> Right
+            public IAVLNode<TItem> Right
             {
                 get => null;
                 set
@@ -436,7 +432,7 @@ namespace Algolib.Structures
                 }
             }
 
-            public AVLInnerNode<T> Parent
+            public AVLInnerNode<TItem> Parent
             {
                 get => inner;
 
@@ -449,24 +445,24 @@ namespace Algolib.Structures
                 }
             }
 
-            public IAVLNode<T> Minimum => Parent == null ? (IAVLNode<T>)this : Parent.Minimum;
+            public IAVLNode<TItem> Minimum => Parent == null ? (IAVLNode<TItem>)this : Parent.Minimum;
 
-            public IAVLNode<T> Maximum => Parent == null ? (IAVLNode<T>)this : Parent.Maximum;
+            public IAVLNode<TItem> Maximum => Parent == null ? (IAVLNode<TItem>)this : Parent.Maximum;
 
             public AVLHeaderNode() => Parent = null;
         }
 
-        private class AVLEnumerator : IEnumerator<E>
+        private class AVLEnumerator : IEnumerator<T>
         {
-            private readonly AVLTree<E> tree;
-            private IAVLNode<E> currentNode;
+            private readonly AVLTree<T> tree;
+            private IAVLNode<T> currentNode;
 
-            public E Current =>
-                currentNode is AVLInnerNode<E> node ? node.Element : throw new InvalidOperationException();
+            public T Current =>
+                currentNode is AVLInnerNode<T> node ? node.Element : throw new InvalidOperationException();
 
             object IEnumerator.Current => Current;
 
-            public AVLEnumerator(AVLTree<E> tree)
+            public AVLEnumerator(AVLTree<T> tree)
             {
                 this.tree = tree;
                 Reset();
