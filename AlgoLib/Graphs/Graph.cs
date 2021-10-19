@@ -4,8 +4,13 @@ using System.Collections.Generic;
 
 namespace Algolib.Graphs
 {
-    public interface IGraph<V, VP, EP>
+    public interface IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
+        IGraphProperties Properties
+        {
+            get;
+        }
+
         /// <summary>Number of vertices.</summary>
         int VerticesCount
         {
@@ -19,65 +24,95 @@ namespace Algolib.Graphs
         }
 
         /// <summary>Enumerable of all vertices.</summary>
-        IEnumerable<V> Vertices
+        IEnumerable<Vertex<TVertexId>> Vertices
         {
             get;
         }
 
         /// <summary>Enumerable of all edges.</summary>
-        IEnumerable<Edge<V>> Edges
+        IEnumerable<Edge<TVertexId>> Edges
         {
             get;
         }
 
-        /// <summary>Property of a vertex from this graph.</summary>
-        VP this[V vertex]
+        /// <summary>Vertex with given identifier.</summary>
+        /// <exception cref="KeyNotFoundException">If no such vertex in this graph</exception>
+        Vertex<TVertexId> this[TVertexId vertexId]
         {
             get;
-            set;
         }
 
-        /// <summary>Property of an edge from this graph.</summary>
-        EP this[Edge<V> edge]
+        /// <summary>Edge between given vertices.</summary>
+        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId]
         {
             get;
-            set;
         }
 
-        /// <param name="source">source vertex</param>
-        /// <param name="destination">destination vertex</param>
-        /// <returns>the edge between the vertices, or <c>null</c> if no edge</returns>
-        Edge<V> GetEdge(V source, V destination);
+        /// <summary>Edge between given vertices.</summary>
+        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
+            this[source.Id, destination.Id];
 
-        /// <param name="vertex">a vertex from this graph</param>
-        /// <returns>enumerable of neighbouring vertices</returns>
-        IEnumerable<V> GetNeighbours(V vertex);
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <returns>Enumerable of neighbouring vertices</returns>
+        IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">a vertex from this graph</param>
-        /// <returns>enumerable of edges adjacent to the vertex</returns>
-        IEnumerable<Edge<V>> GetAdjacentEdges(V vertex);
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <returns>Enumerable of edges adjacent to the vertex</returns>
+        IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">a vertex from this graph</param>
-        /// <returns>the output degree of the vertex</returns>
-        int GetOutputDegree(V vertex);
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <returns>Output degree of the vertex</returns>
+        int GetOutputDegree(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">a vertex from this graph</param>
-        /// <returns>the input degree of the vertex</returns>
-        int GetInputDegree(V vertex);
+        /// <param name="vertex">Vertex from this graph</param>
+        /// <returns>Input degree of the vertex</returns>
+        int GetInputDegree(Vertex<TVertexId> vertex);
+
+        public interface IGraphProperties
+        {
+            /// <summary>Property of a vertex from this graph.</summary>
+            TVertexProperty this[Vertex<TVertexId> vertex]
+            {
+                get;
+                set;
+            }
+
+            /// <summary>Property of an edge from this graph.</summary>
+            TEdgeProperty this[Edge<TVertexId> edge]
+            {
+                get;
+                set;
+            }
+        }
     }
 
-    public class Edge<V>
+    public class Vertex<TVertexId>
     {
-        public readonly V Source;
-        public readonly V Destination;
+        public readonly TVertexId Id;
 
-        internal Edge(V source, V destination)
+        public Vertex(TVertexId id) => Id = id;
+
+        public override bool Equals(object obj) => obj is Vertex<TVertexId> vertex && Id.Equals(vertex.Id);
+
+        public override int GetHashCode() => Id.GetHashCode();
+
+        public override string ToString() => $"Vertex({Id})";
+    }
+
+    public class Edge<TVertexId>
+    {
+        public readonly Vertex<TVertexId> Source;
+        public readonly Vertex<TVertexId> Destination;
+
+        public Edge(Vertex<TVertexId> source, Vertex<TVertexId> destination)
         {
             Source = source;
             Destination = destination;
         }
 
-        public V GetNeighbour(V vertex)
+        public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
             if(Source.Equals(vertex))
                 return Destination;
@@ -88,16 +123,16 @@ namespace Algolib.Graphs
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
         }
 
-        public Edge<V> Reversed() => new Edge<V>(Destination, Source);
+        public Edge<TVertexId> Reversed() => new Edge<TVertexId>(Destination, Source);
 
         public override bool Equals(object obj) =>
-            obj is Edge<V> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
+            obj is Edge<TVertexId> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
 
-        public override int GetHashCode() => (Source, Destination).GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(Source, Destination);
 
         public override string ToString() => $"Edge{{{Source} -- {Destination}}}";
 
-        public void Deconstruct(out V source, out V destination)
+        public void Deconstruct(out Vertex<TVertexId> source, out Vertex<TVertexId> destination)
         {
             source = Source;
             destination = Destination;

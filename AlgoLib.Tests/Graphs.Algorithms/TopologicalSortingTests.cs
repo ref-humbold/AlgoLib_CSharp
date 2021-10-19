@@ -17,7 +17,7 @@ namespace Algolib.Graphs.Algorithms
             IDirectedGraph<int, object, object> graph =
                 new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
             // when
-            IEnumerable<int> result = TopologicalSorting.SortUsingInputs(graph);
+            IEnumerable<Vertex<int>> result = graph.SortUsingInputs();
             // then
             result.Should().Equal(graph.Vertices);
         }
@@ -32,7 +32,7 @@ namespace Algolib.Graphs.Algorithms
             IDirectedGraph<int, object, object> graph =
                 new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
             // when
-            IEnumerable<int> result = TopologicalSorting.SortUsingDfs(graph);
+            IEnumerable<Vertex<int>> result = graph.SortUsingDfs();
             // then
             result.Should().Equal(graph.Vertices);
         }

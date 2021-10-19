@@ -1,6 +1,6 @@
-﻿// Tests: Structure of tree graph
+﻿// Tests: Structure of tree testObject
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -15,29 +15,29 @@ namespace Algolib.Graphs
         public void SetUp()
         {
             testObject = new TreeGraph<int, string, string>(0);
-            testObject.AddVertex(1, 0);
-            testObject.AddVertex(2, 0);
-            testObject.AddVertex(3, 0);
-            testObject.AddVertex(4, 1);
-            testObject.AddVertex(5, 1);
-            testObject.AddVertex(6, 2);
-            testObject.AddVertex(7, 2);
+            testObject.AddVertex(1, testObject[0]);
+            testObject.AddVertex(2, testObject[0]);
+            testObject.AddVertex(3, testObject[0]);
+            testObject.AddVertex(4, testObject[1]);
+            testObject.AddVertex(5, testObject[1]);
+            testObject.AddVertex(6, testObject[2]);
+            testObject.AddVertex(7, testObject[2]);
         }
 
         [Test]
-        public void IndexerGetSet_WhenSettingProperty_ThenProperty()
+        public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
         {
             // given
             string vertexProperty = "x";
             string edgeProperty = "y";
-            int vertex = 2;
-            Edge<int> edge = testObject.GetEdge(6, 2);
+            Vertex<int> vertex = testObject[2];
+            Edge<int> edge = testObject[6, 2];
             // when
-            testObject[vertex] = vertexProperty;
-            testObject[edge] = edgeProperty;
+            testObject.Properties[vertex] = vertexProperty;
+            testObject.Properties[edge] = edgeProperty;
 
-            string resultVertex = testObject[vertex];
-            string resultEdge = testObject[edge];
+            string resultVertex = testObject.Properties[vertex];
+            string resultEdge = testObject.Properties[edge];
             // then
             resultVertex.Should().Be(vertexProperty);
             resultEdge.Should().Be(edgeProperty);
@@ -56,44 +56,11 @@ namespace Algolib.Graphs
         public void Vertices_ThenAllVertices()
         {
             // when
-            IEnumerable<int> result = testObject.Vertices;
+            IEnumerable<Vertex<int>> result = testObject.Vertices;
             // then
-            result.Should().BeEquivalentTo(Enumerable.Range(0, 8));
-        }
-
-        [Test]
-        public void AddVertex_WhenNewVertex_ThenCreatedEdge()
-        {
-            // given
-            int newVertex = 13;
-            int neighbour = 5;
-            string vertexProperty = "qwerty";
-            string edgeProperty = "asdfgh";
-            // when
-            Edge<int> result = testObject.AddVertex(newVertex, neighbour, vertexProperty, edgeProperty);
-            // then
-            result.Source.Should().Be(newVertex);
-            result.Destination.Should().Be(neighbour);
-            testObject.VerticesCount.Should().Be(9);
-            testObject.GetNeighbours(newVertex).Should().Equal(neighbour);
-            testObject[newVertex].Should().Be(vertexProperty);
-            testObject[result].Should().Be(edgeProperty);
-        }
-
-        [Test]
-        public void AddVertex_WhenExistingVertex_ThenNull()
-        {
-            // given
-            int vertex = 6;
-            string property = "qwerty";
-
-            testObject[vertex] = property;
-            // when
-            Edge<int> result = testObject.AddVertex(vertex, 2, "abcdefg", "xyz");
-            // then
-            result.Should().BeNull();
-            testObject.VerticesCount.Should().Be(8);
-            testObject[vertex].Should().Be(property);
+            result.Should().BeEquivalentTo(
+                new[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
+                        new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7) });
         }
 
         [Test]
@@ -111,20 +78,34 @@ namespace Algolib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
-            result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(1, 0), new Edge<int>(2, 0), new Edge<int>(3, 0),
-                                        new Edge<int>(4, 1), new Edge<int>(5, 1), new Edge<int>(6, 2),
-                                        new Edge<int>(7, 2) });
+            result.Should().BeEquivalentTo(new[] { new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                                                   new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
+                                                   new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
+                                                   new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                                                   new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
+                                                   new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
+                                                   new Edge<int>(new Vertex<int>(7), new Vertex<int>(2)) });
         }
 
         [Test]
-        public void GetEdge_WhenExists_ThenEdge()
+        public void IndexerGetVertex_WhenExists_ThenVertex()
         {
             // given
-            int source = 5;
-            int destination = 1;
+            int vertexId = 4;
             // when
-            Edge<int> result = testObject.GetEdge(source, destination);
+            Vertex<int> result = testObject[vertexId];
+            // then
+            result.Id.Should().Be(vertexId);
+        }
+
+        [Test]
+        public void IndexerGetEdge_WhenExists_ThenEdge()
+        {
+            // given
+            Vertex<int> source = testObject[5];
+            Vertex<int> destination = testObject[1];
+            // when
+            Edge<int> result = testObject[source, destination];
             // then
             result.Source.Should().Be(source);
             result.Destination.Should().Be(destination);
@@ -134,26 +115,28 @@ namespace Algolib.Graphs
         public void GetNeighbours_ThenDestinationVerticesOfOutgoingEdges()
         {
             // when
-            IEnumerable<int> result = testObject.GetNeighbours(1);
+            IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 0, 4, 5 });
+            result.Should().BeEquivalentTo(new[] { new Vertex<int>(0), new Vertex<int>(4),
+                                                   new Vertex<int>(5) });
         }
 
         [Test]
         public void GetAdjacentEdges_ThenDestinationVerticesOfOutgoingEdges()
         {
             // when
-            IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(1);
+            IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
             // then
-            result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { new Edge<int>(1, 0), new Edge<int>(4, 1), new Edge<int>(5, 1) });
+            result.Should().BeEquivalentTo(new[] { new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                                                   new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                                                   new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)) });
         }
 
         [Test]
         public void GetOutputDegree_ThenNumberOfOutgoingEdges()
         {
             // when
-            long result = testObject.GetOutputDegree(1);
+            long result = testObject.GetOutputDegree(testObject[1]);
             // then
             result.Should().Be(3);
         }
@@ -162,9 +145,44 @@ namespace Algolib.Graphs
         public void GetInputDegree_ThenNumberOfIncomingEdges()
         {
             // when
-            long result = testObject.GetInputDegree(1);
+            long result = testObject.GetInputDegree(testObject[1]);
             // then
             result.Should().Be(3);
+        }
+
+        [Test]
+        public void AddVertex_WhenNewVertex_ThenCreatedEdge()
+        {
+            // given
+            int newVertexId = 13;
+            Vertex<int> neighbour = testObject[5];
+            string vertexProperty = "qwerty";
+            string edgeProperty = "asdfgh";
+            // when
+            Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
+            // then
+            result.Source.Id.Should().Be(newVertexId);
+            result.Destination.Should().Be(neighbour);
+            testObject.VerticesCount.Should().Be(9);
+            testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
+            testObject.Properties[testObject[newVertexId]].Should().Be(vertexProperty);
+            testObject.Properties[result].Should().Be(edgeProperty);
+        }
+
+        [Test]
+        public void AddVertex_WhenExistingVertex_ThenArgumentException()
+        {
+            // given
+            Vertex<int> vertex = testObject[6];
+            string property = "qwerty";
+
+            testObject.Properties[vertex] = property;
+            // when
+            Action action = () => testObject.AddVertex(vertex.Id, testObject[2], "abcdefg", "xyz");
+            // then
+            action.Should().Throw<ArgumentException>();
+            testObject.VerticesCount.Should().Be(8);
+            testObject.Properties[vertex].Should().Be(property);
         }
     }
 }

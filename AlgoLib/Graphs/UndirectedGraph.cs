@@ -1,58 +1,68 @@
 ﻿// Structures of undirected graphs
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algolib.Graphs
 {
-    public interface IUndirectedGraph<V, VP, EP> : IGraph<V, VP, EP>
+    public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
     }
 
-    public class UndirectedSimpleGraph<V, VP, EP> : SimpleGraph<V, VP, EP>, IUndirectedGraph<V, VP, EP>
+    public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
+        SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
+        IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         public override int EdgesCount => representation.Edges.Distinct().Count();
 
-        public override IEnumerable<Edge<V>> Edges => representation.Edges.Distinct();
+        public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges.Distinct();
 
         public UndirectedSimpleGraph() : base()
         {
         }
 
-        public UndirectedSimpleGraph(IEnumerable<V> vertices) : base(vertices)
+        public UndirectedSimpleGraph(IEnumerable<TVertexId> vertexIds) : base(vertexIds)
         {
         }
 
-        public override int GetOutputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
+        public override int GetOutputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
 
-        public override int GetInputDegree(V vertex) => representation.GetAdjacentEdges(vertex).Count;
+        public override int GetInputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
 
-        public override Edge<V> AddEdge(Edge<V> edge, EP property = default)
+        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
         {
-            Edge<V> existingEdge = GetEdge(edge.Source, edge.Destination);
+            try
+            {
+                Edge<TVertexId> existingEdge = this[edge.Source, edge.Destination];
 
-            if(existingEdge != null)
-                return existingEdge;
-
-            representation.AddEdgeToSource(edge);
-            representation.AddEdgeToDestination(edge);
-            representation[edge] = property;
-            return edge;
+                throw new ArgumentException($"Edge {existingEdge} already exists in the graph");
+            }
+            catch(KeyNotFoundException)
+            {
+                representation.addEdgeToSource(edge);
+                representation.addEdgeToDestination(edge);
+                representation.setProperty(edge, property);
+                return edge;
+            }
         }
 
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
         /// <returns>directed graph</returns>
-        public DirectedSimpleGraph<V, VP, EP> AsDirected()
+        public DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected()
         {
-            DirectedSimpleGraph<V, VP, EP> directedSimpleGraph =
-                new DirectedSimpleGraph<V, VP, EP>(Vertices);
+            DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> directedSimpleGraph =
+                new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
 
-            foreach(V vertex in Vertices)
-                directedSimpleGraph[vertex] = this[vertex];
+            foreach(Vertex<TVertexId> vertex in Vertices)
+                directedSimpleGraph.Properties[vertex] = Properties[vertex];
 
-            foreach(Edge<V> edge in Edges)
+            foreach(Edge<TVertexId> edge in Edges)
             {
-                directedSimpleGraph.AddEdge(edge, this[edge]);
-                directedSimpleGraph.AddEdge(edge.Reversed(), this[edge]);
+                directedSimpleGraph.AddEdge(edge, Properties[edge]);
+
+                if(edge.Source != edge.Destination)
+                    directedSimpleGraph.AddEdge(edge.Reversed(), Properties[edge]);
             }
 
             return directedSimpleGraph;
