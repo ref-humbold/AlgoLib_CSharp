@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Algolib.Graphs
+namespace AlgoLib.Graphs
 {
     public interface IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {

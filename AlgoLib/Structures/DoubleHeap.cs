@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Algolib.Structures
+namespace AlgoLib.Structures
 {
     public class DoubleHeap<T> : IEnumerable<T>
     {

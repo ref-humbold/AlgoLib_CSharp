@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Sequences
+namespace AlgoLib.Sequences
 {
     [TestFixture]
     public class SubsequencesTests

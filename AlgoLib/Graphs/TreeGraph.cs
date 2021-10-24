@@ -1,7 +1,7 @@
 ﻿// Structure of tree graph
 using System.Collections.Generic;
 
-namespace Algolib.Graphs
+namespace AlgoLib.Graphs
 {
     public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>

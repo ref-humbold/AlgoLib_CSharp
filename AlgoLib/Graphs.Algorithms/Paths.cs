@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Algolib.Structures;
 
-namespace Algolib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms
 {
     public static class Paths
     {

@@ -1,7 +1,7 @@
 ﻿// Structure of vector in 2D
 using System;
 
-namespace Algolib.Geometry.Dim2
+namespace AlgoLib.Geometry.Dim2
 {
     public struct Vector2D : IGeometryObject, IEquatable<Vector2D>
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Mathmat
+namespace AlgoLib.Mathmat
 {
     public static class Primes
     {

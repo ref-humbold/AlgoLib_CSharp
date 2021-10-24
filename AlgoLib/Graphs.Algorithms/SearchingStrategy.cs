@@ -1,6 +1,6 @@
 ﻿// Strategies for algorithms for graph searching
 
-namespace Algolib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms
 {
     public interface IBfsStrategy<TVertexId>
     {

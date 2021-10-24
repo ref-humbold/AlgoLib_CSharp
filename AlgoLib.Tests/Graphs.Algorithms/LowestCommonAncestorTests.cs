@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms
 {
     [TestFixture]
     public class LowestCommonAncestorTests

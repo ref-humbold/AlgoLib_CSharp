@@ -5,7 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Graphs
+namespace AlgoLib.Graphs
 {
     [TestFixture]
     public class DirectedGraphTests

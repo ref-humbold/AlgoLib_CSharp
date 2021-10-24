@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Mathmat
+namespace AlgoLib.Mathmat
 {
     [TestFixture]
     public class PrimeTests

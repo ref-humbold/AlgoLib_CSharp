@@ -1,4 +1,4 @@
-﻿namespace Algolib.Graphs
+﻿namespace AlgoLib.Graphs
 {
     public interface IWeighted
     {

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Graphs
+namespace AlgoLib.Graphs
 {
     internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
     {

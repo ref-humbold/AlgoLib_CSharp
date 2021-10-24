@@ -3,7 +3,7 @@ using System;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Text
+namespace AlgoLib.Text
 {
     [TestFixture]
     public class BaseWordsDictionaryTests

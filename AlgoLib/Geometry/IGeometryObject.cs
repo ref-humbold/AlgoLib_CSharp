@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algolib.Geometry
+namespace AlgoLib.Geometry
 {
     public interface IGeometryObject
     {

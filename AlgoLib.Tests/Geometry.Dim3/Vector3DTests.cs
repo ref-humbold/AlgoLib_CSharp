@@ -3,7 +3,7 @@ using System;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Geometry.Dim3
+namespace AlgoLib.Geometry.Dim3
 {
     [TestFixture]
     public class Vector3DTests

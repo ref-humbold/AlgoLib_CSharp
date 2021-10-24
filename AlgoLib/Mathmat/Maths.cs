@@ -1,7 +1,7 @@
 // Algorithms for basic mathematical operations
 using System;
 
-namespace Algolib.Mathmat
+namespace AlgoLib.Mathmat
 {
     public static class Maths
     {

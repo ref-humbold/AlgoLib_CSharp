@@ -1,7 +1,7 @@
 ﻿// Structure of trie tree
 using System.Collections.Generic;
 
-namespace Algolib.Text
+namespace AlgoLib.Text
 {
     public class Trie
     {

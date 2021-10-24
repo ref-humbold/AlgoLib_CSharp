@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms
 {
     public static class StronglyConnectedComponents
     {

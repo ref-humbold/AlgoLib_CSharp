@@ -1,7 +1,7 @@
 ﻿// Structure of point in 3D
 using System;
 
-namespace Algolib.Geometry.Dim3
+namespace AlgoLib.Geometry.Dim3
 {
     public struct Point3D : IGeometryObject, IEquatable<Point3D>
     {

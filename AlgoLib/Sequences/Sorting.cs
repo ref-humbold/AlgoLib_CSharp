@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Sequences
+namespace AlgoLib.Sequences
 {
     public static class Sorting
     {

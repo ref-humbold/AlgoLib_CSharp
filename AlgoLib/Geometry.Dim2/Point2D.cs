@@ -1,7 +1,7 @@
 ﻿// Structure of point in 2D
 using System;
 
-namespace Algolib.Geometry.Dim2
+namespace AlgoLib.Geometry.Dim2
 {
     public struct Point2D : IGeometryObject, IEquatable<Point2D>
     {

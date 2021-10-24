@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algolib.Structures
+namespace AlgoLib.Structures
 {
     public class AVLTree<T> : ISet<T>, IReadOnlyCollection<T>
     {

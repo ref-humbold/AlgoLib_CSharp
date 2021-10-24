@@ -1,7 +1,7 @@
 // Algorithms for graph searching
 using System.Collections.Generic;
 
-namespace Algolib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms
 {
     public static class Searching
     {

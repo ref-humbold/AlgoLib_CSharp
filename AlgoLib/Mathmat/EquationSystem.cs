@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Algolib.Mathmat
+namespace AlgoLib.Mathmat
 {
     public class EquationSystem
     {

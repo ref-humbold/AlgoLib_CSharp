@@ -5,7 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Algolib.Structures
+namespace AlgoLib.Structures
 {
     [TestFixture]
     public class DisjointSetsTests
