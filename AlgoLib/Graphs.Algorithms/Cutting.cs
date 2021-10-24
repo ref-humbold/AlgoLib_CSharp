@@ -9,54 +9,60 @@ namespace Algolib.Graphs.Algorithms
         /// <summary>Finds an edge cut of given graph.</summary>
         /// <param name="graph">an undirected graph</param>
         /// <returns>edges in the edge cut</returns>
-        public static IEnumerable<Edge<V>> FindEdgeCut<V, VP, EP>(IUndirectedGraph<V, VP, EP> graph)
+        public static IEnumerable<Edge<TVertexId>> FindEdgeCut<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
-            CuttingStrategy<V> strategy = new CuttingStrategy<V>();
+            CuttingStrategy<TVertexId> strategy = new CuttingStrategy<TVertexId>();
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return graph.Vertices
-                        .Where(vertex => strategy.HasBridge(vertex))
-                        .Select(vertex => graph.GetEdge(vertex, strategy.dfsParents[vertex]));
+                        .Where(vertex => strategy.hasBridge(vertex))
+                        .Select(vertex => graph[vertex, strategy.dfsParents[vertex]]);
         }
 
         /// <summary>Finds a vertex cut of given graph.</summary>
         /// <param name="graph">an undirected graph</param>
         /// <returns>vertices in the vertex cut</returns>
-        public static IEnumerable<V> FindVertexCut<V, VP, EP>(IUndirectedGraph<V, VP, EP> graph)
+        public static IEnumerable<Vertex<TVertexId>> FindVertexCut<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
-            CuttingStrategy<V> strategy = new CuttingStrategy<V>();
+            CuttingStrategy<TVertexId> strategy = new CuttingStrategy<TVertexId>();
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
-            return graph.Vertices.Where(vertex => strategy.IsSeparator(vertex));
+            return graph.Vertices.Where(vertex => strategy.isSeparator(vertex));
         }
 
-        private class CuttingStrategy<V> : IDfsStrategy<V>
+        private class CuttingStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<V, V> dfsParents = new Dictionary<V, V>();
-            internal readonly Dictionary<V, List<V>> dfsChildren = new Dictionary<V, List<V>>();
-            internal readonly Dictionary<V, int> dfsDepths = new Dictionary<V, int>();
-            internal readonly Dictionary<V, int> lowValues = new Dictionary<V, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> dfsParents =
+                new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
+
+            internal readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren =
+                new Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>>();
+
+            internal readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = new Dictionary<Vertex<TVertexId>, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, int> lowValues = new Dictionary<Vertex<TVertexId>, int>();
             private int depth = 0;
 
-            public void ForRoot(V root)
+            public void ForRoot(Vertex<TVertexId> root)
             {
             }
 
-            public void OnEntry(V vertex)
+            public void OnEntry(Vertex<TVertexId> vertex)
             {
                 dfsDepths[vertex] = depth;
                 lowValues[vertex] = depth;
-                dfsChildren.TryAdd(vertex, new List<V>());
+                dfsChildren.TryAdd(vertex, new List<Vertex<TVertexId>>());
                 ++depth;
             }
 
-            public void OnNextVertex(V vertex, V neighbour)
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
                 dfsParents[neighbour] = vertex;
                 dfsChildren[vertex].Add(neighbour);
             }
 
-            public void OnExit(V vertex)
+            public void OnExit(Vertex<TVertexId> vertex)
             {
                 int? childLowValue = dfsChildren[vertex].Min(child => (int?)lowValues[child]);
                 int minimalLowValue = childLowValue ?? int.MaxValue;
@@ -65,23 +71,21 @@ namespace Algolib.Graphs.Algorithms
                 --depth;
             }
 
-            public void OnEdgeToVisited(V vertex, V neighbour)
+            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
                 if(!neighbour.Equals(dfsParents[vertex]))
                     lowValues[vertex] = Math.Min(lowValues[vertex], dfsDepths[neighbour]);
             }
 
-            internal bool HasBridge(V vertex)
-            {
-                return !IsDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
-            }
+            internal bool hasBridge(Vertex<TVertexId> vertex) =>
+                !isDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
 
-            internal bool IsSeparator(V vertex) =>
-                IsDfsRoot(vertex) ? dfsChildren[vertex].Count > 1
+            internal bool isSeparator(Vertex<TVertexId> vertex) =>
+                isDfsRoot(vertex) ? dfsChildren[vertex].Count > 1
                                   : dfsChildren[vertex].Any(
                                           child => lowValues[child] >= dfsDepths[vertex]);
 
-            internal bool IsDfsRoot(V vertex) => dfsDepths[vertex] == 0;
+            internal bool isDfsRoot(Vertex<TVertexId> vertex) => dfsDepths[vertex] == 0;
         }
     }
 }

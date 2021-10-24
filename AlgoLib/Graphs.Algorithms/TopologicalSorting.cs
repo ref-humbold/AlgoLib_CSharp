@@ -5,26 +5,19 @@ using Algolib.Structures;
 
 namespace Algolib.Graphs.Algorithms
 {
-    [Serializable]
-    public class DirectedCyclicGraphException : Exception
-    {
-        public DirectedCyclicGraphException(string message) : base(message)
-        {
-        }
-    }
-
     public static class TopologicalSorting
     {
-        public static IEnumerable<V> SortUsingInputs<V, VP, EP>(IDirectedGraph<V, VP, EP> graph)
+        public static IEnumerable<Vertex<TVertexId>> SortUsingInputs<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             if(graph.EdgesCount == 0)
                 return graph.Vertices;
 
-            List<V> order = new List<V>();
-            Dictionary<V, int> inputDegrees = new Dictionary<V, int>();
-            Heap<V> vertexHeap = new Heap<V>();
+            List<Vertex<TVertexId>> order = new List<Vertex<TVertexId>>();
+            Dictionary<Vertex<TVertexId>, int> inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
+            Heap<Vertex<TVertexId>> vertexHeap = new Heap<Vertex<TVertexId>>();
 
-            foreach(V vertex in graph.Vertices)
+            foreach(Vertex<TVertexId> vertex in graph.Vertices)
             {
                 int degree = graph.GetInputDegree(vertex);
 
@@ -36,12 +29,12 @@ namespace Algolib.Graphs.Algorithms
 
             while(vertexHeap.Count > 0)
             {
-                V vertex = vertexHeap.Pop();
+                Vertex<TVertexId> vertex = vertexHeap.Pop();
 
                 order.Add(vertex);
                 inputDegrees.Remove(vertex);
 
-                foreach(V neighbour in graph.GetNeighbours(vertex))
+                foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
                 {
                     --inputDegrees[neighbour];
 
@@ -50,48 +43,49 @@ namespace Algolib.Graphs.Algorithms
                 }
             }
 
-            if(order.Count != graph.VerticesCount)
-                throw new DirectedCyclicGraphException("Given graph contains a cycle");
-
-            return order;
+            return order.Count == graph.VerticesCount ? order : throw new DirectedCyclicGraphException("Given graph contains a cycle");
         }
 
-        public static IEnumerable<V> SortUsingDfs<V, VP, EP>(IDirectedGraph<V, VP, EP> graph)
+        public static IEnumerable<Vertex<TVertexId>> SortUsingDfs<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             if(graph.EdgesCount == 0)
                 return graph.Vertices;
 
-            TopologicalStrategy<V> strategy = new TopologicalStrategy<V>();
+            TopologicalStrategy<TVertexId> strategy = new TopologicalStrategy<TVertexId>();
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
 
-            return strategy.order.Reverse<V>();
+            return strategy.order.Reverse<Vertex<TVertexId>>();
         }
 
-        private class TopologicalStrategy<V> : IDfsStrategy<V>
+        private class TopologicalStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal List<V> order = new List<V>();
+            internal List<Vertex<TVertexId>> order = new List<Vertex<TVertexId>>();
 
-            public void ForRoot(V root)
+            public void ForRoot(Vertex<TVertexId> root)
             {
             }
 
-            public void OnEdgeToVisited(V vertex, V neighbour)
+            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
 
-            public void OnEntry(V vertex)
+            public void OnEntry(Vertex<TVertexId> vertex)
             {
             }
 
-            public void OnExit(V vertex)
-            {
-                order.Add(vertex);
-            }
+            public void OnExit(Vertex<TVertexId> vertex) => order.Add(vertex);
 
-            public void OnNextVertex(V vertex, V neighbour)
-            {
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
                 throw new DirectedCyclicGraphException("Given graph contains a cycle");
-            }
+        }
+    }
+
+    [Serializable]
+    public class DirectedCyclicGraphException : Exception
+    {
+        public DirectedCyclicGraphException(string message) : base(message)
+        {
         }
     }
 }

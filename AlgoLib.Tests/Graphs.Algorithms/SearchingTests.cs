@@ -16,27 +16,27 @@ namespace Algolib.Graphs.Algorithms
         public void SetUp()
         {
             directedGraph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
-            directedGraph.AddEdgeBetween(0, 1);
-            directedGraph.AddEdgeBetween(1, 3);
-            directedGraph.AddEdgeBetween(1, 7);
-            directedGraph.AddEdgeBetween(3, 4);
-            directedGraph.AddEdgeBetween(4, 0);
-            directedGraph.AddEdgeBetween(5, 4);
-            directedGraph.AddEdgeBetween(5, 8);
-            directedGraph.AddEdgeBetween(6, 2);
-            directedGraph.AddEdgeBetween(6, 9);
-            directedGraph.AddEdgeBetween(8, 5);
+            directedGraph.AddEdgeBetween(directedGraph[0], directedGraph[1]);
+            directedGraph.AddEdgeBetween(directedGraph[1], directedGraph[3]);
+            directedGraph.AddEdgeBetween(directedGraph[1], directedGraph[7]);
+            directedGraph.AddEdgeBetween(directedGraph[3], directedGraph[4]);
+            directedGraph.AddEdgeBetween(directedGraph[4], directedGraph[0]);
+            directedGraph.AddEdgeBetween(directedGraph[5], directedGraph[4]);
+            directedGraph.AddEdgeBetween(directedGraph[5], directedGraph[8]);
+            directedGraph.AddEdgeBetween(directedGraph[6], directedGraph[2]);
+            directedGraph.AddEdgeBetween(directedGraph[6], directedGraph[9]);
+            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[5]);
 
             undirectedGraph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
-            undirectedGraph.AddEdgeBetween(0, 1);
-            undirectedGraph.AddEdgeBetween(0, 4);
-            undirectedGraph.AddEdgeBetween(1, 3);
-            undirectedGraph.AddEdgeBetween(1, 7);
-            undirectedGraph.AddEdgeBetween(2, 6);
-            undirectedGraph.AddEdgeBetween(3, 4);
-            undirectedGraph.AddEdgeBetween(4, 5);
-            undirectedGraph.AddEdgeBetween(5, 8);
-            undirectedGraph.AddEdgeBetween(6, 9);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[0], undirectedGraph[1]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[0], undirectedGraph[4]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[1], undirectedGraph[3]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[1], undirectedGraph[7]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[2], undirectedGraph[6]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[3], undirectedGraph[4]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[4], undirectedGraph[5]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[5], undirectedGraph[8]);
+            undirectedGraph.AddEdgeBetween(undirectedGraph[6], undirectedGraph[9]);
         }
 
         #region Bfs
@@ -45,13 +45,13 @@ namespace Algolib.Graphs.Algorithms
         public void Bfs_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.Bfs(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
+            IEnumerable<Vertex<int>> result =
+                undirectedGraph.Bfs(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
-            result.Should().NotContain(2);
-            result.Should().NotContain(6);
-            result.Should().NotContain(9);
+            result.Should().NotContain(undirectedGraph[2]);
+            result.Should().NotContain(undirectedGraph[6]);
+            result.Should().NotContain(undirectedGraph[9]);
         }
 
         [Test]
@@ -60,7 +60,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result = Searching.Bfs(undirectedGraph, strategy, new List<int>() { 0, 6 });
+            IEnumerable<Vertex<int>> result =
+                undirectedGraph.Bfs(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -71,8 +72,8 @@ namespace Algolib.Graphs.Algorithms
         public void Bfs_WhenUndirectedGraphAndNoRoots_ThenEmpty()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.Bfs(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
+            IEnumerable<Vertex<int>> result =
+                    undirectedGraph.Bfs(new EmptyStrategy<int>(), new Vertex<int>[] { });
             // then
             result.Should().BeEmpty();
         }
@@ -81,10 +82,11 @@ namespace Algolib.Graphs.Algorithms
         public void Bfs_WhenDirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.Bfs(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
+            IEnumerable<Vertex<int>> result =
+                directedGraph.Bfs(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
+            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                                                   directedGraph[4], directedGraph[7] });
         }
 
         [Test]
@@ -93,7 +95,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result = Searching.Bfs(directedGraph, strategy, new List<int>() { 8, 6 });
+            IEnumerable<Vertex<int>> result =
+                directedGraph.Bfs(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -108,13 +111,13 @@ namespace Algolib.Graphs.Algorithms
         public void DfsIterative_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsIterative(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
+            IEnumerable<Vertex<int>> result =
+                undirectedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
-            result.Should().NotContain(2);
-            result.Should().NotContain(6);
-            result.Should().NotContain(9);
+            result.Should().NotContain(undirectedGraph[2]);
+            result.Should().NotContain(undirectedGraph[6]);
+            result.Should().NotContain(undirectedGraph[9]);
         }
 
         [Test]
@@ -123,8 +126,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result =
-                    Searching.DfsIterative(undirectedGraph, strategy, new List<int>() { 0, 6 });
+            IEnumerable<Vertex<int>> result =
+                undirectedGraph.DfsIterative(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -135,8 +138,8 @@ namespace Algolib.Graphs.Algorithms
         public void DfsIterative_WhenUndirectedGraphAndNoRoots_ThenEmpty()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsIterative(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
+            IEnumerable<Vertex<int>> result =
+                    undirectedGraph.DfsIterative(new EmptyStrategy<int>(), new Vertex<int>[] { });
             // then
             result.Should().BeEmpty();
         }
@@ -145,10 +148,11 @@ namespace Algolib.Graphs.Algorithms
         public void DfsIterative_WhenDirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsIterative(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
+            IEnumerable<Vertex<int>> result =
+                directedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
+            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                                                   directedGraph[4], directedGraph[7] });
         }
 
         [Test]
@@ -157,7 +161,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result = Searching.DfsIterative(directedGraph, strategy, new List<int>() { 8, 6 });
+            IEnumerable<Vertex<int>> result =
+                directedGraph.DfsIterative(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -172,13 +177,13 @@ namespace Algolib.Graphs.Algorithms
         public void DfsRecursive_WhenUndirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsRecursive(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { 0 });
+            IEnumerable<Vertex<int>> result =
+                undirectedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
-            result.Should().NotContain(2);
-            result.Should().NotContain(6);
-            result.Should().NotContain(9);
+            result.Should().NotContain(undirectedGraph[2]);
+            result.Should().NotContain(undirectedGraph[6]);
+            result.Should().NotContain(undirectedGraph[9]);
         }
 
         [Test]
@@ -187,8 +192,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result =
-                    Searching.DfsRecursive(undirectedGraph, strategy, new List<int>() { 0, 6 });
+            IEnumerable<Vertex<int>> result =
+                    undirectedGraph.DfsRecursive(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -199,8 +204,8 @@ namespace Algolib.Graphs.Algorithms
         public void DfsRecursive_WhenUndirectedGraphAndNoRoots_ThenEmpty()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsRecursive(undirectedGraph, new EmptyStrategy<int>(), new List<int>() { });
+            IEnumerable<Vertex<int>> result =
+                    undirectedGraph.DfsRecursive(new EmptyStrategy<int>(), new Vertex<int>[] { });
             // then
             result.Should().BeEmpty();
         }
@@ -209,10 +214,11 @@ namespace Algolib.Graphs.Algorithms
         public void DfsRecursive_WhenDirectedGraphAndSingleRoot_ThenVisitedVertices()
         {
             // when
-            IEnumerable<int> result =
-                    Searching.DfsRecursive(directedGraph, new EmptyStrategy<int>(), new List<int>() { 1 });
+            IEnumerable<Vertex<int>> result =
+                    directedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new List<int>() { 0, 1, 3, 4, 7 });
+            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                                                   directedGraph[4], directedGraph[7] });
         }
 
         [Test]
@@ -221,7 +227,8 @@ namespace Algolib.Graphs.Algorithms
             // given
             TestingStrategy<int> strategy = new TestingStrategy<int>();
             // when
-            IEnumerable<int> result = Searching.DfsRecursive(directedGraph, strategy, new List<int>() { 8, 6 });
+            IEnumerable<Vertex<int>> result =
+                directedGraph.DfsRecursive(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
             strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -230,24 +237,24 @@ namespace Algolib.Graphs.Algorithms
 
         #endregion
 
-        private class TestingStrategy<V> : IDfsStrategy<V>
+        private class TestingStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly HashSet<V> entries = new HashSet<V>();
-            internal readonly HashSet<V> exits = new HashSet<V>();
+            internal readonly HashSet<Vertex<TVertexId>> entries = new HashSet<Vertex<TVertexId>>();
+            internal readonly HashSet<Vertex<TVertexId>> exits = new HashSet<Vertex<TVertexId>>();
 
-            public void ForRoot(V root)
+            public void ForRoot(Vertex<TVertexId> root)
             {
             }
 
-            public void OnEntry(V vertex) => entries.Add(vertex);
+            public void OnEntry(Vertex<TVertexId> vertex) => entries.Add(vertex);
 
-            public void OnNextVertex(V vertex, V neighbour)
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
 
-            public void OnExit(V vertex) => exits.Add(vertex);
+            public void OnExit(Vertex<TVertexId> vertex) => exits.Add(vertex);
 
-            public void OnEdgeToVisited(V vertex, V neighbour)
+            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
         }

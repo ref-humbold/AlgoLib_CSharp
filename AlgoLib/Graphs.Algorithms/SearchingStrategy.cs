@@ -2,41 +2,41 @@
 
 namespace Algolib.Graphs.Algorithms
 {
-    public interface IBfsStrategy<V>
+    public interface IBfsStrategy<TVertexId>
     {
-        void ForRoot(V root);
+        void ForRoot(Vertex<TVertexId> root);
 
-        void OnEntry(V vertex);
+        void OnEntry(Vertex<TVertexId> vertex);
 
-        void OnNextVertex(V vertex, V neighbour);
+        void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour);
 
-        void OnExit(V vertex);
+        void OnExit(Vertex<TVertexId> vertex);
     }
 
-    public interface IDfsStrategy<V> : IBfsStrategy<V>
+    public interface IDfsStrategy<TVertexId> : IBfsStrategy<TVertexId>
     {
-        void OnEdgeToVisited(V vertex, V neighbour);
+        void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour);
     }
 
-    public struct EmptyStrategy<V> : IDfsStrategy<V>
+    public struct EmptyStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        public void ForRoot(V root)
+        public void ForRoot(Vertex<TVertexId> root)
         {
         }
 
-        public void OnEntry(V vertex)
+        public void OnEntry(Vertex<TVertexId> vertex)
         {
         }
 
-        public void OnNextVertex(V vertex, V neighbour)
+        public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
         {
         }
 
-        public void OnExit(V vertex)
+        public void OnExit(Vertex<TVertexId> vertex)
         {
         }
 
-        public void OnEdgeToVisited(V vertex, V neighbour)
+        public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
         {
         }
     }
