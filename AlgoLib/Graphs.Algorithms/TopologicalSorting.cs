@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Algolib.Structures;
+using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms
 {

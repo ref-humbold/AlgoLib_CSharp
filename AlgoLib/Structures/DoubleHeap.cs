@@ -313,8 +313,8 @@ namespace AlgoLib.Structures
 
             private List<T> createOrderedMinimalList(List<T> heap)
             {
-                Queue<int> indices = new Queue<int>();
-                List<T> minimalList = new List<T>();
+                var indices = new Queue<int>();
+                var minimalList = new List<T>();
 
                 if(indexMin < heap.Count)
                     indices.Enqueue(indexMin);
@@ -337,8 +337,8 @@ namespace AlgoLib.Structures
 
             private List<T> createOrderedMaximalList(List<T> heap)
             {
-                Queue<int> indices = new Queue<int>();
-                List<T> maximalList = new List<T>();
+                var indices = new Queue<int>();
+                var maximalList = new List<T>();
 
                 if(indexMax < heap.Count)
                     indices.Enqueue(indexMax);

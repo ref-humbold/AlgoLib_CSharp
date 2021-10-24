@@ -19,37 +19,37 @@ namespace AlgoLib.Sequences
         /// <returns>Least lexicographically longest increasing subsequence</returns>
         public static IEnumerable<T> LongestIncreasing<T>(this IList<T> sequence, Comparison<T> comparison)
         {
-            List<int?> previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
-            List<int> subseqLast = new List<int> { 0 };
+            var previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
+            var subsequence = new List<int> { 0 };
 
             for(int i = 1; i < sequence.Count; ++i)
             {
                 T elem = sequence[i];
 
-                if(comparison.Invoke(elem, sequence[subseqLast[^1]]) > 0)
+                if(comparison.Invoke(elem, sequence[subsequence[^1]]) > 0)
                 {
-                    previousElem[i] = subseqLast[^1];
-                    subseqLast.Add(i);
+                    previousElem[i] = subsequence[^1];
+                    subsequence.Add(i);
                 }
                 else
                 {
-                    int index = searchIndex(sequence, comparison, subseqLast, i, 0, subseqLast.Count - 1);
+                    int index = searchIndex(sequence, comparison, subsequence, i, 0, subsequence.Count);
 
-                    subseqLast[index] = i;
-                    previousElem[i] = index > 0 ? (int?)subseqLast[index - 1] : null;
+                    subsequence[index] = i;
+                    previousElem[i] = index > 0 ? (int?)subsequence[index - 1] : null;
                 }
             }
 
-            List<T> longestSubseq = new List<T>();
-            int? j = subseqLast[^1];
+            var longestSubsequence = new List<T>();
+            int? subsequenceIndex = subsequence[^1];
 
-            while(j.HasValue)
+            while(subsequenceIndex.HasValue)
             {
-                longestSubseq.Add(sequence[j.Value]);
-                j = previousElem[j.Value];
+                longestSubsequence.Add(sequence[subsequenceIndex.Value]);
+                subsequenceIndex = previousElem[subsequenceIndex.Value];
             }
 
-            return longestSubseq.Reverse<T>();
+            return longestSubsequence.Reverse<T>();
         }
 
         /// <summary>Dynamically constructs coherent subarray with maximal sum.</summary>
@@ -85,10 +85,10 @@ namespace AlgoLib.Sequences
             while(size < 2 * sequence.Count())
                 size *= 2;
 
-            List<double> intervalSums = Enumerable.Repeat(0.0, size).ToList();
-            List<double> prefixSums = Enumerable.Repeat(0.0, size).ToList();
-            List<double> suffixSums = Enumerable.Repeat(0.0, size).ToList();
-            List<double> allSums = Enumerable.Repeat(0.0, size).ToList();
+            var intervalSums = Enumerable.Repeat(0.0, size).ToList();
+            var prefixSums = Enumerable.Repeat(0.0, size).ToList();
+            var suffixSums = Enumerable.Repeat(0.0, size).ToList();
+            var allSums = Enumerable.Repeat(0.0, size).ToList();
 
             int i = 0;
 
@@ -129,10 +129,10 @@ namespace AlgoLib.Sequences
                                           in List<int> subseqLast, in int indexElem, int indexBegin,
                                           int indexEnd)
         {
-            if(indexBegin == indexEnd)
+            if(indexEnd - indexBegin <= 1)
                 return indexBegin;
 
-            int indexMiddle = (indexBegin + indexEnd) / 2;
+            int indexMiddle = (indexBegin + indexEnd - 1) / 2;
 
             return comparison.Invoke(sequence[indexElem], sequence[subseqLast[indexMiddle]]) > 0
                 ? searchIndex(sequence, comparison, subseqLast, indexElem, indexMiddle + 1, indexEnd)

@@ -69,10 +69,10 @@ namespace AlgoLib.Text
         private int extend(int length, int codeValue, Func<int, int, int[]> func)
         {
             (int, int) previousCode = (0, 0);
-            List<int[]> codes = Enumerable.Range(0, Text.Length - length + 1)
-                .Select(i => func.Invoke(i, length))
-                .OrderBy(c => c, new CodesComparer())
-                .ToList();
+            var codes = Enumerable.Range(0, Text.Length - length + 1)
+                                  .Select(i => func.Invoke(i, length))
+                                  .OrderBy(c => c, new CodesComparer())
+                                  .ToList();
 
             foreach(int[] code in codes)
             {

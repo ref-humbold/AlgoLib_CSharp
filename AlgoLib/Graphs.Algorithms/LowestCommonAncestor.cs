@@ -49,10 +49,9 @@ namespace AlgoLib.Graphs.Algorithms
             if(isOffspring(vertex2, vertex1))
                 return vertex1;
 
-            List<Vertex<TVertexId>> candidates =
-                paths[vertex1].Reverse<Vertex<TVertexId>>()
-                              .Where(candidate => !isOffspring(vertex2, candidate))
-                              .ToList();
+            var candidates = paths[vertex1].Reverse<Vertex<TVertexId>>()
+                                           .Where(candidate => !isOffspring(vertex2, candidate))
+                                           .ToList();
 
             return candidates.Count > 0 ? doFind(candidates[0], vertex2)
                                         : doFind(paths[vertex1][0], vertex2);
@@ -97,7 +96,8 @@ namespace AlgoLib.Graphs.Algorithms
                 ++timer;
             }
 
-            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) => parents[neighbour] = vertex;
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
+                parents[neighbour] = vertex;
 
             public void OnExit(Vertex<TVertexId> vertex)
             {

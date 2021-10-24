@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Algolib.Structures;
+using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms
 {
@@ -15,7 +15,7 @@ namespace AlgoLib.Graphs.Algorithms
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
                 where TEdgeProperty : IWeighted
         {
-            Dictionary<Vertex<TVertexId>, double> distances = new Dictionary<Vertex<TVertexId>, double>(
+            var distances = new Dictionary<Vertex<TVertexId>, double>(
                 graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
                 [source] = 0.0
             };
@@ -47,14 +47,13 @@ namespace AlgoLib.Graphs.Algorithms
                 if(graph.Properties[edge].Weight < 0.0)
                     throw new InvalidOperationException("Graph contains an edge with negative weight");
 
-            Dictionary<Vertex<TVertexId>, double> distances = new Dictionary<Vertex<TVertexId>, double>(
+            var distances = new Dictionary<Vertex<TVertexId>, double>(
                 graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
                 [source] = 0.0
             };
-            HashSet<Vertex<TVertexId>> visited = new HashSet<Vertex<TVertexId>>();
-            Heap<(double Distance, Vertex<TVertexId> Vertex)> vertexHeap =
-                new Heap<(double Distance, Vertex<TVertexId> Vertex)>(
-                        (pair1, pair2) => pair1.Distance.CompareTo(pair2.Vertex));
+            var visited = new HashSet<Vertex<TVertexId>>();
+            var vertexHeap = new Heap<(double Distance, Vertex<TVertexId> Vertex)>(
+                        (pair1, pair2) => pair1.Distance.CompareTo(pair2.Distance));
 
             vertexHeap.Push((0.0, source));
 
@@ -91,8 +90,7 @@ namespace AlgoLib.Graphs.Algorithms
                 IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
                     where TEdgeProperty : IWeighted
         {
-            Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double> distances =
-                new Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>();
+            var distances = new Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>();
 
             foreach(Vertex<TVertexId> v in graph.Vertices)
                 foreach(Vertex<TVertexId> u in graph.Vertices)

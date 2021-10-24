@@ -335,7 +335,7 @@ namespace AlgoLib.Graphs
             testObject.Properties[vertex] = vertexProperty;
             testObject.Properties[edge] = edgeProperty;
             // when
-            DirectedSimpleGraph<int, string, string> result = testObject.AsDirected();
+            IDirectedGraph<int, string, string> result = testObject.AsDirected();
             // then
             result.Vertices.Should().BeEquivalentTo(testObject.Vertices);
             result.Edges.Should().BeEquivalentTo(

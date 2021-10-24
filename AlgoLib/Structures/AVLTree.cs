@@ -31,23 +31,8 @@ namespace AlgoLib.Structures
                 _ = Add(item);
         }
 
-        public override string ToString()
-        {
-            string repr = "{|";
-            IEnumerator<T> enumerator = GetEnumerator();
-            bool hasNext = enumerator.MoveNext();
-
-            while(hasNext)
-            {
-                repr += enumerator.Current.ToString();
-                hasNext = enumerator.MoveNext();
-
-                if(hasNext)
-                    repr += ", ";
-            }
-
-            return repr + "|}";
-        }
+        public override string ToString() =>
+            $"{{|{string.Join(", ", this.Select(elem => elem.ToString()))}|}}";
 
         public bool Add(T item)
         {
@@ -67,7 +52,7 @@ namespace AlgoLib.Structures
             if(theNode != null)
                 return false;
 
-            AVLInnerNode<T> newNode = new AVLInnerNode<T>(item);
+            var newNode = new AVLInnerNode<T>(item);
 
             if(comparer.Compare(item, node_parent.Element) < 0)
                 node_parent.Left = newNode;
@@ -100,7 +85,7 @@ namespace AlgoLib.Structures
 
         public void IntersectWith(IEnumerable<T> other)
         {
-            HashSet<T> otherSet = other.ToHashSet();
+            var otherSet = other.ToHashSet();
 
             ExceptWith(this.Where(e => !otherSet.Contains(e)).ToList());
         }
@@ -222,7 +207,7 @@ namespace AlgoLib.Structures
         {
             if(isRightChild(node))
             {
-                AVLInnerNode<T> upperNode = node.Parent as AVLInnerNode<T>;
+                var upperNode = node.Parent as AVLInnerNode<T>;
 
                 upperNode.Right = node.Left;
                 replaceNode(upperNode, node);
@@ -230,7 +215,7 @@ namespace AlgoLib.Structures
             }
             else if(isLeftChild(node))
             {
-                AVLInnerNode<T> upperNode = node.Parent as AVLInnerNode<T>;
+                var upperNode = node.Parent as AVLInnerNode<T>;
 
                 upperNode.Left = node.Right;
                 replaceNode(upperNode, node);
@@ -243,7 +228,7 @@ namespace AlgoLib.Structures
         {
             while(node.Height > 0)
             {
-                AVLInnerNode<T> theNode = node as AVLInnerNode<T>;
+                var theNode = node as AVLInnerNode<T>;
                 int newBalance = countBalance(theNode);
 
                 if(newBalance >= 2)
@@ -435,7 +420,6 @@ namespace AlgoLib.Structures
             public AVLInnerNode<TItem> Parent
             {
                 get => inner;
-
                 set
                 {
                     inner = value;

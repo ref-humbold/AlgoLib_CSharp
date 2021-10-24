@@ -12,7 +12,7 @@ namespace AlgoLib.Graphs.Algorithms
         public static IEnumerable<Edge<TVertexId>> FindEdgeCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
-            CuttingStrategy<TVertexId> strategy = new CuttingStrategy<TVertexId>();
+            var strategy = new CuttingStrategy<TVertexId>();
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return graph.Vertices
@@ -26,7 +26,7 @@ namespace AlgoLib.Graphs.Algorithms
         public static IEnumerable<Vertex<TVertexId>> FindVertexCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
-            CuttingStrategy<TVertexId> strategy = new CuttingStrategy<TVertexId>();
+            var strategy = new CuttingStrategy<TVertexId>();
 
             Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return graph.Vertices.Where(vertex => strategy.isSeparator(vertex));
@@ -40,8 +40,12 @@ namespace AlgoLib.Graphs.Algorithms
             internal readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren =
                 new Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>>();
 
-            internal readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = new Dictionary<Vertex<TVertexId>, int>();
-            internal readonly Dictionary<Vertex<TVertexId>, int> lowValues = new Dictionary<Vertex<TVertexId>, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, int> dfsDepths =
+                new Dictionary<Vertex<TVertexId>, int>();
+
+            internal readonly Dictionary<Vertex<TVertexId>, int> lowValues =
+                new Dictionary<Vertex<TVertexId>, int>();
+
             private int depth = 0;
 
             public void ForRoot(Vertex<TVertexId> root)

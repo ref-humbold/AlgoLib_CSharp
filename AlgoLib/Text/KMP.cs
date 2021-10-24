@@ -24,22 +24,22 @@ namespace AlgoLib.Text
             if(pattern.Length == 0)
                 return Enumerable.Empty<int>();
 
-            List<int> places = new List<int>();
+            var places = new List<int>();
             List<int> pi = prefixes(pattern);
-            int pos = 0;
+            int position = 0;
 
             for(int i = 0; i < text.Length; ++i)
             {
-                while(pos > 0 && pattern[pos] != text[i])
-                    pos = pi[pos - 1];
+                while(position > 0 && pattern[position] != text[i])
+                    position = pi[position - 1];
 
-                if(pattern[pos] == text[i])
-                    ++pos;
+                if(pattern[position] == text[i])
+                    ++position;
 
-                if(pos == pattern.Length)
+                if(position == pattern.Length)
                 {
                     places.Add(i - pattern.Length + 1);
-                    pos = pi[pos - 1];
+                    position = pi[position - 1];
                 }
             }
 
@@ -49,18 +49,18 @@ namespace AlgoLib.Text
         // Counts values of Knuth's PI prefix function for given pattern.
         private static List<int> prefixes(string pattern)
         {
-            List<int> pi = new List<int>() { 0 };
-            int pos = 0;
+            var pi = new List<int>() { 0 };
+            int position = 0;
 
             foreach(char letter in pattern)
             {
-                while(pos > 0 && pattern[pos] != letter)
-                    pos = pi[pos - 1];
+                while(position > 0 && pattern[position] != letter)
+                    position = pi[position - 1];
 
-                if(pattern[pos] == letter)
-                    ++pos;
+                if(pattern[position] == letter)
+                    ++position;
 
-                pi.Add(pos);
+                pi.Add(position);
             }
 
             return pi;

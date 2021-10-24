@@ -11,7 +11,7 @@ namespace AlgoLib.Mathmat
         private Fraction(long numerator, long denominator)
         {
             if(denominator == 0)
-                throw new ArithmeticException("Denominator cannot be equal to zero");
+                throw new DivideByZeroException("Denominator cannot be equal to zero");
 
             if(denominator < 0)
             {

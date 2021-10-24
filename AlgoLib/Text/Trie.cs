@@ -23,7 +23,7 @@ namespace AlgoLib.Text
 
             foreach(char character in text)
             {
-                node.Add(character, new TrieNode());
+                node.add(character, new TrieNode());
                 node = node[character];
             }
 
@@ -85,7 +85,7 @@ namespace AlgoLib.Text
                 TrieNode nextNode = node[text[i]];
 
                 if(nextNode != null && removeNode(text, nextNode, i + 1))
-                    node.Remove(text[i]);
+                    node.remove(text[i]);
             }
 
             return !node.Terminus && node.Count == 0;
@@ -114,9 +114,9 @@ namespace AlgoLib.Text
                 }
             }
 
-            internal void Add(char c, TrieNode node) => children.TryAdd(c, node);
+            internal void add(char c, TrieNode node) => children.TryAdd(c, node);
 
-            internal void Remove(char c) => children.Remove(c);
+            internal void remove(char c) => children.Remove(c);
         }
     }
 }

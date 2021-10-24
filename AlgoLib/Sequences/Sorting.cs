@@ -118,7 +118,7 @@ namespace AlgoLib.Sequences
         private static void merge<T>(List<T> sequence, int indexBegin, int indexMiddle, int indexEnd)
             where T : IComparable<T>
         {
-            List<T> ordered = new List<T>();
+            var ordered = new List<T>();
             int iter1 = indexBegin;
             int iter2 = indexMiddle;
 
@@ -179,12 +179,12 @@ namespace AlgoLib.Sequences
         // Randomly chooses pivot for quick-sort algorithm.
         private static int choosePivot(int indexBegin, int indexEnd) =>
             Enumerable.Empty<int>()
-                .Append(random.Next(indexBegin, indexEnd))
-                .Append(random.Next(indexBegin, indexEnd))
-                .Append(random.Next(indexBegin, indexEnd))
-                .OrderBy(c => c)
-                .Skip(1)
-                .First();
+                      .Append(random.Next(indexBegin, indexEnd))
+                      .Append(random.Next(indexBegin, indexEnd))
+                      .Append(random.Next(indexBegin, indexEnd))
+                      .OrderBy(c => c)
+                      .Skip(1)
+                      .First();
 
         // Swaps two elements in given sequence.
         private static void swap<T>(List<T> sequence, int index1, int index2)

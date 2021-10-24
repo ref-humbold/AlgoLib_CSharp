@@ -35,7 +35,7 @@ namespace AlgoLib.Geometry.Dim2
                                                      double beltWidth)
         {
             (Point2D, Point2D)? closestPoints = null;
-            List<int> beltPoints = new List<int>();
+            var beltPoints = new List<int>();
             double minDistance = beltWidth;
 
             for(int i = 0; i < pointsY.Count; ++i)
@@ -82,8 +82,8 @@ namespace AlgoLib.Geometry.Dim2
 
             int index_middle = (index_begin + index_end) / 2;
             double middleX = (pointsX[index_middle].X + pointsX[index_middle + 1].X) / 2;
-            List<Point2D> pointsYL = new List<Point2D>();
-            List<Point2D> pointsYR = new List<Point2D>();
+            var pointsYL = new List<Point2D>();
+            var pointsYR = new List<Point2D>();
 
             foreach(Point2D pt in pointsY)
                 if(pt.X <= index_middle)

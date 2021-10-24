@@ -8,6 +8,9 @@ namespace AlgoLib.Graphs
     public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
+        /// <summary>Converts this graph to a directed graph with same vertices.</summary>
+        /// <returns>Directed graph</returns>
+        public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
     }
 
     public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
@@ -26,9 +29,11 @@ namespace AlgoLib.Graphs
         {
         }
 
-        public override int GetOutputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
+        public override int GetOutputDegree(Vertex<TVertexId> vertex) =>
+            representation.getAdjacentEdges(vertex).Count();
 
-        public override int GetInputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
+        public override int GetInputDegree(Vertex<TVertexId> vertex) =>
+            representation.getAdjacentEdges(vertex).Count();
 
         public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
         {
@@ -47,12 +52,10 @@ namespace AlgoLib.Graphs
             }
         }
 
-        /// <summary>Converts this graph to a directed graph with same vertices.</summary>
-        /// <returns>directed graph</returns>
-        public DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected()
+        public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected()
         {
-            DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> directedSimpleGraph =
-                new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
+            var directedSimpleGraph = new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
+                Vertices.Select(v => v.Id));
 
             foreach(Vertex<TVertexId> vertex in Vertices)
                 directedSimpleGraph.Properties[vertex] = Properties[vertex];

@@ -11,11 +11,11 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="roots">starting vertices</param>
         /// <returns>enumerable of visited vertices</returns>
         public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
-           this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IBfsStrategy<TVertexId> strategy,
+            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IBfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
         {
-            HashSet<Vertex<TVertexId>> reached = new HashSet<Vertex<TVertexId>>();
-            Queue<Vertex<TVertexId>> vertexQueue = new Queue<Vertex<TVertexId>>();
+            var reached = new HashSet<Vertex<TVertexId>>();
+            var vertexQueue = new Queue<Vertex<TVertexId>>();
 
             foreach(Vertex<TVertexId> root in roots)
                 if(!reached.Contains(root))
@@ -54,8 +54,8 @@ namespace AlgoLib.Graphs.Algorithms
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IDfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
         {
-            Dictionary<Vertex<TVertexId>, int> reached = new Dictionary<Vertex<TVertexId>, int>();
-            Stack<Vertex<TVertexId>> vertexStack = new Stack<Vertex<TVertexId>>();
+            var reached = new Dictionary<Vertex<TVertexId>, int>();
+            var vertexStack = new Stack<Vertex<TVertexId>>();
             int iteration = 1;
 
             foreach(Vertex<TVertexId> root in roots)
@@ -102,7 +102,7 @@ namespace AlgoLib.Graphs.Algorithms
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IDfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
         {
-            DfsRecursiveState<TVertexId> state = new DfsRecursiveState<TVertexId>();
+            var state = new DfsRecursiveState<TVertexId>();
 
             foreach(Vertex<TVertexId> root in roots)
                 if(!state.reached.ContainsKey(root))

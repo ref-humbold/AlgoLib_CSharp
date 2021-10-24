@@ -31,7 +31,8 @@ namespace AlgoLib.Graphs
         {
         }
 
-        public override int GetOutputDegree(Vertex<TVertexId> vertex) => representation.getAdjacentEdges(vertex).Count();
+        public override int GetOutputDegree(Vertex<TVertexId> vertex) =>
+            representation.getAdjacentEdges(vertex).Count();
 
         public override int GetInputDegree(Vertex<TVertexId> vertex) =>
             representation.EdgesSet
@@ -56,8 +57,8 @@ namespace AlgoLib.Graphs
 
         public void Reverse()
         {
-            GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty> newRepresentation =
-                new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
+            var newRepresentation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(
+                Vertices.Select(v => v.Id));
 
             foreach(Vertex<TVertexId> vertex in Vertices)
                 newRepresentation.setProperty(vertex, representation.getProperty(vertex));
@@ -75,8 +76,8 @@ namespace AlgoLib.Graphs
 
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy()
         {
-            DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph =
-                new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(Vertices.Select(v => v.Id));
+            var reversedGraph = new DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
+                Vertices.Select(v => v.Id));
 
             foreach(Vertex<TVertexId> vertex in Vertices)
                 reversedGraph.Properties[vertex] = Properties[vertex];

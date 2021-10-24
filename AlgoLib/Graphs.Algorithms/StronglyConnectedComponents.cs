@@ -11,16 +11,16 @@ namespace AlgoLib.Graphs.Algorithms
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
                 this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
-            PostOrderStrategy<TVertexId> postOrderStrategy = new PostOrderStrategy<TVertexId>();
+            var postOrderStrategy = new PostOrderStrategy<TVertexId>();
 
             Searching.DfsRecursive(graph, postOrderStrategy, graph.Vertices);
 
-            List<Vertex<TVertexId>> vertices = postOrderStrategy.postTimes
-                                                                .OrderByDescending(kv => kv.Value)
-                                                                .Select(kv => kv.Key)
-                                                                .ToList();
+            var vertices = postOrderStrategy.postTimes
+                                            .OrderByDescending(kv => kv.Value)
+                                            .Select(kv => kv.Key)
+                                            .ToList();
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph = graph.ReversedCopy();
-            SCCStrategy<TVertexId> sccStrategy = new SCCStrategy<TVertexId>();
+            var sccStrategy = new SCCStrategy<TVertexId>();
 
             Searching.DfsRecursive(reversedGraph, sccStrategy, vertices);
             return sccStrategy.components;

@@ -46,26 +46,18 @@ namespace AlgoLib.Text
          * @return index in text where suffix begins
          */
 
-        public int IndexAt(int i)
-        {
-            if(i < 0 || i >= Count)
-                throw new IndexOutOfRangeException("Suffix array index out of range");
-
-            return suffixArray[i];
-        }
+        public int IndexAt(int i) =>
+            i < 0 || i >= Count ? throw new IndexOutOfRangeException("Suffix array index out of range")
+                                : suffixArray[i];
 
         /**
          * @param suf index in text where suffix begins
          * @return index of suffix in suffix array
          */
 
-        public int IndexOf(int suf)
-        {
-            if(suf < 0 || suf >= Count)
-                throw new IndexOutOfRangeException("Text index out of range");
-
-            return inverseArray[suf];
-        }
+        public int IndexOf(int suf) =>
+            suf < 0 || suf >= Count ? throw new IndexOutOfRangeException("Text index out of range")
+                                    : inverseArray[suf];
 
         /**
          * @param suf1 index in text where first suffix begins
@@ -127,7 +119,7 @@ namespace AlgoLib.Text
 
             int length2 = (txt.Count + 2) / 3, length1 = (txt.Count + 1) / 3, length0 = txt.Count / 3;
             int length02 = length0 + length2;
-            List<int> indices12 = new List<int>();
+            var indices12 = new List<int>();
 
             for(int i = 0; i < txt.Count + length2 - length1; ++i)
                 if(i % 3 != 0)
@@ -139,7 +131,7 @@ namespace AlgoLib.Text
 
             int code = 0;
             (int, int, int) last = (int.MaxValue, int.MaxValue, int.MaxValue);
-            List<int> text12 = Enumerable.Repeat(0, length02).ToList();
+            var text12 = Enumerable.Repeat(0, length02).ToList();
 
             foreach(int i in indices12)
             {
@@ -158,7 +150,7 @@ namespace AlgoLib.Text
                     text12[i / 3 + length2] = code;
             }
 
-            List<int> sa0 = new List<int>();
+            var sa0 = new List<int>();
             List<int> sa12;
 
             if(code < length02)
@@ -181,14 +173,13 @@ namespace AlgoLib.Text
                     sa0.Add(3 * i);
 
             sortIndices(sa0, txt, 0);
-
             return merge(txt, sa0, text12, sa12);
         }
 
         private List<int> merge(List<int> t0, List<int> sa0, List<int> t12,
                                     List<int> sa12)
         {
-            List<int> sa = new List<int>();
+            var sa = new List<int>();
             int length2 = (t0.Count + 2) / 3, length1 = (t0.Count + 1) / 3;
             int index0 = 0, index12 = length2 - length1;
 
@@ -233,7 +224,7 @@ namespace AlgoLib.Text
 
         private void sortIndices(List<int> indices, List<int> values, int shift)
         {
-            SortedDictionary<int, Queue<int>> buckets = new SortedDictionary<int, Queue<int>>();
+            var buckets = new SortedDictionary<int, Queue<int>>();
             int j = 0;
 
             foreach(int i in indices)

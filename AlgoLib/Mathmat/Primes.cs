@@ -17,9 +17,9 @@ namespace AlgoLib.Mathmat
             if(maxNumber < minNumber)
                 return Enumerable.Empty<int>();
 
-            List<int> primes = new List<int>();
-            List<bool> isPrime = new List<bool>();
-            List<bool> basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2)).ToList();
+            var primes = new List<int>();
+            var isPrime = new List<bool>();
+            var basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2)).ToList();
 
             for(int i = minNumber; i < maxNumber; ++i)
                 isPrime.Add(i == 2 || i > 2 && i % 2 != 0);
@@ -92,7 +92,7 @@ namespace AlgoLib.Mathmat
 
                 if(Maths.Power(witness, multiplicand, number) != 1)
                 {
-                    List<int> exponents = new List<int>();
+                    var exponents = new List<int>();
 
                     for(int d = multiplicand; d <= number / 2; d *= 2)
                         exponents.Add(d);

@@ -8,7 +8,8 @@ namespace AlgoLib.Graphs
     {
         private readonly UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-        public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties => graph.Properties;
+        public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties =>
+            graph.Properties;
 
         public int VerticesCount => graph.VerticesCount;
 
@@ -39,6 +40,9 @@ namespace AlgoLib.Graphs
 
         public int GetInputDegree(Vertex<TVertexId> vertex) => graph.GetInputDegree(vertex);
 
+        public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
+            graph.AsDirected();
+
         /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
         /// <param name="vertexId">Vertex identifier</param>
         /// <param name="neighbour">Existing vertex</param>
@@ -51,7 +55,7 @@ namespace AlgoLib.Graphs
                                         TEdgeProperty edgeProperty = default)
         {
             Vertex<TVertexId> vertex = graph.AddVertex(vertexId, vertexProperty);
-            return vertex != null ? graph.AddEdgeBetween(vertex, neighbour, edgeProperty) : null;
+            return graph.AddEdgeBetween(vertex, neighbour, edgeProperty);
         }
     }
 }
