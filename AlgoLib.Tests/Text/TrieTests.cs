@@ -75,7 +75,7 @@ namespace AlgoLib.Text
         public void AddRange_WhenPresentAndAbsent_ThenAbsentAdded()
         {
             // given
-            List<string> textsToAdd = new List<string> { "abxx", "x", "abcdef", "xyz" };
+            var textsToAdd = new List<string> { "abxx", "x", "abcdef", "xyz" };
             // when
             testObject.AddRange(textsToAdd);
             // then
@@ -162,7 +162,7 @@ namespace AlgoLib.Text
         public void RemoveRange_WhenPresentAndAbsent_ThenPresentRemoved()
         {
             // given
-            List<string> textsToRemove = new List<string> { "abxx", "x", "abcdef", "xyz" };
+            var textsToRemove = new List<string> { "abxx", "x", "abcdef", "xyz" };
             // when
             testObject.RemoveRange(textsToRemove);
             // then

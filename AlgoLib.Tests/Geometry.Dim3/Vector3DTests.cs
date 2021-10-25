@@ -32,7 +32,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Between_ThenVectorFromBeginToEnd()
         {
             // when
-            Vector3D result =
+            var result =
                     Vector3D.Between(Point3D.Of(2.4, 7.8, -10.3), Point3D.Of(-1.5, 13.2, 15.8));
             // then
             result.Should().Be(Vector3D.Of(-3.9, 5.4, 26.1));
@@ -60,7 +60,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Cross_ThenCrossProduct()
         {
             // when
-            Vector3D result = Vector3D.Cross(Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5));
+            var result = Vector3D.Cross(Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5));
             // then
             result.Should().Be(Vector3D.Of(-42.75, -44.25, 32.25));
         }
@@ -69,7 +69,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Cross_WhenParallel_ThenZero()
         {
             // when
-            Vector3D result = Vector3D.Cross(Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0));
+            var result = Vector3D.Cross(Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0));
             // then
             result.Should().Be(Vector3D.Of(0.0, 0.0, 0.0));
         }
@@ -126,7 +126,7 @@ namespace AlgoLib.Geometry.Dim3
         public void OperatorUnaryPlus_ThenCopied()
         {
             // given
-            Vector3D vector = Vector3D.Of(5.4, 9.0, -12.3);
+            var vector = Vector3D.Of(5.4, 9.0, -12.3);
             // when
             Vector3D result = +vector;
             // then

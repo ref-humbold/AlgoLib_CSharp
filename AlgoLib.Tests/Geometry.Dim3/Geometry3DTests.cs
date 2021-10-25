@@ -12,7 +12,7 @@ namespace AlgoLib.Geometry.Dim3
         public void SortByX_ThenSortedStablyAscending()
         {
             // given
-            List<Point3D> sequence = new List<Point3D> {
+            var sequence = new List<Point3D> {
                 Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
                 Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
                 Point3D.Of(-3.0, 2.0, 5.0) };
@@ -30,7 +30,7 @@ namespace AlgoLib.Geometry.Dim3
         public void SortByY_ThenSortedStablyAscending()
         {
             // given
-            List<Point3D> sequence = new List<Point3D> {
+            var sequence = new List<Point3D> {
                 Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
                 Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
                 Point3D.Of(-3.0, 2.0, 5.0) };
@@ -48,7 +48,7 @@ namespace AlgoLib.Geometry.Dim3
         public void SortByZ_ThenSortedStablyAscending()
         {
             // given
-            List<Point3D> sequence = new List<Point3D> {
+            var sequence = new List<Point3D> {
                 Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
                 Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
                 Point3D.Of(-3.0, 2.0, 5.0) };
@@ -75,7 +75,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Distance_WhenSamePoint_ThenZero()
         {
             // given
-            Point3D point = Point3D.Of(13.5, 6.5, -4.2);
+            var point = Point3D.Of(13.5, 6.5, -4.2);
             // when
             double result = point.Distance(point);
             // then
@@ -95,7 +95,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Translate_WhenZeroVector_ThenSamePoint()
         {
             // given
-            Point3D point = Point3D.Of(13.5, 6.5, -4.2);
+            var point = Point3D.Of(13.5, 6.5, -4.2);
             // when
             Point3D result = point.Translate(Vector3D.Of(0.0, 0.0, 0.0));
             // then
@@ -124,7 +124,7 @@ namespace AlgoLib.Geometry.Dim3
         public void Reflect_WhenSamePoint_ThenSamePoint()
         {
             // given
-            Point3D point = Point3D.Of(13.5, 6.5, -4.2);
+            var point = Point3D.Of(13.5, 6.5, -4.2);
             // when
             Point3D result = point.Reflect(point);
             // then

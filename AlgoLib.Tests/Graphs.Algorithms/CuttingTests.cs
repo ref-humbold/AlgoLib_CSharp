@@ -12,8 +12,8 @@ namespace AlgoLib.Graphs.Algorithms
         public void FindEdgeCut_WhenPresentBridges_ThenBridges()
         {
             // given
-            UndirectedSimpleGraph<int, object, object> graph =
-                new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
+            var graph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
+
             graph.AddEdgeBetween(graph[0], graph[1]);
             graph.AddEdgeBetween(graph[0], graph[2]);
             graph.AddEdgeBetween(graph[0], graph[7]);
@@ -33,16 +33,15 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             IEnumerable<Edge<int>> result = graph.FindEdgeCut();
             // then
-            result.Should().BeEquivalentTo(
-                new List<Edge<int>>() { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
+            result.Should().BeEquivalentTo(graph[graph[0], graph[7]], graph[graph[5], graph[6]]);
         }
 
         [Test]
         public void FindEdgeCut_WhenNoBridges_ThenEmptyList()
         {
             // given
-            UndirectedSimpleGraph<int, object, object> graph =
-                new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
+            var graph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
+
             graph.AddEdgeBetween(graph[0], graph[1]);
             graph.AddEdgeBetween(graph[0], graph[2]);
             graph.AddEdgeBetween(graph[1], graph[2]);
@@ -60,8 +59,8 @@ namespace AlgoLib.Graphs.Algorithms
         public void FindVertexCut_WhenPresentSeparators_ThenSeparators()
         {
             // given
-            UndirectedSimpleGraph<int, object, object> graph =
-                new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
+            var graph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 12));
+
             graph.AddEdgeBetween(graph[0], graph[1]);
             graph.AddEdgeBetween(graph[0], graph[2]);
             graph.AddEdgeBetween(graph[0], graph[7]);
@@ -81,15 +80,15 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             IEnumerable<Vertex<int>> result = graph.FindVertexCut();
             // then
-            result.Should().BeEquivalentTo(new List<Vertex<int>>() { graph[0], graph[1], graph[5], graph[7] });
+            result.Should().BeEquivalentTo(graph[0], graph[1], graph[5], graph[7]);
         }
 
         [Test]
         public void FindVertexCut_WhenNoSeparators_ThenEmptyList()
         {
             // given
-            UndirectedSimpleGraph<int, object, object> graph =
-                new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
+            var graph = new UndirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6));
+
             graph.AddEdgeBetween(graph[0], graph[1]);
             graph.AddEdgeBetween(graph[0], graph[2]);
             graph.AddEdgeBetween(graph[1], graph[2]);

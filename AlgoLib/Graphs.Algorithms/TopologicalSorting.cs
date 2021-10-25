@@ -13,9 +13,9 @@ namespace AlgoLib.Graphs.Algorithms
             if(graph.EdgesCount == 0)
                 return graph.Vertices;
 
-            List<Vertex<TVertexId>> order = new List<Vertex<TVertexId>>();
-            Dictionary<Vertex<TVertexId>, int> inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
-            Heap<Vertex<TVertexId>> vertexHeap = new Heap<Vertex<TVertexId>>();
+            var order = new List<Vertex<TVertexId>>();
+            var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
+            var vertexHeap = new Heap<Vertex<TVertexId>>();
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
             {
@@ -43,7 +43,9 @@ namespace AlgoLib.Graphs.Algorithms
                 }
             }
 
-            return order.Count == graph.VerticesCount ? order : throw new DirectedCyclicGraphException("Given graph contains a cycle");
+            return order.Count == graph.VerticesCount
+                ? order
+                : throw new DirectedCyclicGraphException("Given graph contains a cycle");
         }
 
         public static IEnumerable<Vertex<TVertexId>> SortUsingDfs<TVertexId, TVertexProperty, TEdgeProperty>(
@@ -52,9 +54,9 @@ namespace AlgoLib.Graphs.Algorithms
             if(graph.EdgesCount == 0)
                 return graph.Vertices;
 
-            TopologicalStrategy<TVertexId> strategy = new TopologicalStrategy<TVertexId>();
-            Searching.DfsRecursive(graph, strategy, graph.Vertices);
+            var strategy = new TopologicalStrategy<TVertexId>();
 
+            Searching.DfsRecursive(graph, strategy, graph.Vertices);
             return strategy.order.Reverse<Vertex<TVertexId>>();
         }
 

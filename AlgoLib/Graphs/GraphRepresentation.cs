@@ -35,7 +35,7 @@ namespace AlgoLib.Graphs
         {
             foreach(TVertexId vertexId in vertexIds)
             {
-                Vertex<TVertexId> vertex = new Vertex<TVertexId>(vertexId);
+                var vertex = new Vertex<TVertexId>(vertexId);
 
                 graphDict[vertex] = new HashSet<Edge<TVertexId>>();
             }

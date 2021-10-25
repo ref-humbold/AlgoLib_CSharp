@@ -10,25 +10,32 @@ namespace AlgoLib.Mathmat
         private const int attempts = 17;
         private static readonly Random random = new Random();
 
-        public static IEnumerable<int> Find(int maxNumber) => Find(0, maxNumber);
+        /// <summary>Finds prime numbers less than given number.</summary>
+        /// <param name="maximum">Maximal number, exclusive</param>
+        /// <returns>Enumerable of prime numbers</returns>
+        public static IEnumerable<int> Find(int maximum) => Find(0, maximum);
 
-        public static IEnumerable<int> Find(int minNumber, int maxNumber)
+        /// <summary>Finds prime numbers less inside given range of numbers.</summary>
+        /// <param name="minimum">Minimal number, inclusive</param>
+        /// <param name="maximum">Maximal number, exclusive</param>
+        /// <returns>Enumerable of prime numbers</returns>
+        public static IEnumerable<int> Find(int minimum, int maximum)
         {
-            if(maxNumber < minNumber)
+            if(maximum <= minimum)
                 return Enumerable.Empty<int>();
 
             var primes = new List<int>();
             var isPrime = new List<bool>();
-            var basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maxNumber) / 2)).ToList();
+            var basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maximum) / 2)).ToList();
 
-            for(int i = minNumber; i < maxNumber; ++i)
+            for(int i = minimum; i < maximum; ++i)
                 isPrime.Add(i == 2 || i > 2 && i % 2 != 0);
 
             for(int i = 0; i < basePrimes.Count; ++i)
                 if(basePrimes[i])
                 {
                     int p = 2 * i + 3;
-                    int begin = minNumber < p * p ? p * p - minNumber : (p - minNumber % p) % p;
+                    int begin = minimum < p * p ? p * p - minimum : (p - minimum % p) % p;
 
                     for(int j = (p * p - 3) / 2; j < basePrimes.Count; j += p)
                         basePrimes[j] = false;
@@ -39,7 +46,7 @@ namespace AlgoLib.Mathmat
 
             for(int i = 0; i < isPrime.Count; ++i)
                 if(isPrime[i])
-                    primes.Add(minNumber + i);
+                    primes.Add(minimum + i);
 
             return primes;
         }

@@ -58,7 +58,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void Bfs_WhenUndirectedGraphAndManyRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                 undirectedGraph.Bfs(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
@@ -85,15 +85,15 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                 directedGraph.Bfs(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
-                                                   directedGraph[4], directedGraph[7] });
+            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
+                                           directedGraph[4], directedGraph[7]);
         }
 
         [Test]
         public void Bfs_WhenDirectedGraphAndMultipleRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                 directedGraph.Bfs(strategy, new[] { directedGraph[8], directedGraph[6] });
@@ -124,7 +124,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void DfsIterative_WhenUndirectedGraphAndManyRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                 undirectedGraph.DfsIterative(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
@@ -151,15 +151,15 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                 directedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
-                                                   directedGraph[4], directedGraph[7] });
+            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
+                                           directedGraph[4], directedGraph[7]);
         }
 
         [Test]
         public void DfsIterative_WhenDirectedGraphAndMultipleRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                 directedGraph.DfsIterative(strategy, new[] { directedGraph[8], directedGraph[6] });
@@ -190,7 +190,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void DfsRecursive_WhenUndirectedGraphAndManyRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                     undirectedGraph.DfsRecursive(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
@@ -217,15 +217,15 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                     directedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(new[] { directedGraph[0], directedGraph[1], directedGraph[3],
-                                                   directedGraph[4], directedGraph[7] });
+            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
+                                           directedGraph[4], directedGraph[7]);
         }
 
         [Test]
         public void DfsRecursive_WhenDirectedGraphAndMultipleRoots_ThenAllVertices()
         {
             // given
-            TestingStrategy<int> strategy = new TestingStrategy<int>();
+            var strategy = new TestingStrategy<int>();
             // when
             IEnumerable<Vertex<int>> result =
                 directedGraph.DfsRecursive(strategy, new[] { directedGraph[8], directedGraph[6] });

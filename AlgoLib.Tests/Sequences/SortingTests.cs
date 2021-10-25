@@ -47,7 +47,7 @@ namespace AlgoLib.Sequences
         public void HeapSort_ThenSortedAscending()
         {
             // given
-            List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
             sequence.HeapSort();
             // then
@@ -58,7 +58,7 @@ namespace AlgoLib.Sequences
         public void HeapSort_WhenEmptyList_ThenEmpty()
         {
             // given
-            List<int> sequence = new List<int>();
+            var sequence = new List<int>();
             // when
             sequence.HeapSort();
             // then
@@ -81,7 +81,7 @@ namespace AlgoLib.Sequences
         public void TopDownMergeSort_ThenSortedAscending()
         {
             // given
-            List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
             sequence.TopDownMergeSort();
             // then
@@ -92,7 +92,7 @@ namespace AlgoLib.Sequences
         public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
         {
             // given
-            List<IntPair> sequence = new List<IntPair>() {
+            var sequence = new List<IntPair>() {
                 new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
                 new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
             };
@@ -108,7 +108,7 @@ namespace AlgoLib.Sequences
         public void TopDownMergeSort_WhenEmptyList_ThenEmpty()
         {
             // given
-            List<int> sequence = new List<int>();
+            var sequence = new List<int>();
             // when
             sequence.TopDownMergeSort();
             // then
@@ -131,7 +131,7 @@ namespace AlgoLib.Sequences
         public void BottomUpMergeSort_ThenSortedAscending()
         {
             // given
-            List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
             sequence.BottomUpMergeSort();
             // then
@@ -142,7 +142,7 @@ namespace AlgoLib.Sequences
         public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
         {
             // given
-            List<IntPair> sequence = new List<IntPair>() {
+            var sequence = new List<IntPair>() {
                 new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
                 new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
             };
@@ -158,7 +158,7 @@ namespace AlgoLib.Sequences
         public void BottomUpMergeSort_WhenEmptyList_ThenEmpty()
         {
             // given
-            List<int> sequence = new List<int>();
+            var sequence = new List<int>();
             // when
             sequence.BottomUpMergeSort();
             // then
@@ -181,7 +181,7 @@ namespace AlgoLib.Sequences
         public void QuickSort_ThenSortedAscending()
         {
             // given
-            List<int> sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
             // when
             sequence.QuickSort();
             // then
@@ -192,7 +192,7 @@ namespace AlgoLib.Sequences
         public void QuickSort_WhenEmptyList_ThenEmpty()
         {
             // given
-            List<int> sequence = new List<int>();
+            var sequence = new List<int>();
             // when
             sequence.QuickSort();
             // then

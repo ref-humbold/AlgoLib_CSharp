@@ -12,8 +12,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void FindScc_WhenManyComponents_ThenAllListed()
         {
             // given
-            DirectedSimpleGraph<int, object, object> graph =
-                new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
+            var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 10));
 
             graph.AddEdgeBetween(graph[0], graph[4]);
             graph.AddEdgeBetween(graph[0], graph[5]);
@@ -32,20 +31,19 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             List<HashSet<Vertex<int>>> result = graph.FindScc();
             // then
-            result.Should().BeEquivalentTo(new List<HashSet<Vertex<int>>> {
+            result.Should().BeEquivalentTo(
                 new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
                 new HashSet<Vertex<int>> { graph[2] },
                 new HashSet<Vertex<int>> { graph[5] },
                 new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] }
-            });
+            );
         }
 
         [Test]
         public void FindScc_WhenSingleComponent_ThenAllVertices()
         {
             // given
-            DirectedSimpleGraph<int, object, object> graph =
-                new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 7));
+            var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 7));
 
             graph.AddEdgeBetween(graph[0], graph[1]);
             graph.AddEdgeBetween(graph[1], graph[2]);
@@ -57,24 +55,23 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             List<HashSet<Vertex<int>>> result = graph.FindScc();
             // then
-            result.Should().BeEquivalentTo(new List<HashSet<Vertex<int>>> { new HashSet<Vertex<int>>(graph.Vertices) });
+            result.Should().BeEquivalentTo(new[] { new HashSet<Vertex<int>>(graph.Vertices) });
         }
 
         [Test]
         public void FindScc_WhenEmptyGraph_ThenEachVertexIsComponent()
         {
             // given
-            DirectedSimpleGraph<int, object, object> graph =
-                new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 4));
+            var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 4));
             // when
             List<HashSet<Vertex<int>>> result = graph.FindScc();
             // then
-            result.Should().BeEquivalentTo(new List<HashSet<Vertex<int>>> {
+            result.Should().BeEquivalentTo(
                 new HashSet<Vertex<int>> { graph[0] },
                 new HashSet<Vertex<int>> { graph[1] },
                 new HashSet<Vertex<int>> { graph[2] },
                 new HashSet<Vertex<int>> { graph[3] }
-            });
+            );
         }
     }
 }

@@ -67,7 +67,7 @@ namespace AlgoLib.Structures
         public void AddAll_WhenNewElements_ThenAllAdded()
         {
             // given
-            List<int> elems = new List<int> { 20, 17, 35 };
+            var elems = new List<int> { 20, 17, 35 };
             // when
             testObject.AddRange(elems);
             // then
@@ -172,7 +172,7 @@ namespace AlgoLib.Structures
         public void UnionSet_WhenNewElementsInChain_ThenSameRepresent()
         {
             // given
-            List<int> elems = new List<int> { 20, 17, 35 };
+            var elems = new List<int> { 20, 17, 35 };
             // when
             testObject.AddRange(elems)
                       .UnionSet(elems[0], elems[1])

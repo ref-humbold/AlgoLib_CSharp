@@ -29,11 +29,11 @@ namespace AlgoLib.Structures
         public void Push_Pop_WhenMultipleElements_ThenElementsAccordingToComparer()
         {
             // given
-            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
             // when
             elements.ForEach(e => testObject.Push(e));
 
-            List<int> result = new List<int>();
+            var result = new List<int>();
 
             while(testObject.Count > 0)
                 result.Add(testObject.Pop());
@@ -47,7 +47,7 @@ namespace AlgoLib.Structures
         public void Get_WhenContainsElements_ThenElementAccordingToComparer()
         {
             // given
-            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
 
             elements.ForEach(e => testObject.Push(e));
             // when
@@ -70,7 +70,7 @@ namespace AlgoLib.Structures
         public void TryGet_WhenContainsElements_ThenElementAccordingToComparer()
         {
             // given
-            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
 
             elements.ForEach(e => testObject.Push(e));
             // when
@@ -96,7 +96,7 @@ namespace AlgoLib.Structures
         public void Pop_WhenContainsElements_ThenElementRemoved()
         {
             // given
-            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
 
             elements.ForEach(e => testObject.Push(e));
             // when
@@ -120,7 +120,7 @@ namespace AlgoLib.Structures
         public void TryPop_WhenContainsElements_ThenElementRemoved()
         {
             // given
-            List<int> elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
 
             elements.ForEach(e => testObject.Push(e));
             // when

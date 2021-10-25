@@ -41,7 +41,7 @@ namespace AlgoLib.Structures
         public void GetEnumerator_WhenNotEmpty_ThenSortedElements()
         {
             // given
-            List<int> result = new List<int>();
+            var result = new List<int>();
             IEnumerator<int> enumerator = testObject.GetEnumerator();
             // when
             while(enumerator.MoveNext())
@@ -426,7 +426,7 @@ namespace AlgoLib.Structures
         public void SymmetricExceptWith_WhenPresentAndAbsentElements_ThenPresentRemovedAndAbsentAdded()
         {
             // given
-            List<int> elements = presentNumbers.Union(absentNumbers).ToList();
+            var elements = presentNumbers.Union(absentNumbers).ToList();
             // when
             testObject.SymmetricExceptWith(elements);
             // then

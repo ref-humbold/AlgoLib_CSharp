@@ -12,7 +12,7 @@ namespace AlgoLib.Mathmat
         public void Of_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
         {
             // when
-            Fraction result = Fraction.Of(32, 104);
+            var result = Fraction.Of(32, 104);
             // then
             result.Should().Be(Fraction.Of(4, 13));
         }
@@ -21,7 +21,7 @@ namespace AlgoLib.Mathmat
         public void Of_WhenOnlyNumerator_ThenDenominatorEqualsOne()
         {
             // when
-            Fraction result = Fraction.Of(29);
+            var result = Fraction.Of(29);
             // then
             result.Should().Be(Fraction.Of(29, 1));
         }
@@ -39,7 +39,7 @@ namespace AlgoLib.Mathmat
         public void Of_WhenNumeratorIsNegative_ThenNegativeFraction()
         {
             // when
-            Fraction result = Fraction.Of(-4, 11);
+            var result = Fraction.Of(-4, 11);
             // then
             result.As<IComparable<double>>().Should().BeLessThan(0);
         }
@@ -48,7 +48,7 @@ namespace AlgoLib.Mathmat
         public void Of_WhenDenominatorIsNegative_ThenNegativeFraction()
         {
             // when
-            Fraction result = Fraction.Of(4, -11);
+            var result = Fraction.Of(4, -11);
             // then
             result.As<IComparable<double>>().Should().BeLessThan(0);
         }
@@ -57,7 +57,7 @@ namespace AlgoLib.Mathmat
         public void Of_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
         {
             // when
-            Fraction result = Fraction.Of(-4, -11);
+            var result = Fraction.Of(-4, -11);
             // then
             result.As<IComparable<double>>().Should().BeGreaterThan(0);
         }
@@ -75,7 +75,7 @@ namespace AlgoLib.Mathmat
         public void OperatorUnaryPlus_ThenCopied()
         {
             // given
-            Fraction fraction = Fraction.Of(23, 18);
+            var fraction = Fraction.Of(23, 18);
             // when
             Fraction result = +fraction;
             // then
@@ -150,7 +150,7 @@ namespace AlgoLib.Mathmat
         public void OperatorSlash_WhenByZero_ThenDivideByZeroException()
         {
             // when
-            Action action = () => _ = Fraction.Of(9, 14) / 0;
+            Action action = () => _ = Fraction.Of(9, 14) / Fraction.Of(0);
             // then
             action.Should().Throw<DivideByZeroException>();
         }

@@ -32,7 +32,7 @@ namespace AlgoLib.Geometry.Dim2
         public void Between_ThenVectorFromBeginToEnd()
         {
             // when
-            Vector2D result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
+            var result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
             // then
             result.Should().Be(Vector2D.Of(-3.9, 5.4));
         }
@@ -77,7 +77,7 @@ namespace AlgoLib.Geometry.Dim2
         public void OperatorUnaryPlus_ThenCopied()
         {
             // given
-            Vector2D vector = Vector2D.Of(5.4, 9.0);
+            var vector = Vector2D.Of(5.4, 9.0);
             // when
             Vector2D result = +vector;
             // then

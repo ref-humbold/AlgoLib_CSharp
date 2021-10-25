@@ -48,7 +48,7 @@ namespace AlgoLib.Structures
         public void GetEnumerator_WhenContainsElements_ThenFirstMinimumAndLastMaximum()
         {
             // when
-            List<int> result = new List<int>();
+            var result = new List<int>();
             IEnumerator<int> enumerator = testObject.GetEnumerator();
 
             while(enumerator.MoveNext())
@@ -64,7 +64,7 @@ namespace AlgoLib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
-            List<int> result = new List<int>();
+            var result = new List<int>();
             IEnumerator<int> enumerator = testObject.GetEnumerator();
 
             while(enumerator.MoveNext())

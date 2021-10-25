@@ -12,7 +12,7 @@ namespace AlgoLib.Geometry.Dim2
         public void SortByX_ThenSortedStablyAscending()
         {
             // given
-            List<Point2D> sequence = new List<Point2D> {
+            var sequence = new List<Point2D> {
                 Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
                 Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
                 Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
@@ -29,7 +29,7 @@ namespace AlgoLib.Geometry.Dim2
         public void SortByY_ThenSortedStablyAscending()
         {
             // given
-            List<Point2D> sequence = new List<Point2D> {
+            var sequence = new List<Point2D> {
                 Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
                 Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
                 Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
@@ -46,7 +46,7 @@ namespace AlgoLib.Geometry.Dim2
         public void SortByAngle_ThenSortedStablyAscending()
         {
             // given
-            List<Point2D> sequence = new List<Point2D> {
+            var sequence = new List<Point2D> {
                 Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
                 Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
                 Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
@@ -72,7 +72,7 @@ namespace AlgoLib.Geometry.Dim2
         public void Distance_WhenSamePoint_ThenZero()
         {
             // given
-            Point2D point = Point2D.Of(13.5, 6.5);
+            var point = Point2D.Of(13.5, 6.5);
             // when
             double result = point.Distance(point);
             // then
@@ -92,7 +92,7 @@ namespace AlgoLib.Geometry.Dim2
         public void Translate_WhenZeroVector_ThenSamePoint()
         {
             // given
-            Point2D point = Point2D.Of(13.5, 6.5);
+            var point = Point2D.Of(13.5, 6.5);
             // when
             Point2D result = point.Translate(Vector2D.Of(0.0, 0.0));
             // then
@@ -121,7 +121,7 @@ namespace AlgoLib.Geometry.Dim2
         public void Reflect_WhenSamePoint_ThenSamePoint()
         {
             // given
-            Point2D point = Point2D.Of(13.5, 6.5);
+            var point = Point2D.Of(13.5, 6.5);
             // when
             Point2D result = point.Reflect(point);
             // then
