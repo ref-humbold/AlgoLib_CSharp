@@ -8,6 +8,8 @@ namespace AlgoLib.Mathmat
     [TestFixture]
     public class FractionTests
     {
+        #region Of
+
         [Test]
         public void Of_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
         {
@@ -41,7 +43,7 @@ namespace AlgoLib.Mathmat
             // when
             var result = Fraction.Of(-4, 11);
             // then
-            result.As<IComparable<double>>().Should().BeLessThan(0);
+            result.As<IComparable<int>>().Should().BeLessThan(0);
         }
 
         [Test]
@@ -50,7 +52,7 @@ namespace AlgoLib.Mathmat
             // when
             var result = Fraction.Of(4, -11);
             // then
-            result.As<IComparable<double>>().Should().BeLessThan(0);
+            result.As<IComparable<int>>().Should().BeLessThan(0);
         }
 
         [Test]
@@ -59,17 +61,109 @@ namespace AlgoLib.Mathmat
             // when
             var result = Fraction.Of(-4, -11);
             // then
-            result.As<IComparable<double>>().Should().BeGreaterThan(0);
+            result.As<IComparable<int>>().Should().BeGreaterThan(0);
+        }
+
+        #endregion
+        #region cast operators
+
+        [Test]
+        public void OperatorDouble_WhenToDouble_ThenDobuleValue()
+        {
+            // when
+            double result = (double)Fraction.Of(-129, 20);
+            // then
+            result.Should().Be(-6.45);
         }
 
         [Test]
-        public void OperatorEqual_WhenSameButNormalization_ThenTrue()
+        public void OperatorInt_WhenToInt_ThenIntegerValueRoundedTowardsZero()
         {
             // when
-            bool result = Fraction.Of(20, 12) == Fraction.Of(5, 3);
+            int result = (int)Fraction.Of(-129, 20);
+            // then
+            result.Should().Be(-6);
+        }
+
+        [Test]
+        public void OperatorInt_WhenFromInt_ThenFractionValue()
+        {
+            // when
+            Fraction result = 18;
+            // then
+            result.Should().Be(Fraction.Of(18));
+        }
+
+        #endregion
+        #region comparison operators
+
+        [Test]
+        public void OperatorEqual_WhenSameNormalizedFraction_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(9, 15) == Fraction.Of(3, 5);
             // then
             result.Should().BeTrue();
         }
+
+        [Test]
+        public void OperatorEqual_WhenEqualToInt_ThenTrue()
+        {
+            // when
+            bool result1 = Fraction.Of(125, 5) == 25;
+            bool result2 = 25 == Fraction.Of(125, 5);
+            // then
+            result1.Should().BeTrue();
+            result2.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorNotEqual_WhenDifferentFraction_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(9, 14) != Fraction.Of(3, 5);
+            // then
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(9, 14) < Fraction.Of(17, 14);
+            // then
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorLess_WhenLessThanInt_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(-31, 6) < -4;
+            // then
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(9, 14) > Fraction.Of(9, 26);
+            // then
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void OperatorGreater_WhenGreaterThanLong_ThenTrue()
+        {
+            // when
+            bool result = Fraction.Of(11, 3) > 2L;
+            // then
+            result.Should().BeTrue();
+        }
+
+        #endregion
+        #region unary operators
 
         [Test]
         public void OperatorUnaryPlus_ThenCopied()
@@ -109,6 +203,9 @@ namespace AlgoLib.Mathmat
             // then
             action.Should().Throw<InvalidOperationException>();
         }
+
+        #endregion
+        #region binary operators
 
         [Test]
         public void OperatorPlus_WhenFraction_ThenDenominatorEqualsLCM()
@@ -155,6 +252,18 @@ namespace AlgoLib.Mathmat
             action.Should().Throw<DivideByZeroException>();
         }
 
+        #endregion
+        #region CompareTo
+
+        [Test]
+        public void CompareTo_WhenSameNormalizedFraction_ThenZero()
+        {
+            // when
+            int result = Fraction.Of(-35, 14).CompareTo(Fraction.Of(5, -2));
+            // then
+            result.Should().Be(0);
+        }
+
         [Test]
         public void CompareTo_WhenFraction_ThenCompared()
         {
@@ -165,21 +274,23 @@ namespace AlgoLib.Mathmat
         }
 
         [Test]
-        public void CompareTo_WhenDouble_ThenCompared()
-        {
-            // when
-            int result = Fraction.Of(25, 7).CompareTo(1.5);
-            // then
-            result.Should().BeGreaterThan(0);
-        }
-
-        [Test]
-        public void CompareTo_WhenInteger_ThenCompared()
+        public void CompareTo_WhenInt_ThenCompared()
         {
             // when
             int result = Fraction.Of(-25, 7).CompareTo(-2);
             // then
             result.Should().BeLessThan(0);
         }
+
+        [Test]
+        public void CompareTo_WhenLong_ThenCompared()
+        {
+            // when
+            int result = Fraction.Of(25, 7).CompareTo(2L);
+            // then
+            result.Should().BeGreaterThan(0);
+        }
+
+        #endregion
     }
 }
