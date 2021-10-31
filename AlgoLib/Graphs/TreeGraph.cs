@@ -43,8 +43,8 @@ namespace AlgoLib.Graphs
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
             graph.AsDirected();
 
-        /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
-        /// <param name="vertexId">Vertex identifier</param>
+        /// <summary>Adds new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <param name="vertexId">Identifier of new vertex</param>
         /// <param name="neighbour">Existing vertex</param>
         /// <param name="vertexProperty">Vertex property</param>
         /// <param name="edgeProperty">Edge property</param>
@@ -55,7 +55,7 @@ namespace AlgoLib.Graphs
                                         TEdgeProperty edgeProperty = default)
             => AddVertex(new Vertex<TVertexId>(vertexId), neighbour, vertexProperty, edgeProperty);
 
-        /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <summary>Adds new vertex to this graph and creates an edge to an existing vertex.</summary>
         /// <param name="vertex">New vertex</param>
         /// <param name="neighbour">Existing vertex</param>
         /// <param name="vertexProperty">Vertex property</param>

@@ -245,5 +245,15 @@ namespace AlgoLib.Graphs
             // then
             action.Should().Throw<GraphPartitionException>();
         }
+
+        [Test]
+        public void AddEdge_WhenInvalidVertex_ThenArgumentException()
+        {
+            // when
+            Action action = () => testObject.AddEdgeBetween(new Vertex<int>(15), new Vertex<int>(18));
+
+            // then
+            action.Should().Throw<ArgumentException>();
+        }
     }
 }

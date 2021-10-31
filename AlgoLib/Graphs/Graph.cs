@@ -11,46 +11,58 @@ namespace AlgoLib.Graphs
             get;
         }
 
-        /// <summary>Number of vertices.</summary>
+        /// <summary>Gets the number of vertices in this graph.</summary>
+        /// <value>Number of vertices</value>
         int VerticesCount
         {
             get;
         }
 
-        /// <summary>Number of edges.</summary>
+        /// <summary>Gets the number of edges in this graph.</summary>
+        /// <value>Number of edges</value>
         int EdgesCount
         {
             get;
         }
 
-        /// <summary>Enumerable of all vertices.</summary>
+        /// <summary>Gets all vertices in this graph.</summary>
+        /// <value>Enumerable of all vertices</value>
         IEnumerable<Vertex<TVertexId>> Vertices
         {
             get;
         }
 
-        /// <summary>Enumerable of all edges.</summary>
+        /// <summary>Gets all edges in this graph.</summary>
+        /// <value>Enumerable of all edges</value>
         IEnumerable<Edge<TVertexId>> Edges
         {
             get;
         }
 
-        /// <summary>Vertex with given identifier.</summary>
-        /// <exception cref="KeyNotFoundException">If no such vertex in this graph</exception>
+        /// <summary>Gets the vertex from this graph with given identifier.</summary>
+        /// <value>Vertex with the identifier</value>
+        /// <param name="vertexId">Vertex identifier.</param>
+        /// <exception cref="KeyNotFoundException">If no such vertex</exception>
         Vertex<TVertexId> this[TVertexId vertexId]
         {
             get;
         }
 
-        /// <summary>Edge between given vertices.</summary>
-        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        /// <summary>Gets the edge between given vertices.</summary>
+        /// <value>Edge between the vertices</value>
+        /// <param name="sourceId">Source vertex identifier</param>
+        /// <param name="destinationId">Destination vertex identifier</param>
+        /// <exception cref="KeyNotFoundException">If no such edge</exception>
         Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId]
         {
             get;
         }
 
-        /// <summary>Edge between given vertices.</summary>
-        /// <exception cref="KeyNotFoundException">If no such edge in this graph</exception>
+        /// <summary>Gets the edge between given vertices.</summary>
+        /// <value>Edge between the vertices</value>
+        /// <param name="source">Source vertex</param>
+        /// <param name="destination">Destination vertex</param>
+        /// <exception cref="KeyNotFoundException">If no such edge</exception>
         Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
@@ -72,14 +84,18 @@ namespace AlgoLib.Graphs
 
         public interface IGraphProperties
         {
-            /// <summary>Property of a vertex from this graph.</summary>
+            /// <summary>Gets or sets property for given vertex.</summary>
+            /// <value>Property of the vertex</value>
+            /// <param name="vertex">Vertex from this graph</param>
             TVertexProperty this[Vertex<TVertexId> vertex]
             {
                 get;
                 set;
             }
 
-            /// <summary>Property of an edge from this graph.</summary>
+            /// <summary>Gets or sets property for given edge.</summary>
+            /// <value>Property of the edge</value>
+            /// <param name="edge">Edge from this graph</param>
             TEdgeProperty this[Edge<TVertexId> edge]
             {
                 get;
@@ -112,6 +128,9 @@ namespace AlgoLib.Graphs
             Destination = destination;
         }
 
+        /// <param name="vertex">Vertex adjacent to this edge</param>
+        /// <returns>Neighbour of the vertex along this edge</returns>
+        /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge</exception>
         public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
             if(Source.Equals(vertex))
@@ -123,6 +142,7 @@ namespace AlgoLib.Graphs
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
         }
 
+        /// <returns>Edge with reversed direction</returns>
         public Edge<TVertexId> Reversed() => new Edge<TVertexId>(Destination, Source);
 
         public override bool Equals(object obj) =>

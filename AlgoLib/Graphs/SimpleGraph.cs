@@ -52,10 +52,10 @@ namespace AlgoLib.Graphs
         public abstract int GetInputDegree(Vertex<TVertexId> vertex);
 
         /// <summary>Adds new vertex with given property to this graph.</summary>
-        /// <param name="vertexId">Vertex identifier</param>
+        /// <param name="vertexId">Identifier of new vertex</param>
         /// <param name="property">Vertex property</param>
         /// <returns>New vertex</returns>
-        /// <exception cref="ArgumentException">If vertex exists in the graph</exception>
+        /// <exception cref="ArgumentException">If vertex already exists</exception>
         public Vertex<TVertexId> AddVertex(TVertexId vertexId, TVertexProperty property = default) =>
             AddVertex(new Vertex<TVertexId>(vertexId), property);
 
@@ -63,7 +63,7 @@ namespace AlgoLib.Graphs
         /// <param name="vertex">New vertex</param>
         /// <param name="property">Vertex property</param>
         /// <returns>New vertex</returns>
-        /// <exception cref="ArgumentException">If vertex exists in the graph</exception>
+        /// <exception cref="ArgumentException">If vertex already exists</exception>
         public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex, TVertexProperty property = default)
         {
             bool wasAdded = representation.addVertex(vertex);
@@ -82,7 +82,7 @@ namespace AlgoLib.Graphs
         /// <param name="destination">Destination vertex</param>
         /// <param name="property">Edge property</param>
         /// <returns>New edge</returns>
-        /// <exception cref="ArgumentException">If edge exists in the graph</exception>
+        /// <exception cref="ArgumentException">If edge already exists</exception>
         public Edge<TVertexId> AddEdgeBetween(Vertex<TVertexId> source,
                                               Vertex<TVertexId> destination,
                                               TEdgeProperty property = default) =>
@@ -92,7 +92,7 @@ namespace AlgoLib.Graphs
         /// <param name="edge">New edge</param>
         /// <param name="property">Edge property</param>
         /// <returns>New edge</returns>
-        /// <exception cref="ArgumentException">If edge exists in the graph</exception>
+        /// <exception cref="ArgumentException">If edge already exists</exception>
         public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default);
 
         private class GraphPropertiesImpl : IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties
