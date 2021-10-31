@@ -88,7 +88,7 @@ namespace AlgoLib.Graphs
         }
 
         [Test]
-        public void IndexerGetVertex_WhenExists_ThenVertex()
+        public void Indexer_WhenVertexExists_ThenVertex()
         {
             // given
             int vertexId = 4;
@@ -99,7 +99,7 @@ namespace AlgoLib.Graphs
         }
 
         [Test]
-        public void IndexerGetEdge_WhenExists_ThenEdge()
+        public void Indexer_WhenEdgeExists_ThenEdge()
         {
             // given
             Vertex<int> source = testObject[5];
@@ -177,7 +177,7 @@ namespace AlgoLib.Graphs
 
             testObject.Properties[vertex] = property;
             // when
-            Action action = () => testObject.AddVertex(vertex.Id, testObject[2], "abcdefg", "xyz");
+            Action action = () => testObject.AddVertex(vertex, testObject[2], "abcdefg", "xyz");
             // then
             action.Should().Throw<ArgumentException>();
             testObject.VerticesCount.Should().Be(8);

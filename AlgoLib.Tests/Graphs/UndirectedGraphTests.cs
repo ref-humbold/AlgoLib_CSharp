@@ -106,11 +106,11 @@ namespace AlgoLib.Graphs
             // then
             result.Should().BeEquivalentTo(
                 new[] { new Edge<int>(new Vertex<int>(7), new Vertex<int>(7)),
-                         new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
-                         new Edge<int>(new Vertex<int>(2), new Vertex<int>(4)),
-                         new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
-                         new Edge<int>(new Vertex<int>(6), new Vertex<int>(3)),
-                         new Edge<int>(new Vertex<int>(9), new Vertex<int>(3)) });
+                        new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
+                        new Edge<int>(new Vertex<int>(2), new Vertex<int>(4)),
+                        new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
+                        new Edge<int>(new Vertex<int>(6), new Vertex<int>(3)),
+                        new Edge<int>(new Vertex<int>(9), new Vertex<int>(3)) });
         }
 
         [Test]

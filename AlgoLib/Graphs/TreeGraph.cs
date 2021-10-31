@@ -53,9 +53,21 @@ namespace AlgoLib.Graphs
                                         Vertex<TVertexId> neighbour,
                                         TVertexProperty vertexProperty = default,
                                         TEdgeProperty edgeProperty = default)
+            => AddVertex(new Vertex<TVertexId>(vertexId), neighbour, vertexProperty, edgeProperty);
+
+        /// <summary>Adds a new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <param name="vertex">New vertex</param>
+        /// <param name="neighbour">Existing vertex</param>
+        /// <param name="vertexProperty">Vertex property</param>
+        /// <param name="edgeProperty">Edge property</param>
+        /// <returns>Edge between the vertices</returns>
+        public Edge<TVertexId> AddVertex(Vertex<TVertexId> vertex,
+                                         Vertex<TVertexId> neighbour,
+                                         TVertexProperty vertexProperty = default,
+                                         TEdgeProperty edgeProperty = default)
         {
-            Vertex<TVertexId> vertex = graph.AddVertex(vertexId, vertexProperty);
-            return graph.AddEdgeBetween(vertex, neighbour, edgeProperty);
+            Vertex<TVertexId> newVertex = graph.AddVertex(vertex, vertexProperty);
+            return graph.AddEdgeBetween(newVertex, neighbour, edgeProperty);
         }
     }
 }
