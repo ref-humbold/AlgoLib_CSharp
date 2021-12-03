@@ -6,56 +6,54 @@ namespace AlgoLib.Geometry.Dim2
     public static class ClosestPoints
     {
         /// <summary>Searches for a pair closest of points among given points.</summary>
-        /// <param name="points">A list of points</param>
+        /// <param name="points">List of points</param>
         /// <returns>Pair of closest points</returns>
         public static (Point2D, Point2D) Find(List<Point2D> points) =>
             searchClosest(Geometry2D.SortByX(points), Geometry2D.SortByY(points), 0, -1);
 
         // Finds closest pair of points among three of them.
-        private static (Point2D, Point2D) searchThree(List<Point2D> pointsX, int index_begin,
-                                                      int index_end)
+        private static (Point2D, Point2D) searchThree(List<Point2D> pointsX, int indexBegin,
+                                                      int indexEnd)
         {
-            int index_middle = index_begin + 1;
-            double distance12 = Geometry2D.Distance(pointsX[index_begin], pointsX[index_middle]);
-            double distance23 = Geometry2D.Distance(pointsX[index_middle], pointsX[index_end]);
-            double distance31 = Geometry2D.Distance(pointsX[index_begin], pointsX[index_end]);
+            int indexMiddle = indexBegin + 1;
+            double distance12 = Geometry2D.Distance(pointsX[indexBegin], pointsX[indexMiddle]);
+            double distance23 = Geometry2D.Distance(pointsX[indexMiddle], pointsX[indexEnd]);
+            double distance31 = Geometry2D.Distance(pointsX[indexBegin], pointsX[indexEnd]);
 
-            if(distance12 <= distance23 && distance12 <= distance31)
-                return (pointsX[index_begin], pointsX[index_middle]);
-
-            if(distance23 <= distance12 && distance23 <= distance31)
-                return (pointsX[index_middle], pointsX[index_end]);
-
-            return (pointsX[index_begin], pointsX[index_end]);
+            return distance12 <= distance23 && distance12 <= distance31
+                ? (pointsX[indexBegin], pointsX[indexMiddle])
+                : distance23 <= distance12 && distance23 <= distance31
+                ? (pointsX[indexMiddle], pointsX[indexEnd])
+                : (pointsX[indexBegin], pointsX[indexEnd]);
         }
 
         // Finds closest pair inside a belt of given width. The resulting distance should not be
         // less than belt width.
         private static (Point2D, Point2D)? checkBelt(List<Point2D> pointsY, double middleX,
-                                                     double beltWidth)
+                                                     double width)
         {
             (Point2D, Point2D)? closestPoints = null;
             var beltPoints = new List<int>();
-            double minDistance = beltWidth;
+            double minDistance = width;
 
-            for(int i = 0; i < pointsY.Count; ++i)
-                if(pointsY[i].X >= middleX - beltWidth && pointsY[i].X <= middleX + beltWidth)
+            for (int i = 0; i < pointsY.Count; ++i)
+                if (pointsY[i].X >= middleX - width && pointsY[i].X <= middleX + width)
                     beltPoints.Add(i);
 
-            for(int i = 1; i < beltPoints.Count; ++i)
-                for(int j = i + 1; j < beltPoints.Count; ++j)
+            for (int i = 0; i < beltPoints.Count; ++i)
+                for (int j = i + 1; j < beltPoints.Count; ++j)
                 {
                     Point2D pt1 = pointsY[beltPoints[i]];
                     Point2D pt2 = pointsY[beltPoints[j]];
 
-                    if(pt2.Y > pt1.Y + beltWidth)
+                    if (pt2.Y > pt1.Y + width)
                         break;
 
-                    if(pt1.X <= middleX && pt2.X > middleX || pt1.X > middleX && pt2.X <= middleX)
+                    if (pt1.X <= middleX && pt2.X > middleX || pt1.X > middleX && pt2.X <= middleX)
                     {
                         double actualDistance = Geometry2D.Distance(pt1, pt2);
 
-                        if(actualDistance < minDistance)
+                        if (actualDistance < minDistance)
                         {
                             minDistance = actualDistance;
                             closestPoints = (pt1, pt2);
@@ -69,33 +67,35 @@ namespace AlgoLib.Geometry.Dim2
         // Searches for a pair of closest points in given sublist of points. Points are given sorted
         // by X coordinate and by Y coordinate. (index_begin & index_end inclusive)
         private static (Point2D, Point2D) searchClosest(List<Point2D> pointsX, List<Point2D> pointsY,
-                                                        int index_begin, int index_end)
+                                                        int indexBegin, int indexEnd)
         {
-            index_begin = (index_begin + pointsX.Count) % pointsX.Count;
-            index_end = (index_end + pointsX.Count) % pointsX.Count;
+            indexBegin = (indexBegin + pointsX.Count) % pointsX.Count;
+            indexEnd = (indexEnd + pointsX.Count) % pointsX.Count;
 
-            if(index_end - index_begin <= 1)
-                return (pointsX[index_begin], pointsX[index_end]);
+            if (indexEnd - indexBegin <= 1)
+                return (pointsX[indexBegin], pointsX[indexEnd]);
 
-            if(index_end - index_begin == 2)
-                return searchThree(pointsX, index_begin, index_end);
+            if (indexEnd - indexBegin == 2)
+                return searchThree(pointsX, indexBegin, indexEnd);
 
-            int index_middle = (index_begin + index_end) / 2;
-            double middleX = (pointsX[index_middle].X + pointsX[index_middle + 1].X) / 2;
-            var pointsYL = new List<Point2D>();
-            var pointsYR = new List<Point2D>();
+            int indexMiddle = (indexBegin + indexEnd) / 2;
+            double middleX = (pointsX[indexMiddle].X + pointsX[indexMiddle + 1].X) / 2;
+            var pointsYLeft = new List<Point2D>();
+            var pointsYRight = new List<Point2D>();
 
-            foreach(Point2D pt in pointsY)
-                if(pt.X <= index_middle)
-                    pointsYL.Add(pt);
+            foreach (Point2D pt in pointsY)
+                if (pt.X <= indexMiddle)
+                    pointsYLeft.Add(pt);
                 else
-                    pointsYR.Add(pt);
+                    pointsYRight.Add(pt);
 
-            (Point2D, Point2D) closestL = searchClosest(pointsX, pointsYL, index_begin, index_middle);
-            (Point2D, Point2D) closestR = searchClosest(pointsX, pointsYR, index_middle + 1, index_end);
+            (Point2D, Point2D) closestLeft = searchClosest(pointsX, pointsYLeft, indexBegin, indexMiddle);
+            (Point2D, Point2D) closestRight = searchClosest(pointsX, pointsYRight, indexMiddle + 1,
+                                                            indexEnd);
             (Point2D, Point2D) closestPoints =
-                    Geometry2D.Distance(closestL.Item1, closestL.Item2)
-                        <= Geometry2D.Distance(closestR.Item1, closestR.Item2) ? closestL : closestR;
+                    Geometry2D.Distance(closestLeft.Item1, closestLeft.Item2)
+                        <= Geometry2D.Distance(closestRight.Item1, closestRight.Item2)
+                        ? closestLeft : closestRight;
             (Point2D, Point2D)? beltPoints = checkBelt(pointsY, middleX,
                                                        Geometry2D.Distance(closestPoints.Item1,
                                                                            closestPoints.Item2));

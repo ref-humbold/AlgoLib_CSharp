@@ -133,10 +133,10 @@ namespace AlgoLib.Graphs
         /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge</exception>
         public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
-            if(Source.Equals(vertex))
+            if (Source.Equals(vertex))
                 return Destination;
 
-            if(Destination.Equals(vertex))
+            if (Destination.Equals(vertex))
                 return Source;
 
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
