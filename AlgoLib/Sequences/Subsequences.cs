@@ -125,8 +125,8 @@ namespace AlgoLib.Sequences
         }
 
         // Searches for place of element in list of subsequences.
-        private static int searchIndex<T>(in IList<T> sequence, in Comparison<T> comparison,
-                                          in List<int> subseqLast, in int indexElem, int indexBegin,
+        private static int searchIndex<T>(IList<T> sequence, Comparison<T> comparison,
+                                          IList<int> subsequence, int indexElem, int indexBegin,
                                           int indexEnd)
         {
             if(indexEnd - indexBegin <= 1)
@@ -134,9 +134,9 @@ namespace AlgoLib.Sequences
 
             int indexMiddle = (indexBegin + indexEnd - 1) / 2;
 
-            return comparison.Invoke(sequence[indexElem], sequence[subseqLast[indexMiddle]]) > 0
-                ? searchIndex(sequence, comparison, subseqLast, indexElem, indexMiddle + 1, indexEnd)
-                : searchIndex(sequence, comparison, subseqLast, indexElem, indexBegin, indexMiddle);
+            return comparison.Invoke(sequence[indexElem], sequence[subsequence[indexMiddle]]) > 0
+                ? searchIndex(sequence, comparison, subsequence, indexElem, indexMiddle + 1, indexEnd)
+                : searchIndex(sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
         }
     }
 }

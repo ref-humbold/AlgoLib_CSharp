@@ -44,6 +44,17 @@ namespace AlgoLib.Sequences
         }
 
         [Test]
+        public void LongestIncreasing_WhenSearchInMiddle_ThenLeastLexicographically()
+        {
+            // given
+            var sequence = new List<int> { 0, 2, 4, 6, 8, 3, 5, 7, 8 };
+            // when
+            IEnumerable<int> result = sequence.LongestIncreasing(Comparer<int>.Default);
+            // then
+            result.Should().Equal(0, 2, 3, 5, 7, 8);
+        }
+
+        [Test]
         public void LongestIncreasing_WhenIncreasingAndReversedComparator_ThenLastElementOnly()
         {
             // given
