@@ -6,15 +6,15 @@ namespace AlgoLib.Geometry.Dim2
 {
     public static class ConvexHull
     {
-        /// <summary>Constructs a convex hull of given points.</summary>
-        /// <param name="points">A list of points</param>
-        /// <returns>List of hull points</returns>
-        public static IEnumerable<Point2D> Find(List<Point2D> points)
+        /// <summary>Constructs convex hull of given points.</summary>
+        /// <param name="points">Enumerable of points</param>
+        /// <returns>Enumerable of hull points</returns>
+        public static IEnumerable<Point2D> Find(IEnumerable<Point2D> points)
         {
-            if(points.Count < 3)
+            if(points.Count() < 3)
                 return Enumerable.Empty<Point2D>();
 
-            List<Point2D> sorted = Geometry2D.SortByX(points);
+            List<Point2D> sorted = Geometry2D.SortByX(points.ToList());
             List<Point2D> lowerHull = createHalfHull(sorted);
             List<Point2D> upperHull = createHalfHull(Enumerable.Reverse(sorted));
 
