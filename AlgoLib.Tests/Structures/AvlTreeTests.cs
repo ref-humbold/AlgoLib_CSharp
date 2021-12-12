@@ -6,22 +6,22 @@ using NUnit.Framework;
 namespace AlgoLib.Structures
 {
     [TestFixture]
-    public class AVLTreeTests
+    public class AvlTreeTests
     {
         private readonly int[] numbers = new int[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
         private readonly int[] presentNumbers = new int[] { 14, 24, 30, 45 };
         private readonly int[] absentNumbers = new int[] { 111, 140, 187 };
 
-        private AVLTree<int> testObject;
+        private AvlTree<int> testObject;
 
         [SetUp]
-        public void SetUp() => testObject = new AVLTree<int>(numbers);
+        public void SetUp() => testObject = new AvlTree<int>(numbers);
 
         [Test]
         public void Count_WhenEmpty_ThenZero()
         {
             // given
-            testObject = new AVLTree<int>();
+            testObject = new AvlTree<int>();
             // when
             int result = testObject.Count;
             // then
@@ -121,7 +121,7 @@ namespace AlgoLib.Structures
             int root = 27;
             int elem = 11;
 
-            testObject = new AVLTree<int>(new int[] { root, elem });
+            testObject = new AvlTree<int>(new int[] { root, elem });
             // when
             bool result = testObject.Remove(root);
             // then
@@ -137,7 +137,7 @@ namespace AlgoLib.Structures
             int root = 11;
             int elem = 27;
 
-            testObject = new AVLTree<int>(new int[] { root, elem });
+            testObject = new AvlTree<int>(new int[] { root, elem });
             // when
             bool result = testObject.Remove(root);
             // then
@@ -152,7 +152,7 @@ namespace AlgoLib.Structures
             // given
             int root = 0;
 
-            testObject = new AVLTree<int>(new int[] { root });
+            testObject = new AvlTree<int>(new int[] { root });
             // when
             bool result = testObject.Remove(root);
             // then
@@ -165,7 +165,7 @@ namespace AlgoLib.Structures
         public void Remove_WhenEmpty_ThenFalse()
         {
             // given
-            testObject = new AVLTree<int>();
+            testObject = new AvlTree<int>();
             // when
             bool result = testObject.Remove(0);
             // then
