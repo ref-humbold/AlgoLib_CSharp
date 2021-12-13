@@ -1,19 +1,19 @@
-﻿// Knuth-Morris-Pratt algorithm
+﻿// Knuth-Morris-Pratt algorithm for pattern searching
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Text
 {
-    public static class Kmp
+    public static class KnuthMorrisPratt
     {
         /// <summary>
         /// Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
         /// </summary>
-        /// <param name="text">Text to search in</param>
-        /// <param name="pattern">Pattern to search for</param>
-        /// <returns>Enumerable of pattern occurrence positions</returns>
-        public static IEnumerable<int> KmpSearch(this string text, string pattern)
+        /// <param name="text">A text</param>
+        /// <param name="pattern">A pattern</param>
+        /// <returns>Enumerable of indices with pattern occurrences</returns>
+        public static IEnumerable<int> Search(this string text, string pattern)
         {
             if(text == null)
                 throw new ArgumentNullException("Text is null");
@@ -46,7 +46,7 @@ namespace AlgoLib.Text
             return places;
         }
 
-        // Counts values of Knuth's PI prefix function for given pattern.
+        // Computes Knuth's PI prefix function values for specified pattern.
         private static List<int> prefixes(string pattern)
         {
             var pi = new List<int>() { 0 };

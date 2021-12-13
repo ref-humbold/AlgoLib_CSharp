@@ -1,4 +1,4 @@
-﻿// Tests: Knuth-Morris-Pratt algorithm
+﻿// Tests: Knuth-Morris-Pratt algorithm for pattern searching
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
@@ -7,76 +7,76 @@ using NUnit.Framework;
 namespace AlgoLib.Text
 {
     [TestFixture]
-    public class KmpTests
+    public class KnuthMorrisPrattTests
     {
         [Test]
-        public void KmpSearch_WhenPatternFoundOnce_ThenSingleOccurrence()
+        public void Search_WhenPatternFoundOnce_ThenSingleOccurrence()
         {
             // when
-            IEnumerable<int> result = "abcde".KmpSearch("a");
+            IEnumerable<int> result = "abcde".Search("a");
             // then
             result.Should().ContainInOrder(0);
         }
 
         [Test]
-        public void KmpSearch_WhenPatternFoundTwice_ThenTwoOccurrences()
+        public void Search_WhenPatternFoundTwice_ThenTwoOccurrences()
         {
             // when
-            IEnumerable<int> result = "abcdae".KmpSearch("a");
+            IEnumerable<int> result = "abcdae".Search("a");
             // then
             result.Should().ContainInOrder(0, 4);
         }
 
         [Test]
-        public void KmpSearch_WhenPatternFoundTwiceAndIntersects_ThenTwoOccurrences()
+        public void Search_WhenPatternFoundTwiceAndIntersects_ThenTwoOccurrences()
         {
             // when
-            IEnumerable<int> result = "aaabcde".KmpSearch("aa");
+            IEnumerable<int> result = "aaabcde".Search("aa");
             // then
             result.Should().ContainInOrder(0, 1);
         }
 
         [Test]
-        public void KmpSearch_WhenPatternNotFound_ThenEmpty()
+        public void Search_WhenPatternNotFound_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = "abcde".KmpSearch("x");
+            IEnumerable<int> result = "abcde".Search("x");
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void KmpSearch_WhenPatternIsEmptystring_ThenEmpty()
+        public void Search_WhenPatternIsEmptystring_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = "abcde".KmpSearch("");
+            IEnumerable<int> result = "abcde".Search("");
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void KmpSearch_WhenTextIsEmptystring_ThenEmpty()
+        public void Search_WhenTextIsEmptystring_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = "".KmpSearch("a");
+            IEnumerable<int> result = "".Search("a");
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void KmpSearch_WhenTextIsNull_ThenArgumentNullException()
+        public void Search_WhenTextIsNull_ThenArgumentNullException()
         {
             // when
-            Action action = () => Kmp.KmpSearch(null, "a");
+            Action action = () => KnuthMorrisPratt.Search(null, "a");
             // then
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Test]
-        public void KmpSearch_WhenPatternIsNull_ThenArgumentNullException()
+        public void Search_WhenPatternIsNull_ThenArgumentNullException()
         {
             // when
-            Action action = () => "abcde".KmpSearch(null);
+            Action action = () => "abcde".Search(null);
             // then
             action.Should().Throw<ArgumentNullException>();
         }
