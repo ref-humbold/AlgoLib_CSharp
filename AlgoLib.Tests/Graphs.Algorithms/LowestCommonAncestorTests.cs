@@ -27,62 +27,62 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void Find_WhenSameVertex_ThenVertexIsLCA()
+        public void FindLca_WhenSameVertex_ThenVertexIsLCA()
         {
             // given
             Vertex<int> vertex = tree[6];
             // when
-            Vertex<int> result = testObject.Find(vertex, vertex);
+            Vertex<int> result = testObject.FindLca(vertex, vertex);
             // then
             result.Should().Be(vertex);
         }
 
         [Test]
-        public void Find_WhenVerticesInDifferentSubtrees_ThenLCA()
+        public void FindLca_WhenVerticesInDifferentSubtrees_ThenLCA()
         {
             // when
-            Vertex<int> result = testObject.Find(tree[5], tree[7]);
+            Vertex<int> result = testObject.FindLca(tree[5], tree[7]);
             // then
             result.Should().Be(tree[1]);
         }
 
         [Test]
-        public void Find_WhenVerticesSwapped_ThenSameLCA()
+        public void FindLca_WhenVerticesSwapped_ThenSameLCA()
         {
             // when
-            Vertex<int> result1 = testObject.Find(tree[5], tree[7]);
-            Vertex<int> result2 = testObject.Find(tree[7], tree[5]);
+            Vertex<int> result1 = testObject.FindLca(tree[5], tree[7]);
+            Vertex<int> result2 = testObject.FindLca(tree[7], tree[5]);
             // then
             result1.Should().Be(tree[1]);
             result2.Should().Be(result1);
         }
 
         [Test]
-        public void Find_WhenRootIsCommonAncestor_ThenRoot()
+        public void FindLca_WhenRootIsCommonAncestor_ThenRoot()
         {
             // when
-            Vertex<int> result = testObject.Find(tree[3], tree[9]);
+            Vertex<int> result = testObject.FindLca(tree[3], tree[9]);
             // then
             result.Should().Be(testObject.Root);
         }
 
         [Test]
-        public void Find_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot()
+        public void FindLca_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot()
         {
             //given
             Vertex<int> vertex1 = tree[8];
             Vertex<int> vertex2 = tree[2];
             // when
-            Vertex<int> result = testObject.Find(vertex1, vertex2);
+            Vertex<int> result = testObject.FindLca(vertex1, vertex2);
             // then
             result.Should().Be(vertex2);
         }
 
         [Test]
-        public void Find_WhenRootIsOneOfVertices_ThenRoot()
+        public void FindLca_WhenRootIsOneOfVertices_ThenRoot()
         {
             // when
-            Vertex<int> result = testObject.Find(tree[4], testObject.Root);
+            Vertex<int> result = testObject.FindLca(tree[4], testObject.Root);
             // then
             result.Should().Be(testObject.Root);
         }

@@ -9,41 +9,41 @@ namespace AlgoLib.Geometry.Dim2
     public class ConvexHullTest
     {
         [Test]
-        public void Find_WhenOnePoint_ThenEmpty()
+        public void FindConvexHull_WhenOnePoint_ThenEmpty()
         {
             // when
-            IEnumerable<Point2D> result = ConvexHull.Find(new Point2D[] { Point2D.Of(3.0, 2.0) });
+            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(new Point2D[] { Point2D.Of(3.0, 2.0) });
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void Find_WhenTwoPoints_ThenEmpty()
+        public void FindConvexHull_WhenTwoPoints_ThenEmpty()
         {
             // when
             IEnumerable<Point2D> result =
-                ConvexHull.Find(new Point2D[] { Point2D.Of(2.0, 3.0), Point2D.Of(3.0, 2.0) });
+                ConvexHull.FindConvexHull(new Point2D[] { Point2D.Of(2.0, 3.0), Point2D.Of(3.0, 2.0) });
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void Find_WhenThreePoints_ThenThesePointsInHull()
+        public void FindConvexHull_WhenThreePoints_ThenThesePointsInHull()
         {
             // given
             Point2D[] points =
                 new Point2D[] { Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0) };
             // when
-            IEnumerable<Point2D> result = ConvexHull.Find(points);
+            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(points);
             // then
             result.Should().BeEquivalentTo(points);
         }
 
         [Test]
-        public void Find_ThenPointsInHull()
+        public void FindConvexHull_ThenPointsInHull()
         {
             // when
-            IEnumerable<Point2D> result = ConvexHull.Find(
+            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(
                     new Point2D[] { Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7),
                                     Point2D.Of(-8, -7), Point2D.Of(-3, -4), Point2D.Of(5, 9),
                                     Point2D.Of(-1, -8), Point2D.Of(-5, 10), Point2D.Of(8, 0),
@@ -58,10 +58,10 @@ namespace AlgoLib.Geometry.Dim2
         }
 
         [Test]
-        public void Find_WhenMultiplePointsAreCollinear_ThenInnerPointsOmitted()
+        public void FindConvexHull_WhenMultiplePointsAreCollinear_ThenInnerPointsOmitted()
         {
             // when
-            IEnumerable<Point2D> result = ConvexHull.Find(
+            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(
                     new Point2D[] { Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
                                     Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
                                     Point2D.Of(7, -3), Point2D.Of(-3, -2) });

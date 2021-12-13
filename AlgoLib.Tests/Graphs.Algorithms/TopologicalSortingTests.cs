@@ -8,31 +8,31 @@ namespace AlgoLib.Graphs.Algorithms
     [TestFixture]
     public class TopologicalSortingTests
     {
-        #region SortUsingInputs
+        #region InputsTopologicalSort
 
         [Test]
-        public void SortUsingInputs_WhenEmptyGraph_ThenVertices()
+        public void InputsTopologicalSort_WhenEmptyGraph_ThenVertices()
         {
             // given
             IDirectedGraph<int, object, object> graph =
                 new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
             // when
-            IEnumerable<Vertex<int>> result = graph.SortUsingInputs();
+            IEnumerable<Vertex<int>> result = graph.InputsTopologicalSort();
             // then
             result.Should().Equal(graph.Vertices);
         }
 
         #endregion
-        #region SortUsingDfs
+        #region DfsTopologicalSort
 
         [Test]
-        public void SortUsingDfs_WhenEmptyGraph_ThenVertices()
+        public void DfsTopologicalSort_WhenEmptyGraph_ThenVertices()
         {
             // given
             IDirectedGraph<int, object, object> graph =
                 new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
             // when
-            IEnumerable<Vertex<int>> result = graph.SortUsingDfs();
+            IEnumerable<Vertex<int>> result = graph.DfsTopologicalSort();
             // then
             result.Should().Equal(graph.Vertices);
         }

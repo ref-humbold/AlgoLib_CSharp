@@ -29,19 +29,19 @@ namespace AlgoLib.Graphs.Algorithms
             Root = root;
         }
 
-        public Vertex<TVertexId> Find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
+        public Vertex<TVertexId> FindLca(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(empty)
                 initialize();
 
-            return doFind(vertex1, vertex2);
+            return find(vertex1, vertex2);
         }
 
         /// <summary>Finds a lowest common ancestor of two vertices in a rooted tree.</summary>
         /// <param name="vertex1">first vertex</param>
         /// <param name="vertex2">second vertex</param>
         /// <returns>lowest common ancestor of given vertices</returns>
-        private Vertex<TVertexId> doFind(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
+        private Vertex<TVertexId> find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(isOffspring(vertex1, vertex2))
                 return vertex2;
@@ -53,8 +53,8 @@ namespace AlgoLib.Graphs.Algorithms
                                            .Where(candidate => !isOffspring(vertex2, candidate))
                                            .ToList();
 
-            return candidates.Count > 0 ? doFind(candidates[0], vertex2)
-                                        : doFind(paths[vertex1][0], vertex2);
+            return candidates.Count > 0 ? find(candidates[0], vertex2)
+                                        : find(paths[vertex1][0], vertex2);
         }
 
         private void initialize()

@@ -7,7 +7,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class TopologicalSorting
     {
-        public static IEnumerable<Vertex<TVertexId>> SortUsingInputs<TVertexId, TVertexProperty, TEdgeProperty>(
+        public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             if(graph.EdgesCount == 0)
@@ -48,7 +48,7 @@ namespace AlgoLib.Graphs.Algorithms
                 : throw new DirectedCyclicGraphException("Given graph contains a cycle");
         }
 
-        public static IEnumerable<Vertex<TVertexId>> SortUsingDfs<TVertexId, TVertexProperty, TEdgeProperty>(
+        public static IEnumerable<Vertex<TVertexId>> DfsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             if(graph.EdgesCount == 0)

@@ -13,7 +13,7 @@ namespace AlgoLib.Text
         /// <param name="text">A text</param>
         /// <param name="pattern">A pattern</param>
         /// <returns>Enumerable of indices with pattern occurrences</returns>
-        public static IEnumerable<int> Search(this string text, string pattern)
+        public static IEnumerable<int> KmpSearch(this string text, string pattern)
         {
             if(text == null)
                 throw new ArgumentNullException("Text is null");

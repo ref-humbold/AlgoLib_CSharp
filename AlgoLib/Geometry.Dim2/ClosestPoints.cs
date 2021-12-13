@@ -9,7 +9,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <summary>Searches for pair of closest points among given points.</summary>
         /// <param name="points">Enumerable of points</param>
         /// <returns>Pair of closest points</returns>
-        public static (Point2D, Point2D) Find(IEnumerable<Point2D> points) =>
+        public static (Point2D, Point2D) FindClosestPoints(IEnumerable<Point2D> points) =>
             searchClosest(Geometry2D.SortByX(points.ToList()), Geometry2D.SortByY(points.ToList()),
                           0, -1);
 
