@@ -7,15 +7,27 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class TopologicalSorting
     {
+
         public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
+            InputsTopologicalSort(graph, Comparer<TVertexId>.Default);
+
+        public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            Comparison<TVertexId> vertexIdComparison) =>
+            InputsTopologicalSort(graph, Comparer<TVertexId>.Create(vertexIdComparison));
+
+        public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            IComparer<TVertexId> vertexIdComparer)
         {
             if(graph.EdgesCount == 0)
                 return graph.Vertices;
 
             var order = new List<Vertex<TVertexId>>();
             var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
-            var vertexHeap = new Heap<Vertex<TVertexId>>();
+            Heap<Vertex<TVertexId>> vertexHeap = new Heap<Vertex<TVertexId>>(
+                    ((vertex1, vertex2) => vertexIdComparer.Compare(vertex1.Id, vertex2.Id)));
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
             {
@@ -56,7 +68,7 @@ namespace AlgoLib.Graphs.Algorithms
 
             var strategy = new TopologicalStrategy<TVertexId>();
 
-            Searching.DfsRecursive(graph, strategy, graph.Vertices);
+            graph.DfsRecursive(strategy, graph.Vertices);
             return strategy.order.Reverse<Vertex<TVertexId>>();
         }
 
@@ -68,7 +80,7 @@ namespace AlgoLib.Graphs.Algorithms
             {
             }
 
-            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
+            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
 
@@ -78,7 +90,7 @@ namespace AlgoLib.Graphs.Algorithms
 
             public void OnExit(Vertex<TVertexId> vertex) => order.Add(vertex);
 
-            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
+            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
                 throw new DirectedCyclicGraphException("Given graph contains a cycle");
         }
     }
