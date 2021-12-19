@@ -37,8 +37,8 @@ namespace AlgoLib.Graphs.Algorithms
             result.VerticesCount.Should().Be(graph.VerticesCount);
             result.Vertices.Should().BeEquivalentTo(graph.Vertices);
             result.EdgesCount.Should().Be(4);
-            result.Edges.Should().BeEquivalentTo(new Edge<int>[] { graph[0, 1], graph[0, 2],
-                                                                   graph[2, 4], graph[3, 4] });
+            result.Edges.Should().BeEquivalentTo(
+                new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
             mstSize.Should().BeApproximately(12.0, 0.000001);
         }
 
@@ -58,8 +58,8 @@ namespace AlgoLib.Graphs.Algorithms
             result.VerticesCount.Should().Be(graph.VerticesCount);
             result.Vertices.Should().BeEquivalentTo(graph.Vertices);
             result.EdgesCount.Should().Be(4);
-            result.Edges.Should().BeEquivalentTo(new Edge<int>[] { graph[0, 1], graph[0, 2],
-                                                                   graph[2, 4], graph[3, 4] });
+            result.Edges.Should().BeEquivalentTo(
+                new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
             mstSize.Should().BeApproximately(12.0, 0.000001);
         }
 
