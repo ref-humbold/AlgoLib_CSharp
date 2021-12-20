@@ -7,23 +7,27 @@ namespace AlgoLib.Text
 {
     public static class LongestCommonSubsequence
     {
-        public static int FindLcsLength<T>(IEnumerable<T> sequence1, IEnumerable<T> sequence2)
+        public static int CountLcsLength<T>(IEnumerable<T> sequence1, IEnumerable<T> sequence2)
         {
-            (List<T> shorterList, List<T> longerList) = sequence1.Count() <= sequence2.Count()
+            (List<T> shortSeq, List<T> longSeq) = sequence1.Count() <= sequence2.Count()
                 ? (sequence1.ToList(), sequence2.ToList())
                 : (sequence2.ToList(), sequence1.ToList());
 
-            List<int> lcs = Enumerable.Repeat(0, shorterList.Count + 1).ToList();
+            var prevLcs = Enumerable.Repeat(0, shortSeq.Count + 1).ToList();
 
-            foreach(T element in longerList)
+            foreach(T element in longSeq)
             {
-                for(int j = 0; j < shorterList.Count; ++j)
-                    lcs[j + 1] = Equals(element, shorterList[j])
-                        ? lcs[j] + 1
-                        : Math.Max(lcs[j + 1], lcs[j]);
+                var nextLcs = new List<int> { 0 };
+
+                for(int j = 0; j < shortSeq.Count; ++j)
+                    nextLcs.Add(Equals(element, shortSeq[j])
+                        ? prevLcs[j] + 1
+                        : Math.Max(prevLcs[j + 1], nextLcs[^1]));
+
+                prevLcs = nextLcs;
             }
 
-            return lcs.Last();
+            return prevLcs[^1];
         }
     }
 }

@@ -8,48 +8,57 @@ namespace AlgoLib.Text
     public class LongestCommonSubsequenceTests
     {
         [Test]
-        public void FindLcsLength_WhenEmptySequence_ThenZero()
+        public void CountLcsLength_WhenEmptySequence_ThenZero()
         {
             // when
-            int result = LongestCommonSubsequence.FindLcsLength("qwertyuiop", "");
+            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "");
             // then
             result.Should().Be(0);
         }
 
         [Test]
-        public void FindLcsLength_WhenSameSequence_ThenSequenceLength()
+        public void CountLcsLength_WhenRepeatedSingleElement_ThenOne()
+        {
+            // when
+            int result = LongestCommonSubsequence.CountLcsLength("abcde", "eeee");
+            // then
+            result.Should().Be(1);
+        }
+
+        [Test]
+        public void CountLcsLength_WhenSameSequence_ThenSequenceLength()
         {
             // given
             string sequence = "qwertyuiop";
             // when
-            int result = LongestCommonSubsequence.FindLcsLength(sequence, sequence);
+            int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence);
             // then
             result.Should().Be(sequence.Length);
         }
 
         [Test]
-        public void FindLcsLength_WhenSubsequence_ThenSubsequenceLength()
+        public void CountLcsLength_WhenSubsequence_ThenSubsequenceLength()
         {
             // when
-            int result = LongestCommonSubsequence.FindLcsLength("qwertyuiop", "zxqwertyasdfuiopcvb");
+            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "zxqwertyasdfuiopcvb");
             // then
             result.Should().Be("qwertyuiop".Length);
         }
 
         [Test]
-        public void FindLcsLength_WhenDifferent_ThenZero()
+        public void CountLcsLength_WhenDifferent_ThenZero()
         {
             // when
-            int result = LongestCommonSubsequence.FindLcsLength("qwertyuiop", "asdfghjkl");
+            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "asdfghjkl");
             // then
             result.Should().Be(0);
         }
 
         [Test]
-        public void FindLcsLength_WhenCommonSubsequence_ThenCommonSubsequenceLength()
+        public void CountLcsLength_WhenCommonSubsequence_ThenCommonSubsequenceLength()
         {
             // when
-            int result = LongestCommonSubsequence.FindLcsLength("qwertyuiop", "zxrtyasdfuiopcvb");
+            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "zxrtyasdfuiopcvb");
             // then
             result.Should().Be("rtyuiop".Length);
         }
