@@ -7,27 +7,59 @@ namespace AlgoLib.Text
 {
     public static class LongestCommonSubsequence
     {
-        public static int CountLcsLength<T>(IEnumerable<T> sequence1, IEnumerable<T> sequence2)
+        public static int CountLcsLength<T>(IList<T> sequence1, IList<T> sequence2)
         {
-            (List<T> shortSeq, List<T> longSeq) = sequence1.Count() <= sequence2.Count()
-                ? (sequence1.ToList(), sequence2.ToList())
-                : (sequence2.ToList(), sequence1.ToList());
+            (IList<T> shortSeq, IList<T> longSeq) = sequence1.Count <= sequence2.Count
+                ? (sequence1, sequence2)
+                : (sequence2, sequence1);
 
-            var prevLcs = Enumerable.Repeat(0, shortSeq.Count + 1).ToList();
+            var lcs = Enumerable.Repeat(0, shortSeq.Count + 1).ToList();
 
             foreach(T element in longSeq)
             {
-                var nextLcs = new List<int> { 0 };
+                int previousAbove = lcs[0];
 
-                for(int j = 0; j < shortSeq.Count; ++j)
-                    nextLcs.Add(Equals(element, shortSeq[j])
-                        ? prevLcs[j] + 1
-                        : Math.Max(prevLcs[j + 1], nextLcs[^1]));
+                for(int i = 0; i < shortSeq.Count; ++i)
+                {
+                    int previousDiagonal = previousAbove;
 
-                prevLcs = nextLcs;
+                    previousAbove = lcs[i + 1];
+                    lcs[i + 1] = Equals(element, shortSeq[i])
+                        ? previousDiagonal + 1
+                        : Math.Max(previousAbove, lcs[i]);
+                }
             }
 
-            return prevLcs[^1];
+            return lcs[^1];
+        }
+
+        public static int CountLcsLength<T>(T[] sequence1, T[] sequence2) =>
+            CountLcsLength(sequence1.ToList(), sequence2.ToList());
+
+        public static int CountLcsLength(string text1, string text2)
+        {
+            (string shortText, string longText) = text1.Length <= text2.Length
+                ? (text1, text2)
+                : (text2, text1);
+
+            var lcs = Enumerable.Repeat(0, shortText.Length + 1).ToList();
+
+            foreach(char element in longText)
+            {
+                int previousAbove = lcs[0];
+
+                for(int i = 0; i < shortText.Length; ++i)
+                {
+                    int previousDiagonal = previousAbove;
+
+                    previousAbove = lcs[i + 1];
+                    lcs[i + 1] = Equals(element, shortText[i])
+                        ? previousDiagonal + 1
+                        : Math.Max(previousAbove, lcs[i]);
+                }
+            }
+
+            return lcs[^1];
         }
     }
 }
