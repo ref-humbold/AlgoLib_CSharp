@@ -13,7 +13,7 @@ namespace AlgoLib.Text
                 ? (sequence1, sequence2)
                 : (sequence2, sequence1);
 
-            var lcs = Enumerable.Repeat(0, shortSeq.Count + 1).ToList();
+            int[] lcs = Enumerable.Repeat(0, shortSeq.Count + 1).ToArray();
 
             foreach(T element in longSeq)
             {
@@ -33,16 +33,13 @@ namespace AlgoLib.Text
             return lcs[^1];
         }
 
-        public static int CountLcsLength<T>(T[] sequence1, T[] sequence2) =>
-            CountLcsLength(sequence1.ToList(), sequence2.ToList());
-
         public static int CountLcsLength(string text1, string text2)
         {
             (string shortText, string longText) = text1.Length <= text2.Length
                 ? (text1, text2)
                 : (text2, text1);
 
-            var lcs = Enumerable.Repeat(0, shortText.Length + 1).ToList();
+            int[] lcs = Enumerable.Repeat(0, shortText.Length + 1).ToArray();
 
             foreach(char element in longText)
             {

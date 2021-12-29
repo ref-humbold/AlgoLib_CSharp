@@ -90,11 +90,11 @@ namespace AlgoLib.Text
         public void CountLcsLength_WhenSameSequence_ThenSequenceLength()
         {
             // given
-            int[] sequence = "qwertyuiop".Select(c => (int)c).ToArray();
+            var sequence = "qwertyuiop".Select(c => (int)c).ToList();
             // when
             int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence);
             // then
-            result.Should().Be(sequence.Length);
+            result.Should().Be(sequence.Count);
         }
 
         [Test]
