@@ -68,5 +68,23 @@ namespace AlgoLib.Text
 
             return distance[^1];
         }
+
+        public static double CountHamming(this string source, string destination,
+                                          double substitutionCost = 1.0)
+        {
+            if(substitutionCost < 0)
+                throw new ArgumentException("Cost cannot be negative");
+
+            if(source.Length != destination.Length)
+                throw new ArgumentException("Texts should have equal length");
+
+            (double Previous, double Current) initial = (0.0, 0.0);
+
+            return Enumerable.Range(0, source.Length)
+                             .Aggregate(initial, (acc, i) =>
+                                (acc.Current, source[i] == destination[i]
+                                    ? acc.Previous
+                                    : acc.Previous + substitutionCost)).Current;
+        }
     }
 }
