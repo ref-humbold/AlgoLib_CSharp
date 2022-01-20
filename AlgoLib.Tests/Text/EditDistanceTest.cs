@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text
@@ -43,6 +44,63 @@ namespace AlgoLib.Text
             double result = text.CountLevenshtein("", 1.0, deletionCost, 1.0);
             // then
             result.Should().BeApproximately(text.Length * deletionCost, precision);
+        }
+
+        [Test]
+        public void CountLevenshtein_WhenNegativeCost_ThenArgumentException()
+        {
+            // when
+            Action action = () => "a".CountLevenshtein("b", 1.0, 1.0, -1.0);
+            // then
+            action.Should().Throw<ArgumentException>();
+        }
+
+        #endregion
+
+        #region CountLcs
+
+        [Test]
+        public void CountLcs_WhenSameText_ThenZero()
+        {
+            // given
+            string text = "qwertyuiop";
+            // when
+            double result = text.CountLcs(text);
+            // then
+            result.Should().Be(0.0);
+        }
+
+        [Test]
+        public void CountLcs_WhenEmptySource_ThenSumOfInsertions()
+        {
+            // given
+            string text = "qwertyuiop";
+            double insertionCost = 2.0;
+            // when
+            double result = "".CountLcs(text, insertionCost, 1.0);
+            // then
+            result.Should().BeApproximately(text.Length * insertionCost, precision);
+        }
+
+        [Test]
+        public void CountLcs_WhenEmptyDestination_ThenSumOfDeletions()
+        {
+            // given
+            string text = "qwertyuiop";
+            double deletionCost = 2.0;
+            // when
+            double result = text.CountLcs("", 1.0, deletionCost);
+            // then
+            result.Should().BeApproximately(text.Length * deletionCost, precision);
+        }
+
+        [Test]
+        public void CountLcs_WhenNegativeCost_ThenArgumentException()
+        {
+            // when
+            Action action = () => "a".CountLcs("b", 1.0, -1.0);
+            // then
+            action.Should().Throw<ArgumentException>();
         }
 
         #endregion
