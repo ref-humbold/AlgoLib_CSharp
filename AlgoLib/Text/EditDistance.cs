@@ -78,13 +78,10 @@ namespace AlgoLib.Text
             if(source.Length != destination.Length)
                 throw new ArgumentException("Texts should have equal length");
 
-            (double Previous, double Current) initial = (0.0, 0.0);
-
-            return Enumerable.Range(0, source.Length)
-                             .Aggregate(initial, (acc, i) =>
-                                (acc.Current, source[i] == destination[i]
-                                    ? acc.Previous
-                                    : acc.Previous + substitutionCost)).Current;
+            return source.Zip(destination)
+                         .Where(p => p.First != p.Second)
+                         .Select(_ => substitutionCost)
+                         .Sum();
         }
     }
 }
