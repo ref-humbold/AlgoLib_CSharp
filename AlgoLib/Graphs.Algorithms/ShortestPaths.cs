@@ -11,12 +11,14 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">A directed weighted graph</param>
         /// <param name="source">A source vertex</param>
         /// <returns>Dictionary of distances for vertices</returns>
+        /// <exception cref="InvalidOperationException">If graph contains a negative cycle</exception>
         public static Dictionary<Vertex<TVertexId>, double> BellmanFord<TVertexId, TVertexProperty, TEdgeProperty>(
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
                 where TEdgeProperty : IWeighted
         {
             var distances = new Dictionary<Vertex<TVertexId>, double>(
-                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
+                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity)))
+            {
                 [source] = 0.0
             };
 
@@ -30,7 +32,7 @@ namespace AlgoLib.Graphs.Algorithms
                 foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))
                     if(distances[vertex] < IWeighted.Infinity
                        && distances[vertex] + graph.Properties[edge].Weight < distances[edge.Destination])
-                        throw new InvalidOperationException("Graph contains a negative cycle");
+                        throw new InvalidOperationException("Graph contains a cycle with negative weight");
 
             return distances;
         }
@@ -39,6 +41,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">A graph with weighted edges (weights are not negative)</param>
         /// <param name="source">Source vertex</param>
         /// <returns>Map of vertices' distances</returns>
+        /// <exception cref="InvalidOperationException">If graph contains a negative edge</exception>
         public static Dictionary<Vertex<TVertexId>, double> Dijkstra<TVertexId, TVertexProperty, TEdgeProperty>(
             IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
                 where TEdgeProperty : IWeighted
@@ -48,7 +51,8 @@ namespace AlgoLib.Graphs.Algorithms
                     throw new InvalidOperationException("Graph contains an edge with negative weight");
 
             var distances = new Dictionary<Vertex<TVertexId>, double>(
-                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity))) {
+                graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity)))
+            {
                 [source] = 0.0
             };
             var visited = new HashSet<Vertex<TVertexId>>();
