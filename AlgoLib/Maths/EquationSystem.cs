@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace AlgoLib.Mathmat
+namespace AlgoLib.Maths
 {
     public class EquationSystem
     {
@@ -22,7 +22,7 @@ namespace AlgoLib.Mathmat
         }
 
         /// <param name="i">Index of equation</param>
-        /// <returns>i-th equation of this system</returns>
+        /// <returns>I-th equation of this system</returns>
         public Equation this[Index i] => equations[i];
 
         public override string ToString() =>

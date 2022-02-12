@@ -5,7 +5,7 @@ using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms
 {
-    public static class Paths
+    public static class ShortestPaths
     {
         /// <summary>Bellman-Ford algorithm.</summary>
         /// <param name="graph">A directed weighted graph</param>

@@ -3,7 +3,7 @@ using System;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Mathmat
+namespace AlgoLib.Maths
 {
     [TestFixture]
     public class MathsTests
