@@ -6,8 +6,8 @@ namespace AlgoLib.Graphs.Algorithms
     public static class StronglyConnectedComponents
     {
         /// <summary>Finds strongly connected components in given directed graph.</summary>
-        /// <param name="graph">A directed graph</param>
-        /// <returns>List of vertices in strongly connected components</returns>
+        /// <param name="graph">The directed graph.</param>
+        /// <returns>List of vertices in strongly connected components.</returns>
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
                 this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

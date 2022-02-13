@@ -43,7 +43,7 @@ namespace AlgoLib.Structures
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
         /// <summary>Adds a new element to this heap.</summary>
-        /// <param name="item">Element to add</param>
+        /// <param name="item">Element to add.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -63,16 +63,16 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves minimal element from this heap.</summary>
-        /// <returns>Minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the heap is empty</exception>
+        /// <returns>Minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
         public T Get() => Count == 0 ? throw new InvalidOperationException("The heap is empty")
                                      : heap[0];
 
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Minimal element if it's present, otherwise the default value</param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryGet(out T result)
         {
             if(Count == 0)
@@ -86,8 +86,8 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes minimal element from this heap.</summary>
-        /// <returns>Removed minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the heap is empty</exception>
+        /// <returns>Removed minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
         public T Pop()
         {
             T element = Get();
@@ -100,9 +100,9 @@ namespace AlgoLib.Structures
         /// Removes minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed minimal element if it's present, otherwise the default value
+        /// Removed minimal element if it's present, otherwise the default value.
         /// </param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPop(out T result)
         {
             bool wasPresent = TryGet(out result);

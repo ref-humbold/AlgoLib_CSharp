@@ -7,8 +7,8 @@ namespace AlgoLib.Geometry.Dim2
     public static class ConvexHull
     {
         /// <summary>Constructs convex hull of given points.</summary>
-        /// <param name="points">Enumerable of points</param>
-        /// <returns>Enumerable of hull points</returns>
+        /// <param name="points">Enumerable of points.</param>
+        /// <returns>Enumerable of points in the convex hull.</returns>
         public static IEnumerable<Point2D> FindConvexHull(IEnumerable<Point2D> points)
         {
             if(points.Count() < 3)

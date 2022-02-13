@@ -7,13 +7,13 @@ namespace AlgoLib.Geometry.Dim2
     public static class ClosestPoints
     {
         /// <summary>Searches for pair of closest points among given points.</summary>
-        /// <param name="points">Enumerable of points</param>
-        /// <returns>Pair of closest points</returns>
+        /// <param name="points">Enumerable of points.</param>
+        /// <returns>Pair of the closest points.</returns>
         public static (Point2D, Point2D) FindClosestPoints(IEnumerable<Point2D> points) =>
             searchClosest(Geometry2D.SortByX(points.ToList()), Geometry2D.SortByY(points.ToList()),
                           0, -1);
 
-        // Finds closest pair of points among three of them.
+        // Finds pair of closest points among three of them.
         private static (Point2D, Point2D) searchThree(List<Point2D> pointsX, int indexBegin,
                                                       int indexEnd)
         {
@@ -29,8 +29,8 @@ namespace AlgoLib.Geometry.Dim2
                 : (pointsX[indexBegin], pointsX[indexEnd]);
         }
 
-        // Finds closest pair inside a belt of given width. The resulting distance should not be
-        // less than belt width.
+        // Finds pair of closest points inside a belt of given width. The resulting distance should
+        // not be less than belt width.
         private static (Point2D, Point2D)? checkBelt(List<Point2D> pointsY, double middleX,
                                                      double width)
         {

@@ -11,14 +11,14 @@ namespace AlgoLib.Maths
         private static readonly Random random = new Random();
 
         /// <summary>Finds prime numbers less than given number.</summary>
-        /// <param name="maximum">Maximal number, exclusive</param>
-        /// <returns>Enumerable of prime numbers</returns>
+        /// <param name="maximum">Maximal number, exclusive.</param>
+        /// <returns>Enumerable of prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int maximum) => FindPrimes(0, maximum);
 
-        /// <summary>Finds prime numbers less inside given range of numbers.</summary>
-        /// <param name="minimum">Minimal number, inclusive</param>
-        /// <param name="maximum">Maximal number, exclusive</param>
-        /// <returns>Enumerable of prime numbers</returns>
+        /// <summary>Finds prime numbers inside given range of numbers.</summary>
+        /// <param name="minimum">Minimal number, inclusive.</param>
+        /// <param name="maximum">Maximal number, exclusive.</param>
+        /// <returns>Enumerable of prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int minimum, int maximum)
         {
             if(maximum <= minimum)
@@ -51,9 +51,9 @@ namespace AlgoLib.Maths
             return primes;
         }
 
-        /// <summary>Performs Fermat primality test.</summary>
-        /// <param name="number">Number to test</param>
-        /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
+        /// <summary>Checks whether given number is prime using Fermat's prime test.</summary>
+        /// <param name="number">Number to check.</param>
+        /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestFermat(int number)
         {
             number = Math.Abs(number);
@@ -75,9 +75,9 @@ namespace AlgoLib.Maths
             return true;
         }
 
-        /// <summary>Performs Miller–Rabin primality test.</summary>
-        /// <param name="number">Number to test</param>
-        /// <returns><c>true</c> if number is prime, otherwise <c>false</c></returns>
+        /// <summary>Checks whether given number is prime using Miller-Rabin's prime test.</summary>
+        /// <param name="number">Number to check.</param>
+        /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestMiller(int number)
         {
             number = Math.Abs(number);

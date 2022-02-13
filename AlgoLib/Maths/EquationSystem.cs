@@ -29,8 +29,8 @@ namespace AlgoLib.Maths
             $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
 
         /// <summary>Solves this equation system.</summary>
-        /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions</exception>
-        /// <exception cref="NoSolutionException">If there is no solution</exception>
+        /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions.</exception>
+        /// <exception cref="NoSolutionException">If there is no solution.</exception>
         public double[] Solve()
         {
             GaussianReduce();
@@ -90,8 +90,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Swaps two equations in this system.</summary>
-        /// <param name="i">Index of first equation</param>
-        /// <param name="j">Index of second equation</param>
+        /// <param name="i">Index of first equation.</param>
+        /// <param name="j">Index of second equation.</param>
         public void Swap(Index i, Index j)
         {
             Equation temp = equations[i];
@@ -101,8 +101,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given values solve this equation system.</summary>
-        /// <param name="solution">Values to check</param>
-        /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
+        /// <param name="solution">Values to check.</param>
+        /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
     }
 

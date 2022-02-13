@@ -23,7 +23,6 @@ namespace AlgoLib.Text
         /// <summary>Retrieves code of substring denoted by given range.</summary>
         /// <param name="range">Range in the text</param>
         /// <returns>Code of the substring</returns>
-        /// <exception cref="IndexOutOfRangeException">If start or end of the range are invalid</exception>
         public (int, int) this[Range range]
         {
             get

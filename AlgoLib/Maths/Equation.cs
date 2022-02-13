@@ -23,7 +23,7 @@ namespace AlgoLib.Maths
         /// <returns>Coefficient by i-th variable</returns>
         public double this[Index i] => Coefficients[i];
 
-        /// <returns>String representation of this equation</returns>
+        /// <returns>String representation of this equation.</returns>
         public override string ToString()
         {
             IEnumerable<string> terms = Coefficients.Select((c, i) => c != 0 ? $"{c} x_{i}" : "")
@@ -32,9 +32,9 @@ namespace AlgoLib.Maths
             return $"{string.Join(" + ", terms)} = {Free}";
         }
 
-        /// <summary>Multiplies this equation by a constant.</summary>
-        /// <param name="constant">Constant</param>
-        /// <exception cref="ArithmeticException">If the constant is equal to zero</exception>
+        /// <summary>Multiplies this equation by given constant.</summary>
+        /// <param name="constant">The constant.</param>
+        /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
         public void Multiply(double constant)
         {
             if(constant == 0)
@@ -46,11 +46,11 @@ namespace AlgoLib.Maths
             Free *= constant;
         }
 
-        /// <summary>Transforms this equation through a linear combination with another equation.</summary>
-        /// <param name="equation">Equation</param>
-        /// <param name="constant">Linear combination constant</param>
-        /// <exception cref="ArgumentException">If equations sizes differ</exception>
-        /// <exception cref="ArithmeticException">If the constant is equal to zero</exception>
+        /// <summary>Transforms this equation through linear combination with another equation.</summary>
+        /// <param name="equation">The equation.</param>
+        /// <param name="constant">The linear combination constant.</param>
+        /// <exception cref="ArgumentException">If equations sizes are different.</exception>
+        /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
         public void Combine(Equation equation, double constant = 1)
         {
             if(equation.Count != Count)
@@ -66,8 +66,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given values solve this equation.</summary>
-        /// <param name="solution">Values to check</param>
-        /// <returns><c>true</c> if solution is correct, otherwise <c>false</c></returns>
+        /// <param name="solution">Values to check.</param>
+        /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool IsSolution(double[] solution) =>
             solution.Length == Coefficients.Length
                 && Coefficients.Zip(solution).Select(p => p.First * p.Second).Sum() == Free;

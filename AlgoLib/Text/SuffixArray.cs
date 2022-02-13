@@ -1,4 +1,4 @@
-﻿// Structure of suffix array
+﻿// Structure of suffix array (with longest common prefix)
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace AlgoLib.Text
 
         /// <summary>Gets text suffix at given index.</summary>
         /// <param name="index">Index in this suffix array.</param>
-        /// <returns>Suffix at the index.</returns>
+        /// <returns>Text suffix at the index.</returns>
         public string this[Index index]
         {
             get

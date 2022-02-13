@@ -8,10 +8,10 @@ namespace AlgoLib.Graphs.Algorithms
     public static class ShortestPaths
     {
         /// <summary>Bellman-Ford algorithm.</summary>
-        /// <param name="graph">A directed weighted graph</param>
-        /// <param name="source">A source vertex</param>
-        /// <returns>Dictionary of distances for vertices</returns>
-        /// <exception cref="InvalidOperationException">If graph contains a negative cycle</exception>
+        /// <param name="graph">The directed weighted graph.</param>
+        /// <param name="source">The source vertex.</param>
+        /// <returns>Dictionary of distances for vertices.</returns>
+        /// <exception cref="InvalidOperationException">If graph contains a negative cycle.</exception>
         public static Dictionary<Vertex<TVertexId>, double> BellmanFord<TVertexId, TVertexProperty, TEdgeProperty>(
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
                 where TEdgeProperty : IWeighted
@@ -38,10 +38,10 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Dijkstra algorithm.</summary>
-        /// <param name="graph">A graph with weighted edges (weights are not negative)</param>
-        /// <param name="source">Source vertex</param>
-        /// <returns>Map of vertices' distances</returns>
-        /// <exception cref="InvalidOperationException">If graph contains a negative edge</exception>
+        /// <param name="graph">The graph with weighted edges (weights are not negative).</param>
+        /// <param name="source">Source vertex.</param>
+        /// <returns>Dictionary of vertices' distances.</returns>
+        /// <exception cref="InvalidOperationException">If graph contains a negative edge.</exception>
         public static Dictionary<Vertex<TVertexId>, double> Dijkstra<TVertexId, TVertexProperty, TEdgeProperty>(
             IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
                 where TEdgeProperty : IWeighted
@@ -87,8 +87,8 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Floyd-Warshall algorithm.</summary>
-        /// <param name="graph">A directed weighted graph</param>
-        /// <returns>Dictionary of distances for each pair of vertices</returns>
+        /// <param name="graph">The directed weighted graph.</param>
+        /// <returns>Dictionary of distances for each pair of vertices.</returns>
         public static Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>
             FloydWarshall<TVertexId, TVertexProperty, TEdgeProperty>(
                 IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
