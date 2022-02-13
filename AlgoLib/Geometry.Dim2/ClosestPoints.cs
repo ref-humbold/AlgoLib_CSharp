@@ -66,8 +66,8 @@ namespace AlgoLib.Geometry.Dim2
             return closestPoints;
         }
 
-        // Searches for a pair of closest points in given sublist of points. Points are given sorted
-        // by X coordinate and by Y coordinate. (index_begin & index_end inclusive)
+        // Searches for pair of closest points in given sublist of points. Points are given sorted
+        // by X coordinate and by Y coordinate. (indexBegin & indexEnd inclusive)
         private static (Point2D, Point2D) searchClosest(List<Point2D> pointsX, List<Point2D> pointsY,
                                                         int indexBegin, int indexEnd)
         {
@@ -98,9 +98,9 @@ namespace AlgoLib.Geometry.Dim2
                     Geometry2D.Distance(closestLeft.Item1, closestLeft.Item2)
                         <= Geometry2D.Distance(closestRight.Item1, closestRight.Item2)
                         ? closestLeft : closestRight;
-            (Point2D, Point2D)? beltPoints = checkBelt(pointsY, middleX,
-                                                       Geometry2D.Distance(closestPoints.Item1,
-                                                                           closestPoints.Item2));
+            (Point2D, Point2D)? beltPoints =
+                checkBelt(pointsY, middleX, Geometry2D.Distance(closestPoints.Item1,
+                                                                closestPoints.Item2));
 
             return beltPoints ?? closestPoints;
         }

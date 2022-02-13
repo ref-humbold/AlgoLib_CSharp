@@ -24,7 +24,7 @@ namespace AlgoLib.Geometry.Dim2
             return lowerHull;
         }
 
-        // Creates a half of a convex hull for given points.
+        // Creates half of convex hull for given points.
         private static List<Point2D> createHalfHull(IEnumerable<Point2D> points)
         {
             var hull = new List<Point2D>();

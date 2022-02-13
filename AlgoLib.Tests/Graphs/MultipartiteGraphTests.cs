@@ -65,10 +65,13 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Vertex<int>> result = testObject.Vertices;
             // then
-            result.Should().BeEquivalentTo(new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
-                                           new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
-                                           new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
-                                           new Vertex<int>(9));
+            result.Should().BeEquivalentTo(
+                new[] {
+                    new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
+                    new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
+                    new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
+                    new Vertex<int>(9)
+                });
         }
 
         [Test]
@@ -77,11 +80,14 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
-            result.Should().BeEquivalentTo(new Edge<int>(new Vertex<int>(0), new Vertex<int>(3)),
-                                           new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
-                                           new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
-                                           new Edge<int>(new Vertex<int>(4), new Vertex<int>(6)),
-                                           new Edge<int>(new Vertex<int>(7), new Vertex<int>(9)));
+            result.Should().BeEquivalentTo(
+                new[]{
+                    new Edge<int>(new Vertex<int>(0), new Vertex<int>(3)),
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
+                    new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(6)),
+                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(9))
+                });
         }
 
         [Test]
@@ -114,8 +120,9 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(new Vertex<int>(9));
             // then
-            result.Should().BeEquivalentTo(new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
-                                           new Edge<int>(new Vertex<int>(7), new Vertex<int>(9)));
+            result.Should().BeEquivalentTo(
+                new[]{ new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
+                        new Edge<int>(new Vertex<int>(7), new Vertex<int>(9)) });
         }
 
         [Test]
@@ -124,7 +131,7 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Vertex<int>> result = testObject.GetNeighbours(new Vertex<int>(9));
             // then
-            result.Should().BeEquivalentTo(new Vertex<int>(2), new Vertex<int>(7));
+            result.Should().BeEquivalentTo(new[] { new Vertex<int>(2), new Vertex<int>(7) });
         }
 
         [Test]
@@ -151,8 +158,8 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Vertex<int>> result = testObject.GetVerticesFromGroup(2);
             // then
-            result.Should().BeEquivalentTo(new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7),
-                                           new Vertex<int>(8));
+            result.Should().BeEquivalentTo(new[] { new Vertex<int>(5), new Vertex<int>(6),
+                                                    new Vertex<int>(7), new Vertex<int>(8) });
         }
 
         [Test]
@@ -219,7 +226,7 @@ namespace AlgoLib.Graphs
             result.Source.Should().Be(source);
             result.Destination.Should().Be(destination);
             testObject.Properties[result].Should().Be(property);
-            testObject.GetNeighbours(destination).Should().BeEquivalentTo(source);
+            testObject.GetNeighbours(destination).Should().BeEquivalentTo(new[] { source });
         }
 
         [Test]

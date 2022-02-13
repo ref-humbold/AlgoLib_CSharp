@@ -85,8 +85,9 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                 directedGraph.Bfs(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
-                                           directedGraph[4], directedGraph[7]);
+            result.Should().BeEquivalentTo(
+                new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                        directedGraph[4], directedGraph[7] });
         }
 
         [Test]
@@ -151,8 +152,9 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                 directedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
-                                           directedGraph[4], directedGraph[7]);
+            result.Should().BeEquivalentTo(
+                new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                         directedGraph[4], directedGraph[7] });
         }
 
         [Test]
@@ -217,8 +219,9 @@ namespace AlgoLib.Graphs.Algorithms
             IEnumerable<Vertex<int>> result =
                     directedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { directedGraph[1] });
             // then
-            result.Should().BeEquivalentTo(directedGraph[0], directedGraph[1], directedGraph[3],
-                                           directedGraph[4], directedGraph[7]);
+            result.Should().BeEquivalentTo(
+                new[] { directedGraph[0], directedGraph[1], directedGraph[3],
+                        directedGraph[4], directedGraph[7] });
         }
 
         [Test]

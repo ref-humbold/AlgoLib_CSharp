@@ -78,13 +78,16 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
-            result.Should().BeEquivalentTo(new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
-                                           new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
-                                           new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
-                                           new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
-                                           new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
-                                           new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
-                                           new Edge<int>(new Vertex<int>(7), new Vertex<int>(2)));
+            result.Should().BeEquivalentTo(
+                new[] {
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
+                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(2))
+                });
         }
 
         [Test]
@@ -117,7 +120,8 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
             // then
-            result.Should().BeEquivalentTo(new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5));
+            result.Should().BeEquivalentTo(
+                new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) });
         }
 
         [Test]
@@ -126,9 +130,12 @@ namespace AlgoLib.Graphs
             // when
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
             // then
-            result.Should().BeEquivalentTo(new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
-                                           new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
-                                           new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)));
+            result.Should().BeEquivalentTo(
+                new[] {
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(5), new Vertex<int>(1))
+                });
         }
 
         [Test]

@@ -10,9 +10,9 @@ namespace AlgoLib.Text
         /// <summary>
         /// Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
         /// </summary>
-        /// <param name="text">A text</param>
-        /// <param name="pattern">A pattern</param>
-        /// <returns>Enumerable of indices with pattern occurrences</returns>
+        /// <param name="text">A text.</param>
+        /// <param name="pattern">A pattern.</param>
+        /// <returns>Enumerable of indices with pattern occurrences.</returns>
         public static IEnumerable<int> KmpSearch(this string text, string pattern)
         {
             if(text == null)

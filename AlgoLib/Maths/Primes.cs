@@ -13,13 +13,13 @@ namespace AlgoLib.Maths
         /// <summary>Finds prime numbers less than given number.</summary>
         /// <param name="maximum">Maximal number, exclusive</param>
         /// <returns>Enumerable of prime numbers</returns>
-        public static IEnumerable<int> Find(int maximum) => Find(0, maximum);
+        public static IEnumerable<int> FindPrimes(int maximum) => FindPrimes(0, maximum);
 
         /// <summary>Finds prime numbers less inside given range of numbers.</summary>
         /// <param name="minimum">Minimal number, inclusive</param>
         /// <param name="maximum">Maximal number, exclusive</param>
         /// <returns>Enumerable of prime numbers</returns>
-        public static IEnumerable<int> Find(int minimum, int maximum)
+        public static IEnumerable<int> FindPrimes(int minimum, int maximum)
         {
             if(maximum <= minimum)
                 return Enumerable.Empty<int>();

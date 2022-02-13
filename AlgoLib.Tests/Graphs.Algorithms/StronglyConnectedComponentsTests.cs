@@ -32,11 +32,12 @@ namespace AlgoLib.Graphs.Algorithms
             List<HashSet<Vertex<int>>> result = graph.FindScc();
             // then
             result.Should().BeEquivalentTo(
-                new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
-                new HashSet<Vertex<int>> { graph[2] },
-                new HashSet<Vertex<int>> { graph[5] },
-                new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] }
-            );
+                new[] {
+                    new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
+                    new HashSet<Vertex<int>> { graph[2] },
+                    new HashSet<Vertex<int>> { graph[5] },
+                    new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] }
+                });
         }
 
         [Test]
@@ -67,11 +68,12 @@ namespace AlgoLib.Graphs.Algorithms
             List<HashSet<Vertex<int>>> result = graph.FindScc();
             // then
             result.Should().BeEquivalentTo(
-                new HashSet<Vertex<int>> { graph[0] },
-                new HashSet<Vertex<int>> { graph[1] },
-                new HashSet<Vertex<int>> { graph[2] },
-                new HashSet<Vertex<int>> { graph[3] }
-            );
+                new[] {
+                    new HashSet<Vertex<int>> { graph[0] },
+                    new HashSet<Vertex<int>> { graph[1] },
+                    new HashSet<Vertex<int>> { graph[2] },
+                    new HashSet<Vertex<int>> { graph[3] }
+                });
         }
     }
 }

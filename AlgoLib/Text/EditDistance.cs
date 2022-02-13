@@ -5,12 +5,20 @@ namespace AlgoLib.Text
 {
     public static class EditDistance
     {
+        /// <summary>Computes cost of Levenshtein edit distance between given texts.</summary>
+        /// <param name="source">Initial text.</param>
+        /// <param name="destination">Final text.</param>
+        /// <param name="insertionCost">Cost of insertion operation.</param>
+        /// <param name="deletionCost">Cost of deletion operation.</param>
+        /// <param name="substitutionCost">Cost of substitution operation.</param>
+        /// <returns>Cost of edit distance.</returns>
+        /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
         public static double CountLevenshtein(this string source, string destination,
                                               double insertionCost = 1.0, double deletionCost = 1.0,
                                               double substitutionCost = 1.0)
         {
             if(insertionCost < 0 || deletionCost < 0 || substitutionCost < 0)
-                throw new ArgumentException("Cost cannot be negative");
+                throw new ArgumentException("Cost of operation cannot be negative");
 
             double[] distance = Enumerable.Range(0, destination.Length + 1)
                                           .Select(i => i * insertionCost)
@@ -38,11 +46,18 @@ namespace AlgoLib.Text
             return distance[^1];
         }
 
+        /// <summary>Computes cost of LCS edit distance between given texts.</summary>
+        /// <param name="source">Initial text.</param>
+        /// <param name="destination">Final text.</param>
+        /// <param name="insertionCost">Cost of insertion operation.</param>
+        /// <param name="deletionCost">Cost of deletion operation.</param>
+        /// <returns>Cost of edit distance.</returns>
+        /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
         public static double CountLcs(this string source, string destination,
                                       double insertionCost = 1.0, double deletionCost = 1.0)
         {
             if(insertionCost < 0 || deletionCost < 0)
-                throw new ArgumentException("Cost cannot be negative");
+                throw new ArgumentException("Cost of operation cannot be negative");
 
             double[] distance = Enumerable.Range(0, destination.Length + 1)
                                           .Select(i => i * insertionCost)
@@ -69,11 +84,19 @@ namespace AlgoLib.Text
             return distance[^1];
         }
 
+        /// <summary>Computes cost of Hamming edit distance between given texts of equal length.</summary>
+        /// <param name="source">Initial text.</param>
+        /// <param name="destination">Final text.</param>
+        /// <param name="substitutionCost">Cost of substitution operation.</param>
+        /// <returns>Cost of edit distance.</returns>
+        /// <exception cref="ArgumentException">
+        /// If any operation cost is negative, or if texts have different length.
+        /// </exception>
         public static double CountHamming(this string source, string destination,
                                           double substitutionCost = 1.0)
         {
             if(substitutionCost < 0)
-                throw new ArgumentException("Cost cannot be negative");
+                throw new ArgumentException("Cost of operation cannot be negative");
 
             if(source.Length != destination.Length)
                 throw new ArgumentException("Texts should have equal length");

@@ -39,7 +39,7 @@ namespace AlgoLib.Text
             string result0 = testObject[0];
             string result1 = testObject[3];
             string result2 = testObject[6];
-            string result3 = testObject[9];
+            string result3 = testObject[^2];
             // then
             result0.Should().Be("i");
             result1.Should().Be("ississippi");
@@ -63,7 +63,7 @@ namespace AlgoLib.Text
             int result0 = testObject.IndexAt(0);
             int result1 = testObject.IndexAt(3);
             int result2 = testObject.IndexAt(6);
-            int result3 = testObject.IndexAt(9);
+            int result3 = testObject.IndexAt(^2);
             // then
             result0.Should().Be(10);
             result1.Should().Be(1);
@@ -87,7 +87,7 @@ namespace AlgoLib.Text
             int result0 = testObject.IndexOf(0);
             int result1 = testObject.IndexOf(3);
             int result2 = testObject.IndexOf(6);
-            int result3 = testObject.IndexOf(9);
+            int result3 = testObject.IndexOf(^2);
             // then
             result0.Should().Be(4);
             result1.Should().Be(8);
@@ -117,7 +117,7 @@ namespace AlgoLib.Text
         public void CountLCP_WhenFirstEarlierThanSecondSuffix_ThenLengthOfPrefix()
         {
             // when
-            int result = testObject.CountLCP(1, 10);
+            int result = testObject.CountLCP(1, ^1);
             // then
             result.Should().Be(1);
         }
@@ -126,7 +126,7 @@ namespace AlgoLib.Text
         public void CountLCP_WhenFirstFurtherThanSecondSuffix_ThenLengthOfPrefix()
         {
             // when
-            int result = testObject.CountLCP(9, 6);
+            int result = testObject.CountLCP(^2, 6);
             // then
             result.Should().Be(0);
         }

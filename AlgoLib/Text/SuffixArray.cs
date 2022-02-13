@@ -30,57 +30,73 @@ namespace AlgoLib.Text
             initLcpArray();
         }
 
-        public string this[int i]
+        /// <summary>Gets text suffix at given index.</summary>
+        /// <param name="index">Index in this suffix array.</param>
+        /// <returns>Suffix at the index.</returns>
+        public string this[Index index]
         {
             get
             {
-                if(i < 0 || i >= Count)
-                    throw new IndexOutOfRangeException("Suffix array index out of range");
+                int i = index.GetOffset(suffixArray.Count);
 
-                return Text.Substring(suffixArray[i]);
+                return i < 0 || i >= Count
+                    ? throw new IndexOutOfRangeException("Suffix array index out of range")
+                    : Text[suffixArray[i]..];
             }
         }
 
-        /**
-         * @param i index in suffix array
-         * @return index in text where suffix begins
-         */
-
-        public int IndexAt(int i) =>
-            i < 0 || i >= Count ? throw new IndexOutOfRangeException("Suffix array index out of range")
-                                : suffixArray[i];
-
-        /**
-         * @param suf index in text where suffix begins
-         * @return index of suffix in suffix array
-         */
-
-        public int IndexOf(int suf) =>
-            suf < 0 || suf >= Count ? throw new IndexOutOfRangeException("Text index out of range")
-                                    : inverseArray[suf];
-
-        /**
-         * @param suf1 index in text where first suffix begins
-         * @param suf2 index in text where second suffix begins
-         * @return longest common prefix of both suffices
-         */
-
-        public int CountLCP(int suf1, int suf2)
+        /// <summary>Finds suffix in text for given index in this suffix array.</summary>
+        /// <param name="index">Index in the suffix array.</param>
+        /// <returns>Index in the text where the suffix begins.</returns>
+        public int IndexAt(Index index)
         {
-            if(suf1 < 0 || suf1 >= Count || suf2 < 0 || suf2 >= Count)
+            int i = index.GetOffset(suffixArray.Count);
+
+            return i < 0 || i >= Count
+            ? throw new IndexOutOfRangeException("Suffix array index out of range")
+                : suffixArray[index];
+        }
+
+        /// <summary>Finds index in this suffix array for given text suffix.</summary>
+        /// <param name="index">Index in the text where suffix begins.</param>
+        /// <returns>Index of suffix in the suffix array.</returns>
+        public int IndexOf(Index index)
+        {
+            int i = index.GetOffset(suffixArray.Count);
+
+            return i < 0 || i >= Count
+            ? throw new IndexOutOfRangeException("Text index out of range")
+                : inverseArray[index];
+        }
+
+        /// <summary>Counts length of the longest common prefix of given suffixes.</summary>
+        /// <param name="index1">Index in text where first suffix begins.</param>
+        /// <param name="index2">Index in text where second suffix begins.</param>
+        /// <returns>Length of the longest common prefix.</returns>
+        public int CountLCP(Index index1, Index index2)
+        {
+            int i1 = index1.GetOffset(suffixArray.Count);
+            int i2 = index2.GetOffset(suffixArray.Count);
+
+            if(i1 < 0 || i1 >= Count || i2 < 0 || i2 >= Count)
                 throw new IndexOutOfRangeException("Text index out of range");
 
-            if(suf1 == suf2)
-                return Count - suf1;
+            if(i1 == i2)
+                return Count - i1;
 
-            int i1 = Math.Min(inverseArray[suf1], inverseArray[suf2]);
-            int i2 = Math.Max(inverseArray[suf1], inverseArray[suf2]);
-            int res = lcpArray[i1 + 1];
+            int j1 = Math.Min(inverseArray[i1], inverseArray[i2]);
+            int j2 = Math.Max(inverseArray[i1], inverseArray[i2]);
 
-            for(int i = i1 + 2; i <= i2; ++i)
-                res = Math.Min(res, lcpArray[i]);
-
-            return res;
+            try
+            {
+                return Enumerable.Range(j1 + 1, j2 - j1)
+                                 .Select(j => lcpArray[j])
+                                 .Min();
+            }
+            catch(InvalidOperationException)
+            {
+                return lcpArray[j1 + 1];
+            }
         }
 
         private void initInverseArray()

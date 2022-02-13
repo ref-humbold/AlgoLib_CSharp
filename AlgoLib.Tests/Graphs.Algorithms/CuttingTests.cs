@@ -33,7 +33,8 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             IEnumerable<Edge<int>> result = graph.FindEdgeCut();
             // then
-            result.Should().BeEquivalentTo(graph[graph[0], graph[7]], graph[graph[5], graph[6]]);
+            result.Should().BeEquivalentTo(
+                new[] { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
         }
 
         [Test]
@@ -80,7 +81,8 @@ namespace AlgoLib.Graphs.Algorithms
             // when
             IEnumerable<Vertex<int>> result = graph.FindVertexCut();
             // then
-            result.Should().BeEquivalentTo(graph[0], graph[1], graph[5], graph[7]);
+            result.Should().BeEquivalentTo(
+                new[] { graph[0], graph[1], graph[5], graph[7] });
         }
 
         [Test]

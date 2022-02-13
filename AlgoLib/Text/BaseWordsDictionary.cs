@@ -20,7 +20,7 @@ namespace AlgoLib.Text
             create();
         }
 
-        /// <summary>Retrieves code of a substring denoted by given range.</summary>
+        /// <summary>Retrieves code of substring denoted by given range.</summary>
         /// <param name="range">Range in the text</param>
         /// <returns>Code of the substring</returns>
         /// <exception cref="IndexOutOfRangeException">If start or end of the range are invalid</exception>
@@ -44,17 +44,15 @@ namespace AlgoLib.Text
                     return (code, 0);
 
                 int n = getMaxLength(endIndex - startIndex);
-                return (factors[(startIndex, startIndex + n)],
-                         factors[(endIndex - n, endIndex)]);
+                return (factors[(startIndex, startIndex + n)], factors[(endIndex - n, endIndex)]);
             }
         }
 
-        // Builds a base words map using Karp-Miller-Rosenberg algorithm
+        // Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
         private void create()
         {
-            int codeValue = extend(1, 0, (i, length) => new int[] { Text[i],
-                                                                    1 + Text[i],
-                                                                    i, i + length });
+            int codeValue = extend(1, 0,
+                                   (i, length) => new int[] { Text[i], 1 + Text[i], i, i + length });
 
             for(int currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
             {
@@ -65,7 +63,7 @@ namespace AlgoLib.Text
             }
         }
 
-        // Encodes substring of given length using already counted factors
+        // Encodes substring of given length using already counted factors.
         private int extend(int length, int codeValue, Func<int, int, int[]> func)
         {
             (int, int) previousCode = (0, 0);

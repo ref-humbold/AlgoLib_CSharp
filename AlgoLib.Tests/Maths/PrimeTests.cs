@@ -8,60 +8,60 @@ namespace AlgoLib.Maths
     [TestFixture]
     public class PrimeTests
     {
-        #region Find
+        #region FindPrimes
 
         [Test]
-        public void Find_WhenMinGreaterThanMax_ThenEmpty()
+        public void FindPrimes_WhenMinGreaterThanMax_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = Primes.Find(100, 30);
+            IEnumerable<int> result = Primes.FindPrimes(100, 30);
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void Find_WhenSingleArgument_ThenMinIsZero()
+        public void FindPrimes_WhenSingleArgument_ThenMinIsZero()
         {
             // when
-            IEnumerable<int> result1 = Primes.Find(100);
-            IEnumerable<int> result2 = Primes.Find(0, 100);
+            IEnumerable<int> result1 = Primes.FindPrimes(100);
+            IEnumerable<int> result2 = Primes.FindPrimes(0, 100);
             // then
             result1.Should().Equal(result2);
         }
 
         [Test]
-        public void Find_WhenMaxIsComposite_ThenAllPrimes()
+        public void FindPrimes_WhenMaxIsComposite_ThenAllPrimes()
         {
             // when
-            IEnumerable<int> result = Primes.Find(100);
+            IEnumerable<int> result = Primes.FindPrimes(100);
             // then
             result.Should().Equal(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
                                   61, 67, 71, 73, 79, 83, 89, 97);
         }
 
         [Test]
-        public void Find_WhenMaxIsComposite_ThenMaxExclusive()
+        public void FindPrimes_WhenMaxIsComposite_ThenMaxExclusive()
         {
             // when
-            IEnumerable<int> result = Primes.Find(67);
+            IEnumerable<int> result = Primes.FindPrimes(67);
             // then
             result.Should().Equal(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61);
         }
 
         [Test]
-        public void Find_WhenMaxIsTwo_ThenEmpty()
+        public void FindPrimes_WhenMaxIsTwo_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = Primes.Find(2);
+            IEnumerable<int> result = Primes.FindPrimes(2);
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void Find_WhenRange_ThenPrimesBetween()
+        public void FindPrimes_WhenRange_ThenPrimesBetween()
         {
             // when
-            IEnumerable<int> result = Primes.Find(30, 200);
+            IEnumerable<int> result = Primes.FindPrimes(30, 200);
             // then
             result.Should().Equal(31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
                                   103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
@@ -69,10 +69,10 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void Find_WhenMinIsLessThanSquareRootOfMax_ThenPrimesBetween()
+        public void FindPrimes_WhenMinIsLessThanSquareRootOfMax_ThenPrimesBetween()
         {
             // when
-            IEnumerable<int> result = Primes.Find(5, 150);
+            IEnumerable<int> result = Primes.FindPrimes(5, 150);
             // then
             result.Should().Equal(5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
                                   71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137,
@@ -80,10 +80,10 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void Find_WhenMinAndMaxArePrimes_ThenMinInclusiveAndMaxExclusive()
+        public void FindPrimes_WhenMinAndMaxArePrimes_ThenMinInclusiveAndMaxExclusive()
         {
             // when
-            IEnumerable<int> result = Primes.Find(137, 317);
+            IEnumerable<int> result = Primes.FindPrimes(137, 317);
             // then
             result.Should().Equal(137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197,
                                   199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271,
@@ -91,19 +91,19 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void Find_WhenMinEqualsMaxAndPrime_ThenEmpty()
+        public void FindPrimes_WhenMinEqualsMaxAndPrime_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = Primes.Find(41, 41);
+            IEnumerable<int> result = Primes.FindPrimes(41, 41);
             // then
             result.Should().BeEmpty();
         }
 
         [Test]
-        public void Find_WhenMinEqualsMaxAndComposite_ThenEmpty()
+        public void FindPrimes_WhenMinEqualsMaxAndComposite_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = Primes.Find(91, 91);
+            IEnumerable<int> result = Primes.FindPrimes(91, 91);
             // then
             result.Should().BeEmpty();
         }
