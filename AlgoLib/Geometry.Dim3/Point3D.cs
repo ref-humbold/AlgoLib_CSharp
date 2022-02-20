@@ -9,7 +9,7 @@ namespace AlgoLib.Geometry.Dim3
         public readonly double Y;
         public readonly double Z;
 
-        public double[] Coordinates => new double[] { X, Y, Z };
+        public double[] Coordinates => new[] { X, Y, Z };
 
         public double Radius => Math.Sqrt(X * X + Y * Y + Z * Z);
 

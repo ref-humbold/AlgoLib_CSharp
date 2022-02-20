@@ -8,7 +8,7 @@ namespace AlgoLib.Geometry.Dim2
         public readonly double X;
         public readonly double Y;
 
-        public double[] Coordinates => new double[] { X, Y };
+        public double[] Coordinates => new[] { X, Y };
 
         public double Radius => Math.Sqrt(X * X + Y * Y);
 

@@ -12,7 +12,7 @@ namespace AlgoLib.Geometry.Dim2
         public void FindConvexHull_WhenOnePoint_ThenEmpty()
         {
             // when
-            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(new Point2D[] { Point2D.Of(3.0, 2.0) });
+            IEnumerable<Point2D> result = ConvexHull.FindConvexHull(new[] { Point2D.Of(3.0, 2.0) });
             // then
             result.Should().BeEmpty();
         }
@@ -22,7 +22,7 @@ namespace AlgoLib.Geometry.Dim2
         {
             // when
             IEnumerable<Point2D> result =
-                ConvexHull.FindConvexHull(new Point2D[] { Point2D.Of(2.0, 3.0), Point2D.Of(3.0, 2.0) });
+                ConvexHull.FindConvexHull(new[] { Point2D.Of(2.0, 3.0), Point2D.Of(3.0, 2.0) });
             // then
             result.Should().BeEmpty();
         }
@@ -32,7 +32,7 @@ namespace AlgoLib.Geometry.Dim2
         {
             // given
             Point2D[] points =
-                new Point2D[] { Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0) };
+                new[] { Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0) };
             // when
             IEnumerable<Point2D> result = ConvexHull.FindConvexHull(points);
             // then
@@ -44,17 +44,17 @@ namespace AlgoLib.Geometry.Dim2
         {
             // when
             IEnumerable<Point2D> result = ConvexHull.FindConvexHull(
-                    new Point2D[] { Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7),
-                                    Point2D.Of(-8, -7), Point2D.Of(-3, -4), Point2D.Of(5, 9),
-                                    Point2D.Of(-1, -8), Point2D.Of(-5, 10), Point2D.Of(8, 0),
-                                    Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
-                                    Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7),
-                                    Point2D.Of(6, -4) });
+                    new[] { Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7),
+                            Point2D.Of(-8, -7), Point2D.Of(-3, -4), Point2D.Of(5, 9),
+                            Point2D.Of(-1, -8), Point2D.Of(-5, 10), Point2D.Of(8, 0),
+                            Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
+                            Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7),
+                            Point2D.Of(6, -4) });
             // then
             result.Should().BeEquivalentTo(
-                    new Point2D[] { Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
-                                    Point2D.Of(6, -4), Point2D.Of(10, 2), Point2D.Of(5, 9),
-                                    Point2D.Of(-5, 10), Point2D.Of(-7, 7) });
+                    new[] { Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
+                            Point2D.Of(6, -4), Point2D.Of(10, 2), Point2D.Of(5, 9),
+                            Point2D.Of(-5, 10), Point2D.Of(-7, 7) });
         }
 
         [Test]
@@ -62,12 +62,12 @@ namespace AlgoLib.Geometry.Dim2
         {
             // when
             IEnumerable<Point2D> result = ConvexHull.FindConvexHull(
-                    new Point2D[] { Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
-                                    Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
-                                    Point2D.Of(7, -3), Point2D.Of(-3, -2) });
+                    new[] { Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
+                            Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
+                            Point2D.Of(7, -3), Point2D.Of(-3, -2) });
             // then
             result.Should().BeEquivalentTo(
-                new Point2D[] { Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5) });
+                new[] { Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5) });
         }
     }
 }

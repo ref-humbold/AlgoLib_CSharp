@@ -12,17 +12,16 @@ namespace AlgoLib.Maths
         public void Solve_WhenSingleSolution_ThenSolution()
         {
             //given
-            var testObject = new EquationSystem(new Equation[] {
-                new Equation(new double[] { 2, 3, -2 }, 15),
-                new Equation(new double[] { 7, -1, 0 }, 4),
-                new Equation(new double[] { -1, 6, 4 }, 9)
-            });
+            var testObject = new EquationSystem(
+                new[] { new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
+                        new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
+                        new Equation(new[] { -1.0, 6.0, 4.0 }, 9) });
             // when
             double[] result = testObject.Solve();
             // then
-            result.Should().Equal(new double[] { 1, 3, -2 });
+            result.Should().Equal(new[] { 1.0, 3.0, -2.0 });
             testObject.IsSolution(result).Should().BeTrue();
-            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeFalse();
+            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -30,16 +29,16 @@ namespace AlgoLib.Maths
         {
             // given
             var testObject = new EquationSystem(new Equation[] {
-                new Equation(new double[] { 2, 3, -2 }, 15),
-                new Equation(new double[] { 7, -1, 0 }, 4),
-                new Equation(new double[] { -1, -1.5, 1 }, -1)
+                new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
+                new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
+                new Equation(new[] { -1.0, -1.5, 1.0 }, -1)
             });
             // when
             Action action = () => testObject.Solve();
             // then
             action.Should().Throw<NoSolutionException>();
-            testObject.IsSolution(new double[] { 1, 3, -2 }).Should().BeFalse();
-            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeFalse();
+            testObject.IsSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeFalse();
+            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -47,16 +46,16 @@ namespace AlgoLib.Maths
         {
             // given
             var testObject = new EquationSystem(new Equation[] {
-                new Equation(new double[] { 2, 3, -2 }, 15),
-                new Equation(new double[] { 7, -1, 0 }, 4),
-                new Equation(new double[] { 4, 6, -4 }, 30)
+                new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
+                new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
+                new Equation(new[] { 4.0, 6.0, -4.0 }, 30)
             });
             // when
             Action action = () => testObject.Solve();
             // then
             action.Should().Throw<InfiniteSolutionsException>();
-            testObject.IsSolution(new double[] { 1, 3, -2 }).Should().BeTrue();
-            testObject.IsSolution(new double[] { -2, -18, -36.5 }).Should().BeTrue();
+            testObject.IsSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeTrue();
+            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeTrue();
         }
     }
 }

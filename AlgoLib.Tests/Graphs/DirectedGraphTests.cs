@@ -255,7 +255,7 @@ namespace AlgoLib.Graphs
             // then
             result.Should().BeEquivalentTo(
                 new[] { new Vertex<int>(1), new Vertex<int>(3), new Vertex<int>(4),
-                         new Vertex<int>(7), new Vertex<int>(9) });
+                        new Vertex<int>(7), new Vertex<int>(9) });
         }
 
         [Test]

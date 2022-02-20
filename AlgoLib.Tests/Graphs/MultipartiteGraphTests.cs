@@ -81,7 +81,7 @@ namespace AlgoLib.Graphs
             IEnumerable<Edge<int>> result = testObject.Edges;
             // then
             result.Should().BeEquivalentTo(
-                new[]{
+                new[] {
                     new Edge<int>(new Vertex<int>(0), new Vertex<int>(3)),
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
@@ -121,7 +121,7 @@ namespace AlgoLib.Graphs
             IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(new Vertex<int>(9));
             // then
             result.Should().BeEquivalentTo(
-                new[]{ new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
+                new[] { new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
                         new Edge<int>(new Vertex<int>(7), new Vertex<int>(9)) });
         }
 

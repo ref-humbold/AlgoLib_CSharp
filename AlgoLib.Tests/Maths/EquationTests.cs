@@ -11,7 +11,7 @@ namespace AlgoLib.Maths
         private Equation testObject;
 
         [SetUp]
-        public void SetUp() => testObject = new Equation(new double[] { 2, 3, 0, -2 }, 15);
+        public void SetUp() => testObject = new Equation(new[] { 2.0, 3.0, 0.0, -2.0 }, 15);
 
         [Test]
         public void ToString_ThenStringRepresentation()
@@ -28,7 +28,7 @@ namespace AlgoLib.Maths
             // when
             testObject.Multiply(2);
             // then
-            testObject.Coefficients.Should().Equal(new double[] { 4, 6, 0, -4 });
+            testObject.Coefficients.Should().Equal(new[] { 4.0, 6.0, 0.0, -4.0 });
             testObject.Free.Should().Be(30);
         }
 
@@ -45,9 +45,9 @@ namespace AlgoLib.Maths
         public void Combine_WhenConstantIsNonZero_ThenCombined()
         {
             // when
-            testObject.Combine(new Equation(new double[] { 1, -1, 4, 10 }, 5), -2);
+            testObject.Combine(new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5), -2);
             // then
-            testObject.Coefficients.Should().Equal(new double[] { 0, 5, -8, -22 });
+            testObject.Coefficients.Should().Equal(new[] { 0.0, 5.0, -8.0, -22.0 });
             testObject.Free.Should().Be(5);
         }
 
@@ -56,7 +56,7 @@ namespace AlgoLib.Maths
         {
             // when
             Action action =
-                () => testObject.Combine(new Equation(new double[] { 1, -1, 10, 7 }, 5), 0);
+                () => testObject.Combine(new Equation(new[] { 1.0, -1.0, 10.0, 7.0 }, 5), 0);
             // then
             action.Should().Throw<ArithmeticException>();
         }

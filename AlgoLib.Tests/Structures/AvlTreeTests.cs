@@ -8,9 +8,9 @@ namespace AlgoLib.Structures
     [TestFixture]
     public class AvlTreeTests
     {
-        private readonly int[] numbers = new int[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-        private readonly int[] presentNumbers = new int[] { 14, 24, 30, 45 };
-        private readonly int[] absentNumbers = new int[] { 111, 140, 187 };
+        private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+        private readonly int[] presentNumbers = new[] { 14, 24, 30, 45 };
+        private readonly int[] absentNumbers = new[] { 111, 140, 187 };
 
         private AvlTree<int> testObject;
 
@@ -121,7 +121,7 @@ namespace AlgoLib.Structures
             int root = 27;
             int elem = 11;
 
-            testObject = new AvlTree<int>(new int[] { root, elem });
+            testObject = new AvlTree<int>(new[] { root, elem });
             // when
             bool result = testObject.Remove(root);
             // then
@@ -137,7 +137,7 @@ namespace AlgoLib.Structures
             int root = 11;
             int elem = 27;
 
-            testObject = new AvlTree<int>(new int[] { root, elem });
+            testObject = new AvlTree<int>(new[] { root, elem });
             // when
             bool result = testObject.Remove(root);
             // then
@@ -152,7 +152,7 @@ namespace AlgoLib.Structures
             // given
             int root = 0;
 
-            testObject = new AvlTree<int>(new int[] { root });
+            testObject = new AvlTree<int>(new[] { root });
             // when
             bool result = testObject.Remove(root);
             // then
