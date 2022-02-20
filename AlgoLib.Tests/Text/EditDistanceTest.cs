@@ -7,7 +7,7 @@ namespace AlgoLib.Text
     [TestFixture]
     public class EditDistanceTest
     {
-        private const double precision = 1e-6;
+        private static readonly double precision = 1e-6;
 
         #region CountLevenshtein
 

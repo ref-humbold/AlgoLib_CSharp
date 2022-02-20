@@ -43,8 +43,8 @@ namespace AlgoLib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <summary>Adds a new value to this double heap.</summary>
-        /// <param name="item">Value to add</param>
+        /// <summary>Adds new value to this double heap.</summary>
+        /// <param name="item">New value.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -81,8 +81,8 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T GetMin() => Count == 0 ? throw new InvalidOperationException("The double heap is empty")
-                                        : heap[indexMin];
+        public T GetMin() => Count > 0 ? heap[indexMin]
+                                       : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
@@ -142,7 +142,9 @@ namespace AlgoLib.Structures
         {
             T minimal = GetMin();
 
-            doPopAt(indexMin);
+            heap[indexMin] = heap[^1];
+            heap.RemoveAt(heap.Count - 1);
+            moveToMax(indexMin);
             return minimal;
         }
 
@@ -158,14 +160,18 @@ namespace AlgoLib.Structures
             bool wasPresent = TryGetMin(out result);
 
             if(wasPresent)
-                doPopAt(indexMin);
+            {
+                heap[indexMin] = heap[^1];
+                heap.RemoveAt(heap.Count - 1);
+                moveToMax(indexMin);
+            }
 
             return wasPresent;
         }
 
         /// <summary>Retrieves and removes maximal element from this double heap.</summary>
-        /// <returns>Removed maximal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Removed maximal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PopMax()
         {
             if(Count == 1)
@@ -173,7 +179,9 @@ namespace AlgoLib.Structures
 
             T maximal = GetMax();
 
-            doPopAt(indexMax);
+            heap[indexMax] = heap[^1];
+            heap.RemoveAt(heap.Count - 1);
+            moveToMin(indexMax);
             return maximal;
         }
 
@@ -181,28 +189,27 @@ namespace AlgoLib.Structures
         /// Removes maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed maximal element if it's present, otherwise the default value
+        /// Removed maximal element if it's present, otherwise the default value.
         /// </param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPopMax(out T result)
         {
+            if(Count == 1)
+                return TryGetMin(out result);
+
             bool wasPresent = TryGetMax(out result);
 
             if(wasPresent)
-                doPopAt(indexMax);
+            {
+                heap[indexMax] = heap[^1];
+                heap.RemoveAt(heap.Count - 1);
+                moveToMin(indexMax);
+            }
 
             return wasPresent;
         }
 
         private int compare(int index1, int index2) => Comparer.Compare(heap[index1], heap[index2]);
-
-        // Removes element from given index.
-        private void doPopAt(int index)
-        {
-            heap[index] = heap[^1];
-            heap.RemoveAt(heap.Count - 1);
-            moveToMax(index);
-        }
 
         // Moves element from given index towards minimum.
         private void moveToMin(int index)

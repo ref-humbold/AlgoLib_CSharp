@@ -7,7 +7,7 @@ namespace AlgoLib.Maths
 {
     public static class Primes
     {
-        private const int attempts = 17;
+        private static readonly int attempts = 17;
         private static readonly Random random = new Random();
 
         /// <summary>Finds prime numbers less than given number.</summary>

@@ -8,7 +8,7 @@ namespace AlgoLib.Geometry.Dim2
     [TestFixture]
     public class Vector3DTests
     {
-        private const double offset = IGeometryObject.Epsilon;
+        private static readonly double offset = IGeometryObject.Epsilon;
 
         [Test]
         public void Coordinates_ThenArray()

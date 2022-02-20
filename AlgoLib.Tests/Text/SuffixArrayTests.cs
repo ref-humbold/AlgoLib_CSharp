@@ -8,7 +8,7 @@ namespace AlgoLib.Text
     [TestFixture]
     public class SuffixArrayTests
     {
-        private const string text = "mississippi";
+        private static readonly string text = "mississippi";
         private SuffixArray testObject;
 
         [SetUp]

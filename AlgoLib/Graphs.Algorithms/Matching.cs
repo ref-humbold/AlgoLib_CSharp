@@ -27,7 +27,7 @@ namespace AlgoLib.Graphs.Algorithms
             internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> matching =
                 new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
 
-            private const double infinity = double.PositiveInfinity;
+            private static readonly double infinity = double.PositiveInfinity;
             private readonly MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
             internal MatchAugmenter(MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)

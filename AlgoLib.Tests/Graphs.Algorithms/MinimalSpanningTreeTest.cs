@@ -6,7 +6,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public class MinimalSpanningTreeTest
     {
-        private const double precision = 1e-6;
+        private static readonly double precision = 1e-6;
         private UndirectedSimpleGraph<int, object, WeightProp> graph;
 
         [SetUp]

@@ -9,14 +9,15 @@ namespace AlgoLib.Structures
     [TestFixture]
     public class DoubleHeapTests
     {
-        private readonly List<int> numbers;
+        private readonly int[] numbers =
+            new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+
         private readonly int minimum;
         private readonly int maximum;
         private DoubleHeap<int> testObject;
 
         public DoubleHeapTests()
         {
-            numbers = new List<int>() { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
             minimum = numbers.Min();
             maximum = numbers.Max();
         }
@@ -36,26 +37,12 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void Count_WhenContainsElements_ThenNumberOfElements()
+        public void Count_WhenNotEmpty_ThenNumberOfElements()
         {
             // when
             int result = testObject.Count;
             // then
-            result.Should().Be(numbers.Count);
-        }
-
-        [Test]
-        public void GetEnumerator_WhenContainsElements_ThenFirstMinimumAndLastMaximum()
-        {
-            // when
-            var result = new List<int>();
-            IEnumerator<int> enumerator = testObject.GetEnumerator();
-
-            while(enumerator.MoveNext())
-                result.Add(enumerator.Current);
-            // then
-            result.Should().HaveElementAt(0, minimum);
-            result.Should().HaveElementAt(result.Count - 1, maximum);
+            result.Should().Be(numbers.Length);
         }
 
         [Test]
@@ -64,14 +51,98 @@ namespace AlgoLib.Structures
             // given
             testObject = new DoubleHeap<int>();
             // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
+        {
+            // given
+            int element = 17;
+
+            testObject = new DoubleHeap<int>(new[] { element });
+            // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeTrue();
+            result.Current.Should().Be(element);
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+        {
+            // when
             var result = new List<int>();
             IEnumerator<int> enumerator = testObject.GetEnumerator();
 
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            result.Should().BeEmpty();
+            result.Should().HaveElementAt(0, minimum)
+                .And.HaveElementAt(result.Count - 1, maximum);
         }
+
+        #region Push
+
+        [Test]
+        public void Push_WhenNewElement_ThenAdded()
+        {
+            // given
+            int element = 46;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(minimum);
+            testObject.GetMax().Should().Be(maximum);
+        }
+
+        [Test]
+        public void Push_WhenEmpty_ThenAdded()
+        {
+            // given
+            int element = 19;
+
+            testObject = new DoubleHeap<int>();
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(1);
+            testObject.GetMin().Should().Be(element);
+            testObject.GetMax().Should().Be(element);
+        }
+
+        [Test]
+        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
+        {
+            // given
+            int element = minimum - 3;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(element);
+            testObject.GetMax().Should().Be(maximum);
+        }
+
+        [Test]
+        public void Push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum()
+        {
+            // given
+            int element = maximum + 3;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(minimum);
+            testObject.GetMax().Should().Be(element);
+        }
+
+        #endregion
+        #region Get
 
         [Test]
         public void GetMin_WhenEmpty_ThenInvalidOperationException()
@@ -85,34 +156,25 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void GetMin_WhenContainsElements_ThenMinimalElement()
+        public void GetMin_WhenSingleElement_ThenThisElement()
+        {
+            // given
+            int element = 19;
+
+            testObject = new DoubleHeap<int>(new[] { element });
+            // when
+            int result = testObject.GetMin();
+            // then
+            result.Should().Be(element);
+        }
+
+        [Test]
+        public void GetMin_WhenMultipleElements_ThenMinimalElement()
         {
             // when
             int result = testObject.GetMin();
             // then
             result.Should().Be(minimum);
-        }
-
-        [Test]
-        public void TryGetMin_WhenEmpty_ThenDefaultValue()
-        {
-            // given
-            testObject = new DoubleHeap<int>();
-            // when
-            bool result = testObject.TryGetMin(out int resultValue);
-            // then
-            result.Should().BeFalse();
-            resultValue.Should().Be(default);
-        }
-
-        [Test]
-        public void TryGetMin_WhenContainsElements_ThenMinimalElement()
-        {
-            // when
-            bool result = testObject.TryGetMin(out int resultValue);
-            // then
-            result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
         }
 
         [Test]
@@ -131,7 +193,8 @@ namespace AlgoLib.Structures
         {
             // given
             int element = 19;
-            testObject = new DoubleHeap<int>(new List<int>() { element });
+
+            testObject = new DoubleHeap<int>(new[] { element });
             // when
             int result = testObject.GetMax();
             // then
@@ -147,6 +210,31 @@ namespace AlgoLib.Structures
             result.Should().Be(maximum);
         }
 
+        #endregion
+        #region TryGet
+
+        [Test]
+        public void TryGetMin_WhenEmpty_ThenDefaultValue()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            bool result = testObject.TryGetMin(out int resultValue);
+            // then
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+        }
+
+        [Test]
+        public void TryGetMin_WhenNotEmpty_ThenMinimalElement()
+        {
+            // when
+            bool result = testObject.TryGetMin(out int resultValue);
+            // then
+            result.Should().BeTrue();
+            resultValue.Should().Be(minimum);
+        }
+
         [Test]
         public void TryGetMax_WhenEmpty_ThenDefaultValue()
         {
@@ -160,7 +248,7 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryGetMax_WhenContainsElements_ThenMaximalElement()
+        public void TryGetMax_WhenNotEmpty_ThenMaximalElement()
         {
             // when
             bool result = testObject.TryGetMax(out int resultValue);
@@ -169,18 +257,8 @@ namespace AlgoLib.Structures
             resultValue.Should().Be(maximum);
         }
 
-        [Test]
-        public void Push_WhenNewElement_ThenAdded()
-        {
-            // given
-            int element = 46;
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(numbers.Count + 1);
-            testObject.GetMin().Should().Be(minimum);
-            testObject.GetMax().Should().Be(maximum);
-        }
+        #endregion
+        #region Pop
 
         [Test]
         public void PopMin_WhenEmpty_ThenInvalidOperationException()
@@ -194,36 +272,43 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void PopMin_WhenContainsElements_ThenMinimalElementRemoved()
+        public void PopMin_WhenSingleElement_ThenThisElementRemoved()
+        {
+            // given
+            int element = 19;
+
+            testObject = new DoubleHeap<int>(new[] { element });
+            // when
+            int result = testObject.PopMin();
+            // then
+            result.Should().Be(element);
+            testObject.Should().BeEmpty();
+        }
+
+        [Test]
+        public void PopMin_WhenMultipleElements_ThenMinimalElementRemoved()
         {
             // when
             int result = testObject.PopMin();
             // then
-            testObject.Should().HaveCount(numbers.Count - 1);
             result.Should().Be(minimum);
+            testObject.Should().HaveCount(numbers.Length - 1);
         }
 
         [Test]
-        public void TryPopMin_WhenEmpty_ThenDefaultValue()
+        public void PopMin_WhenMultipleCalls_ThenSortedAsComparer()
         {
             // given
-            testObject = new DoubleHeap<int>();
+            testObject = new DoubleHeap<int>((n, m) => m.CompareTo(n));
+            Array.ForEach(numbers, n => testObject.Push(n));
             // when
-            bool result = testObject.TryPopMin(out int resultValue);
-            // then
-            result.Should().BeFalse();
-            resultValue.Should().Be(default);
-        }
+            var result = new List<int>();
 
-        [Test]
-        public void TryPopMin_WhenContainsElements_ThenMinimalElementRemoved()
-        {
-            // when
-            bool result = testObject.TryPopMin(out int resultValue);
+            while(testObject.Count > 0)
+                result.Add(testObject.PopMin());
             // then
-            result.Should().BeTrue();
-            testObject.Should().HaveCount(numbers.Count - 1);
-            resultValue.Should().Be(minimum);
+            result.Should().BeEquivalentTo(numbers.ToList());
+            result.Should().BeInAscendingOrder(testObject.Comparer);
         }
 
         [Test]
@@ -242,12 +327,13 @@ namespace AlgoLib.Structures
         {
             // given
             int element = 19;
-            testObject = new DoubleHeap<int>(new List<int>() { element });
+
+            testObject = new DoubleHeap<int>(new[] { element });
             // when
             int result = testObject.PopMax();
             // then
-            testObject.Should().BeEmpty();
             result.Should().Be(element);
+            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -256,8 +342,50 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.PopMax();
             // then
-            testObject.Should().HaveCount(numbers.Count - 1);
             result.Should().Be(maximum);
+            testObject.Should().HaveCount(numbers.Length - 1);
+        }
+
+        [Test]
+        public void PopMax_WhenMultipleCalls_ThenSortedAsComparer()
+        {
+            // given
+            testObject = new DoubleHeap<int>((n, m) => m.CompareTo(n));
+            Array.ForEach(numbers, n => testObject.Push(n));
+            // when
+            var result = new List<int>();
+
+            while(testObject.Count > 0)
+                result.Add(testObject.PopMax());
+            // then
+            result.Should().BeEquivalentTo(numbers.ToList());
+            result.Should().BeInDescendingOrder(testObject.Comparer);
+        }
+
+        #endregion
+        #region TryPop
+
+        [Test]
+        public void TryPopMin_WhenEmpty_ThenDefaultValue()
+        {
+            // given
+            testObject = new DoubleHeap<int>();
+            // when
+            bool result = testObject.TryPopMin(out int resultValue);
+            // then
+            result.Should().BeFalse();
+            resultValue.Should().Be(default);
+        }
+
+        [Test]
+        public void TryPopMin_WhenNotEmpty_ThenMinimalElementRemoved()
+        {
+            // when
+            bool result = testObject.TryPopMin(out int resultValue);
+            // then
+            result.Should().BeTrue();
+            resultValue.Should().Be(minimum);
+            testObject.Should().HaveCount(numbers.Length - 1);
         }
 
         [Test]
@@ -273,14 +401,16 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryPopMax_WhenContainsElements_ThenMaximalElementRemoved()
+        public void TryPopMax_WhenNotEmpty_ThenMaximalElementRemoved()
         {
             // when
             bool result = testObject.TryPopMax(out int resultValue);
             // then
             result.Should().BeTrue();
-            testObject.Should().HaveCount(numbers.Count - 1);
             resultValue.Should().Be(maximum);
+            testObject.Should().HaveCount(numbers.Length - 1);
         }
+
+        #endregion
     }
 }

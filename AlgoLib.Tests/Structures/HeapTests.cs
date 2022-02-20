@@ -10,56 +10,122 @@ namespace AlgoLib.Structures
     [TestFixture]
     public class HeapTests
     {
-        private readonly Comparison<int> comparison = (n, m) => m.CompareTo(n);
+        private readonly int[] numbers =
+            new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+
+        private readonly int minimum;
         private Heap<int> testObject;
 
+        public HeapTests() => this.minimum = numbers.Min();
+
         [SetUp]
-        public void SetUp() => testObject = new Heap<int>(comparison);
+        public void SetUp() => testObject = new Heap<int>(numbers);
 
         [Test]
-        public void Push_WhenNewElement_ThenAddedToHeap()
+        public void Count_WhenEmpty_ThenZero()
+        {
+            // given
+            testObject = new Heap<int>();
+            // when
+            int result = testObject.Count;
+            // then
+            result.Should().Be(0);
+        }
+
+        [Test]
+        public void Count_WhenNotEmpty_ThenNumberOfElements()
         {
             // when
-            testObject.Push(19);
+            int result = testObject.Count;
+            // then
+            result.Should().Be(numbers.Length);
+        }
+
+        [Test]
+        public void GetEnumerator_WhenEmpty_ThenNoElements()
+        {
+            // given
+            testObject = new Heap<int>();
+            // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
+        {
+            // given
+            int element = 17;
+
+            testObject = new Heap<int>(new[] { element });
+            // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeTrue();
+            result.Current.Should().Be(element);
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+        {
+            // when
+            var result = new List<int>();
+            IEnumerator<int> enumerator = testObject.GetEnumerator();
+
+            while(enumerator.MoveNext())
+                result.Add(enumerator.Current);
+            // then
+            result.Should().HaveElementAt(0, minimum);
+        }
+
+        #region Push
+
+        [Test]
+        public void Push_WhenNewElement_ThenAdded()
+        {
+            // when
+            testObject.Push(46);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Get().Should().Be(minimum);
+        }
+
+        [Test]
+        public void Push_WhenEmpty_ThenAdded()
+        {
+            // given
+            int element = 19;
+
+            testObject = new Heap<int>();
+            // when
+            testObject.Push(element);
             // then
             testObject.Should().HaveCount(1);
+            testObject.Get().Should().Be(element);
         }
 
         [Test]
-        public void Push_Pop_WhenMultipleElements_ThenElementsAccordingToComparer()
+        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
         {
             // given
-            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            int element = minimum - 3;
             // when
-            elements.ForEach(e => testObject.Push(e));
-
-            var result = new List<int>();
-
-            while(testObject.Count > 0)
-                result.Add(testObject.Pop());
+            testObject.Push(element);
             // then
-            elements.Sort(comparison);
-            result.Should().BeInDescendingOrder();
-            result.Should().Equal(elements);
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Get().Should().Be(element);
         }
 
-        [Test]
-        public void Get_WhenContainsElements_ThenElementAccordingToComparer()
-        {
-            // given
-            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
-
-            elements.ForEach(e => testObject.Push(e));
-            // when
-            int result = testObject.Get();
-            // then
-            result.Should().Be(elements.Max());
-            testObject.Should().HaveSameCount(elements);
-        }
+        #endregion
+        #region Get
 
         [Test]
         public void Get_WhenEmpty_ThenInvalidOperationException()
         {
+            // given
+            testObject = new Heap<int>();
             // when
             Action action = () => _ = testObject.Get();
             // then
@@ -67,49 +133,57 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryGet_WhenContainsElements_ThenElementAccordingToComparer()
+        public void GetMin_WhenSingleElement_ThenThisElement()
         {
             // given
-            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            int element = 19;
 
-            elements.ForEach(e => testObject.Push(e));
+            testObject = new Heap<int>(new[] { element });
             // when
-            bool result = testObject.TryGet(out int resultValue);
+            int result = testObject.Get();
             // then
-            result.Should().BeTrue();
-            resultValue.Should().Be(elements.Max());
-            testObject.Should().HaveSameCount(elements);
+            result.Should().Be(element);
+        }
+
+        [Test]
+        public void Get_WhenMultipleElements_ThenMinimalElement()
+        {
+            // when
+            int result = testObject.Get();
+            // then
+            result.Should().Be(minimum);
         }
 
         [Test]
         public void TryGet_WhenEmpty_ThenDefaultValue()
         {
+            // given
+            testObject = new Heap<int>();
             // when
             bool result = testObject.TryGet(out int resultValue);
             // then
             result.Should().BeFalse();
             resultValue.Should().Be(default);
-            testObject.Should().HaveCount(0);
         }
 
         [Test]
-        public void Pop_WhenContainsElements_ThenElementRemoved()
+        public void TryGet_WhenNotEmpty_ThenMinimalElement()
         {
-            // given
-            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
-
-            elements.ForEach(e => testObject.Push(e));
             // when
-            int result = testObject.Pop();
+            bool result = testObject.TryGet(out int resultValue);
             // then
-            result.Should().Be(elements.Max());
-            testObject.Should().HaveCountLessThan(elements.Count)
-                .And.HaveCount(elements.Count - 1);
+            result.Should().BeTrue();
+            resultValue.Should().Be(minimum);
         }
+
+        #endregion
+        #region Pop
 
         [Test]
         public void Pop_WhenEmpty_ThenInvalidOperationException()
         {
+            // given
+            testObject = new Heap<int>();
             // when
             Action action = () => _ = testObject.Pop();
             // then then
@@ -117,30 +191,68 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryPop_WhenContainsElements_ThenElementRemoved()
+        public void Pop_WhenSingleElement_ThenThisElementRemoved()
         {
             // given
-            var elements = new List<int> { 11, 4, 6, 18, 13, 7 };
+            int element = 19;
 
-            elements.ForEach(e => testObject.Push(e));
+            testObject = new Heap<int>(new[] { element });
             // when
-            bool result = testObject.TryPop(out int resultValue);
+            int result = testObject.Pop();
             // then
-            result.Should().BeTrue();
-            resultValue.Should().Be(elements.Max());
-            testObject.Should().HaveCountLessThan(elements.Count)
-                .And.HaveCount(elements.Count - 1);
+            result.Should().Be(element);
+            testObject.Should().BeEmpty();
+        }
+
+        [Test]
+        public void Pop_WhenMultipleElements_ThenMinimalElementRemoved()
+        {
+            // when
+            int result = testObject.Pop();
+            // then
+            result.Should().Be(minimum);
+            testObject.Should().HaveCount(numbers.Length - 1);
+        }
+
+        [Test]
+        public void Pop_WhenMultipleCalls_ThenSortedAsComparer()
+        {
+            // given
+            testObject = new Heap<int>((n, m) => m.CompareTo(n));
+            Array.ForEach(numbers, e => testObject.Push(e));
+            // when
+            var result = new List<int>();
+
+            while(testObject.Count > 0)
+                result.Add(testObject.Pop());
+            // then
+            result.Should().BeEquivalentTo(numbers.ToList());
+            result.Should().BeInAscendingOrder(testObject.Comparer);
         }
 
         [Test]
         public void TryPop_WhenEmpty_ThenDefaultValue()
         {
+            // given
+            testObject = new Heap<int>();
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
             result.Should().BeFalse();
             resultValue.Should().Be(default);
-            testObject.Should().HaveCount(0);
         }
+
+        [Test]
+        public void TryPop_WhenNotEmpty_ThenMinimalElementRemoved()
+        {
+            // when
+            bool result = testObject.TryPop(out int resultValue);
+            // then
+            result.Should().BeTrue();
+            resultValue.Should().Be(minimum);
+            testObject.Should().HaveCount(numbers.Length - 1);
+        }
+
+        #endregion
     }
 }

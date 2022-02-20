@@ -42,8 +42,8 @@ namespace AlgoLib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
-        /// <summary>Adds a new element to this heap.</summary>
-        /// <param name="item">Element to add.</param>
+        /// <summary>Adds new value to this heap.</summary>
+        /// <param name="item">New value.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -65,8 +65,8 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
-        public T Get() => Count == 0 ? throw new InvalidOperationException("The heap is empty")
-                                     : heap[0];
+        public T Get() => Count > 0 ? heap[0]
+                                    : throw new InvalidOperationException("The heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
@@ -113,7 +113,7 @@ namespace AlgoLib.Structures
             return wasPresent;
         }
 
-        // Removes minimal element
+        // Removes minimal element.
         private void doPop()
         {
             heap[0] = heap[^1];

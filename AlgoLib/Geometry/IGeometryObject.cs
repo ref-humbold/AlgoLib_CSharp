@@ -4,7 +4,7 @@ namespace AlgoLib.Geometry
 {
     public interface IGeometryObject
     {
-        public const double Epsilon = 1e-12;
+        public static readonly double Epsilon = 1e-12;
 
         public double[] Coordinates
         {
