@@ -42,26 +42,6 @@ namespace AlgoLib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
-        /// <summary>Adds new value to this heap.</summary>
-        /// <param name="item">New value.</param>
-        public void Push(T item)
-        {
-            heap.Add(item);
-
-            int index = heap.Count - 1;
-
-            while(index > 0)
-            {
-                int nextIndex = (index - 1) / 2;
-
-                if(Comparer.Compare(heap[index], heap[nextIndex]) >= 0)
-                    break;
-
-                swap(index, nextIndex);
-                index = nextIndex;
-            }
-        }
-
         /// <summary>Retrieves minimal element from this heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
@@ -83,6 +63,26 @@ namespace AlgoLib.Structures
 
             result = heap[0];
             return true;
+        }
+
+        /// <summary>Adds new value to this heap.</summary>
+        /// <param name="item">New value.</param>
+        public void Push(T item)
+        {
+            heap.Add(item);
+
+            int index = heap.Count - 1;
+
+            while(index > 0)
+            {
+                int nextIndex = (index - 1) / 2;
+
+                if(Comparer.Compare(heap[index], heap[nextIndex]) >= 0)
+                    break;
+
+                swap(index, nextIndex);
+                index = nextIndex;
+            }
         }
 
         /// <summary>Retrieves and removes minimal element from this heap.</summary>

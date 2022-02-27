@@ -85,63 +85,6 @@ namespace AlgoLib.Structures
                 .And.HaveElementAt(result.Count - 1, maximum);
         }
 
-        #region Push
-
-        [Test]
-        public void Push_WhenNewElement_ThenAdded()
-        {
-            // given
-            int element = 46;
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(minimum);
-            testObject.GetMax().Should().Be(maximum);
-        }
-
-        [Test]
-        public void Push_WhenEmpty_ThenAdded()
-        {
-            // given
-            int element = 19;
-
-            testObject = new DoubleHeap<int>();
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(1);
-            testObject.GetMin().Should().Be(element);
-            testObject.GetMax().Should().Be(element);
-        }
-
-        [Test]
-        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
-        {
-            // given
-            int element = minimum - 3;
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(element);
-            testObject.GetMax().Should().Be(maximum);
-        }
-
-        [Test]
-        public void Push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum()
-        {
-            // given
-            int element = maximum + 3;
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(minimum);
-            testObject.GetMax().Should().Be(element);
-        }
-
-        #endregion
         #region Get
 
         [Test]
@@ -255,6 +198,63 @@ namespace AlgoLib.Structures
             // then
             result.Should().BeTrue();
             resultValue.Should().Be(maximum);
+        }
+
+        #endregion
+        #region Push
+
+        [Test]
+        public void Push_WhenNewElement_ThenAdded()
+        {
+            // given
+            int element = 46;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(minimum);
+            testObject.GetMax().Should().Be(maximum);
+        }
+
+        [Test]
+        public void Push_WhenEmpty_ThenAdded()
+        {
+            // given
+            int element = 19;
+
+            testObject = new DoubleHeap<int>();
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(1);
+            testObject.GetMin().Should().Be(element);
+            testObject.GetMax().Should().Be(element);
+        }
+
+        [Test]
+        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
+        {
+            // given
+            int element = minimum - 3;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(element);
+            testObject.GetMax().Should().Be(maximum);
+        }
+
+        [Test]
+        public void Push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum()
+        {
+            // given
+            int element = maximum + 3;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.GetMin().Should().Be(minimum);
+            testObject.GetMax().Should().Be(element);
         }
 
         #endregion

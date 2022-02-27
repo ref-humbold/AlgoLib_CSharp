@@ -80,45 +80,6 @@ namespace AlgoLib.Structures
             result.Should().HaveElementAt(0, minimum);
         }
 
-        #region Push
-
-        [Test]
-        public void Push_WhenNewElement_ThenAdded()
-        {
-            // when
-            testObject.Push(46);
-            // then
-            testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.Get().Should().Be(minimum);
-        }
-
-        [Test]
-        public void Push_WhenEmpty_ThenAdded()
-        {
-            // given
-            int element = 19;
-
-            testObject = new Heap<int>();
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(1);
-            testObject.Get().Should().Be(element);
-        }
-
-        [Test]
-        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
-        {
-            // given
-            int element = minimum - 3;
-            // when
-            testObject.Push(element);
-            // then
-            testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.Get().Should().Be(element);
-        }
-
-        #endregion
         #region Get
 
         [Test]
@@ -174,6 +135,45 @@ namespace AlgoLib.Structures
             // then
             result.Should().BeTrue();
             resultValue.Should().Be(minimum);
+        }
+
+        #endregion
+        #region Push
+
+        [Test]
+        public void Push_WhenNewElement_ThenAdded()
+        {
+            // when
+            testObject.Push(46);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Get().Should().Be(minimum);
+        }
+
+        [Test]
+        public void Push_WhenEmpty_ThenAdded()
+        {
+            // given
+            int element = 19;
+
+            testObject = new Heap<int>();
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(1);
+            testObject.Get().Should().Be(element);
+        }
+
+        [Test]
+        public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
+        {
+            // given
+            int element = minimum - 3;
+            // when
+            testObject.Push(element);
+            // then
+            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Get().Should().Be(element);
         }
 
         #endregion

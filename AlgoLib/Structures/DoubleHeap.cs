@@ -43,41 +43,6 @@ namespace AlgoLib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <summary>Adds new value to this double heap.</summary>
-        /// <param name="item">New value.</param>
-        public void Push(T item)
-        {
-            heap.Add(item);
-
-            if(heap.Count > 1)
-            {
-                int index = heap.Count - 1;
-
-                if(index % 2 == 1)
-                {
-                    if(compare(index, index - 1) < 0)
-                    {
-                        swap(index, index - 1);
-                        moveToMin(index - 1);
-                    }
-                    else
-                        moveToMax(index);
-                }
-                else
-                {
-                    int newIndex = ((index + 1) / 2 - 1) / 2 * 2 + 1;
-
-                    if(compare(index, newIndex) > 0)
-                    {
-                        swap(index, newIndex);
-                        moveToMax(newIndex);
-                    }
-                    else
-                        moveToMin(index);
-                }
-            }
-        }
-
         /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
@@ -132,6 +97,41 @@ namespace AlgoLib.Structures
                 default:
                     result = heap[indexMax];
                     return true;
+            }
+        }
+
+        /// <summary>Adds new value to this double heap.</summary>
+        /// <param name="item">New value.</param>
+        public void Push(T item)
+        {
+            heap.Add(item);
+
+            if(heap.Count > 1)
+            {
+                int index = heap.Count - 1;
+
+                if(index % 2 == 1)
+                {
+                    if(compare(index, index - 1) < 0)
+                    {
+                        swap(index, index - 1);
+                        moveToMin(index - 1);
+                    }
+                    else
+                        moveToMax(index);
+                }
+                else
+                {
+                    int newIndex = ((index + 1) / 2 - 1) / 2 * 2 + 1;
+
+                    if(compare(index, newIndex) > 0)
+                    {
+                        swap(index, newIndex);
+                        moveToMax(newIndex);
+                    }
+                    else
+                        moveToMin(index);
+                }
             }
         }
 
