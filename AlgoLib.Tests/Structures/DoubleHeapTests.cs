@@ -85,116 +85,116 @@ namespace AlgoLib.Structures
                 .And.HaveElementAt(result.Count - 1, maximum);
         }
 
-        #region Get
+        #region PeekMin & PeekMax
 
         [Test]
-        public void GetMin_WhenEmpty_ThenInvalidOperationException()
+        public void PeekMin_WhenEmpty_ThenInvalidOperationException()
         {
             // given
             testObject = new DoubleHeap<int>();
             // when
-            Action action = () => testObject.GetMin();
+            Action action = () => testObject.PeekMin();
             // then
             action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
-        public void GetMin_WhenSingleElement_ThenThisElement()
+        public void PeekMin_WhenSingleElement_ThenThisElement()
         {
             // given
             int element = 19;
 
             testObject = new DoubleHeap<int>(new[] { element });
             // when
-            int result = testObject.GetMin();
+            int result = testObject.PeekMin();
             // then
             result.Should().Be(element);
         }
 
         [Test]
-        public void GetMin_WhenMultipleElements_ThenMinimalElement()
+        public void PeekMin_WhenMultipleElements_ThenMinimalElement()
         {
             // when
-            int result = testObject.GetMin();
+            int result = testObject.PeekMin();
             // then
             result.Should().Be(minimum);
         }
 
         [Test]
-        public void GetMax_WhenEmpty_ThenInvalidOperationException()
+        public void PeekMax_WhenEmpty_ThenInvalidOperationException()
         {
             // given
             testObject = new DoubleHeap<int>();
             // when
-            Action action = () => testObject.GetMax();
+            Action action = () => testObject.PeekMax();
             // then
             action.Should().Throw<InvalidOperationException>();
         }
 
         [Test]
-        public void GetMax_WhenSingleElement_ThenThisElement()
+        public void PeekMax_WhenSingleElement_ThenThisElement()
         {
             // given
             int element = 19;
 
             testObject = new DoubleHeap<int>(new[] { element });
             // when
-            int result = testObject.GetMax();
+            int result = testObject.PeekMax();
             // then
             result.Should().Be(element);
         }
 
         [Test]
-        public void GetMax_WhenMultipleElements_ThenMaximalElement()
+        public void PeekMax_WhenMultipleElements_ThenMaximalElement()
         {
             // when
-            int result = testObject.GetMax();
+            int result = testObject.PeekMax();
             // then
             result.Should().Be(maximum);
         }
 
         #endregion
-        #region TryGet
+        #region TryPeekMin & TryPeekMax
 
         [Test]
-        public void TryGetMin_WhenEmpty_ThenDefaultValue()
+        public void TryPeekMin_WhenEmpty_ThenDefaultValue()
         {
             // given
             testObject = new DoubleHeap<int>();
             // when
-            bool result = testObject.TryGetMin(out int resultValue);
+            bool result = testObject.TryPeekMin(out int resultValue);
             // then
             result.Should().BeFalse();
             resultValue.Should().Be(default);
         }
 
         [Test]
-        public void TryGetMin_WhenNotEmpty_ThenMinimalElement()
+        public void TryPeekMin_WhenNotEmpty_ThenMinimalElement()
         {
             // when
-            bool result = testObject.TryGetMin(out int resultValue);
+            bool result = testObject.TryPeekMin(out int resultValue);
             // then
             result.Should().BeTrue();
             resultValue.Should().Be(minimum);
         }
 
         [Test]
-        public void TryGetMax_WhenEmpty_ThenDefaultValue()
+        public void TryPeekMax_WhenEmpty_ThenDefaultValue()
         {
             // given
             testObject = new DoubleHeap<int>();
             // when
-            bool result = testObject.TryGetMax(out int resultValue);
+            bool result = testObject.TryPeekMax(out int resultValue);
             // then
             result.Should().BeFalse();
             resultValue.Should().Be(default);
         }
 
         [Test]
-        public void TryGetMax_WhenNotEmpty_ThenMaximalElement()
+        public void TryPeekMax_WhenNotEmpty_ThenMaximalElement()
         {
             // when
-            bool result = testObject.TryGetMax(out int resultValue);
+            bool result = testObject.TryPeekMax(out int resultValue);
             // then
             result.Should().BeTrue();
             resultValue.Should().Be(maximum);
@@ -212,8 +212,8 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(minimum);
-            testObject.GetMax().Should().Be(maximum);
+            testObject.PeekMin().Should().Be(minimum);
+            testObject.PeekMax().Should().Be(maximum);
         }
 
         [Test]
@@ -227,8 +227,8 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(1);
-            testObject.GetMin().Should().Be(element);
-            testObject.GetMax().Should().Be(element);
+            testObject.PeekMin().Should().Be(element);
+            testObject.PeekMax().Should().Be(element);
         }
 
         [Test]
@@ -240,8 +240,8 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(element);
-            testObject.GetMax().Should().Be(maximum);
+            testObject.PeekMin().Should().Be(element);
+            testObject.PeekMax().Should().Be(maximum);
         }
 
         [Test]
@@ -253,12 +253,12 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.GetMin().Should().Be(minimum);
-            testObject.GetMax().Should().Be(element);
+            testObject.PeekMin().Should().Be(minimum);
+            testObject.PeekMax().Should().Be(element);
         }
 
         #endregion
-        #region Pop
+        #region PopMin & PopMax
 
         [Test]
         public void PopMin_WhenEmpty_ThenInvalidOperationException()
@@ -363,7 +363,7 @@ namespace AlgoLib.Structures
         }
 
         #endregion
-        #region TryPop
+        #region TryPopMin & TryPopMax
 
         [Test]
         public void TryPopMin_WhenEmpty_ThenDefaultValue()

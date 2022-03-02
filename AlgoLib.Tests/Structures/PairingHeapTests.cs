@@ -1,5 +1,4 @@
-﻿// Tests: Structure of heap
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -8,22 +7,25 @@ using NUnit.Framework;
 namespace AlgoLib.Structures
 {
     [TestFixture]
-    public class HeapTests
+    public class PairingHeapTests
     {
         private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
         private readonly int minimum;
-        private Heap<int> testObject;
+        private PairingHeap<int> testObject;
 
-        public HeapTests() => this.minimum = numbers.Min();
+        public PairingHeapTests() => minimum = numbers.Min();
 
         [SetUp]
-        public void SetUp() => testObject = new Heap<int>(numbers);
+        public void SetUp()
+        {
+            testObject = new PairingHeap<int>(numbers);
+        }
 
         [Test]
         public void Count_WhenEmpty_ThenZero()
         {
             // given
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
             int result = testObject.Count;
             // then
@@ -39,54 +41,15 @@ namespace AlgoLib.Structures
             result.Should().Be(numbers.Length);
         }
 
-        [Test]
-        public void GetEnumerator_WhenEmpty_ThenNoElements()
-        {
-            // given
-            testObject = new Heap<int>();
-            // when
-            IEnumerator<int> result = testObject.GetEnumerator();
-            // then
-            result.MoveNext().Should().BeFalse();
-        }
-
-        [Test]
-        public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
-        {
-            // given
-            int element = 17;
-
-            testObject = new Heap<int>(new[] { element });
-            // when
-            IEnumerator<int> result = testObject.GetEnumerator();
-            // then
-            result.MoveNext().Should().BeTrue();
-            result.Current.Should().Be(element);
-            result.MoveNext().Should().BeFalse();
-        }
-
-        [Test]
-        public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
-        {
-            // when
-            var result = new List<int>();
-            IEnumerator<int> enumerator = testObject.GetEnumerator();
-
-            while(enumerator.MoveNext())
-                result.Add(enumerator.Current);
-            // then
-            result.Should().HaveElementAt(0, minimum);
-        }
-
         #region Peek & TryPeek
 
         [Test]
         public void Peek_WhenEmpty_ThenInvalidOperationException()
         {
             // given
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
-            Action action = () => _ = testObject.Peek();
+            Action action = () => testObject.Peek();
             // then
             action.Should().Throw<InvalidOperationException>();
         }
@@ -97,7 +60,7 @@ namespace AlgoLib.Structures
             // given
             int element = 19;
 
-            testObject = new Heap<int>(new[] { element });
+            testObject = new PairingHeap<int>(new[] { element });
             // when
             int result = testObject.Peek();
             // then
@@ -117,7 +80,7 @@ namespace AlgoLib.Structures
         public void TryPeek_WhenEmpty_ThenDefaultValue()
         {
             // given
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
             bool result = testObject.TryPeek(out int resultValue);
             // then
@@ -126,7 +89,21 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryPeek_WhenNotEmpty_ThenMinimalElement()
+        public void TryPeek_WhenSingleElement_ThenThisElement()
+        {
+            // given
+            int element = 19;
+
+            testObject = new PairingHeap<int>(new[] { element });
+            // when
+            bool result = testObject.TryPeek(out int resultValue);
+            // then
+            result.Should().BeTrue();
+            resultValue.Should().Be(element);
+        }
+
+        [Test]
+        public void TryPeek_WhenMultipleElements_ThenMinimalElement()
         {
             // when
             bool result = testObject.TryPeek(out int resultValue);
@@ -141,10 +118,12 @@ namespace AlgoLib.Structures
         [Test]
         public void Push_WhenNewElement_ThenAdded()
         {
+            // given
+            int element = 46;
             // when
-            testObject.Push(46);
+            testObject.Push(element);
             // then
-            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Count.Should().Be(numbers.Length + 1);
             testObject.Peek().Should().Be(minimum);
         }
 
@@ -154,11 +133,11 @@ namespace AlgoLib.Structures
             // given
             int element = 19;
 
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
             testObject.Push(element);
             // then
-            testObject.Should().HaveCount(1);
+            testObject.Count.Should().Be(1);
             testObject.Peek().Should().Be(element);
         }
 
@@ -170,7 +149,7 @@ namespace AlgoLib.Structures
             // when
             testObject.Push(element);
             // then
-            testObject.Should().HaveCount(numbers.Length + 1);
+            testObject.Count.Should().Be(numbers.Length + 1);
             testObject.Peek().Should().Be(element);
         }
 
@@ -181,10 +160,10 @@ namespace AlgoLib.Structures
         public void Pop_WhenEmpty_ThenInvalidOperationException()
         {
             // given
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
-            Action action = () => _ = testObject.Pop();
-            // then then
+            Action action = () => testObject.Pop();
+            // then
             action.Should().Throw<InvalidOperationException>();
         }
 
@@ -194,12 +173,12 @@ namespace AlgoLib.Structures
             // given
             int element = 19;
 
-            testObject = new Heap<int>(new[] { element });
+            testObject = new PairingHeap<int>(new[] { element });
             // when
             int result = testObject.Pop();
             // then
+            testObject.Count.Should().Be(0);
             result.Should().Be(element);
-            testObject.Should().BeEmpty();
         }
 
         [Test]
@@ -208,16 +187,13 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.Pop();
             // then
+            testObject.Count.Should().Be(numbers.Length - 1);
             result.Should().Be(minimum);
-            testObject.Should().HaveCount(numbers.Length - 1);
         }
 
         [Test]
-        public void Pop_WhenMultipleCalls_ThenSortedAsComparer()
+        public void Pop_WhenMultipleCalls_ThenSorted()
         {
-            // given
-            testObject = new Heap<int>((n, m) => m.CompareTo(n));
-            Array.ForEach(numbers, e => testObject.Push(e));
             // when
             var result = new List<int>();
 
@@ -225,14 +201,14 @@ namespace AlgoLib.Structures
                 result.Add(testObject.Pop());
             // then
             result.Should().BeEquivalentTo(numbers.ToList());
-            result.Should().BeInAscendingOrder(testObject.Comparer);
+            result.Should().BeInAscendingOrder();
         }
 
         [Test]
         public void TryPop_WhenEmpty_ThenDefaultValue()
         {
             // given
-            testObject = new Heap<int>();
+            testObject = new PairingHeap<int>();
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
@@ -241,14 +217,81 @@ namespace AlgoLib.Structures
         }
 
         [Test]
-        public void TryPop_WhenNotEmpty_ThenMinimalElementRemoved()
+        public void TryPop_WhenSingleElement_ThenThisElementRemoved()
+        {
+            // given
+            int element = 19;
+
+            testObject = new PairingHeap<int>(new[] { element });
+            // when
+            bool result = testObject.TryPop(out int resultValue);
+            // then
+            testObject.Count.Should().Be(0);
+            result.Should().BeTrue();
+            resultValue.Should().Be(element);
+        }
+
+        [Test]
+        public void TryPop_WhenMultipleElements_ThenMinimalElementRemoved()
         {
             // when
             bool result = testObject.TryPop(out int resultValue);
             // then
+            testObject.Count.Should().Be(numbers.Length - 1);
             result.Should().BeTrue();
             resultValue.Should().Be(minimum);
-            testObject.Should().HaveCount(numbers.Length - 1);
+        }
+
+        #endregion
+        #region Merge
+
+        [Test]
+        public void Merge_WhenEmptyAndNotEmpty_ThenSameAsOther()
+        {
+            // given
+            testObject = new PairingHeap<int>();
+
+            var other = new PairingHeap<int>(numbers);
+            // when
+            testObject.Merge(other);
+            // then
+            testObject.Count.Should().Be(numbers.Length);
+            testObject.Peek().Should().Be(other.Peek());
+        }
+
+        [Test]
+        public void Merge_WhenNotEmptyAndEmpty_ThenNoChanges()
+        {
+            // when
+            testObject.Merge(new PairingHeap<int>());
+            // then
+            testObject.Count.Should().Be(numbers.Length);
+            testObject.Peek().Should().Be(minimum);
+        }
+
+        [Test]
+        public void Merge_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
+        {
+            // given
+            var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
+            // when
+            testObject.Merge(other);
+            // then
+            testObject.Count.Should().Be(numbers.Length + other.Count);
+            testObject.Peek().Should().Be(minimum);
+        }
+
+        [Test]
+        public void Merge_WhenOtherHasLessMinimum_ThenNewMinimum()
+        {
+            // given
+            int newMinimum = minimum - 4;
+            var other = new PairingHeap<int>(new[] { newMinimum, minimum + 5, minimum + 13, minimum + 20 });
+            // when
+            testObject.Merge(other);
+            // then
+            testObject.Count.Should().Be(numbers.Length + other.Count);
+            testObject.Peek().Should().Be(newMinimum);
         }
 
         #endregion

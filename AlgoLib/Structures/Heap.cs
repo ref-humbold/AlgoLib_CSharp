@@ -45,15 +45,15 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
-        public T Get() => Count > 0 ? heap[0]
-                                    : throw new InvalidOperationException("The heap is empty");
+        public T Peek() => Count > 0 ? heap[0]
+                                     : throw new InvalidOperationException("The heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
-        public bool TryGet(out T result)
+        public bool TryPeek(out T result)
         {
             if(Count == 0)
             {
@@ -66,7 +66,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Adds new value to this heap.</summary>
-        /// <param name="item">New value.</param>
+        /// <param name="item">The new value.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -90,7 +90,7 @@ namespace AlgoLib.Structures
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
         public T Pop()
         {
-            T element = Get();
+            T element = Peek();
 
             doPop();
             return element;
@@ -105,7 +105,7 @@ namespace AlgoLib.Structures
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPop(out T result)
         {
-            bool wasPresent = TryGet(out result);
+            bool wasPresent = TryPeek(out result);
 
             if(wasPresent)
                 doPop();

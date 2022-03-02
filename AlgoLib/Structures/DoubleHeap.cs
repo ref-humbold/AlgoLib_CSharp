@@ -46,15 +46,15 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T GetMin() => Count > 0 ? heap[indexMin]
-                                       : throw new InvalidOperationException("The double heap is empty");
+        public T PeekMin() => Count > 0 ? heap[indexMin]
+                                        : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">Minimal element if it's present, otherwise the default value</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
-        public bool TryGetMin(out T result)
+        public bool TryPeekMin(out T result)
         {
             if(Count == 0)
             {
@@ -69,7 +69,7 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves maximal element from this double heap.</summary>
         /// <returns>Maximal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T GetMax() =>
+        public T PeekMax() =>
             Count switch
             {
                 0 => throw new InvalidOperationException("The double heap is empty"),
@@ -82,7 +82,7 @@ namespace AlgoLib.Structures
         /// </summary>
         /// <param name="result">Maximal element if it's present, otherwise the default value</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
-        public bool TryGetMax(out T result)
+        public bool TryPeekMax(out T result)
         {
             switch(Count)
             {
@@ -140,7 +140,7 @@ namespace AlgoLib.Structures
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
         public T PopMin()
         {
-            T minimal = GetMin();
+            T minimal = PeekMin();
 
             heap[indexMin] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
@@ -157,7 +157,7 @@ namespace AlgoLib.Structures
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
         public bool TryPopMin(out T result)
         {
-            bool wasPresent = TryGetMin(out result);
+            bool wasPresent = TryPeekMin(out result);
 
             if(wasPresent)
             {
@@ -177,7 +177,7 @@ namespace AlgoLib.Structures
             if(Count == 1)
                 return PopMin();
 
-            T maximal = GetMax();
+            T maximal = PeekMax();
 
             heap[indexMax] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
@@ -195,9 +195,9 @@ namespace AlgoLib.Structures
         public bool TryPopMax(out T result)
         {
             if(Count == 1)
-                return TryGetMin(out result);
+                return TryPeekMin(out result);
 
-            bool wasPresent = TryGetMax(out result);
+            bool wasPresent = TryPeekMax(out result);
 
             if(wasPresent)
             {
