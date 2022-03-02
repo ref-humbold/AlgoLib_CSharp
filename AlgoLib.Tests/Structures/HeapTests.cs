@@ -11,10 +11,7 @@ namespace AlgoLib.Structures
     public class HeapTests
     {
         private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-        private readonly int minimum;
         private Heap<int> testObject;
-
-        public HeapTests() => this.minimum = numbers.Min();
 
         [SetUp]
         public void SetUp() => testObject = new Heap<int>(numbers);
@@ -37,6 +34,15 @@ namespace AlgoLib.Structures
             int result = testObject.Count;
             // then
             result.Should().Be(numbers.Length);
+        }
+
+        [Test]
+        public void Clear_WhenNotEmpty_ThenEmpty()
+        {
+            // when
+            testObject.Clear();
+            // then
+            testObject.Count.Should().Be(0);
         }
 
         [Test]
@@ -75,7 +81,7 @@ namespace AlgoLib.Structures
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            result.Should().HaveElementAt(0, minimum);
+            result.Should().HaveElementAt(0, numbers.Min());
         }
 
         #region Peek & TryPeek
@@ -110,7 +116,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.Peek();
             // then
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
         }
 
         [Test]
@@ -132,11 +138,11 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPeek(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
         }
 
         #endregion
-        #region Push
+        #region Push & PushRange
 
         [Test]
         public void Push_WhenNewElement_ThenAdded()
@@ -145,7 +151,7 @@ namespace AlgoLib.Structures
             testObject.Push(46);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.Peek().Should().Be(minimum);
+            testObject.Peek().Should().Be(numbers.Min());
         }
 
         [Test]
@@ -166,12 +172,24 @@ namespace AlgoLib.Structures
         public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
         {
             // given
-            int element = minimum - 3;
+            int element = numbers.Min() - 3;
             // when
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
             testObject.Peek().Should().Be(element);
+        }
+
+        [Test]
+        public void PushRange_WhenNewElements_ThenAllAdded()
+        {
+            // given
+            int[] elements = new[] { 46, 111, 14, 29 };
+            // when
+            testObject.PushRange(elements);
+            // then
+            testObject.Should().HaveCount(numbers.Length + elements.Length);
+            testObject.Peek().Should().Be(Math.Min(numbers.Min(), elements.Min()));
         }
 
         #endregion
@@ -208,7 +226,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.Pop();
             // then
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 
@@ -247,7 +265,7 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPop(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 

@@ -9,18 +9,8 @@ namespace AlgoLib.Structures
     [TestFixture]
     public class DoubleHeapTests
     {
-        private readonly int[] numbers =
-            new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-
-        private readonly int minimum;
-        private readonly int maximum;
+        private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
         private DoubleHeap<int> testObject;
-
-        public DoubleHeapTests()
-        {
-            minimum = numbers.Min();
-            maximum = numbers.Max();
-        }
 
         [SetUp]
         public void SetUp() => testObject = new DoubleHeap<int>(numbers);
@@ -43,6 +33,15 @@ namespace AlgoLib.Structures
             int result = testObject.Count;
             // then
             result.Should().Be(numbers.Length);
+        }
+
+        [Test]
+        public void Clear_WhenNotEmpty_ThenEmpty()
+        {
+            // when
+            testObject.Clear();
+            // then
+            testObject.Count.Should().Be(0);
         }
 
         [Test]
@@ -81,8 +80,8 @@ namespace AlgoLib.Structures
             while(enumerator.MoveNext())
                 result.Add(enumerator.Current);
             // then
-            result.Should().HaveElementAt(0, minimum)
-                .And.HaveElementAt(result.Count - 1, maximum);
+            result.Should().HaveElementAt(0, numbers.Min())
+                .And.HaveElementAt(result.Count - 1, numbers.Max());
         }
 
         #region PeekMin & PeekMax
@@ -117,7 +116,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.PeekMin();
             // then
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
         }
 
         [Test]
@@ -150,7 +149,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.PeekMax();
             // then
-            result.Should().Be(maximum);
+            result.Should().Be(numbers.Max());
         }
 
         #endregion
@@ -175,7 +174,7 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPeekMin(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
         }
 
         [Test]
@@ -197,11 +196,11 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPeekMax(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(maximum);
+            resultValue.Should().Be(numbers.Max());
         }
 
         #endregion
-        #region Push
+        #region Push & PushRange
 
         [Test]
         public void Push_WhenNewElement_ThenAdded()
@@ -212,8 +211,8 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.PeekMin().Should().Be(minimum);
-            testObject.PeekMax().Should().Be(maximum);
+            testObject.PeekMin().Should().Be(numbers.Min());
+            testObject.PeekMax().Should().Be(numbers.Max());
         }
 
         [Test]
@@ -235,26 +234,39 @@ namespace AlgoLib.Structures
         public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
         {
             // given
-            int element = minimum - 3;
+            int element = numbers.Min() - 3;
             // when
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
             testObject.PeekMin().Should().Be(element);
-            testObject.PeekMax().Should().Be(maximum);
+            testObject.PeekMax().Should().Be(numbers.Max());
         }
 
         [Test]
         public void Push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum()
         {
             // given
-            int element = maximum + 3;
+            int element = numbers.Max() + 3;
             // when
             testObject.Push(element);
             // then
             testObject.Should().HaveCount(numbers.Length + 1);
-            testObject.PeekMin().Should().Be(minimum);
+            testObject.PeekMin().Should().Be(numbers.Min());
             testObject.PeekMax().Should().Be(element);
+        }
+
+        [Test]
+        public void PushRange_WhenNewElements_ThenAllAdded()
+        {
+            // given
+            int[] elements = new[] { 46, 111, 14, 29 };
+            // when
+            testObject.PushRange(elements);
+            // then
+            testObject.Should().HaveCount(numbers.Length + elements.Length);
+            testObject.PeekMin().Should().Be(Math.Min(numbers.Min(), elements.Min()));
+            testObject.PeekMax().Should().Be(Math.Max(numbers.Max(), elements.Max()));
         }
 
         #endregion
@@ -291,7 +303,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.PopMin();
             // then
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 
@@ -342,7 +354,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.PopMax();
             // then
-            result.Should().Be(maximum);
+            result.Should().Be(numbers.Max());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 
@@ -384,7 +396,7 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPopMin(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 
@@ -407,7 +419,7 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPopMax(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(maximum);
+            resultValue.Should().Be(numbers.Max());
             testObject.Should().HaveCount(numbers.Length - 1);
         }
 

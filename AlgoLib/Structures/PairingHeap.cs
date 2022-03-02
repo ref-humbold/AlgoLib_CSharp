@@ -7,6 +7,7 @@ namespace AlgoLib.Structures
     {
         private HeapNode heap;
 
+        /// <summary>Number of elements.</summary>
         public int Count
         {
             get;
@@ -19,10 +20,13 @@ namespace AlgoLib.Structures
             Count = 0;
         }
 
-        public PairingHeap(IEnumerable<T> enumerable) : this()
+        public PairingHeap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+
+        /// <summary>Removes all elements from this pairing heap.</summary>
+        public void Clear()
         {
-            foreach(T element in enumerable)
-                Push(element);
+            heap = null;
+            Count = 0;
         }
 
         /// <summary>Retrieves minimal element from this pairing heap.</summary>
@@ -52,26 +56,18 @@ namespace AlgoLib.Structures
         /// <param name="item">The new value.</param>
         public void Push(T item)
         {
-            if(heap == null)
-                heap = new HeapNode { Element = item, Children = null };
-            else if(item.CompareTo(heap.Element) < 0)
-                heap = new HeapNode
-                {
-                    Element = item,
-                    Children = new HeapNodeList { Node = heap, Next = null }
-                };
-            else
-                heap = new HeapNode
-                {
-                    Element = heap.Element,
-                    Children = new HeapNodeList
-                    {
-                        Node = new HeapNode { Element = item, Children = null },
-                        Next = heap.Children
-                    }
-                };
-
+            heap = heap == null
+                ? new HeapNode { Element = item, Children = null }
+                : heap.Add(item);
             ++Count;
+        }
+
+        /// <summary>Adds new values from given range to this pairing heap.</summary>
+        /// <param name="items">The enumerable of new values.</param>
+        public void PushRange(IEnumerable<T> items)
+        {
+            foreach(T item in items)
+                Push(item);
         }
 
         /// <summary>Retrieves and removes minimal element from this pairing heap.</summary>
@@ -128,17 +124,29 @@ namespace AlgoLib.Structures
             public T Element;
             public HeapNodeList Children;
 
-            public HeapNode Pop()
-            {
-                return mergePairs(Children);
-            }
+            public HeapNode Add(T item) =>
+                Element.CompareTo(item) <= 0
+                ? new HeapNode
+                {
+                    Element = Element,
+                    Children = new HeapNodeList
+                    {
+                        Node = new HeapNode { Element = item, Children = null },
+                        Next = Children
+                    }
+                }
+                : new HeapNode
+                {
+                    Element = item,
+                    Children = new HeapNodeList { Node = this, Next = null }
+                };
 
-            public HeapNode Merge(HeapNode node)
-            {
-                if(node == null)
-                    return this;
+            public HeapNode Pop() => mergePairs(Children);
 
-                return Element.CompareTo(node.Element) <= 0
+            public HeapNode Merge(HeapNode node) =>
+                node == null
+                    ? this
+                    : Element.CompareTo(node.Element) <= 0
                     ? new HeapNode
                     {
                         Element = Element,
@@ -149,11 +157,11 @@ namespace AlgoLib.Structures
                         Element = node.Element,
                         Children = new HeapNodeList { Node = this, Next = node.Children }
                     };
-            }
 
             private HeapNode mergePairs(HeapNodeList list) =>
-                list?.Next == null ? list?.Node
-                                   : list.Node.Merge(list.Next.Node).Merge(mergePairs(list.Next.Next));
+                list?.Next == null
+                    ? list?.Node
+                    : list.Node.Merge(list.Next.Node).Merge(mergePairs(list.Next.Next));
         }
     }
 }

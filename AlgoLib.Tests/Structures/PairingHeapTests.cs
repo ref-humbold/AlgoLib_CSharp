@@ -10,10 +10,7 @@ namespace AlgoLib.Structures
     public class PairingHeapTests
     {
         private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-        private readonly int minimum;
         private PairingHeap<int> testObject;
-
-        public PairingHeapTests() => minimum = numbers.Min();
 
         [SetUp]
         public void SetUp()
@@ -39,6 +36,15 @@ namespace AlgoLib.Structures
             int result = testObject.Count;
             // then
             result.Should().Be(numbers.Length);
+        }
+
+        [Test]
+        public void Clear_WhenNotEmpty_ThenEmpty()
+        {
+            // when
+            testObject.Clear();
+            // then
+            testObject.Count.Should().Be(0);
         }
 
         #region Peek & TryPeek
@@ -73,7 +79,7 @@ namespace AlgoLib.Structures
             // when
             int result = testObject.Peek();
             // then
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
         }
 
         [Test]
@@ -109,11 +115,11 @@ namespace AlgoLib.Structures
             bool result = testObject.TryPeek(out int resultValue);
             // then
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
         }
 
         #endregion
-        #region Push
+        #region Push & PushRange
 
         [Test]
         public void Push_WhenNewElement_ThenAdded()
@@ -124,7 +130,7 @@ namespace AlgoLib.Structures
             testObject.Push(element);
             // then
             testObject.Count.Should().Be(numbers.Length + 1);
-            testObject.Peek().Should().Be(minimum);
+            testObject.Peek().Should().Be(numbers.Min());
         }
 
         [Test]
@@ -145,12 +151,24 @@ namespace AlgoLib.Structures
         public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
         {
             // given
-            int element = minimum - 3;
+            int element = numbers.Min() - 3;
             // when
             testObject.Push(element);
             // then
             testObject.Count.Should().Be(numbers.Length + 1);
             testObject.Peek().Should().Be(element);
+        }
+
+        [Test]
+        public void PushRange_WhenNewElements_ThenAllAdded()
+        {
+            // given
+            int[] elements = new[] { 46, 111, 14, 29 };
+            // when
+            testObject.PushRange(elements);
+            // then
+            testObject.Count.Should().Be(numbers.Length + elements.Length);
+            testObject.Peek().Should().Be(Math.Min(numbers.Min(), elements.Min()));
         }
 
         #endregion
@@ -188,7 +206,7 @@ namespace AlgoLib.Structures
             int result = testObject.Pop();
             // then
             testObject.Count.Should().Be(numbers.Length - 1);
-            result.Should().Be(minimum);
+            result.Should().Be(numbers.Min());
         }
 
         [Test]
@@ -239,7 +257,7 @@ namespace AlgoLib.Structures
             // then
             testObject.Count.Should().Be(numbers.Length - 1);
             result.Should().BeTrue();
-            resultValue.Should().Be(minimum);
+            resultValue.Should().Be(numbers.Min());
         }
 
         #endregion
@@ -266,27 +284,27 @@ namespace AlgoLib.Structures
             testObject.Merge(new PairingHeap<int>());
             // then
             testObject.Count.Should().Be(numbers.Length);
-            testObject.Peek().Should().Be(minimum);
+            testObject.Peek().Should().Be(numbers.Min());
         }
 
         [Test]
         public void Merge_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
         {
             // given
-            var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
+            var other = new PairingHeap<int>(new[] { numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20 });
             // when
             testObject.Merge(other);
             // then
             testObject.Count.Should().Be(numbers.Length + other.Count);
-            testObject.Peek().Should().Be(minimum);
+            testObject.Peek().Should().Be(numbers.Min());
         }
 
         [Test]
         public void Merge_WhenOtherHasLessMinimum_ThenNewMinimum()
         {
             // given
-            int newMinimum = minimum - 4;
-            var other = new PairingHeap<int>(new[] { newMinimum, minimum + 5, minimum + 13, minimum + 20 });
+            int newMinimum = numbers.Min() - 4;
+            var other = new PairingHeap<int>(new[] { newMinimum, numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20 });
             // when
             testObject.Merge(other);
             // then

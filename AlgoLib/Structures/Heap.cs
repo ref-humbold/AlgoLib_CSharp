@@ -7,7 +7,7 @@ namespace AlgoLib.Structures
 {
     public class Heap<T> : IEnumerable<T>
     {
-        private readonly List<T> heap;
+        private List<T> heap;
 
         /// <summary>The comparer.</summary>
         public IComparer<T> Comparer
@@ -22,11 +22,7 @@ namespace AlgoLib.Structures
         {
         }
 
-        public Heap(IEnumerable<T> enumerable) : this()
-        {
-            foreach(T element in enumerable)
-                Push(element);
-        }
+        public Heap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
 
         public Heap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
         {
@@ -37,6 +33,9 @@ namespace AlgoLib.Structures
             heap = new List<T>();
             Comparer = comparer;
         }
+
+        /// <summary>Removes all elements from this heap.</summary>
+        public void Clear() => heap = new List<T>();
 
         public IEnumerator<T> GetEnumerator() => heap.GetEnumerator();
 
@@ -83,6 +82,14 @@ namespace AlgoLib.Structures
                 swap(index, nextIndex);
                 index = nextIndex;
             }
+        }
+
+        /// <summary>Adds new values from given range to this heap.</summary>
+        /// <param name="items">The enumerable of new values.</param>
+        public void PushRange(IEnumerable<T> items)
+        {
+            foreach(T item in items)
+                Push(item);
         }
 
         /// <summary>Retrieves and removes minimal element from this heap.</summary>
