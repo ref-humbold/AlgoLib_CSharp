@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace AlgoLib.Structures
 {
-    public class PairingHeap<T> where T : IComparable<T>
+    public class PairingHeap<T> : IEnumerable<T> where T : IComparable<T>
     {
         private HeapNode heap;
 
@@ -28,6 +29,10 @@ namespace AlgoLib.Structures
             heap = null;
             Count = 0;
         }
+
+        public IEnumerator<T> GetEnumerator() => new HeapEnumerator(heap);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Retrieves minimal element from this pairing heap.</summary>
         /// <returns>Minimal element.</returns>
@@ -162,6 +167,49 @@ namespace AlgoLib.Structures
                 list?.Next == null
                     ? list?.Node
                     : list.Node.Merge(list.Next.Node).Merge(mergePairs(list.Next.Next));
+        }
+
+        private class HeapEnumerator : IEnumerator<T>
+        {
+            private readonly List<T> elements = new List<T>();
+            private readonly IEnumerator<T> elementsEnumerator;
+
+            public T Current => elementsEnumerator.Current;
+
+            object IEnumerator.Current => Current;
+
+            public HeapEnumerator(HeapNode node)
+            {
+                if(node != null)
+                    extractElements(node);
+
+                elementsEnumerator = elements.GetEnumerator();
+            }
+
+            public bool MoveNext() => elementsEnumerator.MoveNext();
+
+            public void Reset() => elementsEnumerator.Reset();
+
+            public void Dispose() => elementsEnumerator.Dispose();
+
+            private void extractElements(HeapNode node)
+            {
+                var queue = new Queue<HeapNode>(new[] { node });
+
+                while(queue.Count > 0)
+                {
+                    HeapNode current = queue.Dequeue();
+                    HeapNodeList list = current.Children;
+
+                    elements.Add(current.Element);
+
+                    while(list != null)
+                    {
+                        queue.Enqueue(list.Node);
+                        list = list.Next;
+                    }
+                }
+            }
         }
     }
 }

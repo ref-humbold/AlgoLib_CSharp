@@ -47,6 +47,45 @@ namespace AlgoLib.Structures
             testObject.Count.Should().Be(0);
         }
 
+        [Test]
+        public void GetEnumerator_WhenEmpty_ThenNoElements()
+        {
+            // given
+            testObject = new PairingHeap<int>();
+            // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
+        {
+            // given
+            int element = 17;
+
+            testObject = new PairingHeap<int>(new[] { element });
+            // when
+            IEnumerator<int> result = testObject.GetEnumerator();
+            // then
+            result.MoveNext().Should().BeTrue();
+            result.Current.Should().Be(element);
+            result.MoveNext().Should().BeFalse();
+        }
+
+        [Test]
+        public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+        {
+            // when
+            var result = new List<int>();
+            IEnumerator<int> enumerator = testObject.GetEnumerator();
+
+            while(enumerator.MoveNext())
+                result.Add(enumerator.Current);
+            // then
+            result.Should().HaveElementAt(0, numbers.Min());
+        }
+
         #region Peek & TryPeek
 
         [Test]
