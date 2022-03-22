@@ -104,20 +104,22 @@ namespace AlgoLib.Graphs
         }
     }
 
-    public class Vertex<TVertexId>
+    public class Vertex<TVertexId> : IEquatable<Vertex<TVertexId>>
     {
         public readonly TVertexId Id;
 
         public Vertex(TVertexId id) => Id = id;
 
-        public override bool Equals(object obj) => obj is Vertex<TVertexId> vertex && Id.Equals(vertex.Id);
+        public bool Equals(Vertex<TVertexId> other) => other != null && Id.Equals(other.Id);
+
+        public override bool Equals(object obj) => obj is Vertex<TVertexId> other && Equals(other);
 
         public override int GetHashCode() => Id.GetHashCode();
 
         public override string ToString() => $"Vertex({Id})";
     }
 
-    public class Edge<TVertexId>
+    public class Edge<TVertexId> : IEquatable<Edge<TVertexId>>
     {
         public readonly Vertex<TVertexId> Source;
         public readonly Vertex<TVertexId> Destination;
@@ -133,10 +135,10 @@ namespace AlgoLib.Graphs
         /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge</exception>
         public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
-            if (Source.Equals(vertex))
+            if(Source.Equals(vertex))
                 return Destination;
 
-            if (Destination.Equals(vertex))
+            if(Destination.Equals(vertex))
                 return Source;
 
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
@@ -145,8 +147,10 @@ namespace AlgoLib.Graphs
         /// <returns>Edge with reversed direction</returns>
         public Edge<TVertexId> Reversed() => new Edge<TVertexId>(Destination, Source);
 
-        public override bool Equals(object obj) =>
-            obj is Edge<TVertexId> other && Source.Equals(other.Source) && Destination.Equals(other.Destination);
+        public bool Equals(Edge<TVertexId> other) =>
+            other != null && Source.Equals(other.Source) && Destination.Equals(other.Destination);
+
+        public override bool Equals(object obj) => obj is Edge<TVertexId> other && Equals(other);
 
         public override int GetHashCode() => HashCode.Combine(Source, Destination);
 
