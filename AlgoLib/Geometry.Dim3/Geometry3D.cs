@@ -13,7 +13,7 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByX(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByY(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByZ(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.Z).ToList();
 
         /// <summary>Counts distance between given points.</summary>

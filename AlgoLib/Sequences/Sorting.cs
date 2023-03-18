@@ -14,7 +14,7 @@ namespace AlgoLib.Sequences
         public static void HeapSort<T>(this List<T> sequence) where T : IComparable<T>
         {
             if(sequence == null)
-                throw new ArgumentNullException("Sequence is null");
+                throw new ArgumentNullException(nameof(sequence));
 
             int heapCount = sequence.Count;
 
@@ -42,7 +42,7 @@ namespace AlgoLib.Sequences
         public static void TopDownMergeSort<T>(this List<T> sequence) where T : IComparable<T>
         {
             if(sequence == null)
-                throw new ArgumentNullException("Sequence is null");
+                throw new ArgumentNullException(nameof(sequence));
 
             doMergeSort(sequence, 0, sequence.Count);
         }
@@ -55,15 +55,15 @@ namespace AlgoLib.Sequences
         public static void BottomUpMergeSort<T>(this List<T> sequence) where T : IComparable<T>
         {
             if(sequence == null)
-                throw new ArgumentNullException("Sequence is null");
+                throw new ArgumentNullException(nameof(sequence));
 
             if(sequence.Count <= 1)
                 return;
 
-            for(int half_step = 1; half_step < sequence.Count; half_step *= 2)
-                for(int i = 0; i < sequence.Count; i += half_step + half_step)
-                    merge(sequence, i, Math.Min(i + half_step, sequence.Count),
-                          Math.Min(i + half_step + half_step, sequence.Count));
+            for(int halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
+                for(int i = 0; i < sequence.Count; i += halfStep + halfStep)
+                    merge(sequence, i, Math.Min(i + halfStep, sequence.Count),
+                          Math.Min(i + halfStep + halfStep, sequence.Count));
         }
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
@@ -71,7 +71,7 @@ namespace AlgoLib.Sequences
         public static void QuickSort<T>(this List<T> sequence) where T : IComparable<T>
         {
             if(sequence == null)
-                throw new ArgumentNullException("Sequence is null");
+                throw new ArgumentNullException(nameof(sequence));
 
             doQuickSort(sequence, 0, sequence.Count);
         }
@@ -85,8 +85,9 @@ namespace AlgoLib.Sequences
             int rightVertex = vertex + vertex + 2;
 
             if(rightVertex < indexEnd)
-                nextVertex = heap[rightVertex].CompareTo(heap[leftVertex]) < 0 ? leftVertex
-                                                                               : rightVertex;
+                nextVertex = heap[rightVertex].CompareTo(heap[leftVertex]) < 0
+                    ? leftVertex
+                    : rightVertex;
 
             if(leftVertex == indexEnd - 1)
                 nextVertex = leftVertex;
@@ -187,12 +188,7 @@ namespace AlgoLib.Sequences
                       .First();
 
         // Swaps two elements in given sequence.
-        private static void swap<T>(List<T> sequence, int index1, int index2)
-        {
-            T temp = sequence[index1];
-
-            sequence[index1] = sequence[index2];
-            sequence[index2] = temp;
-        }
+        private static void swap<T>(List<T> sequence, int index1, int index2) =>
+            (sequence[index2], sequence[index1]) = (sequence[index1], sequence[index2]);
     }
 }

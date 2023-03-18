@@ -13,7 +13,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByX(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByY(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByAngle(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException("Points list is null")
+            points == null ? throw new ArgumentNullException(nameof(points))
                            : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
 
         /// <summary>Counts distance between given points.</summary>

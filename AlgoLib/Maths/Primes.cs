@@ -24,31 +24,31 @@ namespace AlgoLib.Maths
             if(maximum <= minimum)
                 return Enumerable.Empty<int>();
 
-            var primes = new List<int>();
-            var isPrime = new List<bool>();
-            var basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maximum) / 2)).ToList();
+            bool[] isPrime = Enumerable.Range(minimum, maximum - minimum)
+                                       .Select(i => i == 2 || i > 2 && i % 2 != 0)
+                                       .ToArray();
+            bool[] basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maximum) / 2))
+                                          .ToArray();
 
-            for(int i = minimum; i < maximum; ++i)
-                isPrime.Add(i == 2 || i > 2 && i % 2 != 0);
-
-            for(int i = 0; i < basePrimes.Count; ++i)
+            for(int i = 0; i < basePrimes.Length; ++i)
                 if(basePrimes[i])
                 {
-                    int p = 2 * i + 3;
-                    int begin = minimum < p * p ? p * p - minimum : (p - minimum % p) % p;
+                    int basePrime = 2 * i + 3;
+                    int square = basePrime * basePrime;
+                    int begin = minimum < square
+                        ? square - minimum
+                        : (basePrime - minimum % basePrime) % basePrime;
 
-                    for(int j = (p * p - 3) / 2; j < basePrimes.Count; j += p)
+                    for(int j = (square - 3) / 2; j < basePrimes.Length; j += basePrime)
                         basePrimes[j] = false;
 
-                    for(int j = begin; j < isPrime.Count; j += p)
+                    for(int j = begin; j < isPrime.Length; j += basePrime)
                         isPrime[j] = false;
                 }
 
-            for(int i = 0; i < isPrime.Count; ++i)
-                if(isPrime[i])
-                    primes.Add(minimum + i);
-
-            return primes;
+            return isPrime.Select((flag, index) => (flag, index))
+                          .Where(elem => elem.flag)
+                          .Select(elem => minimum + elem.index);
         }
 
         /// <summary>Checks whether given number is prime using Fermat's prime test.</summary>
