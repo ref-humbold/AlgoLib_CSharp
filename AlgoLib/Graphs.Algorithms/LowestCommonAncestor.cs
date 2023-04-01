@@ -6,10 +6,8 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths =
-            new Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>>();
-
-        private readonly LcaStrategy strategy = new LcaStrategy();
+        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();
+        private readonly LcaStrategy strategy = new();
         private bool empty = true;
 
         public TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> Graph
@@ -77,15 +75,9 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class LcaStrategy : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> parents =
-                new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
-
-            internal readonly Dictionary<Vertex<TVertexId>, int> preTimes =
-                new Dictionary<Vertex<TVertexId>, int>();
-
-            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes =
-                new Dictionary<Vertex<TVertexId>, int>();
-
+            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> parents = new();
+            internal readonly Dictionary<Vertex<TVertexId>, int> preTimes = new();
+            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes = new();
             private int timer = 0;
 
             public void ForRoot(Vertex<TVertexId> root) => parents[root] = root;

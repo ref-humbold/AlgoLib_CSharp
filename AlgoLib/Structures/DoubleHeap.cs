@@ -8,7 +8,7 @@ namespace AlgoLib.Structures
     {
         private static readonly int indexMin = 0;
         private static readonly int indexMax = 1;
-        private List<T> heap;
+        private List<T> heap = new();
 
         /// <summary>The comparer.</summary>
         public IComparer<T> Comparer
@@ -29,11 +29,7 @@ namespace AlgoLib.Structures
         {
         }
 
-        public DoubleHeap(IComparer<T> comparer)
-        {
-            heap = new List<T>();
-            Comparer = comparer;
-        }
+        public DoubleHeap(IComparer<T> comparer) => Comparer = comparer;
 
         /// <summary>Removes all elements from this double heap.</summary>
         public void Clear() => heap = new List<T>();
@@ -45,8 +41,9 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T PeekMin() => Count > 0 ? heap[indexMin]
-                                        : throw new InvalidOperationException("The double heap is empty");
+        public T PeekMin() => Count > 0
+                              ? heap[indexMin]
+                              : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
@@ -291,17 +288,12 @@ namespace AlgoLib.Structures
         }
 
         // Swaps two elements in the double heap.
-        private void swap(int index1, int index2)
-        {
-            T temp = heap[index1];
+        private void swap(int index1, int index2) =>
+            (heap[index2], heap[index1]) = (heap[index1], heap[index2]);
 
-            heap[index1] = heap[index2];
-            heap[index2] = temp;
-        }
-
-        public class HeapEnumerator : IEnumerator<T>
+        private sealed class HeapEnumerator : IEnumerator<T>
         {
-            private readonly List<T> orderList = new List<T>();
+            private readonly List<T> orderList = new();
             private readonly IEnumerator<T> orderListEnumerator;
 
             public T Current => orderListEnumerator.Current;
@@ -325,7 +317,7 @@ namespace AlgoLib.Structures
 
             public void Dispose() => orderListEnumerator.Dispose();
 
-            private List<T> createOrderedMinimalList(List<T> heap)
+            private static List<T> createOrderedMinimalList(List<T> heap)
             {
                 var indices = new Queue<int>();
                 var minimalList = new List<T>();
@@ -349,7 +341,7 @@ namespace AlgoLib.Structures
                 return minimalList;
             }
 
-            private List<T> createOrderedMaximalList(List<T> heap)
+            private static List<T> createOrderedMaximalList(List<T> heap)
             {
                 var indices = new Queue<int>();
                 var maximalList = new List<T>();

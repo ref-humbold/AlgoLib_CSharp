@@ -11,7 +11,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">Bipartite graph</param>
         /// <returns>Dictionary of matched vertices</returns>
         public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty, TEdgeProperty>(
-                this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+            this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             var augmenter = new MatchAugmenter<TVertexId, TVertexProperty, TEdgeProperty>(graph);
             bool wasAugmented = true;
@@ -24,9 +24,7 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class MatchAugmenter<TVertexId, TVertexProperty, TEdgeProperty>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> matching =
-                new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
-
+            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> matching = new();
             private static readonly double infinity = double.PositiveInfinity;
             private readonly MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
@@ -77,7 +75,8 @@ namespace AlgoLib.Graphs.Algorithms
                 }
             }
 
-            private bool dfs(Vertex<TVertexId> vertex, HashSet<Vertex<TVertexId>> visited,
+            private bool dfs(Vertex<TVertexId> vertex,
+                             HashSet<Vertex<TVertexId>> visited,
                              Dictionary<Vertex<TVertexId>, double> distances)
             {
                 visited.Add(vertex);

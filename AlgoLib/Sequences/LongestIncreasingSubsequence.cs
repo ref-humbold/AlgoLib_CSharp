@@ -33,7 +33,12 @@ namespace AlgoLib.Sequences
                 }
                 else
                 {
-                    int index = searchIndex(sequence, comparison, subsequence, i, 0, subsequence.Count);
+                    int index = searchIndex(sequence,
+                                            comparison,
+                                            subsequence,
+                                            i,
+                                            0,
+                                            subsequence.Count);
 
                     subsequence[index] = i;
                     previousElem[i] = index > 0 ? (int?)subsequence[index - 1] : null;
@@ -53,8 +58,11 @@ namespace AlgoLib.Sequences
         }
 
         // Searches for place of element in list of subsequences.
-        private static int searchIndex<T>(IList<T> sequence, Comparison<T> comparison,
-                                          IList<int> subsequence, int indexElem, int indexBegin,
+        private static int searchIndex<T>(IList<T> sequence,
+                                          Comparison<T> comparison,
+                                          IList<int> subsequence,
+                                          int indexElem,
+                                          int indexBegin,
                                           int indexEnd)
         {
             if(indexEnd - indexBegin <= 1)

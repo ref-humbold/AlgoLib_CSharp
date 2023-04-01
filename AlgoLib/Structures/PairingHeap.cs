@@ -37,8 +37,9 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this pairing heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the pairing heap is empty.</exception>
-        public T Peek() =>
-            heap != null ? heap.Element : throw new InvalidOperationException("The pairing heap is empty");
+        public T Peek() => heap != null
+                           ? heap.Element
+                           : throw new InvalidOperationException("The pairing heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this pairing heap and copies it to the <c>result</c> parameter.
@@ -62,8 +63,8 @@ namespace AlgoLib.Structures
         public void Push(T item)
         {
             heap = heap == null
-                ? new HeapNode { Element = item, Children = null }
-                : heap.Add(item);
+                   ? new HeapNode { Element = item, Children = null }
+                   : heap.Add(item);
             ++Count;
         }
 
@@ -169,9 +170,9 @@ namespace AlgoLib.Structures
                     : list.Node.Merge(list.Next.Node).Merge(mergePairs(list.Next.Next));
         }
 
-        private class HeapEnumerator : IEnumerator<T>
+        private sealed class HeapEnumerator : IEnumerator<T>
         {
-            private readonly List<T> elements = new List<T>();
+            private readonly List<T> elements = new();
             private readonly IEnumerator<T> elementsEnumerator;
 
             public T Current => elementsEnumerator.Current;

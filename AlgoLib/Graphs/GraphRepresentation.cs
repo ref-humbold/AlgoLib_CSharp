@@ -7,17 +7,9 @@ namespace AlgoLib.Graphs
 {
     internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        // Adjacency list
-        private readonly Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> graphDict =
-            new Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>>();
-
-        // Vertex properties
-        private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties =
-            new Dictionary<Vertex<TVertexId>, TVertexProperty>();
-
-        // Edge properties
-        private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties =
-            new Dictionary<Edge<TVertexId>, TEdgeProperty>();
+        private readonly Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> graphDict = new();
+        private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties = new();
+        private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties = new();
 
         internal int Count => graphDict.Count;
 

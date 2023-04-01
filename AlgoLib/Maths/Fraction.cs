@@ -6,12 +6,13 @@ namespace AlgoLib.Maths
     public class Fraction :
         IComparable<Fraction>, IComparable<int>, IComparable<long>
     {
-        private readonly long numerator, denominator;
+        private readonly long numerator;
+        private readonly long denominator;
 
         private Fraction(long numerator, long denominator)
         {
             if(denominator == 0)
-                throw new DivideByZeroException("Denominator cannot be equal to zero");
+                throw new DivideByZeroException("Denominator cannot be zero");
 
             if(denominator < 0)
             {
@@ -25,7 +26,7 @@ namespace AlgoLib.Maths
             this.denominator = denominator / gcd;
         }
 
-        public static Fraction Of(long numerator, long denominator = 1) => new Fraction(numerator, denominator);
+        public static Fraction Of(long numerator, long denominator = 1) => new(numerator, denominator);
 
         public static explicit operator int(Fraction f) => (int)(f.numerator / f.denominator);
 

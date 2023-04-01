@@ -34,18 +34,10 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class CuttingStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> dfsParents =
-                new Dictionary<Vertex<TVertexId>, Vertex<TVertexId>>();
-
-            internal readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren =
-                new Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>>();
-
-            internal readonly Dictionary<Vertex<TVertexId>, int> dfsDepths =
-                new Dictionary<Vertex<TVertexId>, int>();
-
-            internal readonly Dictionary<Vertex<TVertexId>, int> lowValues =
-                new Dictionary<Vertex<TVertexId>, int>();
-
+            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> dfsParents = new();
+            internal readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren = new();
+            internal readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = new();
+            internal readonly Dictionary<Vertex<TVertexId>, int> lowValues = new();
             private int depth = 0;
 
             public void ForRoot(Vertex<TVertexId> root)

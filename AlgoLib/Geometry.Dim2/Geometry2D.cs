@@ -47,13 +47,13 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="v">Vector of translation.</param>
         /// <returns>Translated point.</returns>
         public static Point2D Translate(this Point2D p, Vector2D v) =>
-            new Point2D(p.X + v.X, p.Y + v.Y);
+            new(p.X + v.X, p.Y + v.Y);
 
         /// <summary>Reflects given point in another point.</summary>
         /// <param name="p">The point.</param>
         /// <param name="centre">Point of reflection.</param>
         /// <returns>Reflected point.</returns>
         public static Point2D Reflect(this Point2D p, Point2D centre) =>
-            new Point2D(-p.X + 2 * centre.X, -p.Y + 2 * centre.Y);
+            new(-p.X + 2 * centre.X, -p.Y + 2 * centre.Y);
     }
 }

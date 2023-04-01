@@ -7,7 +7,7 @@ namespace AlgoLib.Text
 {
     public class BaseWordsDictionary
     {
-        private readonly Dictionary<(int, int), int> factors = new Dictionary<(int, int), int>();
+        private readonly Dictionary<(int, int), int> factors = new();
 
         public string Text
         {
@@ -47,6 +47,20 @@ namespace AlgoLib.Text
             }
         }
 
+        private static int getMaxLength(int n)
+        {
+            int prev = 0;
+            int power = 1;
+
+            while(power < n)
+            {
+                prev = power;
+                power *= 2;
+            }
+
+            return prev;
+        }
+
         // Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
         private void create()
         {
@@ -84,20 +98,6 @@ namespace AlgoLib.Text
             }
 
             return codeValue;
-        }
-
-        private int getMaxLength(int n)
-        {
-            int prev = 0;
-            int power = 1;
-
-            while(power < n)
-            {
-                prev = power;
-                power *= 2;
-            }
-
-            return prev;
         }
 
         private class CodesComparer : Comparer<int[]>

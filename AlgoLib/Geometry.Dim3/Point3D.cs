@@ -3,7 +3,7 @@ using System;
 
 namespace AlgoLib.Geometry.Dim3
 {
-    public struct Point3D : IGeometryObject, IEquatable<Point3D>
+    public readonly struct Point3D : IGeometryObject, IEquatable<Point3D>
     {
         public readonly double X;
         public readonly double Y;
@@ -21,6 +21,10 @@ namespace AlgoLib.Geometry.Dim3
         }
 
         public static Point3D Of(double x, double y, double z) => new Point3D(x, y, z);
+
+        public static bool operator ==(Point3D left, Point3D right) => left.Equals(right);
+
+        public static bool operator !=(Point3D left, Point3D right) => !(left == right);
 
         public override bool Equals(object obj) => obj is Point3D p && Equals(p);
 

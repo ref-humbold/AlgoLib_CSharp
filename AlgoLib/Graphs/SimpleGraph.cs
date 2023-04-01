@@ -27,8 +27,8 @@ namespace AlgoLib.Graphs
             get;
         }
 
-        public SimpleGraph() => representation =
-            new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>();
+        public SimpleGraph() =>
+            representation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>();
 
         public SimpleGraph(IEnumerable<TVertexId> vertexIds) =>
             representation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(vertexIds);
@@ -64,7 +64,8 @@ namespace AlgoLib.Graphs
         /// <param name="property">Vertex property</param>
         /// <returns>New vertex</returns>
         /// <exception cref="ArgumentException">If vertex already exists</exception>
-        public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex, TVertexProperty property = default)
+        public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex,
+                                           TVertexProperty property = default)
         {
             bool wasAdded = representation.addVertex(vertex);
 
@@ -93,9 +94,11 @@ namespace AlgoLib.Graphs
         /// <param name="property">Edge property</param>
         /// <returns>New edge</returns>
         /// <exception cref="ArgumentException">If edge already exists</exception>
-        public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default);
+        public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge,
+                                                TEdgeProperty property = default);
 
-        private class GraphPropertiesImpl : IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties
+        private class GraphPropertiesImpl :
+            IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties
         {
             private readonly SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 

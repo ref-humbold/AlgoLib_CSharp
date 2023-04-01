@@ -7,7 +7,7 @@ namespace AlgoLib.Structures
     public class DisjointSets<T>
     {
         // Map of element represents
-        private readonly Dictionary<T, T> represents;
+        private readonly Dictionary<T, T> represents = new();
 
         /// <summary>Number of sets.</summary>
         public int Count
@@ -18,8 +18,6 @@ namespace AlgoLib.Structures
 
         public DisjointSets(IEnumerable<T> universe)
         {
-            represents = new Dictionary<T, T>();
-
             foreach(T e in universe)
                 represents[e] = e;
 

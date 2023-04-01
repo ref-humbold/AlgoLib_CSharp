@@ -14,7 +14,8 @@ namespace AlgoLib.Geometry.Dim2
                           0, -1);
 
         // Finds pair of closest points among three of them.
-        private static (Point2D, Point2D) searchThree(List<Point2D> pointsX, int indexBegin,
+        private static (Point2D, Point2D) searchThree(List<Point2D> pointsX,
+                                                      int indexBegin,
                                                       int indexEnd)
         {
             int indexMiddle = indexBegin + 1;
@@ -31,7 +32,8 @@ namespace AlgoLib.Geometry.Dim2
 
         // Finds pair of closest points inside a belt of given width. The resulting distance should
         // not be less than belt width.
-        private static (Point2D, Point2D)? checkBelt(List<Point2D> pointsY, double middleX,
+        private static (Point2D, Point2D)? checkBelt(List<Point2D> pointsY,
+                                                     double middleX,
                                                      double width)
         {
             (Point2D, Point2D)? closestPoints = null;
@@ -68,8 +70,10 @@ namespace AlgoLib.Geometry.Dim2
 
         // Searches for pair of closest points in given sublist of points. Points are given sorted
         // by X coordinate and by Y coordinate. (indexBegin & indexEnd inclusive)
-        private static (Point2D, Point2D) searchClosest(List<Point2D> pointsX, List<Point2D> pointsY,
-                                                        int indexBegin, int indexEnd)
+        private static (Point2D, Point2D) searchClosest(List<Point2D> pointsX,
+                                                        List<Point2D> pointsY,
+                                                        int indexBegin,
+                                                        int indexEnd)
         {
             indexBegin = (indexBegin + pointsX.Count) % pointsX.Count;
             indexEnd = (indexEnd + pointsX.Count) % pointsX.Count;

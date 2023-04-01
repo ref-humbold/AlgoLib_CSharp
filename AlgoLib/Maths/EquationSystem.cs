@@ -92,13 +92,8 @@ namespace AlgoLib.Maths
         /// <summary>Swaps two equations in this system.</summary>
         /// <param name="i">Index of first equation.</param>
         /// <param name="j">Index of second equation.</param>
-        public void Swap(Index i, Index j)
-        {
-            Equation temp = equations[i];
-
-            equations[i] = equations[j];
-            equations[j] = temp;
-        }
+        public void Swap(Index i, Index j) =>
+            (equations[j], equations[i]) = (equations[i], equations[j]);
 
         /// <summary>Checks whether given values solve this equation system.</summary>
         /// <param name="solution">Values to check.</param>

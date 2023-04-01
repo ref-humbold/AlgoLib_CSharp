@@ -11,7 +11,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <returns>Diameter length.</returns>
         public static double CountDiameter<TVertexId, TVertexProperty, TEdgeProperty>(
             this TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree)
-                where TEdgeProperty : IWeighted
+            where TEdgeProperty : IWeighted
         {
             Vertex<TVertexId> root = tree.Vertices.Aggregate<Vertex<TVertexId>, Vertex<TVertexId>>(
                 null,
@@ -21,9 +21,10 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         private static (double, double) dfs<TVertexId, TVertexProperty, TEdgeProperty>(
-            TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree, Vertex<TVertexId> vertex,
+            TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree,
+            Vertex<TVertexId> vertex,
             Vertex<TVertexId> parent)
-                where TEdgeProperty : IWeighted
+            where TEdgeProperty : IWeighted
         {
             double pathFrom = 0.0;
             double pathSubtree = 0.0;

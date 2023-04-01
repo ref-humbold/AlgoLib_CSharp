@@ -8,8 +8,8 @@ namespace AlgoLib.Text
     public class SuffixArray
     {
         private readonly List<int> suffixArray;
-        private readonly List<int> inverseArray = new List<int>();
-        private readonly List<int> lcpArray = new List<int>();
+        private readonly List<int> inverseArray = new();
+        private readonly List<int> lcpArray = new();
 
         public int Count
         {
@@ -53,7 +53,7 @@ namespace AlgoLib.Text
             int i = index.GetOffset(suffixArray.Count);
 
             return i < 0 || i >= Count
-            ? throw new IndexOutOfRangeException("Suffix array index out of range")
+                ? throw new IndexOutOfRangeException("Suffix array index out of range")
                 : suffixArray[index];
         }
 
@@ -65,7 +65,7 @@ namespace AlgoLib.Text
             int i = index.GetOffset(suffixArray.Count);
 
             return i < 0 || i >= Count
-            ? throw new IndexOutOfRangeException("Text index out of range")
+                ? throw new IndexOutOfRangeException("Text index out of range")
                 : inverseArray[index];
         }
 
@@ -97,6 +97,85 @@ namespace AlgoLib.Text
             {
                 return lcpArray[j1 + 1];
             }
+        }
+
+        private static int getElement(List<int> v, int i) => i < v.Count ? v[i] : 0;
+
+        private static bool lessOrEqual(params int[] elements)
+        {
+            for(int i = 0; i < elements.Length; i += 2)
+                if(elements[i] < elements[i + 1])
+                    return true;
+                else if(elements[i] > elements[i + 1])
+                    return false;
+
+            return true;
+        }
+
+        private static List<int> merge(List<int> t0, List<int> sa0, List<int> t12, List<int> sa12)
+        {
+            var sa = new List<int>();
+            int length2 = (t0.Count + 2) / 3, length1 = (t0.Count + 1) / 3;
+            int index0 = 0, index12 = length2 - length1;
+
+            while(index0 < sa0.Count && index12 < sa12.Count)
+            {
+                int pos12 = sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2;
+                int pos0 = sa0[index0];
+
+                bool cond = sa12[index12] < length2
+                    ? lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
+                                  getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
+                    : lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
+                                  getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
+                                  getElement(t12, sa12[index12] - length2 + 1), getElement(t12, pos0 / 3 + length2));
+
+                if(cond)
+                {
+                    sa.Add(pos12);
+                    ++index12;
+                }
+                else
+                {
+                    sa.Add(pos0);
+                    ++index0;
+                }
+            }
+
+            while(index12 < sa12.Count)
+            {
+                sa.Add(sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2);
+                ++index12;
+            }
+
+            while(index0 < sa0.Count)
+            {
+                sa.Add(sa0[index0]);
+                ++index0;
+            }
+
+            return sa;
+        }
+
+        private static void sortIndices(List<int> indices, List<int> values, int shift)
+        {
+            var buckets = new SortedDictionary<int, Queue<int>>();
+            int j = 0;
+
+            foreach(int i in indices)
+            {
+                int v = getElement(values, i + shift);
+
+                buckets.TryAdd(v, new Queue<int>());
+                buckets[v].Enqueue(i);
+            }
+
+            foreach(Queue<int> q in buckets.Values)
+                while(q.Count > 0)
+                {
+                    indices[j] = q.Dequeue();
+                    ++j;
+                }
         }
 
         private void initInverseArray()
@@ -190,86 +269,6 @@ namespace AlgoLib.Text
 
             sortIndices(sa0, txt, 0);
             return merge(txt, sa0, text12, sa12);
-        }
-
-        private List<int> merge(List<int> t0, List<int> sa0, List<int> t12,
-                                    List<int> sa12)
-        {
-            var sa = new List<int>();
-            int length2 = (t0.Count + 2) / 3, length1 = (t0.Count + 1) / 3;
-            int index0 = 0, index12 = length2 - length1;
-
-            while(index0 < sa0.Count && index12 < sa12.Count)
-            {
-                int pos12 = sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2;
-                int pos0 = sa0[index0];
-
-                bool cond = sa12[index12] < length2
-                    ? lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                                  getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
-                    : lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                                  getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
-                                  getElement(t12, sa12[index12] - length2 + 1), getElement(t12, pos0 / 3 + length2));
-
-                if(cond)
-                {
-                    sa.Add(pos12);
-                    ++index12;
-                }
-                else
-                {
-                    sa.Add(pos0);
-                    ++index0;
-                }
-            }
-
-            while(index12 < sa12.Count)
-            {
-                sa.Add(sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2);
-                ++index12;
-            }
-
-            while(index0 < sa0.Count)
-            {
-                sa.Add(sa0[index0]);
-                ++index0;
-            }
-
-            return sa;
-        }
-
-        private void sortIndices(List<int> indices, List<int> values, int shift)
-        {
-            var buckets = new SortedDictionary<int, Queue<int>>();
-            int j = 0;
-
-            foreach(int i in indices)
-            {
-                int v = getElement(values, i + shift);
-
-                buckets.TryAdd(v, new Queue<int>());
-                buckets[v].Enqueue(i);
-            }
-
-            foreach(Queue<int> q in buckets.Values)
-                while(q.Count > 0)
-                {
-                    indices[j] = q.Dequeue();
-                    ++j;
-                }
-        }
-
-        private int getElement(List<int> v, int i) => i < v.Count ? v[i] : 0;
-
-        private bool lessOrEqual(params int[] elements)
-        {
-            for(int i = 0; i < elements.Length; i += 2)
-                if(elements[i] < elements[i + 1])
-                    return true;
-                else if(elements[i] > elements[i + 1])
-                    return false;
-
-            return true;
         }
     }
 }

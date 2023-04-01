@@ -14,7 +14,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <exception cref="InvalidOperationException">If graph contains a negative cycle.</exception>
         public static Dictionary<Vertex<TVertexId>, double> BellmanFord<TVertexId, TVertexProperty, TEdgeProperty>(
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
-                where TEdgeProperty : IWeighted
+            where TEdgeProperty : IWeighted
         {
             var distances = new Dictionary<Vertex<TVertexId>, double>(
                 graph.Vertices.Select(v => KeyValuePair.Create(v, IWeighted.Infinity)))
@@ -44,7 +44,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <exception cref="InvalidOperationException">If graph contains a negative edge.</exception>
         public static Dictionary<Vertex<TVertexId>, double> Dijkstra<TVertexId, TVertexProperty, TEdgeProperty>(
             IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
-                where TEdgeProperty : IWeighted
+            where TEdgeProperty : IWeighted
         {
             foreach(Edge<TVertexId> edge in graph.Edges)
                 if(graph.Properties[edge].Weight < 0.0)
@@ -92,7 +92,7 @@ namespace AlgoLib.Graphs.Algorithms
         public static Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>
             FloydWarshall<TVertexId, TVertexProperty, TEdgeProperty>(
                 IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
-                    where TEdgeProperty : IWeighted
+                where TEdgeProperty : IWeighted
         {
             var distances = new Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>();
 

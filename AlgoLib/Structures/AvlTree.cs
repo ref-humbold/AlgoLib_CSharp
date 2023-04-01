@@ -8,11 +8,12 @@ namespace AlgoLib.Structures
     public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     {
         private readonly IComparer<T> comparer;
-        private readonly AvlHeaderNode<T> tree = new AvlHeaderNode<T>();
+        private readonly AvlHeaderNode<T> tree = new();
 
         public int Count
         {
-            get; private set;
+            get;
+            private set;
         }
 
         public bool IsReadOnly => false;
@@ -90,9 +91,11 @@ namespace AlgoLib.Structures
             ExceptWith(this.Where(e => !otherSet.Contains(e)).ToList());
         }
 
-        public bool IsProperSubsetOf(IEnumerable<T> other) => IsSubsetOf(other) && !IsSupersetOf(other);
+        public bool IsProperSubsetOf(IEnumerable<T> other) =>
+            IsSubsetOf(other) && !IsSupersetOf(other);
 
-        public bool IsProperSupersetOf(IEnumerable<T> other) => IsSupersetOf(other) && !IsSubsetOf(other);
+        public bool IsProperSupersetOf(IEnumerable<T> other) =>
+            IsSupersetOf(other) && !IsSubsetOf(other);
 
         public bool IsSubsetOf(IEnumerable<T> other) => this.All(e => other.Contains(e));
 
@@ -129,11 +132,20 @@ namespace AlgoLib.Structures
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        private bool isLeftChild(AvlInnerNode<T> node) =>
+        private static bool isLeftChild(AvlInnerNode<T> node) =>
             node.Parent.Height > 0 && node.Parent.Left == node;
 
-        private bool isRightChild(AvlInnerNode<T> node) =>
+        private static bool isRightChild(AvlInnerNode<T> node) =>
             node.Parent.Height > 0 && node.Parent.Right == node;
+
+        // Counts current node balance.
+        private static int countBalance(AvlInnerNode<T> node)
+        {
+            int leftHeight = node.Left?.Height ?? 0;
+            int rightHeight = node.Right?.Height ?? 0;
+
+            return leftHeight - rightHeight;
+        }
 
         // Determines the subtree where given value might be present:
         // - node if element is in it
@@ -254,15 +266,6 @@ namespace AlgoLib.Structures
 
                 node = theNode.Parent;
             }
-        }
-
-        // Counts current node balance.
-        private int countBalance(AvlInnerNode<T> node)
-        {
-            int leftHeight = node.Left?.Height ?? 0;
-            int rightHeight = node.Right?.Height ?? 0;
-
-            return leftHeight - rightHeight;
         }
 
         private interface IAvlNode<TItem>
@@ -436,13 +439,15 @@ namespace AlgoLib.Structures
             public AvlHeaderNode() => Parent = null;
         }
 
-        private class AvlEnumerator : IEnumerator<T>
+        private sealed class AvlEnumerator : IEnumerator<T>
         {
             private readonly AvlTree<T> tree;
             private IAvlNode<T> currentNode;
 
             public T Current =>
-                currentNode is AvlInnerNode<T> node ? node.Element : throw new InvalidOperationException();
+                currentNode is AvlInnerNode<T> node
+                ? node.Element
+                : throw new InvalidOperationException();
 
             object IEnumerator.Current => Current;
 

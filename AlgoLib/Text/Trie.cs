@@ -5,7 +5,7 @@ namespace AlgoLib.Text
 {
     public class Trie
     {
-        private TrieNode tree = new TrieNode();
+        private TrieNode tree = new();
 
         public int Count
         {

@@ -39,7 +39,8 @@ namespace AlgoLib.Graphs
                           .SelectMany(edges => edges.Where(edge => edge.Destination.Equals(vertex)))
                           .Count();
 
-        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
+        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge,
+                                                TEdgeProperty property = default)
         {
             try
             {

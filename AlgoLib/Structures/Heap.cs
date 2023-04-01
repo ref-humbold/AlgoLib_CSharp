@@ -7,7 +7,7 @@ namespace AlgoLib.Structures
 {
     public class Heap<T> : IEnumerable<T>
     {
-        private List<T> heap;
+        private List<T> heap = new();
 
         /// <summary>The comparer.</summary>
         public IComparer<T> Comparer
@@ -28,11 +28,7 @@ namespace AlgoLib.Structures
         {
         }
 
-        public Heap(IComparer<T> comparer)
-        {
-            heap = new List<T>();
-            Comparer = comparer;
-        }
+        public Heap(IComparer<T> comparer) => Comparer = comparer;
 
         /// <summary>Removes all elements from this heap.</summary>
         public void Clear() => heap = new List<T>();
@@ -44,8 +40,9 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
-        public T Peek() => Count > 0 ? heap[0]
-                                     : throw new InvalidOperationException("The heap is empty");
+        public T Peek() => Count > 0
+                           ? heap[0]
+                           : throw new InvalidOperationException("The heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
@@ -145,12 +142,7 @@ namespace AlgoLib.Structures
         }
 
         // Swaps two elements in the heap.
-        private void swap(int indexFirst, int indexSecond)
-        {
-            T temp = heap[indexFirst];
-
-            heap[indexFirst] = heap[indexSecond];
-            heap[indexSecond] = temp;
-        }
+        private void swap(int indexFirst, int indexSecond) =>
+            (heap[indexSecond], heap[indexFirst]) = (heap[indexFirst], heap[indexSecond]);
     }
 }

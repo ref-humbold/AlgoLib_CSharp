@@ -35,7 +35,8 @@ namespace AlgoLib.Graphs
         public override int GetInputDegree(Vertex<TVertexId> vertex) =>
             representation.getAdjacentEdges(vertex).Count();
 
-        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default)
+        public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge,
+                                                TEdgeProperty property = default)
         {
             try
             {

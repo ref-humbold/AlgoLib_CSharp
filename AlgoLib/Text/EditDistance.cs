@@ -13,8 +13,10 @@ namespace AlgoLib.Text
         /// <param name="substitutionCost">Cost of substitution operation.</param>
         /// <returns>Cost of edit distance.</returns>
         /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
-        public static double CountLevenshtein(this string source, string destination,
-                                              double insertionCost = 1.0, double deletionCost = 1.0,
+        public static double CountLevenshtein(this string source,
+                                              string destination,
+                                              double insertionCost = 1.0,
+                                              double deletionCost = 1.0,
                                               double substitutionCost = 1.0)
         {
             if(insertionCost < 0 || deletionCost < 0 || substitutionCost < 0)
@@ -53,8 +55,10 @@ namespace AlgoLib.Text
         /// <param name="deletionCost">Cost of deletion operation.</param>
         /// <returns>Cost of edit distance.</returns>
         /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
-        public static double CountLcs(this string source, string destination,
-                                      double insertionCost = 1.0, double deletionCost = 1.0)
+        public static double CountLcs(this string source,
+                                      string destination,
+                                      double insertionCost = 1.0,
+                                      double deletionCost = 1.0)
         {
             if(insertionCost < 0 || deletionCost < 0)
                 throw new ArgumentException("Cost of operation cannot be negative");
@@ -92,7 +96,8 @@ namespace AlgoLib.Text
         /// <exception cref="ArgumentException">
         /// If any operation cost is negative, or if texts have different length.
         /// </exception>
-        public static double CountHamming(this string source, string destination,
+        public static double CountHamming(this string source,
+                                          string destination,
                                           double substitutionCost = 1.0)
         {
             if(substitutionCost < 0)

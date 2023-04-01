@@ -7,7 +7,6 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class TopologicalSorting
     {
-
         public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
             InputsTopologicalSort(graph, Comparer<TVertexId>.Default);
@@ -26,7 +25,7 @@ namespace AlgoLib.Graphs.Algorithms
 
             var order = new List<Vertex<TVertexId>>();
             var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
-            Heap<Vertex<TVertexId>> vertexHeap = new Heap<Vertex<TVertexId>>(
+            var vertexHeap = new Heap<Vertex<TVertexId>>(
                     ((vertex1, vertex2) => vertexIdComparer.Compare(vertex1.Id, vertex2.Id)));
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
@@ -74,7 +73,7 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class TopologicalStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal List<Vertex<TVertexId>> order = new List<Vertex<TVertexId>>();
+            internal List<Vertex<TVertexId>> order = new();
 
             public void ForRoot(Vertex<TVertexId> root)
             {

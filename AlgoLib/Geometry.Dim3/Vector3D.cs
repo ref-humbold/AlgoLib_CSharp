@@ -3,7 +3,7 @@ using System;
 
 namespace AlgoLib.Geometry.Dim3
 {
-    public struct Vector3D : IGeometryObject, IEquatable<Vector3D>
+    public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
     {
         public readonly double X;
         public readonly double Y;
@@ -20,7 +20,7 @@ namespace AlgoLib.Geometry.Dim3
             Z = z;
         }
 
-        public static Vector3D Of(double x, double y, double z) => new Vector3D(x, y, z);
+        public static Vector3D Of(double x, double y, double z) => new(x, y, z);
 
         public static Vector3D Between(Point3D begin, Point3D end) =>
             Of(end.X - begin.X, end.Y - begin.Y, end.Z - begin.Z);

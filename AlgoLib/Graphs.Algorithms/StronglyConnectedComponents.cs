@@ -9,7 +9,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">The directed graph.</param>
         /// <returns>List of vertices in strongly connected components.</returns>
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
-                this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
             var postOrderStrategy = new PostOrderStrategy<TVertexId>();
 
@@ -28,9 +28,7 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class PostOrderStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes =
-                new Dictionary<Vertex<TVertexId>, int>();
-
+            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes = new();
             private int timer = 0;
 
             public void ForRoot(Vertex<TVertexId> root)
@@ -58,8 +56,7 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class SCCStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly List<HashSet<Vertex<TVertexId>>> components =
-                new List<HashSet<Vertex<TVertexId>>>();
+            internal readonly List<HashSet<Vertex<TVertexId>>> components = new();
 
             public void ForRoot(Vertex<TVertexId> root) =>
                 components.Add(new HashSet<Vertex<TVertexId>>());

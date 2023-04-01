@@ -11,7 +11,8 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="roots">starting vertices</param>
         /// <returns>enumerable of visited vertices</returns>
         public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IBfsStrategy<TVertexId> strategy,
+            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            IBfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
         {
             var reached = new HashSet<Vertex<TVertexId>>();
@@ -51,7 +52,8 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="roots">starting vertices</param>
         /// <returns>enumerable of visited vertices</returns>
         public static IEnumerable<Vertex<TVertexId>> DfsIterative<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IDfsStrategy<TVertexId> strategy,
+            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            IDfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
         {
             var reached = new Dictionary<Vertex<TVertexId>, int>();

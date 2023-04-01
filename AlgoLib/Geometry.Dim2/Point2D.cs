@@ -3,7 +3,7 @@ using System;
 
 namespace AlgoLib.Geometry.Dim2
 {
-    public struct Point2D : IGeometryObject, IEquatable<Point2D>
+    public readonly struct Point2D : IGeometryObject, IEquatable<Point2D>
     {
         public readonly double X;
         public readonly double Y;
@@ -22,7 +22,11 @@ namespace AlgoLib.Geometry.Dim2
             Y = y;
         }
 
-        public static Point2D Of(double x, double y) => new Point2D(x, y);
+        public static Point2D Of(double x, double y) => new(x, y);
+
+        public static bool operator ==(Point2D left, Point2D right) => left.Equals(right);
+
+        public static bool operator !=(Point2D left, Point2D right) => !(left == right);
 
         public override bool Equals(object obj) => obj is Point2D p && Equals(p);
 

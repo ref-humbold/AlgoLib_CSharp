@@ -145,7 +145,7 @@ namespace AlgoLib.Graphs
         }
 
         /// <returns>Edge with reversed direction</returns>
-        public Edge<TVertexId> Reversed() => new Edge<TVertexId>(Destination, Source);
+        public Edge<TVertexId> Reversed() => new(Destination, Source);
 
         public bool Equals(Edge<TVertexId> other) =>
             other != null && Source.Equals(other.Source) && Destination.Equals(other.Destination);

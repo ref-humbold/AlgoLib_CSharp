@@ -47,13 +47,13 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="v">Vector of translation.</param>
         /// <returns>Translated point.</returns>
         public static Point3D Translate(this Point3D p, Vector3D v) =>
-            new Point3D(p.X + v.X, p.Y + v.Y, p.Z + v.Z);
+            new(p.X + v.X, p.Y + v.Y, p.Z + v.Z);
 
         /// <summary>Reflects given point in another point.</summary>
         /// <param name="p">The point.</param>
         /// <param name="centre">Point of reflection.</param>
         /// <returns>Reflected point.</returns>
         public static Point3D Reflect(this Point3D p, Point3D centre) =>
-            new Point3D(-p.X + 2 * centre.X, -p.Y + 2 * centre.Y, -p.Z + 2 * centre.Z);
+            new(-p.X + 2 * centre.X, -p.Y + 2 * centre.Y, -p.Z + 2 * centre.Z);
     }
 }

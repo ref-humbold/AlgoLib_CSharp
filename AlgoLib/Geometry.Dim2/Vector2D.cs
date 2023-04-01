@@ -3,7 +3,7 @@ using System;
 
 namespace AlgoLib.Geometry.Dim2
 {
-    public struct Vector2D : IGeometryObject, IEquatable<Vector2D>
+    public readonly struct Vector2D : IGeometryObject, IEquatable<Vector2D>
     {
         public readonly double X;
         public readonly double Y;
@@ -18,7 +18,7 @@ namespace AlgoLib.Geometry.Dim2
             Y = y;
         }
 
-        public static Vector2D Of(double x, double y) => new Vector2D(x, y);
+        public static Vector2D Of(double x, double y) => new(x, y);
 
         public static Vector2D Between(Point2D begin, Point2D end) =>
             Of(end.X - begin.X, end.Y - begin.Y);

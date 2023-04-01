@@ -10,7 +10,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">Undirected weighted graph</param>
         /// <returns>Minimal spanning tree</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Kruskal<TVertexId, TVertexProperty, TEdgeProperty>(
-                this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+            this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
             where TEdgeProperty : IWeighted
         {
             var mst = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
@@ -41,8 +41,9 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="source">Starting vertex</param>
         /// <returns>Minimal spanning tree</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Prim<TVertexId, TVertexProperty, TEdgeProperty>(
-                IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
-             where TEdgeProperty : IWeighted
+            IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            Vertex<TVertexId> source)
+            where TEdgeProperty : IWeighted
         {
             var mst = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
                             graph.Vertices.Select(v => v.Id).ToArray());
