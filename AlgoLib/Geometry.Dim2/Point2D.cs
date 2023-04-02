@@ -5,8 +5,15 @@ namespace AlgoLib.Geometry.Dim2
 {
     public readonly struct Point2D : IGeometryObject, IEquatable<Point2D>
     {
-        public readonly double X;
-        public readonly double Y;
+        public readonly double X
+        {
+            get; init;
+        }
+
+        public readonly double Y
+        {
+            get; init;
+        }
 
         public double[] Coordinates => new[] { X, Y };
 

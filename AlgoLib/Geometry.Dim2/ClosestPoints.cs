@@ -26,8 +26,8 @@ namespace AlgoLib.Geometry.Dim2
             return distance12 <= distance23 && distance12 <= distance31
                 ? (pointsX[indexBegin], pointsX[indexMiddle])
                 : distance23 <= distance12 && distance23 <= distance31
-                ? (pointsX[indexMiddle], pointsX[indexEnd])
-                : (pointsX[indexBegin], pointsX[indexEnd]);
+                    ? (pointsX[indexMiddle], pointsX[indexEnd])
+                    : (pointsX[indexBegin], pointsX[indexEnd]);
         }
 
         // Finds pair of closest points inside a belt of given width. The resulting distance should

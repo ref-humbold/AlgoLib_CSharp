@@ -13,8 +13,9 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByX(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.X).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
         /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
@@ -22,8 +23,9 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByY(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.Y).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
         /// Immutably sorts points by their Z coordinate. Sorting is guaranteed to be stable.
@@ -31,8 +33,9 @@ namespace AlgoLib.Geometry.Dim3
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point3D> SortByZ(this List<Point3D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.Z).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.Z).ToList();
 
         /// <summary>Counts distance between given points.</summary>
         /// <param name="p1">First point.</param>

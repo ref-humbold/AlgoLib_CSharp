@@ -40,9 +40,10 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
-        public T Peek() => Count > 0
-                           ? heap[0]
-                           : throw new InvalidOperationException("The heap is empty");
+        public T Peek() =>
+            Count > 0
+                ? heap[0]
+                : throw new InvalidOperationException("The heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.

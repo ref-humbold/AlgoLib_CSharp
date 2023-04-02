@@ -37,9 +37,10 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this pairing heap.</summary>
         /// <returns>Minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the pairing heap is empty.</exception>
-        public T Peek() => heap != null
-                           ? heap.Element
-                           : throw new InvalidOperationException("The pairing heap is empty");
+        public T Peek() =>
+            heap != null
+                ? heap.Element
+                : throw new InvalidOperationException("The pairing heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this pairing heap and copies it to the <c>result</c> parameter.
@@ -63,8 +64,8 @@ namespace AlgoLib.Structures
         public void Push(T item)
         {
             heap = heap == null
-                   ? new HeapNode { Element = item, Children = null }
-                   : heap.Add(item);
+                ? new HeapNode { Element = item, Children = null }
+                : heap.Add(item);
             ++Count;
         }
 
@@ -132,20 +133,20 @@ namespace AlgoLib.Structures
 
             public HeapNode Add(T item) =>
                 Element.CompareTo(item) <= 0
-                ? new HeapNode
-                {
-                    Element = Element,
-                    Children = new HeapNodeList
+                    ? new HeapNode
                     {
-                        Node = new HeapNode { Element = item, Children = null },
-                        Next = Children
+                        Element = Element,
+                        Children = new HeapNodeList
+                        {
+                            Node = new HeapNode { Element = item, Children = null },
+                            Next = Children
+                        }
                     }
-                }
-                : new HeapNode
-                {
-                    Element = item,
-                    Children = new HeapNodeList { Node = this, Next = null }
-                };
+                    : new HeapNode
+                    {
+                        Element = item,
+                        Children = new HeapNodeList { Node = this, Next = null }
+                    };
 
             public HeapNode Pop() => mergePairs(Children);
 
@@ -153,16 +154,16 @@ namespace AlgoLib.Structures
                 node == null
                     ? this
                     : Element.CompareTo(node.Element) <= 0
-                    ? new HeapNode
-                    {
-                        Element = Element,
-                        Children = new HeapNodeList { Node = node, Next = this.Children }
-                    }
-                    : new HeapNode
-                    {
-                        Element = node.Element,
-                        Children = new HeapNodeList { Node = this, Next = node.Children }
-                    };
+                        ? new HeapNode
+                        {
+                            Element = Element,
+                            Children = new HeapNodeList { Node = node, Next = this.Children }
+                        }
+                        : new HeapNode
+                        {
+                            Element = node.Element,
+                            Children = new HeapNodeList { Node = this, Next = node.Children }
+                        };
 
             private HeapNode mergePairs(HeapNodeList list) =>
                 list?.Next == null

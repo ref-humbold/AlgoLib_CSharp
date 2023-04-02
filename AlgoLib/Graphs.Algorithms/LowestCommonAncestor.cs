@@ -51,8 +51,9 @@ namespace AlgoLib.Graphs.Algorithms
                                            .Where(candidate => !isOffspring(vertex2, candidate))
                                            .ToList();
 
-            return candidates.Count > 0 ? find(candidates[0], vertex2)
-                                        : find(paths[vertex1][0], vertex2);
+            return candidates.Count > 0
+                ? find(candidates[0], vertex2)
+                : find(paths[vertex1][0], vertex2);
         }
 
         private void initialize()

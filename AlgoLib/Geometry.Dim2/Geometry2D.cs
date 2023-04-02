@@ -13,8 +13,9 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByX(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.X).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
         /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
@@ -22,8 +23,9 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByY(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.Y).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
         /// Immutably sorts points by their polar coordinates. First sorts by angle, then by radius.
@@ -32,8 +34,9 @@ namespace AlgoLib.Geometry.Dim2
         /// <param name="points">List of points.</param>
         /// <returns>Sorted list of points.</returns>
         public static List<Point2D> SortByAngle(this List<Point2D> points) =>
-            points == null ? throw new ArgumentNullException(nameof(points))
-                           : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
+            points == null
+                ? throw new ArgumentNullException(nameof(points))
+                : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
 
         /// <summary>Counts distance between given points.</summary>
         /// <param name="p1">First point.</param>

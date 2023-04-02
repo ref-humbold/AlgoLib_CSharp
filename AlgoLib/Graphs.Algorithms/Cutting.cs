@@ -77,9 +77,9 @@ namespace AlgoLib.Graphs.Algorithms
                 !isDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
 
             internal bool isSeparator(Vertex<TVertexId> vertex) =>
-                isDfsRoot(vertex) ? dfsChildren[vertex].Count > 1
-                                  : dfsChildren[vertex].Any(
-                                          child => lowValues[child] >= dfsDepths[vertex]);
+                isDfsRoot(vertex)
+                    ? dfsChildren[vertex].Count > 1
+                    : dfsChildren[vertex].Any(child => lowValues[child] >= dfsDepths[vertex]);
 
             internal bool isDfsRoot(Vertex<TVertexId> vertex) => dfsDepths[vertex] == 0;
         }

@@ -41,9 +41,10 @@ namespace AlgoLib.Structures
         /// <summary>Retrieves minimal element from this double heap.</summary>
         /// <returns>Minimal element</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
-        public T PeekMin() => Count > 0
-                              ? heap[indexMin]
-                              : throw new InvalidOperationException("The double heap is empty");
+        public T PeekMin() =>
+            Count > 0
+                ? heap[indexMin]
+                : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.

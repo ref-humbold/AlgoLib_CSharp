@@ -38,8 +38,8 @@ namespace AlgoLib.Structures
         public bool Add(T item)
         {
             AvlInnerNode<T> node_parent =
-                findNode(item, (n, e) => search(n, e) == null
-                                         || comparer.Compare(search(n, e).Element, e) == 0);
+                findNode(item, (n, e) =>
+                    search(n, e) == null || comparer.Compare(search(n, e).Element, e) == 0);
 
             if(node_parent == null)
             {
@@ -175,10 +175,7 @@ namespace AlgoLib.Structures
             if(node.Left != null && node.Right != null)
             {
                 AvlInnerNode<T> succ = node.Right.Minimum;
-                T temp = succ.Element;
-
-                succ.Element = node.Element;
-                node.Element = temp;
+                (node.Element, succ.Element) = (succ.Element, node.Element);
                 deleteNode(succ);
             }
             else
@@ -432,9 +429,9 @@ namespace AlgoLib.Structures
                 }
             }
 
-            public IAvlNode<TItem> Minimum => Parent == null ? (IAvlNode<TItem>)this : Parent.Minimum;
+            public IAvlNode<TItem> Minimum => Parent == null ? this : Parent.Minimum;
 
-            public IAvlNode<TItem> Maximum => Parent == null ? (IAvlNode<TItem>)this : Parent.Maximum;
+            public IAvlNode<TItem> Maximum => Parent == null ? this : Parent.Maximum;
 
             public AvlHeaderNode() => Parent = null;
         }
@@ -446,8 +443,8 @@ namespace AlgoLib.Structures
 
             public T Current =>
                 currentNode is AvlInnerNode<T> node
-                ? node.Element
-                : throw new InvalidOperationException();
+                    ? node.Element
+                    : throw new InvalidOperationException();
 
             object IEnumerator.Current => Current;
 
