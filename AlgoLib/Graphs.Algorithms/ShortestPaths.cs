@@ -25,8 +25,9 @@ namespace AlgoLib.Graphs.Algorithms
             for(int i = 0; i < graph.VerticesCount - 1; ++i)
                 foreach(Vertex<TVertexId> vertex in graph.Vertices)
                     foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))
-                        distances[edge.Destination] = Math.Min(distances[edge.Destination],
-                                                               distances[vertex] + graph.Properties[edge].Weight);
+                        distances[edge.Destination] =
+                            Math.Min(distances[edge.Destination],
+                                     distances[vertex] + graph.Properties[edge].Weight);
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
                 foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))

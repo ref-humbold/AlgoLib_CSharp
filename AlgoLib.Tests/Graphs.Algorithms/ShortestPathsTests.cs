@@ -259,8 +259,8 @@ namespace AlgoLib.Graphs.Algorithms
 
         #endregion
 
-        private Dictionary<Vertex<int>, double> fromList(IGraph<int, object, Weighted> graph,
-                                                         List<double> distances)
+        private static Dictionary<Vertex<int>, double> fromList(IGraph<int, object, Weighted> graph,
+                                                                List<double> distances)
         {
             var dictionary = new Dictionary<Vertex<int>, double>();
 
@@ -270,8 +270,9 @@ namespace AlgoLib.Graphs.Algorithms
             return dictionary;
         }
 
-        private Dictionary<(Vertex<int>, Vertex<int>), double> fromMatrix(
-                IGraph<int, object, Weighted> graph, double[,] distances)
+        private static Dictionary<(Vertex<int>, Vertex<int>), double> fromMatrix(
+                IGraph<int, object, Weighted> graph,
+                double[,] distances)
         {
             var dictionary = new Dictionary<(Vertex<int>, Vertex<int>), double>();
 

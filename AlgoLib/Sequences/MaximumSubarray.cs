@@ -11,22 +11,22 @@ namespace AlgoLib.Sequences
         /// <returns>Maximum subarray</returns>
         public static List<double> FindMaximumSubarray(this IEnumerable<double> sequence)
         {
-            (double sum, List<double> subarray) actual = (0.0, new List<double>());
-            (double sum, List<double> subarray) maximal = (0.0, new List<double>());
+            (double Sum, List<double> Subarray) actual = (0.0, new List<double>());
+            (double Sum, List<double> Subarray) maximal = (0.0, new List<double>());
 
             foreach(double elem in sequence)
             {
-                if(actual.sum < 0.0)
+                if(actual.Sum < 0.0)
                     actual = (0.0, new List<double>());
 
-                actual = (actual.sum + elem, actual.subarray);
-                actual.subarray.Add(elem);
+                actual = (actual.Sum + elem, actual.Subarray);
+                actual.Subarray.Add(elem);
 
-                if(actual.sum > maximal.sum)
-                    maximal = (actual.sum, new List<double>(actual.subarray));
+                if(actual.Sum > maximal.Sum)
+                    maximal = (actual.Sum, new List<double>(actual.Subarray));
             }
 
-            return maximal.subarray;
+            return maximal.Subarray;
         }
 
         /// <summary>Counts maximal sum from all coherent subarrays using interval tree.</summary>
@@ -63,9 +63,8 @@ namespace AlgoLib.Sequences
                     int indexRight = index + index + 1;
 
                     intervalSums[index] = Math.Max(
-                        Math.Max(intervalSums[indexRight], intervalSums[indexLeft]),
-                        suffixSums[indexRight] + prefixSums[indexLeft]
-                    );
+                            Math.Max(intervalSums[indexRight], intervalSums[indexLeft]),
+                            suffixSums[indexRight] + prefixSums[indexLeft]);
                     prefixSums[index] = Math.Max(prefixSums[indexRight],
                                                  allSums[indexRight] + prefixSums[indexLeft]);
                     suffixSums[index] = Math.Max(suffixSums[indexLeft],

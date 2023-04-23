@@ -33,11 +33,7 @@ namespace AlgoLib.Sequences
                 }
                 else
                 {
-                    int index = searchIndex(sequence,
-                                            comparison,
-                                            subsequence,
-                                            i,
-                                            0,
+                    int index = searchIndex(sequence, comparison, subsequence, i, 0,
                                             subsequence.Count);
 
                     subsequence[index] = i;
