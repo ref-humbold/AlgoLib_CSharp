@@ -9,17 +9,12 @@ pipeline {
     buildDiscarder logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10')
   }
 
-  environment {
-    APP_VERSION = getAppVersion(0, 0)
-  }
-
   stages {
     stage("Preparation") {
       steps {
         script {
           def scmEnv = checkout scm
-          currentBuild.displayName = "${env.APP_VERSION}.${env.BUILD_NUMBER}+${scmEnv.GIT_COMMIT.take(8)}"
-          echo "#INFO: Version is ${env.APP_VERSION}"
+          currentBuild.displayName = "${env.BUILD_NUMBER} ${scmEnv.GIT_COMMIT.take(8)}"
         }
       }
     }
@@ -58,9 +53,4 @@ pipeline {
       cleanWs()
     }
   }
-}
-
-def getAppVersion(int major, int minor) {
-  def date = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("YYMMdd"))
-  return "${major}.${minor}.${date}"
 }
