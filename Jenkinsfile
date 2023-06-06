@@ -23,7 +23,7 @@ pipeline {
     stage("Build") {
       steps {
         echo "#INFO: Building project"
-        powershell "dotnet build AlgoLib_CSharp.sln -c Release --nologo"
+        dotnetBuild(project: "AlgoLib_CSharp.sln", configuration: "Release", nologo: true)
       }
     }
 
@@ -35,7 +35,13 @@ pipeline {
 
       steps {
         echo "#INFO: Running unit tests"
-        powershell "dotnet test AlgoLib_CSharp.sln -c Release --no-build --nologo -- NUnit.TestOutputXml=${env.NUNIT_RESULTS_PATH}"
+        dotnetTest(
+          project: "AlgoLib_CSharp.sln",
+          configuration: "Release",
+          noBuild: true,
+          nologo: true,
+          runSettings: ['NUnit.TestOutputXml': "${env.NUNIT_RESULTS_PATH}"]
+        )
       }
       
       post {
