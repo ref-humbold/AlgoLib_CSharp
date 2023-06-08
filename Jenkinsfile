@@ -3,10 +3,19 @@ pipeline {
     label "local"
   }
 
+  parameters {
+    booleanParam(name: "archive", description: "Should artifacts be archived?", defaultValue: false)
+  }
+
+  environment {
+    CONFIGURATION = "Release"
+    PACKAGE_DIR = "package"
+  }
+
   options {
     skipDefaultCheckout(true)
-    timeout(time: 20, unit: 'MINUTES')
-    buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+    timeout(time: 20, unit: "MINUTES")
+    buildDiscarder(logRotator(numToKeepStr: "10", artifactNumToKeepStr: "10"))
     timestamps()
   }
 
@@ -23,7 +32,18 @@ pipeline {
     stage("Build") {
       steps {
         echo "#INFO: Building project"
-        dotnetBuild(project: "AlgoLib_CSharp.sln", configuration: "Release", nologo: true)
+        dotnetBuild(
+          project: "AlgoLib_CSharp.sln",
+          configuration: "${env.CONFIGURATION}",
+          nologo: true
+        )
+        dotnetPack(
+          project: "AlgoLib/AlgoLib.csproj",
+          configuration: "${env.CONFIGURATION}",
+          outputDirectory: "${env.PACKAGE_DIR}",
+          noRestore: true,
+          nologo: true
+        )
       }
     }
 
@@ -37,10 +57,10 @@ pipeline {
         echo "#INFO: Running unit tests"
         dotnetTest(
           project: "AlgoLib_CSharp.sln",
-          configuration: "Release",
+          configuration: "${env.CONFIGURATION}",
           noBuild: true,
           nologo: true,
-          runSettings: ['NUnit.TestOutputXml': "${env.NUNIT_RESULTS_PATH}"]
+          runSettings: ["NUnit.TestOutputXml": "${env.NUNIT_RESULTS_PATH}"]
         )
       }
       
@@ -52,6 +72,19 @@ pipeline {
             healthScaleFactor: 1.0
           )
         }
+      }
+    }
+
+    stage("Archive artifacts") {
+      when {
+        beforeAgent true
+        expression {
+          params.archive
+        }
+      }
+
+      steps {
+        archiveArtifacts(artifacts: "${env.PACKAGE_DIR}/*.nupkg", onlyIfSuccessful: true)
       }
     }
   }
