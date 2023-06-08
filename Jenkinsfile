@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label "windows"
+    label "local"
   }
 
   options {
@@ -48,7 +48,8 @@ pipeline {
         always {
           nunit(
             testResultsPattern: "${env.NUNIT_RESULTS_DIR}/*.xml",
-            failedTestsFailBuild: true
+            failedTestsFailBuild: true,
+            healthScaleFactor: 1.0
           )
         }
       }
