@@ -7,8 +7,8 @@ namespace AlgoLib.Maths
 {
     public static class Primes
     {
-        private static readonly int attempts = 17;
-        private static readonly Random random = new Random();
+        private const int attempts = 17;
+        private static readonly Random random = new();
 
         /// <summary>Finds prime numbers less than given number.</summary>
         /// <param name="maximum">Maximal number, exclusive.</param>
@@ -21,34 +21,22 @@ namespace AlgoLib.Maths
         /// <returns>Enumerable of prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int minimum, int maximum)
         {
-            if(maximum <= minimum)
+            if(maximum <= minimum || maximum <= 2)
                 return Enumerable.Empty<int>();
 
-            bool[] isPrime = Enumerable.Range(minimum, maximum - minimum)
-                                       .Select(i => i == 2 || i > 2 && i % 2 != 0)
-                                       .ToArray();
-            bool[] basePrimes = Enumerable.Repeat(true, (int)(Math.Sqrt(maximum) / 2))
-                                          .ToArray();
+            int segmentSize = (int)Math.Sqrt(maximum);
+            int[] basePrimes = getBasePrimes(segmentSize).ToArray();
+            var primes = new List<int>();
 
-            for(int i = 0; i < basePrimes.Length; ++i)
-                if(basePrimes[i])
-                {
-                    int basePrime = 2 * i + 3;
-                    int square = basePrime * basePrime;
-                    int begin = minimum < square
-                        ? square - minimum
-                        : (basePrime - minimum % basePrime) % basePrime;
+            if(minimum < segmentSize)
+                primes.AddRange(
+                    Enumerable.Range(2, 1).Concat(basePrimes).Where(p => p >= minimum)
+                );
 
-                    for(int j = (square - 3) / 2; j < basePrimes.Length; j += basePrime)
-                        basePrimes[j] = false;
+            for(int i = Math.Max(minimum, segmentSize); i < maximum; i += segmentSize)
+                primes.AddRange(getSegmentPrimes(i, Math.Min(i + segmentSize, maximum), basePrimes));
 
-                    for(int j = begin; j < isPrime.Length; j += basePrime)
-                        isPrime[j] = false;
-                }
-
-            return isPrime.Select((flag, index) => (flag, index))
-                          .Where(elem => elem.flag)
-                          .Select(elem => minimum + elem.index);
+            return primes;
         }
 
         /// <summary>Checks whether given number is prime using Fermat's prime test.</summary>
@@ -110,6 +98,41 @@ namespace AlgoLib.Maths
             }
 
             return true;
+        }
+
+        private static IEnumerable<int> getBasePrimes(int baseMaximum)
+        {
+            bool[] isPrime = Enumerable.Repeat(true, (baseMaximum - 1) / 2).ToArray();
+
+            for(int i = 0; i < (int)(Math.Sqrt(baseMaximum) / 2); ++i)
+                if(isPrime[i])
+                {
+                    int primeValue = 2 * i + 3;
+
+                    for(int j = primeValue * primeValue; j < baseMaximum; j += 2 * primeValue)
+                        isPrime[(j - 3) / 2] = false;
+                }
+
+            return isPrime.Select((flag, index) => (Flag: flag, Value: 2 * index + 3))
+                              .Where(elem => elem.Flag)
+                              .Select(elem => elem.Value);
+        }
+
+        private static IEnumerable<int> getSegmentPrimes(int segmentStart,
+                                                         int segmentEnd,
+                                                         IEnumerable<int> basePrimes)
+        {
+            bool[] isPrime = Enumerable.Range(segmentStart, segmentEnd - segmentStart)
+                                       .Select(i => i > 2 && i % 2 != 0)
+                                       .ToArray();
+
+            foreach(int p in basePrimes)
+                for(int i = ((segmentStart + p - 1) / p) * p; i < segmentEnd; i += p)
+                    isPrime[i - segmentStart] = false;
+
+            return isPrime.Select((flag, index) => (Flag: flag, Value: segmentStart + index))
+                          .Where(elem => elem.Flag)
+                          .Select(elem => elem.Value);
         }
     }
 }

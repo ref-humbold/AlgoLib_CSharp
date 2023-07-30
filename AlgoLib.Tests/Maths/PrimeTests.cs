@@ -40,7 +40,7 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void FindPrimes_WhenMaxIsComposite_ThenMaxExclusive()
+        public void FindPrimes_WhenMaxIsPrime_ThenMaxExclusive()
         {
             // when
             IEnumerable<int> result = Primes.FindPrimes(67);
@@ -58,6 +58,24 @@ namespace AlgoLib.Maths
         }
 
         [Test]
+        public void FindPrimes_WhenMaxIsThree_ThenSingleElement()
+        {
+            // when
+            IEnumerable<int> result = Primes.FindPrimes(3);
+            // then
+            result.Should().Equal(2);
+        }
+
+        [Test]
+        public void FindPrimes_WhenMaxIsFour_ThenAllPrimes()
+        {
+            // when
+            IEnumerable<int> result = Primes.FindPrimes(4);
+            // then
+            result.Should().Equal(2, 3);
+        }
+
+        [Test]
         public void FindPrimes_WhenRange_ThenPrimesBetween()
         {
             // when
@@ -66,6 +84,34 @@ namespace AlgoLib.Maths
             result.Should().Equal(31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
                                   103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
                                   173, 179, 181, 191, 193, 197, 199);
+        }
+
+        [Test]
+        public void FindPrimes_WhenMinimumIsTwo_ThenTwoIncluded()
+        {
+            // when
+            IEnumerable<int> result = Primes.FindPrimes(2, 30);
+            // then
+            result.Should().Equal(2, 3, 5, 7, 11, 13, 17, 19, 23, 29);
+        }
+
+        [Test]
+        public void FindPrimes_WhenMinimumIsThree_ThenTwoNotIncluded()
+        {
+            // when
+            IEnumerable<int> result = Primes.FindPrimes(3, 30);
+            // then
+            result.Should().Equal(3, 5, 7, 11, 13, 17, 19, 23, 29);
+        }
+
+        [Test]
+        public void FindPrimes_WhenMaxIsFourthPowerOfPrime_ThenAllPrimesBetween()
+        {
+            // when
+            IEnumerable<int> result = Primes.FindPrimes(9, 81);
+            // then
+            result.Should().Equal(11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
+                                  67, 71, 73, 79);
         }
 
         [Test]
