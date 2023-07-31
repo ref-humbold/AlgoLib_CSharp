@@ -100,6 +100,7 @@ namespace AlgoLib.Maths
             return true;
         }
 
+        // Extracts prime numbers between 0 and given maximum value
         private static IEnumerable<int> getBasePrimes(int baseMaximum)
         {
             bool[] isPrime = Enumerable.Repeat(true, (baseMaximum - 1) / 2).ToArray();
@@ -118,19 +119,27 @@ namespace AlgoLib.Maths
                               .Select(elem => elem.Value);
         }
 
+        // Extracts prime numbers from given range using given basic prime numbers
         private static IEnumerable<int> getSegmentPrimes(int segmentStart,
                                                          int segmentEnd,
                                                          IEnumerable<int> basePrimes)
         {
-            bool[] isPrime = Enumerable.Range(segmentStart, segmentEnd - segmentStart)
-                                       .Select(i => i > 2 && i % 2 != 0)
+            int segmentBegin = segmentStart + 1 - segmentStart % 2;
+            bool[] isPrime = Enumerable.Range(segmentBegin, segmentEnd - segmentBegin)
+                                       .Where(i => i % 2 == 1)
+                                       .Select(i => i > 2)
                                        .ToArray();
 
             foreach(int p in basePrimes)
-                for(int i = ((segmentStart + p - 1) / p) * p; i < segmentEnd; i += p)
-                    isPrime[i - segmentStart] = false;
+            {
+                int primeMultiple = (segmentBegin + p - 1) / p * p;
+                int multipleStart = primeMultiple % 2 == 0 ? primeMultiple + p : primeMultiple;
 
-            return isPrime.Select((flag, index) => (Flag: flag, Value: segmentStart + index))
+                for(int i = multipleStart; i < segmentEnd; i += 2 * p)
+                    isPrime[(i - segmentBegin) / 2] = false;
+            }
+
+            return isPrime.Select((flag, index) => (Flag: flag, Value: segmentBegin + 2 * index))
                           .Where(elem => elem.Flag)
                           .Select(elem => elem.Value);
         }
