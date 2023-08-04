@@ -1,5 +1,6 @@
 ﻿// Structure of linear equations system
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Maths
@@ -24,6 +25,10 @@ namespace AlgoLib.Maths
         /// <param name="i">Index of equation</param>
         /// <returns>I-th equation of this system</returns>
         public Equation this[Index i] => equations[i];
+
+        /// <param name="r">Range of indices in equation system</param>
+        /// <returns>Equations of this system specified by given indices range</returns>
+        public IEnumerable<Equation> this[Range r] => equations[r];
 
         public override string ToString() =>
             $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";

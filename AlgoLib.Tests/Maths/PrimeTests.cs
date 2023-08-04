@@ -87,7 +87,7 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void FindPrimes_WhenMinimumIsTwo_ThenTwoIncluded()
+        public void FindPrimes_WhenMinIsTwo_ThenTwoIncluded()
         {
             // when
             IEnumerable<int> result = Primes.FindPrimes(2, 30);
@@ -96,7 +96,7 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void FindPrimes_WhenMinimumIsThree_ThenTwoNotIncluded()
+        public void FindPrimes_WhenMinIsThree_ThenTwoNotIncluded()
         {
             // when
             IEnumerable<int> result = Primes.FindPrimes(3, 30);
