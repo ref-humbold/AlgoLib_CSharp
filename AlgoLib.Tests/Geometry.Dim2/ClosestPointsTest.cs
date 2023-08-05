@@ -9,6 +9,15 @@ namespace AlgoLib.Geometry.Dim2
     public class ClosestPointsTest
     {
         [Test]
+        public void FindClosestPoints_WhenNoPoints_ThenInvalidOperationException()
+        {
+            // when
+            Action action = () => ClosestPoints.FindClosestPoints(Array.Empty<Point2D>());
+            // then
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [Test]
         public void FindClosestPoints_WhenOnePoint_ThenThisPoint()
         {
             // when

@@ -44,7 +44,7 @@ namespace AlgoLib.Sequences
             if(sequence == null)
                 throw new ArgumentNullException(nameof(sequence));
 
-            doMergeSort(sequence, 0, sequence.Count);
+            doMergeSort(sequence, ..);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace AlgoLib.Sequences
             if(sequence == null)
                 throw new ArgumentNullException(nameof(sequence));
 
-            doQuickSort(sequence, 0, sequence.Count);
+            doQuickSort(sequence, ..);
         }
 
         // Move element down inside given heap.
@@ -102,16 +102,19 @@ namespace AlgoLib.Sequences
         }
 
         // Mutably sorts given sequence using a recursive merge-sort algorithm.
-        private static void doMergeSort<T>(List<T> sequence, int indexBegin, int indexEnd)
+        private static void doMergeSort<T>(List<T> sequence, Range range)
             where T : IComparable<T>
         {
+            int indexBegin = range.Start.GetOffset(sequence.Count);
+            int indexEnd = range.End.GetOffset(sequence.Count);
+
             if(indexEnd - indexBegin <= 1)
                 return;
 
             int indexMiddle = (indexBegin + indexEnd) / 2;
 
-            doMergeSort(sequence, indexBegin, indexMiddle);
-            doMergeSort(sequence, indexMiddle, indexEnd);
+            doMergeSort(sequence, indexBegin..indexMiddle);
+            doMergeSort(sequence, indexMiddle..indexEnd);
             merge(sequence, indexBegin, indexMiddle, indexEnd);
         }
 
@@ -146,9 +149,12 @@ namespace AlgoLib.Sequences
         }
 
         // Mutably sorts given sequence using a quick-sort algorithm.
-        private static void doQuickSort<T>(List<T> sequence, int indexBegin, int indexEnd)
+        private static void doQuickSort<T>(List<T> sequence, Range range)
             where T : IComparable<T>
         {
+            int indexBegin = range.Start.GetOffset(sequence.Count);
+            int indexEnd = range.End.GetOffset(sequence.Count);
+
             if(indexEnd - indexBegin <= 1)
                 return;
 
@@ -173,8 +179,8 @@ namespace AlgoLib.Sequences
                     --indexBack;
                 }
 
-            doQuickSort(sequence, indexBegin, indexPivot);
-            doQuickSort(sequence, indexPivot + 1, indexEnd);
+            doQuickSort(sequence, indexBegin..indexPivot);
+            doQuickSort(sequence, (indexPivot + 1)..indexEnd);
         }
 
         // Randomly chooses pivot for quick-sort algorithm.
