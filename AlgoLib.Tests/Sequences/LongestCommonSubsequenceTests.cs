@@ -3,7 +3,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Text
+namespace AlgoLib.Sequences
 {
     [TestFixture]
     public class LongestCommonSubsequenceTests

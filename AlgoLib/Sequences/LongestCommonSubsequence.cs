@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgoLib.Text
+namespace AlgoLib.Sequences
 {
     public static class LongestCommonSubsequence
     {
