@@ -46,7 +46,7 @@ namespace AlgoLib.Geometry.Dim3
                       + (p2.Z - p1.Z) * (p2.Z - p1.Z));
 
         /// <summary>Translates given point by given vector.</summary>
-        /// <param name="p">The point</param>
+        /// <param name="p">The point.</param>
         /// <param name="v">Vector of translation.</param>
         /// <returns>Translated point.</returns>
         public static Point3D Translate(this Point3D p, Vector3D v) =>

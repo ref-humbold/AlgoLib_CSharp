@@ -6,9 +6,9 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class Cutting
     {
-        /// <summary>Finds an edge cut of given graph.</summary>
-        /// <param name="graph">an undirected graph</param>
-        /// <returns>edges in the edge cut</returns>
+        /// <summary>Finds edge cut of given graph.</summary>
+        /// <param name="graph">An undirected graph.</param>
+        /// <returns>Edges in the edge cut.</returns>
         public static IEnumerable<Edge<TVertexId>> FindEdgeCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
@@ -20,9 +20,9 @@ namespace AlgoLib.Graphs.Algorithms
                         .Select(vertex => graph[vertex, strategy.dfsParents[vertex]]);
         }
 
-        /// <summary>Finds a vertex cut of given graph.</summary>
-        /// <param name="graph">an undirected graph</param>
-        /// <returns>vertices in the vertex cut</returns>
+        /// <summary>Finds vertex cut of given graph.</summary>
+        /// <param name="graph">An undirected graph.</param>
+        /// <returns>Vertices in the vertex cut.</returns>
         public static IEnumerable<Vertex<TVertexId>> FindVertexCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

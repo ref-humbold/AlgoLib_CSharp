@@ -7,10 +7,17 @@ namespace AlgoLib.Maths
 {
     public class Equation
     {
-        public double[] Coefficients;
-        public double Free;
+        public double[] Coefficients
+        {
+            get; set;
+        }
 
-        /// <summary>Number of coefficients.</summary>
+        public double Free
+        {
+            get; set;
+        }
+
+        /// <summary>Gets number of coefficients.</summary>
         public int Count => Coefficients.Length;
 
         public Equation(double[] coefficients, double free)
@@ -26,7 +33,7 @@ namespace AlgoLib.Maths
         /// <returns>String representation of this equation.</returns>
         public override string ToString()
         {
-            IEnumerable<string> terms = Coefficients.Select((c, i) => c != 0 ? $"{c} x_{i}" : "")
+            IEnumerable<string> terms = Coefficients.Select((c, i) => c != 0 ? $"{c} x_{i}" : string.Empty)
                                                     .Where(s => !string.IsNullOrEmpty(s));
 
             return $"{string.Join(" + ", terms)} = {Free}";

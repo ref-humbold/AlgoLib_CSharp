@@ -8,8 +8,8 @@ namespace AlgoLib.Graphs.Algorithms
     public static class Matching
     {
         /// <summary>Finds maximal matching in given bipartite graph.</summary>
-        /// <param name="graph">Bipartite graph</param>
-        /// <returns>Dictionary of matched vertices</returns>
+        /// <param name="graph">Bipartite graph.</param>
+        /// <returns>Dictionary of matched vertices.</returns>
         public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty, TEdgeProperty>(
             this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

@@ -15,7 +15,8 @@ namespace AlgoLib.Text
 
         public Trie() => Count = 0;
 
-        public Trie(IEnumerable<string> texts) : this() => AddRange(texts);
+        public Trie(IEnumerable<string> texts)
+            : this() => AddRange(texts);
 
         public void Add(string text)
         {

@@ -19,13 +19,16 @@ namespace AlgoLib.Structures
         /// <summary>Number of elements.</summary>
         public int Count => heap.Count;
 
-        public DoubleHeap() : this(Comparer<T>.Default)
+        public DoubleHeap()
+            : this(Comparer<T>.Default)
         {
         }
 
-        public DoubleHeap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+        public DoubleHeap(IEnumerable<T> enumerable)
+            : this() => PushRange(enumerable);
 
-        public DoubleHeap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
+        public DoubleHeap(Comparison<T> comparison)
+            : this(Comparer<T>.Create(comparison))
         {
         }
 
@@ -39,8 +42,8 @@ namespace AlgoLib.Structures
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Retrieves minimal element from this double heap.</summary>
-        /// <returns>Minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMin() =>
             Count > 0
                 ? heap[indexMin]
@@ -49,8 +52,8 @@ namespace AlgoLib.Structures
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Minimal element if it's present, otherwise the default value</param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMin(out T result)
         {
             if(Count == 0)
@@ -64,8 +67,8 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves maximal element from this double heap.</summary>
-        /// <returns>Maximal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Maximal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMax() =>
             Count switch
             {
@@ -77,8 +80,8 @@ namespace AlgoLib.Structures
         /// <summary>
         /// Retrieves maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Maximal element if it's present, otherwise the default value</param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <param name="result">Maximal element if it's present, otherwise the default value.</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMax(out T result)
         {
             switch(Count)
@@ -141,8 +144,8 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes minimal element from this double heap.</summary>
-        /// <returns>Removed minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Removed minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PopMin()
         {
             T minimal = PeekMin();
@@ -157,9 +160,9 @@ namespace AlgoLib.Structures
         /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed minimal element if it's present, otherwise the default value
+        /// Removed minimal element if it's present, otherwise the default value.
         /// </param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPopMin(out T result)
         {
             bool wasPresent = TryPeekMin(out result);

@@ -7,8 +7,8 @@ namespace AlgoLib.Graphs.Algorithms
     public static class MinimalSpanningTree
     {
         /// <summary>Kruskal algorithm.</summary>
-        /// <param name="graph">Undirected weighted graph</param>
-        /// <returns>Minimal spanning tree</returns>
+        /// <param name="graph">Undirected weighted graph.</param>
+        /// <returns>Minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Kruskal<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
             where TEdgeProperty : IWeighted
@@ -37,9 +37,9 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Prim algorithm.</summary>
-        /// <param name="graph">Undirected weighted graph</param>
-        /// <param name="source">Starting vertex</param>
-        /// <returns>Minimal spanning tree</returns>
+        /// <param name="graph">Undirected weighted graph.</param>
+        /// <param name="source">Starting vertex.</param>
+        /// <returns>Minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Prim<TVertexId, TVertexProperty, TEdgeProperty>(
             IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             Vertex<TVertexId> source)

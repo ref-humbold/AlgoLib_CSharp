@@ -9,7 +9,7 @@ namespace AlgoLib.Graphs
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
-        /// <returns>Directed graph</returns>
+        /// <returns>Directed graph.</returns>
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
     }
 
@@ -21,11 +21,13 @@ namespace AlgoLib.Graphs
 
         public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges.Distinct();
 
-        public UndirectedSimpleGraph() : base()
+        public UndirectedSimpleGraph()
+            : base()
         {
         }
 
-        public UndirectedSimpleGraph(IEnumerable<TVertexId> vertexIds) : base(vertexIds)
+        public UndirectedSimpleGraph(IEnumerable<TVertexId> vertexIds)
+            : base(vertexIds)
         {
         }
 

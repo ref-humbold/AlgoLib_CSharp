@@ -7,9 +7,9 @@ using NUnit.Framework;
 namespace AlgoLib.Text
 {
     [TestFixture]
-    public class TrieTest
+    public class TrieTests
     {
-        private readonly List<string> texts = new List<string> { "abcd", "ab", "xyz" };
+        private readonly List<string> texts = new() { "abcd", "ab", "xyz" };
         private Trie testObject;
 
         [SetUp]

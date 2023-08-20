@@ -31,7 +31,7 @@ namespace AlgoLib.Geometry.Dim3
             Z = z;
         }
 
-        public static Point3D Of(double x, double y, double z) => new Point3D(x, y, z);
+        public static Point3D Of(double x, double y, double z) => new(x, y, z);
 
         public static bool operator ==(Point3D left, Point3D right) => left.Equals(right);
 

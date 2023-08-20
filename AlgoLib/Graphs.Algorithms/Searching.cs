@@ -6,10 +6,10 @@ namespace AlgoLib.Graphs.Algorithms
     public static class Searching
     {
         /// <summary>Breadth-first-search algorithm.</summary>
-        /// <param name="graph">a graph</param>
-        /// <param name="strategy">a searching strategy</param>
-        /// <param name="roots">starting vertices</param>
-        /// <returns>enumerable of visited vertices</returns>
+        /// <param name="graph">a graph.</param>
+        /// <param name="strategy">a searching strategy.</param>
+        /// <param name="roots">starting vertices.</param>
+        /// <returns>enumerable of visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IBfsStrategy<TVertexId> strategy,
@@ -47,10 +47,10 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Iterative deph-first-search algorithm.</summary>
-        /// <param name="graph">a graph</param>
-        /// <param name="strategy">a searching strategy</param>
-        /// <param name="roots">starting vertices</param>
-        /// <returns>enumerable of visited vertices</returns>
+        /// <param name="graph">a graph.</param>
+        /// <param name="strategy">a searching strategy.</param>
+        /// <param name="roots">starting vertices.</param>
+        /// <returns>enumerable of visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> DfsIterative<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IDfsStrategy<TVertexId> strategy,
@@ -96,10 +96,10 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Recursive deph-first-search algorithm.</summary>
-        /// <param name="graph">a graph</param>
-        /// <param name="strategy">a searching strategy</param>
-        /// <param name="roots">starting vertices</param>
-        /// <returns>enumerable of visited vertices</returns>
+        /// <param name="graph">a graph.</param>
+        /// <param name="strategy">a searching strategy.</param>
+        /// <param name="roots">starting vertices.</param>
+        /// <returns>enumerable of visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> DfsRecursive<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, IDfsStrategy<TVertexId> strategy,
             IEnumerable<Vertex<TVertexId>> roots)
@@ -143,7 +143,7 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class DfsRecursiveState<TVertexId>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, int> reached = new Dictionary<Vertex<TVertexId>, int>();
+            internal readonly Dictionary<Vertex<TVertexId>, int> reached = new();
             internal Vertex<TVertexId> vertex;
             internal int iteration = 1;
 

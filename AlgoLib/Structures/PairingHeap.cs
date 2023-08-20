@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace AlgoLib.Structures
 {
-    public class PairingHeap<T> : IEnumerable<T> where T : IComparable<T>
+    public class PairingHeap<T> : IEnumerable<T>
+        where T : IComparable<T>
     {
         private HeapNode heap;
 
@@ -21,7 +22,8 @@ namespace AlgoLib.Structures
             Count = 0;
         }
 
-        public PairingHeap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+        public PairingHeap(IEnumerable<T> enumerable)
+            : this() => PushRange(enumerable);
 
         /// <summary>Removes all elements from this pairing heap.</summary>
         public void Clear()

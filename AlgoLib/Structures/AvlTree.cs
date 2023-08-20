@@ -26,7 +26,8 @@ namespace AlgoLib.Structures
 
         public AvlTree(IComparer<T> comparer = null) => this.comparer = comparer ?? Comparer<T>.Default;
 
-        public AvlTree(IEnumerable<T> enumerable, IComparer<T> comparer = null) : this(comparer)
+        public AvlTree(IEnumerable<T> enumerable, IComparer<T> comparer = null)
+            : this(comparer)
         {
             foreach(T item in enumerable)
                 _ = Add(item);

@@ -66,8 +66,8 @@ namespace AlgoLib.Graphs
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
             graph.AsDirected();
 
-        /// <param name="groupNumber">Group number</param>
-        /// <returns>Vertices that belong to the group</returns>
+        /// <param name="groupNumber">Group number.</param>
+        /// <returns>Vertices that belong to the group.</returns>
         public IEnumerable<Vertex<TVertexId>> GetVerticesFromGroup(int groupNumber)
         {
             validateGroup(groupNumber);
@@ -77,22 +77,22 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Adds new vertex with given property to given group in this graph.</summary>
-        /// <param name="groupNumber">Group number</param>
-        /// <param name="vertexId">Identifier of new vertex</param>
-        /// <param name="property">Vertex property</param>
-        /// <returns>New vertex</returns>
-        /// <exception cref="ArgumentException">If vertex already exists</exception>
+        /// <param name="groupNumber">Group number.</param>
+        /// <param name="vertexId">Identifier of new vertex.</param>
+        /// <param name="property">Vertex property.</param>
+        /// <returns>New vertex.</returns>
+        /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(int groupNumber,
                                            TVertexId vertexId,
                                            TVertexProperty property = default) =>
             AddVertex(groupNumber, new Vertex<TVertexId>(vertexId), property);
 
         /// <summary>Adds new vertex with given property to given group in this graph.</summary>
-        /// <param name="groupNumber">Group number</param>
-        /// <param name="vertex">New vertex</param>
-        /// <param name="property">Vertex property</param>
-        /// <returns>New vertex</returns>
-        /// <exception cref="ArgumentException">If vertex already exists</exception>
+        /// <param name="groupNumber">Group number.</param>
+        /// <param name="vertex">New vertex.</param>
+        /// <param name="property">Vertex property.</param>
+        /// <returns>New vertex.</returns>
+        /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(int groupNumber,
                                            Vertex<TVertexId> vertex,
                                            TVertexProperty property = default)
@@ -106,23 +106,23 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="source">Source vertex</param>
-        /// <param name="destination">Destination vertex</param>
-        /// <param name="property">Edge property</param>
-        /// <returns>New edge</returns>
-        /// <exception cref="ArgumentException">If edge already exists</exception>
-        /// <exception cref="GraphPartitionException">If vertices belong to same group</exception>
+        /// <param name="source">Source vertex.</param>
+        /// <param name="destination">Destination vertex.</param>
+        /// <param name="property">Edge property.</param>
+        /// <returns>New edge.</returns>
+        /// <exception cref="ArgumentException">If edge already exists.</exception>
+        /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
         public Edge<TVertexId> AddEdgeBetween(Vertex<TVertexId> source,
                                               Vertex<TVertexId> destination,
                                               TEdgeProperty property = default) =>
             AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge with given property to this graph.</summary>
-        /// <param name="edge">New edge</param>
-        /// <param name="property">Edge property</param>
-        /// <returns>New edge</returns>
-        /// <exception cref="ArgumentException">If edge already exists</exception>
-        /// <exception cref="GraphPartitionException">If vertices belong to same group</exception>
+        /// <param name="edge">New edge.</param>
+        /// <param name="property">Edge property.</param>
+        /// <returns>New edge.</returns>
+        /// <exception cref="ArgumentException">If edge already exists.</exception>
+        /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
         public Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default) =>
             areInSameGroup(edge.Source, edge.Destination)
                 ? throw new GraphPartitionException("Cannot create an edge between vertices in the same group")
@@ -147,7 +147,8 @@ namespace AlgoLib.Graphs
     [Serializable]
     public class GraphPartitionException : Exception
     {
-        public GraphPartitionException(string message) : base(message)
+        public GraphPartitionException(string message)
+            : base(message)
         {
         }
     }

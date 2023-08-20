@@ -11,7 +11,7 @@ namespace AlgoLib.Graphs
         /// <summary>Reverses directions of edges in this graph.</summary>
         void Reverse();
 
-        /// <returns>Copy of the graph with reversed directions of edges</returns>
+        /// <returns>Copy of the graph with reversed directions of edges.</returns>
         IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy();
     }
 
@@ -23,11 +23,13 @@ namespace AlgoLib.Graphs
 
         public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges;
 
-        public DirectedSimpleGraph() : base()
+        public DirectedSimpleGraph()
+            : base()
         {
         }
 
-        public DirectedSimpleGraph(IEnumerable<TVertexId> vertexIds) : base(vertexIds)
+        public DirectedSimpleGraph(IEnumerable<TVertexId> vertexIds)
+            : base(vertexIds)
         {
         }
 

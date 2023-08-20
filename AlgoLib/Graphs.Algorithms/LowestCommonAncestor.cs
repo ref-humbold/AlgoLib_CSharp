@@ -35,10 +35,10 @@ namespace AlgoLib.Graphs.Algorithms
             return find(vertex1, vertex2);
         }
 
-        /// <summary>Finds a lowest common ancestor of two vertices in a rooted tree.</summary>
-        /// <param name="vertex1">first vertex</param>
-        /// <param name="vertex2">second vertex</param>
-        /// <returns>lowest common ancestor of given vertices</returns>
+        /// <summary>Finds lowest common ancestor of two vertices in a rooted tree.</summary>
+        /// <param name="vertex1">first vertex.</param>
+        /// <param name="vertex2">second vertex.</param>
+        /// <returns>lowest common ancestor of given vertices.</returns>
         private Vertex<TVertexId> find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(isOffspring(vertex1, vertex2))

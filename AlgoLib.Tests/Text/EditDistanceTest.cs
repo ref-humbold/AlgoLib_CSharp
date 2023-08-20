@@ -29,7 +29,7 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double insertionCost = 2.0;
             // when
-            double result = "".CountLevenshtein(text, insertionCost, 1.0, 1.0);
+            double result = string.Empty.CountLevenshtein(text, insertionCost, 1.0, 1.0);
             // then
             result.Should().BeApproximately(text.Length * insertionCost, precision);
         }
@@ -89,7 +89,7 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double deletionCost = 2.0;
             // when
-            double result = text.CountLcs("", 1.0, deletionCost);
+            double result = text.CountLcs(string.Empty, 1.0, deletionCost);
             // then
             result.Should().BeApproximately(text.Length * deletionCost, precision);
         }
@@ -121,7 +121,7 @@ namespace AlgoLib.Text
         public void CountHamming_WhenEmptyText_ThenZero()
         {
             // given
-            string text = "";
+            string text = string.Empty;
             // when
             double result = text.CountHamming(text);
             // then

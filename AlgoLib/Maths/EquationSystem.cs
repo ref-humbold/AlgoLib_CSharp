@@ -22,18 +22,19 @@ namespace AlgoLib.Maths
                                                 + $" expected to have {equations.Length}");
         }
 
-        /// <param name="i">Index of equation</param>
-        /// <returns>I-th equation of this system</returns>
+        /// <param name="i">Index of equation.</param>
+        /// <returns>I-th equation of this system.</returns>
         public Equation this[Index i] => equations[i];
 
-        /// <param name="r">Range of indices in equation system</param>
-        /// <returns>Equations of this system specified by given indices range</returns>
+        /// <param name="r">Range of indices in equation system.</param>
+        /// <returns>Equations of this system specified by given indices range.</returns>
         public IEnumerable<Equation> this[Range r] => equations[r];
 
         public override string ToString() =>
             $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
 
         /// <summary>Solves this equation system.</summary>
+        /// <returns>The solution.</returns>
         /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions.</exception>
         /// <exception cref="NoSolutionException">If there is no solution.</exception>
         public double[] Solve()
@@ -108,14 +109,16 @@ namespace AlgoLib.Maths
 
     public class NoSolutionException : Exception
     {
-        public NoSolutionException() : base()
+        public NoSolutionException()
+            : base()
         {
         }
     }
 
     public class InfiniteSolutionsException : Exception
     {
-        public InfiniteSolutionsException() : base()
+        public InfiniteSolutionsException()
+            : base()
         {
         }
     }

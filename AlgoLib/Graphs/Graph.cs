@@ -12,81 +12,81 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Gets the number of vertices in this graph.</summary>
-        /// <value>Number of vertices</value>
+        /// <value>Number of vertices.</value>
         int VerticesCount
         {
             get;
         }
 
         /// <summary>Gets the number of edges in this graph.</summary>
-        /// <value>Number of edges</value>
+        /// <value>Number of edges.</value>
         int EdgesCount
         {
             get;
         }
 
         /// <summary>Gets all vertices in this graph.</summary>
-        /// <value>Enumerable of all vertices</value>
+        /// <value>Enumerable of all vertices.</value>
         IEnumerable<Vertex<TVertexId>> Vertices
         {
             get;
         }
 
         /// <summary>Gets all edges in this graph.</summary>
-        /// <value>Enumerable of all edges</value>
+        /// <value>Enumerable of all edges.</value>
         IEnumerable<Edge<TVertexId>> Edges
         {
             get;
         }
 
         /// <summary>Gets the vertex from this graph with given identifier.</summary>
-        /// <value>Vertex with the identifier</value>
+        /// <value>Vertex with the identifier.</value>
         /// <param name="vertexId">Vertex identifier.</param>
-        /// <exception cref="KeyNotFoundException">If no such vertex</exception>
+        /// <exception cref="KeyNotFoundException">If no such vertex.</exception>
         Vertex<TVertexId> this[TVertexId vertexId]
         {
             get;
         }
 
         /// <summary>Gets the edge between given vertices.</summary>
-        /// <value>Edge between the vertices</value>
-        /// <param name="sourceId">Source vertex identifier</param>
-        /// <param name="destinationId">Destination vertex identifier</param>
-        /// <exception cref="KeyNotFoundException">If no such edge</exception>
+        /// <value>Edge between the vertices.</value>
+        /// <param name="sourceId">Source vertex identifier.</param>
+        /// <param name="destinationId">Destination vertex identifier.</param>
+        /// <exception cref="KeyNotFoundException">If no such edge.</exception>
         Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId]
         {
             get;
         }
 
         /// <summary>Gets the edge between given vertices.</summary>
-        /// <value>Edge between the vertices</value>
-        /// <param name="source">Source vertex</param>
-        /// <param name="destination">Destination vertex</param>
-        /// <exception cref="KeyNotFoundException">If no such edge</exception>
+        /// <value>Edge between the vertices.</value>
+        /// <param name="source">Source vertex.</param>
+        /// <param name="destination">Destination vertex.</param>
+        /// <exception cref="KeyNotFoundException">If no such edge.</exception>
         Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <returns>Enumerable of neighbouring vertices</returns>
+        /// <param name="vertex">Vertex from this graph.</param>
+        /// <returns>Enumerable of neighbouring vertices.</returns>
         IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <returns>Enumerable of edges adjacent to the vertex</returns>
+        /// <param name="vertex">Vertex from this graph.</param>
+        /// <returns>Enumerable of edges adjacent to the vertex.</returns>
         IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <returns>Output degree of the vertex</returns>
+        /// <param name="vertex">Vertex from this graph.</param>
+        /// <returns>Output degree of the vertex.</returns>
         int GetOutputDegree(Vertex<TVertexId> vertex);
 
-        /// <param name="vertex">Vertex from this graph</param>
-        /// <returns>Input degree of the vertex</returns>
+        /// <param name="vertex">Vertex from this graph.</param>
+        /// <returns>Input degree of the vertex.</returns>
         int GetInputDegree(Vertex<TVertexId> vertex);
 
         public interface IGraphProperties
         {
             /// <summary>Gets or sets property for given vertex.</summary>
-            /// <value>Property of the vertex</value>
-            /// <param name="vertex">Vertex from this graph</param>
+            /// <value>Property of the vertex.</value>
+            /// <param name="vertex">Vertex from this graph.</param>
             TVertexProperty this[Vertex<TVertexId> vertex]
             {
                 get;
@@ -94,8 +94,8 @@ namespace AlgoLib.Graphs
             }
 
             /// <summary>Gets or sets property for given edge.</summary>
-            /// <value>Property of the edge</value>
-            /// <param name="edge">Edge from this graph</param>
+            /// <value>Property of the edge.</value>
+            /// <param name="edge">Edge from this graph.</param>
             TEdgeProperty this[Edge<TVertexId> edge]
             {
                 get;
@@ -130,9 +130,9 @@ namespace AlgoLib.Graphs
             Destination = destination;
         }
 
-        /// <param name="vertex">Vertex adjacent to this edge</param>
-        /// <returns>Neighbour of the vertex along this edge</returns>
-        /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge</exception>
+        /// <param name="vertex">Vertex adjacent to this edge.</param>
+        /// <returns>Neighbour of the vertex along this edge.</returns>
+        /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge.</exception>
         public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex)
         {
             if(Source.Equals(vertex))
@@ -144,7 +144,7 @@ namespace AlgoLib.Graphs
             throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
         }
 
-        /// <returns>Edge with reversed direction</returns>
+        /// <returns>Edge with reversed direction.</returns>
         public Edge<TVertexId> Reversed() => new(Destination, Source);
 
         public bool Equals(Edge<TVertexId> other) =>
