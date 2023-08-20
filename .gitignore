@@ -1,16 +1,5 @@
-# [ CSharp ]
-# CSharp output
 bin/
 obj/
-
-# Test output
-TestResults/
-
-# Doxygen output
 doc/
 
-# Visual Studio
 .vs
-
-# NuGet
-packages/

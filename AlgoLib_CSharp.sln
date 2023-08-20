@@ -7,10 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoLib", "AlgoLib\AlgoLib.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8ABA41C8-E41E-46B2-821B-5F61C2B3A147}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Jenkinsfile = Jenkinsfile
 		LICENSE = LICENSE
 		README.md = README.md
+		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoLib.Tests", "AlgoLib.Tests\AlgoLib.Tests.csproj", "{18A7AAAB-A26A-439E-B963-501091BD4440}"
