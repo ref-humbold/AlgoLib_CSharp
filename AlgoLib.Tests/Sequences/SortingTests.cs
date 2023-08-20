@@ -9,38 +9,6 @@ namespace AlgoLib.Sequences
     [TestFixture]
     public class SortingTests
     {
-        private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
-        {
-            public int First
-            {
-                get; set;
-            }
-
-            public int Second
-            {
-                get; set;
-            }
-
-            public IntPair(int first, int second)
-            {
-                First = first;
-                Second = second;
-            }
-
-            public int CompareTo(object obj) =>
-                obj is IntPair pair ? CompareTo(pair) : throw new ArgumentException();
-
-            public int CompareTo(IntPair other) => First.CompareTo(other.First);
-
-            public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
-
-            public bool Equals(IntPair other) => First == other.First && Second == other.Second;
-
-            public override int GetHashCode() => (First, Second).GetHashCode();
-
-            public override string ToString() => $"IntPair({First}, {Second})";
-        }
-
         #region HeapSort
 
         [Test]
@@ -209,5 +177,39 @@ namespace AlgoLib.Sequences
         }
 
         #endregion
+
+        private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
+        {
+            public int First
+            {
+                get; set;
+            }
+
+            public int Second
+            {
+                get; set;
+            }
+
+            public IntPair(int first, int second)
+            {
+                First = first;
+                Second = second;
+            }
+
+            public int CompareTo(object obj) =>
+                obj is IntPair pair
+                    ? CompareTo(pair)
+                    : throw new ArgumentException("Compared object is not of type IntPair", nameof(obj));
+
+            public int CompareTo(IntPair other) => First.CompareTo(other.First);
+
+            public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
+
+            public bool Equals(IntPair other) => First == other.First && Second == other.Second;
+
+            public override int GetHashCode() => (First, Second).GetHashCode();
+
+            public override string ToString() => $"IntPair({First}, {Second})";
+        }
     }
 }

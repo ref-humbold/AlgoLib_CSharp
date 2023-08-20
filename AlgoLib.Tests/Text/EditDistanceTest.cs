@@ -41,7 +41,7 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double deletionCost = 2.0;
             // when
-            double result = text.CountLevenshtein("", 1.0, deletionCost, 1.0);
+            double result = text.CountLevenshtein(string.Empty, 1.0, deletionCost, 1.0);
             // then
             result.Should().BeApproximately(text.Length * deletionCost, precision);
         }
@@ -77,7 +77,7 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double insertionCost = 2.0;
             // when
-            double result = "".CountLcs(text, insertionCost, 1.0);
+            double result = string.Empty.CountLcs(text, insertionCost, 1.0);
             // then
             result.Should().BeApproximately(text.Length * insertionCost, precision);
         }

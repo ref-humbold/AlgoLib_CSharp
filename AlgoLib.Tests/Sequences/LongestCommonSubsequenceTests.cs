@@ -12,7 +12,7 @@ namespace AlgoLib.Sequences
         public void CountLcsLength_WhenEmptyText_ThenZero()
         {
             // when
-            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "");
+            int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", string.Empty);
             // then
             result.Should().Be(0);
         }
