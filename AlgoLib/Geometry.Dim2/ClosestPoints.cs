@@ -10,7 +10,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <summary>Searches for pair of closest points among given points.</summary>
         /// <param name="points">Enumerable of points.</param>
         /// <returns>Pair of the closest points.</returns>
-        /// <exception cref="InvalidOperationException">If no points specified</exception>
+        /// <exception cref="InvalidOperationException">If no points specified.</exception>
         public static (Point2D, Point2D) FindClosestPoints(IEnumerable<Point2D> points)
         {
             var pointsList = points.ToList();

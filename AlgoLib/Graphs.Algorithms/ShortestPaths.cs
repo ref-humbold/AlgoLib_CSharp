@@ -11,9 +11,13 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">The directed weighted graph.</param>
         /// <param name="source">The source vertex.</param>
         /// <returns>Dictionary of distances for vertices.</returns>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <exception cref="InvalidOperationException">If graph contains a negative cycle.</exception>
         public static Dictionary<Vertex<TVertexId>, double> BellmanFord<TVertexId, TVertexProperty, TEdgeProperty>(
-            IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
+            this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+            Vertex<TVertexId> source)
             where TEdgeProperty : IWeighted
         {
             var distances = new Dictionary<Vertex<TVertexId>, double>(
@@ -42,9 +46,12 @@ namespace AlgoLib.Graphs.Algorithms
         /// <param name="graph">The graph with weighted edges (weights are not negative).</param>
         /// <param name="source">Source vertex.</param>
         /// <returns>Dictionary of vertices' distances.</returns>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <exception cref="InvalidOperationException">If graph contains a negative edge.</exception>
         public static Dictionary<Vertex<TVertexId>, double> Dijkstra<TVertexId, TVertexProperty, TEdgeProperty>(
-            IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
+            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)
             where TEdgeProperty : IWeighted
         {
             foreach(Edge<TVertexId> edge in graph.Edges)
@@ -89,10 +96,13 @@ namespace AlgoLib.Graphs.Algorithms
 
         /// <summary>Floyd-Warshall algorithm.</summary>
         /// <param name="graph">The directed weighted graph.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>Dictionary of distances for each pair of vertices.</returns>
         public static Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>
             FloydWarshall<TVertexId, TVertexProperty, TEdgeProperty>(
-                IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+                this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
                 where TEdgeProperty : IWeighted
         {
             var distances = new Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>();

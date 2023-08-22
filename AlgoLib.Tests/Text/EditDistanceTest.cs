@@ -7,7 +7,7 @@ namespace AlgoLib.Text
     [TestFixture]
     public class EditDistanceTest
     {
-        private static readonly double precision = 1e-6;
+        private static readonly double Precision = 1e-6;
 
         #region CountLevenshtein
 
@@ -29,9 +29,9 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double insertionCost = 2.0;
             // when
-            double result = "".CountLevenshtein(text, insertionCost, 1.0, 1.0);
+            double result = string.Empty.CountLevenshtein(text, insertionCost, 1.0, 1.0);
             // then
-            result.Should().BeApproximately(text.Length * insertionCost, precision);
+            result.Should().BeApproximately(text.Length * insertionCost, Precision);
         }
 
         [Test]
@@ -41,9 +41,9 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double deletionCost = 2.0;
             // when
-            double result = text.CountLevenshtein("", 1.0, deletionCost, 1.0);
+            double result = text.CountLevenshtein(string.Empty, 1.0, deletionCost, 1.0);
             // then
-            result.Should().BeApproximately(text.Length * deletionCost, precision);
+            result.Should().BeApproximately(text.Length * deletionCost, Precision);
         }
 
         [Test]
@@ -77,9 +77,9 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double insertionCost = 2.0;
             // when
-            double result = "".CountLcs(text, insertionCost, 1.0);
+            double result = string.Empty.CountLcs(text, insertionCost, 1.0);
             // then
-            result.Should().BeApproximately(text.Length * insertionCost, precision);
+            result.Should().BeApproximately(text.Length * insertionCost, Precision);
         }
 
         [Test]
@@ -89,9 +89,9 @@ namespace AlgoLib.Text
             string text = "qwertyuiop";
             double deletionCost = 2.0;
             // when
-            double result = text.CountLcs("", 1.0, deletionCost);
+            double result = text.CountLcs(string.Empty, 1.0, deletionCost);
             // then
-            result.Should().BeApproximately(text.Length * deletionCost, precision);
+            result.Should().BeApproximately(text.Length * deletionCost, Precision);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace AlgoLib.Text
         public void CountHamming_WhenEmptyText_ThenZero()
         {
             // given
-            string text = "";
+            string text = string.Empty;
             // when
             double result = text.CountHamming(text);
             // then

@@ -152,7 +152,7 @@ namespace AlgoLib.Maths
         /// <param name="factor1">First factor.</param>
         /// <param name="factor2">Second factor.</param>
         /// <param name="modulo">The modulo.</param>
-        /// <returns>Multiplication result with modulo taken</returns>
+        /// <returns>Multiplication result with modulo taken.</returns>
         public static long Multiply(long factor1, long factor2, long modulo)
         {
             long result = 0;

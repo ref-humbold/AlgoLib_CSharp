@@ -4,16 +4,13 @@ using System.Collections.Generic;
 
 namespace AlgoLib.Structures
 {
-    public class PairingHeap<T> : IEnumerable<T> where T : IComparable<T>
+    public class PairingHeap<T> : IEnumerable<T>
+        where T : IComparable<T>
     {
         private HeapNode heap;
 
-        /// <summary>Number of elements.</summary>
-        public int Count
-        {
-            get;
-            private set;
-        }
+        /// <summary>Gets number of elements.</summary>
+        public int Count { get; private set; }
 
         public PairingHeap()
         {
@@ -21,7 +18,8 @@ namespace AlgoLib.Structures
             Count = 0;
         }
 
-        public PairingHeap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+        public PairingHeap(IEnumerable<T> enumerable)
+            : this() => PushRange(enumerable);
 
         /// <summary>Removes all elements from this pairing heap.</summary>
         public void Clear()
@@ -122,14 +120,16 @@ namespace AlgoLib.Structures
 
         private class HeapNodeList
         {
-            public HeapNode Node;
-            public HeapNodeList Next;
+            public HeapNode Node { get; set; }
+
+            public HeapNodeList Next { get; set; }
         }
 
         private class HeapNode
         {
-            public T Element;
-            public HeapNodeList Children;
+            public T Element { get; set; }
+
+            public HeapNodeList Children { get; set; }
 
             public HeapNode Add(T item) =>
                 Element.CompareTo(item) <= 0
@@ -157,7 +157,7 @@ namespace AlgoLib.Structures
                         ? new HeapNode
                         {
                             Element = Element,
-                            Children = new HeapNodeList { Node = node, Next = this.Children }
+                            Children = new HeapNodeList { Node = node, Next = Children }
                         }
                         : new HeapNode
                         {

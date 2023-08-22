@@ -6,9 +6,9 @@ using NUnit.Framework;
 namespace AlgoLib.Geometry.Dim2
 {
     [TestFixture]
-    public class Vector3DTests
+    public class Vector2DTests
     {
-        private static readonly double offset = IGeometryObject.Epsilon;
+        private static readonly double Offset = IGeometryObject.Epsilon;
 
         [Test]
         public void Coordinates_ThenArray()
@@ -25,7 +25,7 @@ namespace AlgoLib.Geometry.Dim2
             // when
             double result = Vector2D.Of(8.0, -6.0).Length;
             // then
-            result.Should().BeApproximately(10.0, offset);
+            result.Should().BeApproximately(10.0, Offset);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace AlgoLib.Geometry.Dim2
             // when
             double result = Vector2D.Dot(Vector2D.Of(1.5, -4.0), Vector2D.Of(9.0, -2.5));
             // then
-            result.Should().BeApproximately(23.5, offset);
+            result.Should().BeApproximately(23.5, Offset);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace AlgoLib.Geometry.Dim2
             // when
             double result = Vector2D.Dot(Vector2D.Of(1.0, 0.0), Vector2D.Of(0.0, -2.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace AlgoLib.Geometry.Dim2
             // when
             double result = Vector2D.Area(Vector2D.Of(1.5, -4.0), Vector2D.Of(9.0, -2.5));
             // then
-            result.Should().BeApproximately(32.25, offset);
+            result.Should().BeApproximately(32.25, Offset);
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace AlgoLib.Geometry.Dim2
             // when
             double result = Vector2D.Area(Vector2D.Of(3.0, 3.0), Vector2D.Of(-8.0, -8.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]

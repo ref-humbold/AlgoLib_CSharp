@@ -6,26 +6,26 @@ namespace AlgoLib.Structures
 {
     public class DoubleHeap<T> : IEnumerable<T>
     {
-        private static readonly int indexMin = 0;
-        private static readonly int indexMax = 1;
+        private static readonly int IndexMin = 0;
+        private static readonly int IndexMax = 1;
         private List<T> heap = new();
 
-        /// <summary>The comparer.</summary>
-        public IComparer<T> Comparer
-        {
-            get;
-        }
+        /// <summary>Gets comparer.</summary>
+        public IComparer<T> Comparer { get; }
 
-        /// <summary>Number of elements.</summary>
+        /// <summary>Gets number of elements.</summary>
         public int Count => heap.Count;
 
-        public DoubleHeap() : this(Comparer<T>.Default)
+        public DoubleHeap()
+            : this(Comparer<T>.Default)
         {
         }
 
-        public DoubleHeap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+        public DoubleHeap(IEnumerable<T> enumerable)
+            : this() => PushRange(enumerable);
 
-        public DoubleHeap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
+        public DoubleHeap(Comparison<T> comparison)
+            : this(Comparer<T>.Create(comparison))
         {
         }
 
@@ -39,18 +39,18 @@ namespace AlgoLib.Structures
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Retrieves minimal element from this double heap.</summary>
-        /// <returns>Minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMin() =>
             Count > 0
-                ? heap[indexMin]
+                ? heap[IndexMin]
                 : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Minimal element if it's present, otherwise the default value</param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMin(out T result)
         {
             if(Count == 0)
@@ -59,26 +59,26 @@ namespace AlgoLib.Structures
                 return false;
             }
 
-            result = heap[indexMin];
+            result = heap[IndexMin];
             return true;
         }
 
         /// <summary>Retrieves maximal element from this double heap.</summary>
-        /// <returns>Maximal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Maximal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMax() =>
             Count switch
             {
                 0 => throw new InvalidOperationException("The double heap is empty"),
-                1 => heap[indexMin],
-                _ => heap[indexMax]
+                1 => heap[IndexMin],
+                _ => heap[IndexMax]
             };
 
         /// <summary>
         /// Retrieves maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Maximal element if it's present, otherwise the default value</param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <param name="result">Maximal element if it's present, otherwise the default value.</param>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMax(out T result)
         {
             switch(Count)
@@ -88,11 +88,11 @@ namespace AlgoLib.Structures
                     return false;
 
                 case 1:
-                    result = heap[indexMin];
+                    result = heap[IndexMin];
                     return true;
 
                 default:
-                    result = heap[indexMax];
+                    result = heap[IndexMax];
                     return true;
             }
         }
@@ -141,15 +141,15 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes minimal element from this double heap.</summary>
-        /// <returns>Removed minimal element</returns>
-        /// <exception cref="InvalidOperationException">If the double heap is empty</exception>
+        /// <returns>Removed minimal element.</returns>
+        /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PopMin()
         {
             T minimal = PeekMin();
 
-            heap[indexMin] = heap[^1];
+            heap[IndexMin] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
-            moveToMax(indexMin);
+            moveToMax(IndexMin);
             return minimal;
         }
 
@@ -157,18 +157,18 @@ namespace AlgoLib.Structures
         /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed minimal element if it's present, otherwise the default value
+        /// Removed minimal element if it's present, otherwise the default value.
         /// </param>
-        /// <returns><c>true</c> if the element exists, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPopMin(out T result)
         {
             bool wasPresent = TryPeekMin(out result);
 
             if(wasPresent)
             {
-                heap[indexMin] = heap[^1];
+                heap[IndexMin] = heap[^1];
                 heap.RemoveAt(heap.Count - 1);
-                moveToMax(indexMin);
+                moveToMax(IndexMin);
             }
 
             return wasPresent;
@@ -184,9 +184,9 @@ namespace AlgoLib.Structures
 
             T maximal = PeekMax();
 
-            heap[indexMax] = heap[^1];
+            heap[IndexMax] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
-            moveToMin(indexMax);
+            moveToMin(IndexMax);
             return maximal;
         }
 
@@ -206,9 +206,9 @@ namespace AlgoLib.Structures
 
             if(wasPresent)
             {
-                heap[indexMax] = heap[^1];
+                heap[IndexMax] = heap[^1];
                 heap.RemoveAt(heap.Count - 1);
-                moveToMin(indexMax);
+                moveToMin(IndexMax);
             }
 
             return wasPresent;
@@ -219,7 +219,7 @@ namespace AlgoLib.Structures
         // Moves element from given index towards minimum.
         private void moveToMin(int index)
         {
-            if(index == indexMin)
+            if(index == IndexMin)
                 return;
 
             if(index % 2 == 0)
@@ -255,7 +255,7 @@ namespace AlgoLib.Structures
         // Moves element from given index towards maximum.
         private void moveToMax(int index)
         {
-            if(index == indexMax)
+            if(index == IndexMax)
                 return;
 
             if(index % 2 == 1)
@@ -323,8 +323,8 @@ namespace AlgoLib.Structures
                 var indices = new Queue<int>();
                 var minimalList = new List<T>();
 
-                if(indexMin < heap.Count)
-                    indices.Enqueue(indexMin);
+                if(heap.Count > IndexMin)
+                    indices.Enqueue(IndexMin);
 
                 while(indices.Count > 0)
                 {
@@ -347,8 +347,8 @@ namespace AlgoLib.Structures
                 var indices = new Queue<int>();
                 var maximalList = new List<T>();
 
-                if(indexMax < heap.Count)
-                    indices.Enqueue(indexMax);
+                if(heap.Count > IndexMax)
+                    indices.Enqueue(IndexMax);
 
                 while(indices.Count > 0)
                 {

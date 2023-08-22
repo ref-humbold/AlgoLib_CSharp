@@ -26,7 +26,7 @@ namespace AlgoLib.Graphs.Algorithms
             var order = new List<Vertex<TVertexId>>();
             var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
             var vertexHeap = new Heap<Vertex<TVertexId>>(
-                    ((vertex1, vertex2) => vertexIdComparer.Compare(vertex1.Id, vertex2.Id)));
+                    (vertex1, vertex2) => vertexIdComparer.Compare(vertex1.Id, vertex2.Id));
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
             {
@@ -68,12 +68,12 @@ namespace AlgoLib.Graphs.Algorithms
             var strategy = new TopologicalStrategy<TVertexId>();
 
             graph.DfsRecursive(strategy, graph.Vertices);
-            return strategy.order.Reverse<Vertex<TVertexId>>();
+            return strategy.Order.Reverse<Vertex<TVertexId>>();
         }
 
         private class TopologicalStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal List<Vertex<TVertexId>> order = new();
+            public List<Vertex<TVertexId>> Order { get; set; } = new();
 
             public void ForRoot(Vertex<TVertexId> root)
             {
@@ -87,18 +87,10 @@ namespace AlgoLib.Graphs.Algorithms
             {
             }
 
-            public void OnExit(Vertex<TVertexId> vertex) => order.Add(vertex);
+            public void OnExit(Vertex<TVertexId> vertex) => Order.Add(vertex);
 
             public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
                 throw new DirectedCyclicGraphException("Given graph contains a cycle");
-        }
-    }
-
-    [Serializable]
-    public class DirectedCyclicGraphException : Exception
-    {
-        public DirectedCyclicGraphException(string message) : base(message)
-        {
         }
     }
 }

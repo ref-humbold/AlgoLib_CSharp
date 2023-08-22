@@ -8,6 +8,9 @@ namespace AlgoLib.Graphs.Algorithms
     {
         /// <summary>Computes length of diameter of given tree.</summary>
         /// <param name="tree">The tree graph.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>Diameter length.</returns>
         public static double CountDiameter<TVertexId, TVertexProperty, TEdgeProperty>(
             this TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree)

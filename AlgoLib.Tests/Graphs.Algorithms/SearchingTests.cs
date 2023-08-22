@@ -1,4 +1,5 @@
 ﻿// Tests: Algorithms for graph searching
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -46,7 +47,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                undirectedGraph.Bfs(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
+                undirectedGraph.Bfs(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
             result.Should().NotContain(undirectedGraph[2]);
@@ -64,8 +65,8 @@ namespace AlgoLib.Graphs.Algorithms
                 undirectedGraph.Bfs(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                    undirectedGraph.Bfs(new EmptyStrategy<int>(), new Vertex<int>[] { });
+                    undirectedGraph.Bfs(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
             // then
             result.Should().BeEmpty();
         }
@@ -83,7 +84,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                directedGraph.Bfs(new EmptyStrategy<int>(), new[] { directedGraph[1] });
+                directedGraph.Bfs(default(EmptyStrategy<int>), new[] { directedGraph[1] });
             // then
             result.Should().BeEquivalentTo(
                 new[] { directedGraph[0], directedGraph[1], directedGraph[3],
@@ -100,8 +101,8 @@ namespace AlgoLib.Graphs.Algorithms
                 directedGraph.Bfs(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         #endregion
@@ -113,7 +114,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                undirectedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
+                undirectedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
             result.Should().NotContain(undirectedGraph[2]);
@@ -131,8 +132,8 @@ namespace AlgoLib.Graphs.Algorithms
                 undirectedGraph.DfsIterative(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -140,7 +141,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                    undirectedGraph.DfsIterative(new EmptyStrategy<int>(), new Vertex<int>[] { });
+                    undirectedGraph.DfsIterative(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
             // then
             result.Should().BeEmpty();
         }
@@ -150,7 +151,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                directedGraph.DfsIterative(new EmptyStrategy<int>(), new[] { directedGraph[1] });
+                directedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { directedGraph[1] });
             // then
             result.Should().BeEquivalentTo(
                 new[] { directedGraph[0], directedGraph[1], directedGraph[3],
@@ -167,8 +168,8 @@ namespace AlgoLib.Graphs.Algorithms
                 directedGraph.DfsIterative(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         #endregion
@@ -180,7 +181,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                undirectedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { undirectedGraph[0] });
+                undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
             // then
             result.Should().BeSubsetOf(undirectedGraph.Vertices);
             result.Should().NotContain(undirectedGraph[2]);
@@ -198,8 +199,8 @@ namespace AlgoLib.Graphs.Algorithms
                     undirectedGraph.DfsRecursive(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
             // then
             result.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         [Test]
@@ -207,7 +208,7 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                    undirectedGraph.DfsRecursive(new EmptyStrategy<int>(), new Vertex<int>[] { });
+                    undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
             // then
             result.Should().BeEmpty();
         }
@@ -217,11 +218,13 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // when
             IEnumerable<Vertex<int>> result =
-                    directedGraph.DfsRecursive(new EmptyStrategy<int>(), new[] { directedGraph[1] });
+                    directedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { directedGraph[1] });
             // then
             result.Should().BeEquivalentTo(
-                new[] { directedGraph[0], directedGraph[1], directedGraph[3],
-                        directedGraph[4], directedGraph[7] });
+                new[] {
+                    directedGraph[0], directedGraph[1], directedGraph[3], directedGraph[4],
+                    directedGraph[7]
+                });
         }
 
         [Test]
@@ -234,28 +237,29 @@ namespace AlgoLib.Graphs.Algorithms
                 directedGraph.DfsRecursive(strategy, new[] { directedGraph[8], directedGraph[6] });
             // then
             result.Should().BeEquivalentTo(directedGraph.Vertices);
-            strategy.entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
-            strategy.exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
+            strategy.Exits.Should().BeEquivalentTo(undirectedGraph.Vertices);
         }
 
         #endregion
 
         private class TestingStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly HashSet<Vertex<TVertexId>> entries = new HashSet<Vertex<TVertexId>>();
-            internal readonly HashSet<Vertex<TVertexId>> exits = new HashSet<Vertex<TVertexId>>();
+            public HashSet<Vertex<TVertexId>> Entries { get; } = new();
+
+            public HashSet<Vertex<TVertexId>> Exits { get; } = new();
 
             public void ForRoot(Vertex<TVertexId> root)
             {
             }
 
-            public void OnEntry(Vertex<TVertexId> vertex) => entries.Add(vertex);
+            public void OnEntry(Vertex<TVertexId> vertex) => Entries.Add(vertex);
 
             public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {
             }
 
-            public void OnExit(Vertex<TVertexId> vertex) => exits.Add(vertex);
+            public void OnExit(Vertex<TVertexId> vertex) => Exits.Add(vertex);
 
             public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {

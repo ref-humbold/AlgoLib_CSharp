@@ -5,20 +5,11 @@ namespace AlgoLib.Geometry.Dim3
 {
     public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
     {
-        public readonly double X
-        {
-            get; init;
-        }
+        public readonly double X { get; init; }
 
-        public readonly double Y
-        {
-            get; init;
-        }
+        public readonly double Y { get; init; }
 
-        public readonly double Z
-        {
-            get; init;
-        }
+        public readonly double Z { get; init; }
 
         public double[] Coordinates => new[] { X, Y, Z };
 

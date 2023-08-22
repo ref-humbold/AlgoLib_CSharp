@@ -32,7 +32,8 @@ namespace AlgoLib.Geometry.Dim2
             var sequence = new List<Point2D> {
                 Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
                 Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+                Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
+            };
             // when
             List<Point2D> result = sequence.SortByY();
             // then

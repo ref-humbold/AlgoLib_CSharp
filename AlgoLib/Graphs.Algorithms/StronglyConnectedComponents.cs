@@ -7,6 +7,9 @@ namespace AlgoLib.Graphs.Algorithms
     {
         /// <summary>Finds strongly connected components in given directed graph.</summary>
         /// <param name="graph">The directed graph.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>List of vertices in strongly connected components.</returns>
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
@@ -15,7 +18,7 @@ namespace AlgoLib.Graphs.Algorithms
 
             Searching.DfsRecursive(graph, postOrderStrategy, graph.Vertices);
 
-            var vertices = postOrderStrategy.postTimes
+            var vertices = postOrderStrategy.PostTimes
                                             .OrderByDescending(kv => kv.Value)
                                             .Select(kv => kv.Key)
                                             .ToList();
@@ -23,13 +26,14 @@ namespace AlgoLib.Graphs.Algorithms
             var sccStrategy = new SCCStrategy<TVertexId>();
 
             Searching.DfsRecursive(reversedGraph, sccStrategy, vertices);
-            return sccStrategy.components;
+            return sccStrategy.Components;
         }
 
         private class PostOrderStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, int> postTimes = new();
             private int timer = 0;
+
+            public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
 
             public void ForRoot(Vertex<TVertexId> root)
             {
@@ -45,7 +49,7 @@ namespace AlgoLib.Graphs.Algorithms
 
             public void OnExit(Vertex<TVertexId> vertex)
             {
-                postTimes[vertex] = timer;
+                PostTimes[vertex] = timer;
                 ++timer;
             }
 
@@ -56,12 +60,12 @@ namespace AlgoLib.Graphs.Algorithms
 
         private class SCCStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
-            internal readonly List<HashSet<Vertex<TVertexId>>> components = new();
+            public List<HashSet<Vertex<TVertexId>>> Components { get; } = new();
 
             public void ForRoot(Vertex<TVertexId> root) =>
-                components.Add(new HashSet<Vertex<TVertexId>>());
+                Components.Add(new HashSet<Vertex<TVertexId>>());
 
-            public void OnEntry(Vertex<TVertexId> vertex) => components[^1].Add(vertex);
+            public void OnEntry(Vertex<TVertexId> vertex) => Components[^1].Add(vertex);
 
             public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
             {

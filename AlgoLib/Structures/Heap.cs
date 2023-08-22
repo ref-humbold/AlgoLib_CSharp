@@ -9,22 +9,22 @@ namespace AlgoLib.Structures
     {
         private List<T> heap = new();
 
-        /// <summary>The comparer.</summary>
-        public IComparer<T> Comparer
-        {
-            get;
-        }
+        /// <summary>Gets comparer.</summary>
+        public IComparer<T> Comparer { get; }
 
-        /// <summary>Number of elements.</summary>
+        /// <summary>Gets number of elements.</summary>
         public int Count => heap.Count;
 
-        public Heap() : this(Comparer<T>.Default)
+        public Heap()
+            : this(Comparer<T>.Default)
         {
         }
 
-        public Heap(IEnumerable<T> enumerable) : this() => PushRange(enumerable);
+        public Heap(IEnumerable<T> enumerable)
+            : this() => PushRange(enumerable);
 
-        public Heap(Comparison<T> comparison) : this(Comparer<T>.Create(comparison))
+        public Heap(Comparison<T> comparison)
+            : this(Comparer<T>.Create(comparison))
         {
         }
 

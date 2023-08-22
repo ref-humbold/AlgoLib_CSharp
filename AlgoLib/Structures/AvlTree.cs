@@ -10,11 +10,7 @@ namespace AlgoLib.Structures
         private readonly IComparer<T> comparer;
         private readonly AvlHeaderNode<T> tree = new();
 
-        public int Count
-        {
-            get;
-            private set;
-        }
+        public int Count { get; private set; }
 
         public bool IsReadOnly => false;
 
@@ -26,7 +22,8 @@ namespace AlgoLib.Structures
 
         public AvlTree(IComparer<T> comparer = null) => this.comparer = comparer ?? Comparer<T>.Default;
 
-        public AvlTree(IEnumerable<T> enumerable, IComparer<T> comparer = null) : this(comparer)
+        public AvlTree(IEnumerable<T> enumerable, IComparer<T> comparer = null)
+            : this(comparer)
         {
             foreach(T item in enumerable)
                 _ = Add(item);
@@ -267,37 +264,19 @@ namespace AlgoLib.Structures
 
         private interface IAvlNode<TItem>
         {
-            int Height
-            {
-                get;
-            }
+            int Height { get; }
 
-            IAvlNode<TItem> Left
-            {
-                get; set;
-            }
+            IAvlNode<TItem> Left { get; set; }
 
-            IAvlNode<TItem> Right
-            {
-                get; set;
-            }
+            IAvlNode<TItem> Right { get; set; }
 
-            IAvlNode<TItem> Parent
-            {
-                get; set;
-            }
+            IAvlNode<TItem> Parent { get; set; }
 
             // Searches in its subtree for the node with minimal value.
-            IAvlNode<TItem> Minimum
-            {
-                get;
-            }
+            IAvlNode<TItem> Minimum { get; }
 
             // Searches in its subtree for the node with maximal value.
-            IAvlNode<TItem> Maximum
-            {
-                get;
-            }
+            IAvlNode<TItem> Maximum { get; }
         }
 
         private class AvlInnerNode<TItem> : IAvlNode<TItem>
@@ -322,25 +301,18 @@ namespace AlgoLib.Structures
                 set => Right = value as AvlInnerNode<TItem>;
             }
 
-            public IAvlNode<TItem> Parent
-            {
-                get; set;
-            }
+            public IAvlNode<TItem> Parent { get; set; }
 
             IAvlNode<TItem> IAvlNode<TItem>.Minimum => Minimum;
 
             IAvlNode<TItem> IAvlNode<TItem>.Maximum => Maximum;
 
             // Value in the node.
-            public TItem Element
-            {
-                get; set;
-            }
+            public TItem Element { get; set; }
 
             public AvlInnerNode<TItem> Left
             {
                 get => left;
-
                 set
                 {
                     left = value;
@@ -355,7 +327,6 @@ namespace AlgoLib.Structures
             public AvlInnerNode<TItem> Right
             {
                 get => right;
-
                 set
                 {
                     right = value;

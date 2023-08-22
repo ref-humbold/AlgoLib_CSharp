@@ -69,7 +69,7 @@ namespace AlgoLib.Graphs.Algorithms
         [Test]
         public void FindLca_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot()
         {
-            //given
+            // given
             Vertex<int> vertex1 = tree[8];
             Vertex<int> vertex2 = tree[2];
             // when

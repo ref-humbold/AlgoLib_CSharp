@@ -11,7 +11,7 @@ namespace AlgoLib.Maths
         [Test]
         public void Solve_WhenSingleSolution_ThenSolution()
         {
-            //given
+            // given
             var testObject = new EquationSystem(
                 new[] { new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
                         new Equation(new[] { 7.0, -1.0, 0.0 }, 4),

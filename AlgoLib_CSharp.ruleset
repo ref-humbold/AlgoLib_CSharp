@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for AlgoLib_CSharp" Description="Code analysis rules for AlgoLib_CSharp." ToolsVersion="17.0">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS1591" Action="None" />
+    <Rule Id="CS1701" Action="None" />
+    <Rule Id="CS1702" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0058" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1000" Action="None" />
+    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1106" Action="Error" />
+    <Rule Id="SA1107" Action="Error" />
+    <Rule Id="SA1108" Action="Error" />
+    <Rule Id="SA1116" Action="None" />
+    <Rule Id="SA1117" Action="None" />
+    <Rule Id="SA1118" Action="Info" />
+    <Rule Id="SA1124" Action="None" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1300" Action="None" />
+    <Rule Id="SA1403" Action="Error" />
+    <Rule Id="SA1407" Action="None" />
+    <Rule Id="SA1408" Action="None" />
+    <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1500" Action="None" />
+    <Rule Id="SA1503" Action="None" />
+    <Rule Id="SA1515" Action="None" />
+    <Rule Id="SA1517" Action="Error" />
+    <Rule Id="SA1519" Action="None" />
+    <Rule Id="SA1520" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1601" Action="None" />
+    <Rule Id="SA1602" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1634" Action="None" />
+    <Rule Id="SA1635" Action="None" />
+    <Rule Id="SA1636" Action="None" />
+    <Rule Id="SA1641" Action="None" />
+    <Rule Id="SA1649" Action="None" />
+    <Rule Id="SX1101" Action="Info" />
+  </Rules>
+</RuleSet>

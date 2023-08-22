@@ -9,7 +9,7 @@ namespace AlgoLib.Graphs.Algorithms
     [TestFixture]
     public class ShortestPathsTests
     {
-        private static readonly double inf = IWeighted.Infinity;
+        private static readonly double Inf = IWeighted.Infinity;
         private DirectedSimpleGraph<int, object, Weighted> directedGraph;
         private UndirectedSimpleGraph<int, object, Weighted> undirectedGraph;
 
@@ -85,11 +85,10 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenDirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 20.0, 0.0, inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+            var distances = new List<double> { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
             // when
-            Dictionary<Vertex<int>, double> result =
-                    ShortestPaths.BellmanFord(directedGraph, directedGraph[1]);
+            Dictionary<Vertex<int>, double> result = directedGraph.BellmanFord(directedGraph[1]);
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -98,14 +97,12 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenNegativeEdge_ThenEdgeIncluded()
         {
             // given
-            var distances = new List<double> { 8.0, 0.0, inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 };
+            var distances = new List<double> { 8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
-            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3],
-                                         new Weighted(-5.0));
+            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
             // when
-            Dictionary<Vertex<int>, double> result =
-                    ShortestPaths.BellmanFord(directedGraph, directedGraph[1]);
+            Dictionary<Vertex<int>, double> result = directedGraph.BellmanFord(directedGraph[1]);
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -114,11 +111,11 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenUndirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 4.0, 0.0, inf, 7.0, 7.0, 8.0, inf, 10.0, 10.0, inf };
+            var distances = new List<double> { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
             Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
             // when
             Dictionary<Vertex<int>, double> result =
-                    ShortestPaths.BellmanFord(undirectedGraph.AsDirected(), undirectedGraph[1]);
+                undirectedGraph.AsDirected().BellmanFord(undirectedGraph[1]);
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -127,10 +124,9 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenNegativeCycle_ThenIllegalStateException()
         {
             // given
-            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3],
-                                         new Weighted(-20.0));
+            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-20.0));
             // when
-            Action action = () => ShortestPaths.BellmanFord(directedGraph, directedGraph[1]);
+            Action action = () => directedGraph.BellmanFord(directedGraph[1]);
             // then
             action.Should().Throw<InvalidOperationException>();
         }
@@ -142,11 +138,10 @@ namespace AlgoLib.Graphs.Algorithms
         public void Dijkstra_WhenDirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 20.0, 0.0, inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+            var distances = new List<double> { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
             // when
-            Dictionary<Vertex<int>, double> result =
-                    ShortestPaths.Dijkstra(directedGraph, directedGraph[1]);
+            Dictionary<Vertex<int>, double> result = directedGraph.Dijkstra(directedGraph[1]);
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -155,11 +150,10 @@ namespace AlgoLib.Graphs.Algorithms
         public void Dijkstra_WhenUndirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 4.0, 0.0, inf, 7.0, 7.0, 8.0, inf, 10.0, 10.0, inf };
+            var distances = new List<double> { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
             Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
             // when
-            Dictionary<Vertex<int>, double> result =
-                    ShortestPaths.Dijkstra(undirectedGraph, undirectedGraph[1]);
+            Dictionary<Vertex<int>, double> result = undirectedGraph.Dijkstra(undirectedGraph[1]);
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -168,10 +162,9 @@ namespace AlgoLib.Graphs.Algorithms
         public void Dijkstra_WhenNegativeEdge_ThenIllegalStateException()
         {
             // given
-            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3],
-                                         new Weighted(-5.0));
+            directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
             // when
-            Action action = () => ShortestPaths.Dijkstra(directedGraph, directedGraph[1]);
+            Action action = () => directedGraph.Dijkstra(directedGraph[1]);
             // then
             action.Should().Throw<InvalidOperationException>();
         }
@@ -184,22 +177,21 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // given
             double[,] distances = new double[,] {
-                { 0.0, 4.0, inf, 21.0, 11.0, 12.0, 16.0, 16.0, 14.0, 24.0 },
-                { 20.0, 0.0, inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 },
+                { 0.0, 4.0, Inf, 21.0, 11.0, 12.0, 16.0, 16.0, 14.0, 24.0 },
+                { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 },
                 { 19.0, 23.0, 0.0, 16.0, 6.0, 7.0, 8.0, 21.0, 9.0, 19.0 },
-                { 3.0, 7.0, inf, 0.0, 14.0, 7.0, 11.0, 5.0, 9.0, 19.0 },
-                { 13.0, 17.0, inf, 10.0, 0.0, 1.0, 5.0, 15.0, 3.0, 13.0 },
-                { inf, inf, inf, inf, inf, 0.0, 4.0, inf, 2.0, 12.0 },
-                { inf, inf, inf, inf, inf, 7.0, 0.0, inf, 9.0, 19.0 },
-                { inf, inf, inf, inf, inf, 2.0, 6.0, 0.0, 4.0, 14.0 },
-                { inf, inf, inf, inf, inf, 20.0, 13.0, inf, 0.0, 10.0 },
-                { inf, inf, inf, inf, inf, 10.0, 3.0, inf, 12.0, 0.0 }
+                { 3.0, 7.0, Inf, 0.0, 14.0, 7.0, 11.0, 5.0, 9.0, 19.0 },
+                { 13.0, 17.0, Inf, 10.0, 0.0, 1.0, 5.0, 15.0, 3.0, 13.0 },
+                { Inf, Inf, Inf, Inf, Inf, 0.0, 4.0, Inf, 2.0, 12.0 },
+                { Inf, Inf, Inf, Inf, Inf, 7.0, 0.0, Inf, 9.0, 19.0 },
+                { Inf, Inf, Inf, Inf, Inf, 2.0, 6.0, 0.0, 4.0, 14.0 },
+                { Inf, Inf, Inf, Inf, Inf, 20.0, 13.0, Inf, 0.0, 10.0 },
+                { Inf, Inf, Inf, Inf, Inf, 10.0, 3.0, Inf, 12.0, 0.0 }
             };
             Dictionary<(Vertex<int>, Vertex<int>), double> expected =
                 fromMatrix(undirectedGraph, distances);
             // when
-            Dictionary<(Vertex<int>, Vertex<int>), double> result =
-                    ShortestPaths.FloydWarshall(directedGraph);
+            Dictionary<(Vertex<int>, Vertex<int>), double> result = directedGraph.FloydWarshall();
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -209,16 +201,16 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // given
             double[,] distances = new double[,] {
-                { 0.0, 4.0, inf, 9.0, 11.0, 12.0, 16.0, 14.0, 14.0, 24.0 },
-                { 8.0, 0.0, inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 },
+                { 0.0, 4.0, Inf, 9.0, 11.0, 12.0, 16.0, 14.0, 14.0, 24.0 },
+                { 8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 },
                 { 7.0, 11.0, 0.0, 4.0, 6.0, 7.0, 8.0, 9.0, 9.0, 19.0 },
-                { 3.0, 7.0, inf, 0.0, 14.0, 7.0, 11.0, 5.0, 9.0, 19.0 },
-                { 1.0, 5.0, inf, -2.0, 0.0, 1.0, 5.0, 3.0, 3.0, 13.0 },
-                { 0.0, 4.0, inf, -3.0, 11.0, 0.0, 4.0, 2.0, 2.0, 12.0 },
-                { 7.0, 11.0, inf, 4.0, 18.0, 7.0, 0.0, 9.0, 9.0, 19.0 },
-                { 2.0, 6.0, inf, -1.0, 13.0, 2.0, 6.0, 0.0, 4.0, 14.0 },
-                { -2.0, 2.0, inf, -5.0, 9.0, 2.0, 6.0, 0.0, 0.0, 10.0 },
-                { 10.0, 14.0, inf, 7.0, 21.0, 10.0, 3.0, 12.0, 12.0, 0.0 }
+                { 3.0, 7.0, Inf, 0.0, 14.0, 7.0, 11.0, 5.0, 9.0, 19.0 },
+                { 1.0, 5.0, Inf, -2.0, 0.0, 1.0, 5.0, 3.0, 3.0, 13.0 },
+                { 0.0, 4.0, Inf, -3.0, 11.0, 0.0, 4.0, 2.0, 2.0, 12.0 },
+                { 7.0, 11.0, Inf, 4.0, 18.0, 7.0, 0.0, 9.0, 9.0, 19.0 },
+                { 2.0, 6.0, Inf, -1.0, 13.0, 2.0, 6.0, 0.0, 4.0, 14.0 },
+                { -2.0, 2.0, Inf, -5.0, 9.0, 2.0, 6.0, 0.0, 0.0, 10.0 },
+                { 10.0, 14.0, Inf, 7.0, 21.0, 10.0, 3.0, 12.0, 12.0, 0.0 }
             };
             Dictionary<(Vertex<int>, Vertex<int>), double> expected =
                     fromMatrix(undirectedGraph, distances);
@@ -226,8 +218,7 @@ namespace AlgoLib.Graphs.Algorithms
             directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3],
                                          new Weighted(-5.0));
             // when
-            Dictionary<(Vertex<int>, Vertex<int>), double> result =
-                    ShortestPaths.FloydWarshall(directedGraph);
+            Dictionary<(Vertex<int>, Vertex<int>), double> result = directedGraph.FloydWarshall();
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -237,22 +228,22 @@ namespace AlgoLib.Graphs.Algorithms
         {
             // given
             double[,] distances = new double[,] {
-                { 0.0, 4.0, inf, 3.0, 11.0, 10.0, inf, 8.0, 12.0, inf },
-                { 4.0, 0.0, inf, 7.0, 7.0, 8.0, inf, 10.0, 10.0, inf },
-                { inf, inf, 0.0, inf, inf, inf, 8.0, inf, inf, 11.0 },
-                { 3.0, 7.0, inf, 0.0, 8.0, 7.0, inf, 5.0, 9.0, inf },
-                { 11.0, 7.0, inf, 8.0, 0.0, 1.0, inf, 3.0, 3.0, inf },
-                { 10, 8, inf, 7.0, 1.0, 0.0, inf, 2.0, 2.0, inf },
-                { inf, inf, 8.0, inf, inf, inf, 0.0, inf, inf, 3.0 },
-                { 8.0, 10.0, inf, 5.0, 3.0, 2.0, inf, 0.0, 4.0, inf },
-                { 12.0, 10.0, inf, 9.0, 3.0, 2.0, inf, 4.0, 0.0, inf },
-                { inf, inf, 11.0, inf, inf, inf, 3.0, inf, inf, 0.0 }
+                { 0.0, 4.0, Inf, 3.0, 11.0, 10.0, Inf, 8.0, 12.0, Inf },
+                { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf },
+                { Inf, Inf, 0.0, Inf, Inf, Inf, 8.0, Inf, Inf, 11.0 },
+                { 3.0, 7.0, Inf, 0.0, 8.0, 7.0, Inf, 5.0, 9.0, Inf },
+                { 11.0, 7.0, Inf, 8.0, 0.0, 1.0, Inf, 3.0, 3.0, Inf },
+                { 10, 8, Inf, 7.0, 1.0, 0.0, Inf, 2.0, 2.0, Inf },
+                { Inf, Inf, 8.0, Inf, Inf, Inf, 0.0, Inf, Inf, 3.0 },
+                { 8.0, 10.0, Inf, 5.0, 3.0, 2.0, Inf, 0.0, 4.0, Inf },
+                { 12.0, 10.0, Inf, 9.0, 3.0, 2.0, Inf, 4.0, 0.0, Inf },
+                { Inf, Inf, 11.0, Inf, Inf, Inf, 3.0, Inf, Inf, 0.0 }
             };
             Dictionary<(Vertex<int>, Vertex<int>), double> expected =
                     fromMatrix(undirectedGraph, distances);
             // when
             Dictionary<(Vertex<int>, Vertex<int>), double> result =
-                    ShortestPaths.FloydWarshall(undirectedGraph.AsDirected());
+                    undirectedGraph.AsDirected().FloydWarshall();
             // then
             result.Should().BeEquivalentTo(expected);
         }
@@ -284,17 +275,10 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         private sealed class Weighted : IWeighted
-
         {
-            public double Weight
-            {
-                get;
-            }
+            public double Weight { get; }
 
-            public Weighted(double weight)
-            {
-                Weight = weight;
-            }
+            public Weighted(double weight) => Weight = weight;
         }
     }
 }

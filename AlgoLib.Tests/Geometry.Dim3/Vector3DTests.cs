@@ -8,7 +8,7 @@ namespace AlgoLib.Geometry.Dim3
     [TestFixture]
     public class Vector3DTests
     {
-        private static readonly double offset = IGeometryObject.Epsilon;
+        private static readonly double Offset = IGeometryObject.Epsilon;
 
         [Test]
         public void Coordinates_ThenArray()
@@ -25,7 +25,7 @@ namespace AlgoLib.Geometry.Dim3
             // when
             double result = Vector3D.Of(18.0, -6.0, 13.0).Length;
             // then
-            result.Should().BeApproximately(23.0, offset);
+            result.Should().BeApproximately(23.0, Offset);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace AlgoLib.Geometry.Dim3
             // when
             double result = Vector3D.Dot(Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5));
             // then
-            result.Should().BeApproximately(-6.25, offset);
+            result.Should().BeApproximately(-6.25, Offset);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace AlgoLib.Geometry.Dim3
             // when
             double result = Vector3D.Dot(Vector3D.Of(1.0, 0.0, 1.0), Vector3D.Of(0.0, -2.0, 0.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace AlgoLib.Geometry.Dim3
             // when
             double result = Vector3D.Area(Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5));
             // then
-            result.Should().BeApproximately(69.46716850426538, offset);
+            result.Should().BeApproximately(69.46716850426538, Offset);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace AlgoLib.Geometry.Dim3
             // when
             double result = Vector3D.Area(Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace AlgoLib.Geometry.Dim3
             double result = Vector3D.Volume(Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5),
                                             Vector3D.Of(1.0, -1.0, 1.0));
             // then
-            result.Should().BeApproximately(33.75, offset);
+            result.Should().BeApproximately(33.75, Offset);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace AlgoLib.Geometry.Dim3
             double result = Vector3D.Volume(Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0),
                                             Vector3D.Of(2.0, -2.0, 2.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace AlgoLib.Geometry.Dim3
             double result = Vector3D.Volume(Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(1.0, 0.0, 1.0),
                                             Vector3D.Of(0.0, -2.0, 0.0));
             // then
-            result.Should().BeApproximately(0.0, offset);
+            result.Should().BeApproximately(0.0, Offset);
         }
 
         [Test]

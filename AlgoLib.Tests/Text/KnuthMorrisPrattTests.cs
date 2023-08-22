@@ -49,7 +49,7 @@ namespace AlgoLib.Text
         public void KmpSearch_WhenPatternIsEmptystring_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = "abcde".KmpSearch("");
+            IEnumerable<int> result = "abcde".KmpSearch(string.Empty);
             // then
             result.Should().BeEmpty();
         }
@@ -58,7 +58,7 @@ namespace AlgoLib.Text
         public void KmpSearch_WhenTextIsEmptystring_ThenEmpty()
         {
             // when
-            IEnumerable<int> result = "".KmpSearch("a");
+            IEnumerable<int> result = string.Empty.KmpSearch("a");
             // then
             result.Should().BeEmpty();
         }
