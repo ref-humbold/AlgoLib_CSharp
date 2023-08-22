@@ -5,12 +5,11 @@
     <RootNamespace>AlgoLib</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <NoWarn>IDE0058;1701;1702;1591</NoWarn>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\AlgoLib_CSharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
