@@ -7,11 +7,7 @@ namespace AlgoLib.Text
     {
         private TrieNode tree = new();
 
-        public int Count
-        {
-            get;
-            private set;
-        }
+        public int Count { get; private set; }
 
         public Trie() => Count = 0;
 
@@ -24,7 +20,7 @@ namespace AlgoLib.Text
 
             foreach(char character in text)
             {
-                node.add(character, new TrieNode());
+                node.Add(character, new TrieNode());
                 node = node[character];
             }
 
@@ -86,7 +82,7 @@ namespace AlgoLib.Text
                 TrieNode nextNode = node[text[i]];
 
                 if(nextNode != null && removeNode(text, nextNode, i + 1))
-                    node.remove(text[i]);
+                    node.Remove(text[i]);
             }
 
             return !node.Terminus && node.Count == 0;
@@ -94,19 +90,15 @@ namespace AlgoLib.Text
 
         private class TrieNode
         {
-            private readonly Dictionary<char, TrieNode> children = new Dictionary<char, TrieNode>();
+            private readonly Dictionary<char, TrieNode> children = new();
 
-            internal int Count => children.Count;
+            public int Count => children.Count;
 
-            internal bool Terminus
-            {
-                get;
-                set;
-            }
+            internal bool Terminus { get; set; }
 
-            internal TrieNode() => Terminus = false;
+            public TrieNode() => Terminus = false;
 
-            internal TrieNode this[char c]
+            public TrieNode this[char c]
             {
                 get
                 {
@@ -115,9 +107,9 @@ namespace AlgoLib.Text
                 }
             }
 
-            internal void add(char c, TrieNode node) => children.TryAdd(c, node);
+            public void Add(char c, TrieNode node) => children.TryAdd(c, node);
 
-            internal void remove(char c) => children.Remove(c);
+            public void Remove(char c) => children.Remove(c);
         }
     }
 }

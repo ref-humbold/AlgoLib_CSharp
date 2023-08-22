@@ -7,11 +7,15 @@ namespace AlgoLib.Graphs
 {
     public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
         : IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
-
     {
-        public readonly int GroupsCount;
         private readonly UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph = new();
+
         private readonly Dictionary<Vertex<TVertexId>, int> vertexGroupDict = new();
+
+        public int GroupsCount
+        {
+            get;
+        }
 
         public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties => graph.Properties;
 
@@ -66,6 +70,7 @@ namespace AlgoLib.Graphs
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
             graph.AsDirected();
 
+        /// <summary>Gets vertices of given group.</summary>
         /// <param name="groupNumber">Group number.</param>
         /// <returns>Vertices that belong to the group.</returns>
         public IEnumerable<Vertex<TVertexId>> GetVerticesFromGroup(int groupNumber)
@@ -91,7 +96,7 @@ namespace AlgoLib.Graphs
         /// <param name="groupNumber">Group number.</param>
         /// <param name="vertex">New vertex.</param>
         /// <param name="property">Vertex property.</param>
-        /// <returns>New vertex.</returns>
+        /// <returns>Created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(int groupNumber,
                                            Vertex<TVertexId> vertex,
@@ -120,7 +125,7 @@ namespace AlgoLib.Graphs
         /// <summary>Adds new edge with given property to this graph.</summary>
         /// <param name="edge">New edge.</param>
         /// <param name="property">Edge property.</param>
-        /// <returns>New edge.</returns>
+        /// <returns>Created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
         public Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default) =>
@@ -141,15 +146,6 @@ namespace AlgoLib.Graphs
             if(groupNumber < 0 || groupNumber >= GroupsCount)
                 throw new IndexOutOfRangeException(
                     $"Invalid group number {groupNumber}, graph contains only {GroupsCount} groups");
-        }
-    }
-
-    [Serializable]
-    public class GraphPartitionException : Exception
-    {
-        public GraphPartitionException(string message)
-            : base(message)
-        {
         }
     }
 }

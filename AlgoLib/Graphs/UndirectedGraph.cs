@@ -14,12 +14,12 @@ namespace AlgoLib.Graphs
     }
 
     public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
-        SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
+            SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
         IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        public override int EdgesCount => representation.Edges.Distinct().Count();
+        public override int EdgesCount => Representation.Edges.Distinct().Count();
 
-        public override IEnumerable<Edge<TVertexId>> Edges => representation.Edges.Distinct();
+        public override IEnumerable<Edge<TVertexId>> Edges => Representation.Edges.Distinct();
 
         public UndirectedSimpleGraph()
             : base()
@@ -32,10 +32,10 @@ namespace AlgoLib.Graphs
         }
 
         public override int GetOutputDegree(Vertex<TVertexId> vertex) =>
-            representation.getAdjacentEdges(vertex).Count();
+            Representation.getAdjacentEdges(vertex).Count();
 
         public override int GetInputDegree(Vertex<TVertexId> vertex) =>
-            representation.getAdjacentEdges(vertex).Count();
+            Representation.getAdjacentEdges(vertex).Count();
 
         public override Edge<TVertexId> AddEdge(Edge<TVertexId> edge,
                                                 TEdgeProperty property = default)
@@ -48,9 +48,9 @@ namespace AlgoLib.Graphs
             }
             catch(KeyNotFoundException)
             {
-                representation.addEdgeToSource(edge);
-                representation.addEdgeToDestination(edge);
-                representation.setProperty(edge, property);
+                Representation.addEdgeToSource(edge);
+                Representation.addEdgeToDestination(edge);
+                Representation.setProperty(edge, property);
                 return edge;
             }
         }

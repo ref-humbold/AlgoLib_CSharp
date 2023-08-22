@@ -6,7 +6,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public class MinimalSpanningTreeTest
     {
-        private static readonly double precision = 1e-6;
+        private static readonly double Precision = 1e-6;
         private UndirectedSimpleGraph<int, object, WeightProp> graph;
 
         [SetUp]
@@ -40,7 +40,7 @@ namespace AlgoLib.Graphs.Algorithms
             result.EdgesCount.Should().Be(4);
             result.Edges.Should().BeEquivalentTo(
                 new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
-            mstSize.Should().BeApproximately(12.0, precision);
+            mstSize.Should().BeApproximately(12.0, Precision);
         }
 
         #endregion
@@ -61,7 +61,7 @@ namespace AlgoLib.Graphs.Algorithms
             result.EdgesCount.Should().Be(4);
             result.Edges.Should().BeEquivalentTo(
                 new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
-            mstSize.Should().BeApproximately(12.0, precision);
+            mstSize.Should().BeApproximately(12.0, Precision);
         }
 
         [Test]

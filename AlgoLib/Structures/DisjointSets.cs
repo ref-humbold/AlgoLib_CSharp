@@ -9,12 +9,8 @@ namespace AlgoLib.Structures
         // Map of element represents
         private readonly Dictionary<T, T> represents = new();
 
-        /// <summary>Number of sets.</summary>
-        public int Count
-        {
-            get;
-            private set;
-        }
+        /// <summary>Gets number of sets.</summary>
+        public int Count { get; private set; }
 
         public DisjointSets(IEnumerable<T> universe)
         {

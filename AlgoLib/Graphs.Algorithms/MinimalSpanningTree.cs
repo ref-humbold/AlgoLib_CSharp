@@ -8,6 +8,9 @@ namespace AlgoLib.Graphs.Algorithms
     {
         /// <summary>Kruskal algorithm.</summary>
         /// <param name="graph">Undirected weighted graph.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>Minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Kruskal<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
@@ -17,8 +20,7 @@ namespace AlgoLib.Graphs.Algorithms
                             graph.Vertices.Select(v => v.Id).ToArray());
             var vertexSets = new DisjointSets<Vertex<TVertexId>>(graph.Vertices);
             var edgeHeap = new Heap<Edge<TVertexId>>(
-                    (edge1, edge2) => graph.Properties[edge1].Weight.CompareTo(graph.Properties[edge2].Weight)
-            );
+                    (edge1, edge2) => graph.Properties[edge1].Weight.CompareTo(graph.Properties[edge2].Weight));
 
             foreach(Edge<TVertexId> edge in graph.Edges)
                 edgeHeap.Push(edge);
@@ -39,6 +41,9 @@ namespace AlgoLib.Graphs.Algorithms
         /// <summary>Prim algorithm.</summary>
         /// <param name="graph">Undirected weighted graph.</param>
         /// <param name="source">Starting vertex.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>Minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Prim<TVertexId, TVertexProperty, TEdgeProperty>(
             IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
@@ -50,8 +55,7 @@ namespace AlgoLib.Graphs.Algorithms
             var visited = new HashSet<Vertex<TVertexId>>();
             var heap = new Heap<(Edge<TVertexId>, Vertex<TVertexId>)>(
                     (pair1, pair2) => graph.Properties[pair1.Item1].Weight.CompareTo(
-                        graph.Properties[pair2.Item1].Weight)
-            );
+                        graph.Properties[pair2.Item1].Weight));
 
             visited.Add(source);
 

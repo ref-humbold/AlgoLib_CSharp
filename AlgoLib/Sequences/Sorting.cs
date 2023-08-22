@@ -7,10 +7,11 @@ namespace AlgoLib.Sequences
 {
     public static class Sorting
     {
-        private static readonly Random random = new();
+        private static readonly Random Random = new();
 
         /// <summary>Mutably sorts given sequence using a heap.</summary>
         /// <param name="sequence">Sequence of elements.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         public static void HeapSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -40,6 +41,7 @@ namespace AlgoLib.Sequences
         /// guaranteed to be stable.
         /// </summary>
         /// <param name="sequence">Sequence of elements.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         public static void TopDownMergeSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -54,6 +56,7 @@ namespace AlgoLib.Sequences
         /// guaranteed to be stable.
         /// </summary>
         /// <param name="sequence">Sequence of elements.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         public static void BottomUpMergeSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -71,6 +74,7 @@ namespace AlgoLib.Sequences
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
         /// <param name="sequence">Sequence of elements.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         public static void QuickSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -190,9 +194,9 @@ namespace AlgoLib.Sequences
         // Randomly chooses pivot for quick-sort algorithm.
         private static int choosePivot(int indexBegin, int indexEnd) =>
             Enumerable.Empty<int>()
-                      .Append(random.Next(indexBegin, indexEnd))
-                      .Append(random.Next(indexBegin, indexEnd))
-                      .Append(random.Next(indexBegin, indexEnd))
+                      .Append(Random.Next(indexBegin, indexEnd))
+                      .Append(Random.Next(indexBegin, indexEnd))
+                      .Append(Random.Next(indexBegin, indexEnd))
                       .OrderBy(c => c)
                       .Skip(1)
                       .First();

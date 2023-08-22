@@ -11,19 +11,19 @@ namespace AlgoLib.Graphs
         private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties = new();
         private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties = new();
 
-        internal int Count => graphDict.Count;
+        public int Count => graphDict.Count;
 
-        internal IEnumerable<Vertex<TVertexId>> Vertices => graphDict.Keys;
+        public IEnumerable<Vertex<TVertexId>> Vertices => graphDict.Keys;
 
-        internal IEnumerable<Edge<TVertexId>> Edges => graphDict.Values.SelectMany(edges => edges);
+        public IEnumerable<Edge<TVertexId>> Edges => graphDict.Values.SelectMany(edges => edges);
 
-        internal IEnumerable<HashSet<Edge<TVertexId>>> EdgesSet => graphDict.Values;
+        public IEnumerable<HashSet<Edge<TVertexId>>> EdgesSet => graphDict.Values;
 
-        internal GraphRepresentation()
+        public GraphRepresentation()
         {
         }
 
-        internal GraphRepresentation(IEnumerable<TVertexId> vertexIds)
+        public GraphRepresentation(IEnumerable<TVertexId> vertexIds)
         {
             foreach(TVertexId vertexId in vertexIds)
             {
@@ -33,7 +33,7 @@ namespace AlgoLib.Graphs
             }
         }
 
-        internal Vertex<TVertexId> this[TVertexId vertexId]
+        public Vertex<TVertexId> this[TVertexId vertexId]
         {
             get
             {
@@ -48,7 +48,7 @@ namespace AlgoLib.Graphs
             }
         }
 
-        internal Edge<TVertexId> this[TVertexId vertexId1, TVertexId vertexId2]
+        public Edge<TVertexId> this[TVertexId vertexId1, TVertexId vertexId2]
         {
             get
             {
@@ -66,48 +66,48 @@ namespace AlgoLib.Graphs
             }
         }
 
-        internal TVertexProperty getProperty(Vertex<TVertexId> vertex)
+        public TVertexProperty getProperty(Vertex<TVertexId> vertex)
         {
             validate(vertex);
             vertexProperties.TryGetValue(vertex, out TVertexProperty val);
             return val;
         }
 
-        internal void setProperty(Vertex<TVertexId> vertex, TVertexProperty property)
+        public void setProperty(Vertex<TVertexId> vertex, TVertexProperty property)
         {
             validate(vertex);
             vertexProperties[vertex] = property;
         }
 
-        internal TEdgeProperty getProperty(Edge<TVertexId> edge)
+        public TEdgeProperty getProperty(Edge<TVertexId> edge)
         {
             validate(edge, true);
             edgeProperties.TryGetValue(edge, out TEdgeProperty val);
             return val;
         }
 
-        internal void setProperty(Edge<TVertexId> edge, TEdgeProperty property)
+        public void setProperty(Edge<TVertexId> edge, TEdgeProperty property)
         {
             validate(edge, true);
             edgeProperties[edge] = property;
         }
 
-        internal IEnumerable<Edge<TVertexId>> getAdjacentEdges(Vertex<TVertexId> vertex)
+        public IEnumerable<Edge<TVertexId>> getAdjacentEdges(Vertex<TVertexId> vertex)
         {
             validate(vertex);
             return graphDict[vertex];
         }
 
-        internal bool addVertex(Vertex<TVertexId> vertex) =>
+        public bool addVertex(Vertex<TVertexId> vertex) =>
             graphDict.TryAdd(vertex, new HashSet<Edge<TVertexId>>());
 
-        internal void addEdgeToSource(Edge<TVertexId> edge)
+        public void addEdgeToSource(Edge<TVertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Source].Add(edge);
         }
 
-        internal void addEdgeToDestination(Edge<TVertexId> edge)
+        public void addEdgeToDestination(Edge<TVertexId> edge)
         {
             validate(edge, false);
             graphDict[edge.Destination].Add(edge);

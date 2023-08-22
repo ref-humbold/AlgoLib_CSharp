@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms
 {
-    [TestFixture()]
+    [TestFixture]
     public class MatchingTests
     {
         [Test]

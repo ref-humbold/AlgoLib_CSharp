@@ -9,7 +9,7 @@ namespace AlgoLib.Maths
     {
         private readonly Equation[] equations;
 
-        /// <summary>Number of equations.</summary>
+        /// <summary>Gets number of equations.</summary>
         public int Count => equations.Length;
 
         public EquationSystem(Equation[] equations)
@@ -22,10 +22,12 @@ namespace AlgoLib.Maths
                                                 + $" expected to have {equations.Length}");
         }
 
+        /// <summary>Gets equation of given index.</summary>
         /// <param name="i">Index of equation.</param>
         /// <returns>I-th equation of this system.</returns>
         public Equation this[Index i] => equations[i];
 
+        /// <summary>Gets equations from given indices range.</summary>
         /// <param name="r">Range of indices in equation system.</param>
         /// <returns>Equations of this system specified by given indices range.</returns>
         public IEnumerable<Equation> this[Range r] => equations[r];
@@ -105,21 +107,5 @@ namespace AlgoLib.Maths
         /// <param name="solution">Values to check.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
-    }
-
-    public class NoSolutionException : Exception
-    {
-        public NoSolutionException()
-            : base()
-        {
-        }
-    }
-
-    public class InfiniteSolutionsException : Exception
-    {
-        public InfiniteSolutionsException()
-            : base()
-        {
-        }
     }
 }

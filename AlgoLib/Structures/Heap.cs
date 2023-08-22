@@ -10,10 +10,7 @@ namespace AlgoLib.Structures
         private List<T> heap = new();
 
         /// <summary>Gets comparer.</summary>
-        public IComparer<T> Comparer
-        {
-            get;
-        }
+        public IComparer<T> Comparer { get; }
 
         /// <summary>Gets number of elements.</summary>
         public int Count => heap.Count;

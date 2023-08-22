@@ -7,8 +7,8 @@ namespace AlgoLib.Maths
 {
     public static class Primes
     {
-        private const int attempts = 17;
-        private static readonly Random random = new();
+        private const int Attempts = 17;
+        private static readonly Random Random = new();
 
         /// <summary>Finds prime numbers less than given number.</summary>
         /// <param name="maximum">Maximal number, exclusive.</param>
@@ -50,9 +50,9 @@ namespace AlgoLib.Maths
             if(number < 2 || number % 2 == 0 || number % 3 == 0)
                 return false;
 
-            for(int i = 0; i < attempts; ++i)
+            for(int i = 0; i < Attempts; ++i)
             {
-                int witness = random.Next(1, number - 1);
+                int witness = Random.Next(1, number - 1);
 
                 if(Maths.GCD(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
                     return false;
@@ -79,9 +79,9 @@ namespace AlgoLib.Maths
             while(multiplicand % 2 == 0)
                 multiplicand /= 2;
 
-            for(int i = 0; i < attempts; ++i)
+            for(int i = 0; i < Attempts; ++i)
             {
-                int witness = random.Next(1, number - 1);
+                int witness = Random.Next(1, number - 1);
 
                 if(Maths.Power(witness, multiplicand, number) != 1)
                 {

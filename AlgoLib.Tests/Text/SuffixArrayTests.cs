@@ -8,11 +8,11 @@ namespace AlgoLib.Text
     [TestFixture]
     public class SuffixArrayTests
     {
-        private static readonly string text = "mississippi";
+        private static readonly string Text = "mississippi";
         private SuffixArray testObject;
 
         [SetUp]
-        public void SetUp() => testObject = new SuffixArray(text);
+        public void SetUp() => testObject = new SuffixArray(Text);
 
         [Test]
         public void Text_ThenText()
@@ -20,7 +20,7 @@ namespace AlgoLib.Text
             // when
             string result = testObject.Text;
             // then
-            result.Should().Be(text);
+            result.Should().Be(Text);
         }
 
         [Test]

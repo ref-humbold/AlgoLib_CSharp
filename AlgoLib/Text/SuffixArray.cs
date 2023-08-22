@@ -11,20 +11,13 @@ namespace AlgoLib.Text
         private readonly List<int> inverseArray = new();
         private readonly List<int> lcpArray = new();
 
-        public int Count
-        {
-            get;
-        }
+        public string Text { get; }
 
-        public string Text
-        {
-            get;
-        }
+        public int Count => Text.Length;
 
         public SuffixArray(string text)
         {
             Text = text;
-            Count = text.Length;
             suffixArray = createArray(Text.Select(c => +c).ToList());
             initInverseArray();
             initLcpArray();

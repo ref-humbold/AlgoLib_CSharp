@@ -9,6 +9,7 @@ namespace AlgoLib.Sequences
         /// <summary>Constructs longest increasing subsequence according to a comparer.</summary>
         /// <param name="sequence">Sequence of elements.</param>
         /// <param name="comparer">Comparer of elements in subsequence.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         /// <returns>Least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, IComparer<T> comparer) =>
             FindLis(sequence, comparer.Compare);
@@ -16,6 +17,7 @@ namespace AlgoLib.Sequences
         /// <summary>Constructs longest increasing subsequence according to a comparison function.</summary>
         /// <param name="sequence">Sequence of elements.</param>
         /// <param name="comparison">Comparison function of elements in subsequence.</param>
+        /// <typeparam name="T">Type of sequence elements.</typeparam>
         /// <returns>Least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
         {

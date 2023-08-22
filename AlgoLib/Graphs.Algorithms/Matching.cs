@@ -9,6 +9,9 @@ namespace AlgoLib.Graphs.Algorithms
     {
         /// <summary>Finds maximal matching in given bipartite graph.</summary>
         /// <param name="graph">Bipartite graph.</param>
+        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
         /// <returns>Dictionary of matched vertices.</returns>
         public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty, TEdgeProperty>(
             this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
@@ -19,16 +22,17 @@ namespace AlgoLib.Graphs.Algorithms
             while(wasAugmented)
                 wasAugmented = augmenter.augmentMatch();
 
-            return augmenter.matching;
+            return augmenter.Matching;
         }
 
         private class MatchAugmenter<TVertexId, TVertexProperty, TEdgeProperty>
         {
-            internal readonly Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> matching = new();
-            private static readonly double infinity = double.PositiveInfinity;
+            private static readonly double Infinity = double.PositiveInfinity;
             private readonly MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-            internal MatchAugmenter(MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+            public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Matching { get; } = new();
+
+            public MatchAugmenter(MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
             {
                 if(graph.GroupsCount != 2)
                     throw new ArgumentException("Graph is not bipartite");
@@ -36,17 +40,17 @@ namespace AlgoLib.Graphs.Algorithms
                 this.graph = graph;
             }
 
-            internal bool augmentMatch()
+            public bool augmentMatch()
             {
                 var visited = new HashSet<Vertex<TVertexId>>();
-                var distances = graph.Vertices.ToDictionary(v => v, v => infinity);
+                var distances = graph.Vertices.ToDictionary(v => v, v => Infinity);
 
                 bfs(distances);
                 return unmatchedVertices().Aggregate(false, (acc, v) => dfs(v, visited, distances) || acc);
             }
 
             private IEnumerable<Vertex<TVertexId>> unmatchedVertices() =>
-                graph.GetVerticesFromGroup(1).Where(v => !matching.ContainsKey(v));
+                graph.GetVerticesFromGroup(1).Where(v => !Matching.ContainsKey(v));
 
             private void bfs(Dictionary<Vertex<TVertexId>, double> distances)
             {
@@ -64,9 +68,9 @@ namespace AlgoLib.Graphs.Algorithms
 
                     foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
                     {
-                        bool isMatched = matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
+                        bool isMatched = Matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
 
-                        if(isMatched && distances[matched] == infinity)
+                        if(isMatched && distances[matched] == Infinity)
                         {
                             distances[matched] = distances[vertex] + 1;
                             vertexDeque.Enqueue(matched);
@@ -83,20 +87,20 @@ namespace AlgoLib.Graphs.Algorithms
 
                 foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
                 {
-                    bool isMatched = matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
+                    bool isMatched = Matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
 
                     if(!isMatched)
                     {
-                        matching[vertex] = neighbour;
-                        matching[neighbour] = vertex;
+                        Matching[vertex] = neighbour;
+                        Matching[neighbour] = vertex;
                         return true;
                     }
 
                     if(!visited.Contains(matched) && distances[matched] == distances[vertex] + 1
                             && dfs(matched, visited, distances))
                     {
-                        matching[vertex] = neighbour;
-                        matching[neighbour] = vertex;
+                        Matching[vertex] = neighbour;
+                        Matching[neighbour] = vertex;
                         return true;
                     }
                 }

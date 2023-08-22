@@ -109,9 +109,11 @@ namespace AlgoLib.Maths
         [Test]
         public void OperatorEqual_WhenEqualToInt_ThenTrue()
         {
+            // given
+            int integer = 25;
             // when
-            bool result1 = Fraction.Of(125, 5) == 25;
-            bool result2 = 25 == Fraction.Of(125, 5);
+            bool result1 = Fraction.Of(125, 5) == integer;
+            bool result2 = integer == Fraction.Of(125, 5);
             // then
             result1.Should().BeTrue();
             result2.Should().BeTrue();

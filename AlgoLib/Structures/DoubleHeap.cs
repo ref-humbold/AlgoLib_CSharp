@@ -6,17 +6,14 @@ namespace AlgoLib.Structures
 {
     public class DoubleHeap<T> : IEnumerable<T>
     {
-        private static readonly int indexMin = 0;
-        private static readonly int indexMax = 1;
+        private static readonly int IndexMin = 0;
+        private static readonly int IndexMax = 1;
         private List<T> heap = new();
 
-        /// <summary>The comparer.</summary>
-        public IComparer<T> Comparer
-        {
-            get;
-        }
+        /// <summary>Gets comparer.</summary>
+        public IComparer<T> Comparer { get; }
 
-        /// <summary>Number of elements.</summary>
+        /// <summary>Gets number of elements.</summary>
         public int Count => heap.Count;
 
         public DoubleHeap()
@@ -46,7 +43,7 @@ namespace AlgoLib.Structures
         /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMin() =>
             Count > 0
-                ? heap[indexMin]
+                ? heap[IndexMin]
                 : throw new InvalidOperationException("The double heap is empty");
 
         /// <summary>
@@ -62,7 +59,7 @@ namespace AlgoLib.Structures
                 return false;
             }
 
-            result = heap[indexMin];
+            result = heap[IndexMin];
             return true;
         }
 
@@ -73,8 +70,8 @@ namespace AlgoLib.Structures
             Count switch
             {
                 0 => throw new InvalidOperationException("The double heap is empty"),
-                1 => heap[indexMin],
-                _ => heap[indexMax]
+                1 => heap[IndexMin],
+                _ => heap[IndexMax]
             };
 
         /// <summary>
@@ -91,11 +88,11 @@ namespace AlgoLib.Structures
                     return false;
 
                 case 1:
-                    result = heap[indexMin];
+                    result = heap[IndexMin];
                     return true;
 
                 default:
-                    result = heap[indexMax];
+                    result = heap[IndexMax];
                     return true;
             }
         }
@@ -150,9 +147,9 @@ namespace AlgoLib.Structures
         {
             T minimal = PeekMin();
 
-            heap[indexMin] = heap[^1];
+            heap[IndexMin] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
-            moveToMax(indexMin);
+            moveToMax(IndexMin);
             return minimal;
         }
 
@@ -169,9 +166,9 @@ namespace AlgoLib.Structures
 
             if(wasPresent)
             {
-                heap[indexMin] = heap[^1];
+                heap[IndexMin] = heap[^1];
                 heap.RemoveAt(heap.Count - 1);
-                moveToMax(indexMin);
+                moveToMax(IndexMin);
             }
 
             return wasPresent;
@@ -187,9 +184,9 @@ namespace AlgoLib.Structures
 
             T maximal = PeekMax();
 
-            heap[indexMax] = heap[^1];
+            heap[IndexMax] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
-            moveToMin(indexMax);
+            moveToMin(IndexMax);
             return maximal;
         }
 
@@ -209,9 +206,9 @@ namespace AlgoLib.Structures
 
             if(wasPresent)
             {
-                heap[indexMax] = heap[^1];
+                heap[IndexMax] = heap[^1];
                 heap.RemoveAt(heap.Count - 1);
-                moveToMin(indexMax);
+                moveToMin(IndexMax);
             }
 
             return wasPresent;
@@ -222,7 +219,7 @@ namespace AlgoLib.Structures
         // Moves element from given index towards minimum.
         private void moveToMin(int index)
         {
-            if(index == indexMin)
+            if(index == IndexMin)
                 return;
 
             if(index % 2 == 0)
@@ -258,7 +255,7 @@ namespace AlgoLib.Structures
         // Moves element from given index towards maximum.
         private void moveToMax(int index)
         {
-            if(index == indexMax)
+            if(index == IndexMax)
                 return;
 
             if(index % 2 == 1)
@@ -326,8 +323,8 @@ namespace AlgoLib.Structures
                 var indices = new Queue<int>();
                 var minimalList = new List<T>();
 
-                if(indexMin < heap.Count)
-                    indices.Enqueue(indexMin);
+                if(heap.Count > IndexMin)
+                    indices.Enqueue(IndexMin);
 
                 while(indices.Count > 0)
                 {
@@ -350,8 +347,8 @@ namespace AlgoLib.Structures
                 var indices = new Queue<int>();
                 var maximalList = new List<T>();
 
-                if(indexMax < heap.Count)
-                    indices.Enqueue(indexMax);
+                if(heap.Count > IndexMax)
+                    indices.Enqueue(IndexMax);
 
                 while(indices.Count > 0)
                 {

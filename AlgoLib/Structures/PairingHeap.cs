@@ -9,12 +9,8 @@ namespace AlgoLib.Structures
     {
         private HeapNode heap;
 
-        /// <summary>Number of elements.</summary>
-        public int Count
-        {
-            get;
-            private set;
-        }
+        /// <summary>Gets number of elements.</summary>
+        public int Count { get; private set; }
 
         public PairingHeap()
         {
@@ -124,14 +120,16 @@ namespace AlgoLib.Structures
 
         private class HeapNodeList
         {
-            public HeapNode Node;
-            public HeapNodeList Next;
+            public HeapNode Node { get; set; }
+
+            public HeapNodeList Next { get; set; }
         }
 
         private class HeapNode
         {
-            public T Element;
-            public HeapNodeList Children;
+            public T Element { get; set; }
+
+            public HeapNodeList Children { get; set; }
 
             public HeapNode Add(T item) =>
                 Element.CompareTo(item) <= 0
@@ -159,7 +157,7 @@ namespace AlgoLib.Structures
                         ? new HeapNode
                         {
                             Element = Element,
-                            Children = new HeapNodeList { Node = node, Next = this.Children }
+                            Children = new HeapNodeList { Node = node, Next = Children }
                         }
                         : new HeapNode
                         {
