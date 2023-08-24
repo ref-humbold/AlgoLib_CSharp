@@ -294,5 +294,14 @@ namespace AlgoLib.Maths
         }
 
         #endregion
+
+        [Test]
+        public void ToString_ThenStringRepresentation()
+        {
+            // when
+            string result = Fraction.Of(4, -19).ToString();
+            // then
+            result.Should().Be("-4/19");
+        }
     }
 }
