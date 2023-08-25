@@ -261,7 +261,7 @@ namespace AlgoLib.Graphs.Algorithms
             return dictionary;
         }
 
-        private static Dictionary<(Vertex<int>, Vertex<int>), double> fromMatrix(
+        private static Dictionary<(Vertex<int> From, Vertex<int> To), double> fromMatrix(
                 IGraph<int, object, Weighted> graph, double[,] distances)
         {
             var dictionary = new Dictionary<(Vertex<int>, Vertex<int>), double>();

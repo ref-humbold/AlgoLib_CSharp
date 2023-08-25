@@ -20,10 +20,10 @@ namespace AlgoLib.Graphs.Algorithms
                 null,
                 (acc, v) => acc is null || tree.GetOutputDegree(v) > tree.GetOutputDegree(acc) ? v : acc);
 
-            return root is null ? 0.0 : dfs(tree, root, root).Item2;
+            return root is null ? 0.0 : dfs(tree, root, root).Subtree;
         }
 
-        private static (double, double) dfs<TVertexId, TVertexProperty, TEdgeProperty>(
+        private static (double From, double Subtree) dfs<TVertexId, TVertexProperty, TEdgeProperty>(
             TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree,
             Vertex<TVertexId> vertex,
             Vertex<TVertexId> parent)
@@ -40,11 +40,11 @@ namespace AlgoLib.Graphs.Algorithms
                 if(!neighbour.Equals(parent))
                 {
                     double weight = tree.Properties[edge].Weight;
-                    (double, double) result = dfs(tree, neighbour, vertex);
+                    (double childFrom, double childSubtree) = dfs(tree, neighbour, vertex);
 
-                    pathThrough = Math.Max(pathThrough, pathFrom + result.Item1 + weight);
-                    pathSubtree = Math.Max(pathSubtree, result.Item2);
-                    pathFrom = Math.Max(pathFrom, result.Item1 + weight);
+                    pathThrough = Math.Max(pathThrough, pathFrom + childFrom + weight);
+                    pathSubtree = Math.Max(pathSubtree, childSubtree);
+                    pathFrom = Math.Max(pathFrom, childFrom + weight);
                 }
             }
 
