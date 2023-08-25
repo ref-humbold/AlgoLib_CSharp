@@ -79,9 +79,10 @@ namespace AlgoLib.Graphs.Algorithms
                 }
             }
 
-            private bool dfs(Vertex<TVertexId> vertex,
-                             HashSet<Vertex<TVertexId>> visited,
-                             Dictionary<Vertex<TVertexId>, double> distances)
+            private bool dfs(
+                Vertex<TVertexId> vertex,
+                HashSet<Vertex<TVertexId>> visited,
+                Dictionary<Vertex<TVertexId>, double> distances)
             {
                 visited.Add(vertex);
 

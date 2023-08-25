@@ -15,7 +15,6 @@
     <Rule Id="SA1106" Action="Error" />
     <Rule Id="SA1107" Action="Error" />
     <Rule Id="SA1108" Action="Error" />
-    <Rule Id="SA1116" Action="None" />
     <Rule Id="SA1117" Action="None" />
     <Rule Id="SA1118" Action="Info" />
     <Rule Id="SA1124" Action="None" />

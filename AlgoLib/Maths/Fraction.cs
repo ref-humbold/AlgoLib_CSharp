@@ -63,13 +63,13 @@ namespace AlgoLib.Maths
                 ? throw new InvalidOperationException("Value of zero cannot be inverted")
                 : Of(f.denominator, f.numerator);
 
-        public static Fraction operator +(Fraction f1, Fraction f2) =>
-           Of(f1.numerator * f2.denominator + f2.numerator * f1.denominator,
-              f1.denominator * f2.denominator);
-
-        public static Fraction operator -(Fraction f1, Fraction f2) =>
-            Of(f1.numerator * f2.denominator - f2.numerator * f1.denominator,
+        public static Fraction operator +(Fraction f1, Fraction f2) => Of(
+               f1.numerator * f2.denominator + f2.numerator * f1.denominator,
                f1.denominator * f2.denominator);
+
+        public static Fraction operator -(Fraction f1, Fraction f2) => Of(
+            f1.numerator * f2.denominator - f2.numerator * f1.denominator,
+            f1.denominator * f2.denominator);
 
         public static Fraction operator *(Fraction f1, Fraction f2) =>
             Of(f1.numerator * f2.numerator, f1.denominator * f2.denominator);

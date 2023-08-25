@@ -64,8 +64,8 @@ namespace AlgoLib.Maths
         public static Equation operator *(Equation eq, double constant) =>
             constant == 0
                 ? throw new ArithmeticException("Constant cannot be zero")
-                : new Equation(eq.Coefficients.Select(c => c * constant).ToArray(),
-                               eq.Free * constant);
+                : new Equation(
+                    eq.Coefficients.Select(c => c * constant).ToArray(), eq.Free * constant);
 
         /// <summary>Multiplies equation by given constant.</summary>
         /// <param name="eq">The equation.</param>
@@ -82,8 +82,8 @@ namespace AlgoLib.Maths
         public static Equation operator /(Equation eq, double constant) =>
             constant == 0
                 ? throw new ArithmeticException("Constant cannot be zero")
-                : new Equation(eq.Coefficients.Select(c => c / constant).ToArray(),
-                               eq.Free / constant);
+                : new Equation(
+                    eq.Coefficients.Select(c => c / constant).ToArray(), eq.Free / constant);
 
         public override string ToString()
         {

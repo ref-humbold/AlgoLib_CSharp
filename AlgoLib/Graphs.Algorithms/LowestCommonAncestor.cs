@@ -14,8 +14,8 @@ namespace AlgoLib.Graphs.Algorithms
 
         public Vertex<TVertexId> Root { get; }
 
-        public LowestCommonAncestor(TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
-                                    Vertex<TVertexId> root)
+        public LowestCommonAncestor(
+            TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> root)
         {
             Graph = graph;
             Root = root;

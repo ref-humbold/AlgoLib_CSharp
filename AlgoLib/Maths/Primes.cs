@@ -29,7 +29,9 @@ namespace AlgoLib.Maths
             var primes = new List<int>();
 
             if(minimum < segmentSize)
-                primes.AddRange(Enumerable.Range(2, 1).Concat(basePrimes).Where(p => p >= minimum));
+                primes.AddRange(Enumerable.Range(2, 1)
+                      .Concat(basePrimes)
+                      .Where(p => p >= minimum));
 
             for(int i = Math.Max(minimum, segmentSize); i < maximum; i += segmentSize)
                 primes.AddRange(getSegmentPrimes(i, Math.Min(i + segmentSize, maximum), basePrimes));
@@ -113,14 +115,13 @@ namespace AlgoLib.Maths
                 }
 
             return isPrime.Select((flag, index) => (Flag: flag, Value: 2 * index + 3))
-                              .Where(elem => elem.Flag)
-                              .Select(elem => elem.Value);
+                          .Where(elem => elem.Flag)
+                          .Select(elem => elem.Value);
         }
 
         // Extracts prime numbers from given range using given basic prime numbers
-        private static IEnumerable<int> getSegmentPrimes(int segmentStart,
-                                                         int segmentEnd,
-                                                         IEnumerable<int> basePrimes)
+        private static IEnumerable<int> getSegmentPrimes(
+            int segmentStart, int segmentEnd, IEnumerable<int> basePrimes)
         {
             int segmentBegin = segmentStart + 1 - segmentStart % 2;
             bool[] isPrime = Enumerable.Range(segmentBegin, segmentEnd - segmentBegin)

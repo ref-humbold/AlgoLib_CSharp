@@ -61,8 +61,8 @@ namespace AlgoLib.Graphs
         /// <param name="property">Vertex property.</param>
         /// <returns>Created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
-        public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex,
-                                           TVertexProperty property = default)
+        public Vertex<TVertexId> AddVertex(
+            Vertex<TVertexId> vertex, TVertexProperty property = default)
         {
             bool wasAdded = Representation.addVertex(vertex);
 
@@ -81,9 +81,10 @@ namespace AlgoLib.Graphs
         /// <param name="property">Edge property.</param>
         /// <returns>Created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
-        public Edge<TVertexId> AddEdgeBetween(Vertex<TVertexId> source,
-                                              Vertex<TVertexId> destination,
-                                              TEdgeProperty property = default) =>
+        public Edge<TVertexId> AddEdgeBetween(
+                Vertex<TVertexId> source,
+                Vertex<TVertexId> destination,
+                TEdgeProperty property = default) =>
             AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
@@ -91,8 +92,8 @@ namespace AlgoLib.Graphs
         /// <param name="property">Edge property.</param>
         /// <returns>Created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
-        public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge,
-                                                TEdgeProperty property = default);
+        public abstract Edge<TVertexId> AddEdge(
+            Edge<TVertexId> edge, TEdgeProperty property = default);
 
         private class GraphPropertiesImpl :
             IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties

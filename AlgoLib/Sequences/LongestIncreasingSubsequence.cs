@@ -56,12 +56,13 @@ namespace AlgoLib.Sequences
         }
 
         // Searches for place of element in list of subsequences.
-        private static int searchIndex<T>(IList<T> sequence,
-                                          Comparison<T> comparison,
-                                          IList<int> subsequence,
-                                          int indexElem,
-                                          int indexBegin,
-                                          int indexEnd)
+        private static int searchIndex<T>(
+            IList<T> sequence,
+            Comparison<T> comparison,
+            IList<int> subsequence,
+            int indexElem,
+            int indexBegin,
+            int indexEnd)
         {
             if(indexEnd - indexBegin <= 1)
                 return indexBegin;

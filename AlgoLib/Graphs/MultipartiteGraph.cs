@@ -12,10 +12,7 @@ namespace AlgoLib.Graphs
 
         private readonly Dictionary<Vertex<TVertexId>, int> vertexGroupDict = new();
 
-        public int GroupsCount
-        {
-            get;
-        }
+        public int GroupsCount { get; }
 
         public IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties Properties => graph.Properties;
 
@@ -43,10 +40,8 @@ namespace AlgoLib.Graphs
                     $"Cannot add vertices to group {vertexIds.Count()}, graph contains only {GroupsCount} groups");
 
             foreach((IEnumerable<TVertexId> groupVertexIds, int i) in vertexIds.Select((id, i) => (id, i)))
-            {
                 foreach(TVertexId vertexId in groupVertexIds)
                     AddVertex(i, vertexId);
-            }
         }
 
         public Vertex<TVertexId> this[TVertexId vertexId] => graph[vertexId];
@@ -85,11 +80,10 @@ namespace AlgoLib.Graphs
         /// <param name="groupNumber">Group number.</param>
         /// <param name="vertexId">Identifier of new vertex.</param>
         /// <param name="property">Vertex property.</param>
-        /// <returns>New vertex.</returns>
+        /// <returns>Created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
-        public Vertex<TVertexId> AddVertex(int groupNumber,
-                                           TVertexId vertexId,
-                                           TVertexProperty property = default) =>
+        public Vertex<TVertexId> AddVertex(
+                int groupNumber, TVertexId vertexId, TVertexProperty property = default) =>
             AddVertex(groupNumber, new Vertex<TVertexId>(vertexId), property);
 
         /// <summary>Adds new vertex with given property to given group in this graph.</summary>
@@ -98,9 +92,8 @@ namespace AlgoLib.Graphs
         /// <param name="property">Vertex property.</param>
         /// <returns>Created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
-        public Vertex<TVertexId> AddVertex(int groupNumber,
-                                           Vertex<TVertexId> vertex,
-                                           TVertexProperty property = default)
+        public Vertex<TVertexId> AddVertex(
+            int groupNumber, Vertex<TVertexId> vertex, TVertexProperty property = default)
         {
             validateGroup(groupNumber);
 
@@ -114,12 +107,13 @@ namespace AlgoLib.Graphs
         /// <param name="source">Source vertex.</param>
         /// <param name="destination">Destination vertex.</param>
         /// <param name="property">Edge property.</param>
-        /// <returns>New edge.</returns>
+        /// <returns>Created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
-        public Edge<TVertexId> AddEdgeBetween(Vertex<TVertexId> source,
-                                              Vertex<TVertexId> destination,
-                                              TEdgeProperty property = default) =>
+        public Edge<TVertexId> AddEdgeBetween(
+                Vertex<TVertexId> source,
+                Vertex<TVertexId> destination,
+                TEdgeProperty property = default) =>
             AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge with given property to this graph.</summary>

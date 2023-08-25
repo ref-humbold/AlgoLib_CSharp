@@ -30,8 +30,9 @@ namespace AlgoLib.Graphs.Algorithms
                 foreach(Vertex<TVertexId> vertex in graph.Vertices)
                     foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))
                         distances[edge.Destination] =
-                            Math.Min(distances[edge.Destination],
-                                     distances[vertex] + graph.Properties[edge].Weight);
+                            Math.Min(
+                                distances[edge.Destination],
+                                distances[vertex] + graph.Properties[edge].Weight);
 
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
                 foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))
@@ -117,8 +118,8 @@ namespace AlgoLib.Graphs.Algorithms
             foreach(Vertex<TVertexId> w in graph.Vertices)
                 foreach(Vertex<TVertexId> v in graph.Vertices)
                     foreach(Vertex<TVertexId> u in graph.Vertices)
-                        distances[(v, u)] = Math.Min(distances[(v, u)],
-                                                     distances[(v, w)] + distances[(w, u)]);
+                        distances[(v, u)] = Math.Min(
+                            distances[(v, u)], distances[(v, w)] + distances[(w, u)]);
 
             return distances;
         }

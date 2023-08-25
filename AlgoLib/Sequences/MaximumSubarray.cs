@@ -65,10 +65,10 @@ namespace AlgoLib.Sequences
                     intervalSums[index] = Math.Max(
                             Math.Max(intervalSums[indexRight], intervalSums[indexLeft]),
                             suffixSums[indexRight] + prefixSums[indexLeft]);
-                    prefixSums[index] = Math.Max(prefixSums[indexRight],
-                                                 allSums[indexRight] + prefixSums[indexLeft]);
-                    suffixSums[index] = Math.Max(suffixSums[indexLeft],
-                                                 suffixSums[indexRight] + allSums[indexLeft]);
+                    prefixSums[index] = Math.Max(
+                        prefixSums[indexRight], allSums[indexRight] + prefixSums[indexLeft]);
+                    suffixSums[index] = Math.Max(
+                        suffixSums[indexLeft], suffixSums[indexRight] + allSums[indexLeft]);
                     allSums[index] = allSums[indexRight] + allSums[indexLeft];
                     index /= 2;
                 }

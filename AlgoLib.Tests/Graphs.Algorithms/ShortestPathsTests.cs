@@ -85,7 +85,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenDirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+            double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
             // when
             Dictionary<Vertex<int>, double> result = directedGraph.BellmanFord(directedGraph[1]);
@@ -97,7 +97,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenNegativeEdge_ThenEdgeIncluded()
         {
             // given
-            var distances = new List<double> { 8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 };
+            double[] distances = new[] { 8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
             directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
@@ -111,7 +111,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void BellmanFord_WhenUndirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
+            double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
             Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
             // when
             Dictionary<Vertex<int>, double> result =
@@ -138,7 +138,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void Dijkstra_WhenDirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+            double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
             Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
             // when
             Dictionary<Vertex<int>, double> result = directedGraph.Dijkstra(directedGraph[1]);
@@ -150,7 +150,7 @@ namespace AlgoLib.Graphs.Algorithms
         public void Dijkstra_WhenUndirectedGraph_ThenShortestPathsLengths()
         {
             // given
-            var distances = new List<double> { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
+            double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
             Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
             // when
             Dictionary<Vertex<int>, double> result = undirectedGraph.Dijkstra(undirectedGraph[1]);
@@ -250,20 +250,19 @@ namespace AlgoLib.Graphs.Algorithms
 
         #endregion
 
-        private static Dictionary<Vertex<int>, double> fromList(IGraph<int, object, Weighted> graph,
-                                                                List<double> distances)
+        private static Dictionary<Vertex<int>, double> fromList(
+            IGraph<int, object, Weighted> graph, double[] distances)
         {
             var dictionary = new Dictionary<Vertex<int>, double>();
 
-            for(int i = 0; i < distances.Count; ++i)
+            for(int i = 0; i < distances.Length; ++i)
                 dictionary.Add(graph[i], distances[i]);
 
             return dictionary;
         }
 
         private static Dictionary<(Vertex<int>, Vertex<int>), double> fromMatrix(
-                IGraph<int, object, Weighted> graph,
-                double[,] distances)
+                IGraph<int, object, Weighted> graph, double[,] distances)
         {
             var dictionary = new Dictionary<(Vertex<int>, Vertex<int>), double>();
 

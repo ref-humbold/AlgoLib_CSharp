@@ -24,9 +24,7 @@ namespace AlgoLib.Geometry.Dim2
         }
 
         // Finds pair of closest points among three of them.
-        private static (Point2D, Point2D) searchThree(Point2D point1,
-                                                      Point2D point2,
-                                                      Point2D point3)
+        private static (Point2D, Point2D) searchThree(Point2D point1, Point2D point2, Point2D point3)
         {
             double distance12 = Geometry2D.Distance(point1, point2);
             double distance23 = Geometry2D.Distance(point2, point3);
@@ -41,9 +39,8 @@ namespace AlgoLib.Geometry.Dim2
 
         // Finds pair of closest points inside a belt of given width. The resulting distance should
         // not be less than belt width.
-        private static (Point2D, Point2D)? checkBelt(List<Point2D> pointsY,
-                                                     double middleX,
-                                                     double width)
+        private static (Point2D, Point2D)? checkBelt(
+            List<Point2D> pointsY, double middleX, double width)
         {
             (Point2D, Point2D)? closestPoints = null;
             var beltPoints = new List<int>();
@@ -79,9 +76,8 @@ namespace AlgoLib.Geometry.Dim2
 
         // Searches for pair of closest points in given sublist of points. Points are given sorted
         // by X coordinate and by Y coordinate.
-        private static (Point2D, Point2D) searchClosest(List<Point2D> pointsX,
-                                                        List<Point2D> pointsY,
-                                                        Range range)
+        private static (Point2D, Point2D) searchClosest(
+            List<Point2D> pointsX, List<Point2D> pointsY, Range range)
         {
             int indexBegin = range.Start.GetOffset(pointsX.Count);
             int indexEnd = range.End.GetOffset(pointsX.Count);
@@ -104,10 +100,8 @@ namespace AlgoLib.Geometry.Dim2
                 else
                     closetsYR.Add(pt);
 
-            (Point2D, Point2D) closestLeft = searchClosest(pointsX, closetsYL,
-                                                           indexBegin..indexMiddle);
-            (Point2D, Point2D) closestRight = searchClosest(pointsX, closetsYR,
-                                                            indexMiddle..indexEnd);
+            (Point2D, Point2D) closestLeft = searchClosest(pointsX, closetsYL, indexBegin..indexMiddle);
+            (Point2D, Point2D) closestRight = searchClosest(pointsX, closetsYR, indexMiddle..indexEnd);
             (Point2D, Point2D) closestPoints =
                 Geometry2D.Distance(closestLeft.Item1, closestLeft.Item2)
                     <= Geometry2D.Distance(closestRight.Item1, closestRight.Item2)
