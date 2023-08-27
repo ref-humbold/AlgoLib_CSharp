@@ -91,7 +91,7 @@ namespace AlgoLib.Maths
                         double param = -equations[j][i] / equations[i][i];
 
                         if(param != 0)
-                            equations[j].Combine(equations[i], param);
+                            equations[j] += equations[i] * param;
                     }
                 }
             }
@@ -106,6 +106,6 @@ namespace AlgoLib.Maths
         /// <summary>Checks whether given values solve this equation system.</summary>
         /// <param name="solution">Values to check.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
-        public bool IsSolution(double[] solution) => equations.All(eq => eq.IsSolution(solution));
+        public bool HasSolution(double[] solution) => equations.All(eq => eq.HasSolution(solution));
     }
 }

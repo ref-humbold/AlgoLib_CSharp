@@ -8,9 +8,9 @@ namespace AlgoLib.Maths
 {
     public class Equation
     {
-        public double[] Coefficients { get; set; }
+        public double[] Coefficients { get; }
 
-        public double Free { get; set; }
+        public double Free { get; }
 
         /// <summary>Gets number of coefficients.</summary>
         public int Count => Coefficients.Length;
@@ -41,8 +41,8 @@ namespace AlgoLib.Maths
             eq1.Count != eq2.Count
                 ? throw new ArgumentException("Equations have different number of variables")
                 : new Equation(
-                eq1.Coefficients.Zip(eq2.Coefficients, (c1, c2) => c1 + c2).ToArray(),
-                eq1.Free + eq2.Free);
+                    eq1.Coefficients.Zip(eq2.Coefficients, (c1, c2) => c1 + c2).ToArray(),
+                    eq1.Free + eq2.Free);
 
         /// <summary>Subtracts two equations.</summary>
         /// <param name="eq1">First equation.</param>
@@ -53,8 +53,8 @@ namespace AlgoLib.Maths
             eq1.Count != eq2.Count
                 ? throw new ArgumentException("Equations have different number of variables")
                 : new Equation(
-                eq1.Coefficients.Zip(eq2.Coefficients, (c1, c2) => c1 - c2).ToArray(),
-                eq1.Free - eq2.Free);
+                    eq1.Coefficients.Zip(eq2.Coefficients, (c1, c2) => c1 - c2).ToArray(),
+                    eq1.Free - eq2.Free);
 
         /// <summary>Multiplies equation by given constant.</summary>
         /// <param name="eq">The equation.</param>
@@ -94,30 +94,11 @@ namespace AlgoLib.Maths
             return $"{string.Join(" + ", terms)} = {Free}";
         }
 
-        /// <summary>Transforms this equation through linear combination with another equation.</summary>
-        /// <param name="equation">The equation.</param>
-        /// <param name="constant">The linear combination constant.</param>
-        /// <exception cref="ArgumentException">If equations sizes are different.</exception>
-        /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
-        public void Combine(Equation equation, double constant)
-        {
-            if(equation.Count != Count)
-                throw new ArgumentException("Equations have different number of variables");
-
-            if(constant == 0)
-                throw new ArithmeticException("Constant cannot be zero");
-
-            for(int i = 0; i < Coefficients.Length; ++i)
-                Coefficients[i] += equation.Coefficients[i] * constant;
-
-            Free += equation.Free * constant;
-        }
-
         /// <summary>Checks whether given values solve this equation.</summary>
         /// <param name="solution">Values to check.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
-        public bool IsSolution(double[] solution) =>
+        public bool HasSolution(double[] solution) =>
             solution.Length == Coefficients.Length
-                && Coefficients.Zip(solution).Select(p => p.First * p.Second).Sum() == Free;
+                && Coefficients.Zip(solution, (c, s) => c * s).Sum() == Free;
     }
 }

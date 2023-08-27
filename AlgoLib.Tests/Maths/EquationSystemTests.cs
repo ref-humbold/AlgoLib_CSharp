@@ -20,8 +20,8 @@ namespace AlgoLib.Maths
             double[] result = testObject.Solve();
             // then
             result.Should().Equal(new[] { 1.0, 3.0, -2.0 });
-            testObject.IsSolution(result).Should().BeTrue();
-            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
+            testObject.HasSolution(result).Should().BeTrue();
+            testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -37,8 +37,8 @@ namespace AlgoLib.Maths
             Action action = () => testObject.Solve();
             // then
             action.Should().Throw<NoSolutionException>();
-            testObject.IsSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeFalse();
-            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
+            testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeFalse();
+            testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
         }
 
         [Test]
@@ -54,8 +54,8 @@ namespace AlgoLib.Maths
             Action action = () => testObject.Solve();
             // then
             action.Should().Throw<InfiniteSolutionsException>();
-            testObject.IsSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeTrue();
-            testObject.IsSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeTrue();
+            testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeTrue();
+            testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeTrue();
         }
     }
 }

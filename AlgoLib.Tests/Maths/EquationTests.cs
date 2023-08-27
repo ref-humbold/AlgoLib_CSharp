@@ -103,23 +103,25 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void Combine_WhenConstantIsNonZero_ThenCombined()
+        public void HasSolution_WhenSolution_ThenTrue()
         {
+            // given
+            double[] solution = { 10, 10, -29, 14 };
             // when
-            testObject.Combine(new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5), -2);
+            bool result = testObject.HasSolution(solution);
             // then
-            testObject.Coefficients.Should().Equal(new[] { 0.0, 5.0, -8.0, -22.5 });
-            testObject.Free.Should().Be(5);
+            result.Should().BeTrue();
         }
 
         [Test]
-        public void Combine_WhenConstantIsZero_ThenArithmeticException()
+        public void HasSolution_WhenNotSolution_ThenFalse()
         {
+            // given
+            double[] solution = { 10, 6, -17, 14 };
             // when
-            Action action =
-                () => testObject.Combine(new Equation(new[] { 1.0, -1.0, 10.0, 7.0 }, 5), 0);
+            bool result = testObject.HasSolution(solution);
             // then
-            action.Should().Throw<ArithmeticException>();
+            result.Should().BeFalse();
         }
     }
 }
