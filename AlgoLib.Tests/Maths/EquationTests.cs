@@ -55,7 +55,7 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void OperatorAsterisk_WhenConstantIsNonZeroOnRight_ThenMultiplied()
+        public void OperatorAsterisk_WhenConstantIsNonZero_ThenMultipliedEachCoordinate()
         {
             // when
             Equation result = testObject * 2;
@@ -74,7 +74,7 @@ namespace AlgoLib.Maths
         }
 
         [Test]
-        public void OperatorSlash_WhenConstantIsNonZero_ThenMultiplied()
+        public void OperatorSlash_WhenConstantIsNonZero_ThenDividedEachCoordinate()
         {
             // when
             Equation result = testObject / -2;
@@ -105,10 +105,8 @@ namespace AlgoLib.Maths
         [Test]
         public void HasSolution_WhenSolution_ThenTrue()
         {
-            // given
-            double[] solution = { 10, 10, -29, 14 };
             // when
-            bool result = testObject.HasSolution(solution);
+            bool result = testObject.HasSolution(new double[] { 10, 10, -29, 14 });
             // then
             result.Should().BeTrue();
         }
@@ -116,10 +114,8 @@ namespace AlgoLib.Maths
         [Test]
         public void HasSolution_WhenNotSolution_ThenFalse()
         {
-            // given
-            double[] solution = { 10, 6, -17, 14 };
             // when
-            bool result = testObject.HasSolution(solution);
+            bool result = testObject.HasSolution(new double[] { 10, 6, -17, 14 });
             // then
             result.Should().BeFalse();
         }

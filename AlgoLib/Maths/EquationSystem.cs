@@ -12,7 +12,7 @@ namespace AlgoLib.Maths
         /// <summary>Gets number of equations.</summary>
         public int Count => equations.Length;
 
-        public EquationSystem(Equation[] equations)
+        public EquationSystem(params Equation[] equations)
         {
             this.equations = equations;
 
