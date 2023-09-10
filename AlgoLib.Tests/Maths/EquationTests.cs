@@ -1,5 +1,6 @@
 ﻿// Tests: Structure of linear equation
 using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -20,8 +21,8 @@ namespace AlgoLib.Maths
             Equation result = +testObject;
             // then
             result.Should().NotBeSameAs(testObject);
-            result.Coefficients.Should().Equal(new[] { 2.0, 3.0, 0.0, -2.5 });
-            result.Free.Should().Be(15);
+            coefficients(result).Should().Equal(new[] { 2.0, 3.0, 0.0, -2.5 });
+            result.FreeTerm.Should().Be(15);
         }
 
         [Test]
@@ -30,8 +31,8 @@ namespace AlgoLib.Maths
             // when
             Equation result = -testObject;
             // then
-            result.Coefficients.Should().Equal(new[] { -2.0, -3.0, 0.0, 2.5 });
-            result.Free.Should().Be(-15);
+            coefficients(result).Should().Equal(new[] { -2.0, -3.0, 0.0, 2.5 });
+            result.FreeTerm.Should().Be(-15);
         }
 
         [Test]
@@ -40,8 +41,8 @@ namespace AlgoLib.Maths
             // when
             Equation result = testObject + new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
             // then
-            result.Coefficients.Should().Equal(new[] { 3.0, 2.0, 4.0, 7.5 });
-            result.Free.Should().Be(20);
+            coefficients(result).Should().Equal(new[] { 3.0, 2.0, 4.0, 7.5 });
+            result.FreeTerm.Should().Be(20);
         }
 
         [Test]
@@ -50,8 +51,8 @@ namespace AlgoLib.Maths
             // when
             Equation result = testObject - new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
             // then
-            result.Coefficients.Should().Equal(new[] { 1.0, 4.0, -4.0, -12.5 });
-            result.Free.Should().Be(10);
+            coefficients(result).Should().Equal(new[] { 1.0, 4.0, -4.0, -12.5 });
+            result.FreeTerm.Should().Be(10);
         }
 
         [Test]
@@ -60,8 +61,8 @@ namespace AlgoLib.Maths
             // when
             Equation result = testObject * 2;
             // then
-            result.Coefficients.Should().Equal(new[] { 4.0, 6.0, 0.0, -5.0 });
-            result.Free.Should().Be(30);
+            coefficients(result).Should().Equal(new[] { 4.0, 6.0, 0.0, -5.0 });
+            result.FreeTerm.Should().Be(30);
         }
 
         [Test]
@@ -80,8 +81,8 @@ namespace AlgoLib.Maths
             Equation result = testObject / -2;
             // then
             result.Should().NotBeSameAs(testObject);
-            result.Coefficients.Should().Equal(new[] { -1.0, -1.5, 0.0, 1.25 });
-            result.Free.Should().Be(-7.5);
+            coefficients(result).Should().Equal(new[] { -1.0, -1.5, 0.0, 1.25 });
+            result.FreeTerm.Should().Be(-7.5);
         }
 
         [Test]
@@ -119,5 +120,8 @@ namespace AlgoLib.Maths
             // then
             result.Should().BeFalse();
         }
+
+        private static double[] coefficients(Equation eq) =>
+            Enumerable.Range(0, eq.Count).Select(i => eq[i]).ToArray();
     }
 }

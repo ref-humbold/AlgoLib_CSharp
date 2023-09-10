@@ -18,8 +18,8 @@ namespace AlgoLib.Maths
 
             foreach(Equation eq in equations)
                 if(eq.Count != equations.Length)
-                    throw new ArgumentException($"Equation {eq} has {eq.Count} variables, but was "
-                                                + $" expected to have {equations.Length}");
+                    throw new ArgumentException(
+                        $"Equation {eq} has {eq.Count} variables, but was expected to have {equations.Length}");
         }
 
         /// <summary>Gets equation of given index.</summary>
@@ -43,19 +43,19 @@ namespace AlgoLib.Maths
         {
             GaussianReduce();
 
-            if(equations[^1][^1] == 0 && equations[^1].Free == 0)
+            if(equations[^1][^1] == 0 && equations[^1].FreeTerm == 0)
                 throw new InfiniteSolutionsException();
 
-            if(equations[^1][^1] == 0 && equations[^1].Free != 0)
+            if(equations[^1][^1] == 0 && equations[^1].FreeTerm != 0)
                 throw new NoSolutionException();
 
             double[] solution = new double[Count];
 
-            solution[^1] = equations[^1].Free / equations[^1][^1];
+            solution[^1] = equations[^1].FreeTerm / equations[^1][^1];
 
             for(int i = Count - 2; i >= 0; --i)
             {
-                double value = equations[i].Free;
+                double value = equations[i].FreeTerm;
 
                 for(int j = Count - 1; j > i; --j)
                     value -= equations[i][j] * solution[j];
