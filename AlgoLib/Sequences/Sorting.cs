@@ -10,8 +10,8 @@ namespace AlgoLib.Sequences
         private static readonly Random Random = new();
 
         /// <summary>Mutably sorts given sequence using a heap.</summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
         public static void HeapSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -40,8 +40,8 @@ namespace AlgoLib.Sequences
         /// Mutably sorts given sequence using a top-down merge-sort algorithm. Sorting is
         /// guaranteed to be stable.
         /// </summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
         public static void TopDownMergeSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -55,8 +55,8 @@ namespace AlgoLib.Sequences
         /// Mutably sorts given sequence using a bottom-up merge-sort algorithm. Sorting is
         /// guaranteed to be stable.
         /// </summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
         public static void BottomUpMergeSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {
@@ -73,8 +73,8 @@ namespace AlgoLib.Sequences
         }
 
         /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
         public static void QuickSort<T>(this List<T> sequence)
             where T : IComparable<T>
         {

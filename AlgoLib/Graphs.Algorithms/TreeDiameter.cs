@@ -7,11 +7,11 @@ namespace AlgoLib.Graphs.Algorithms
     public static class TreeDiameter
     {
         /// <summary>Computes length of diameter of given tree.</summary>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
         /// <param name="tree">The tree graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Diameter length.</returns>
+        /// <returns>The length of tre diameter.</returns>
         public static double CountDiameter<TVertexId, TVertexProperty, TEdgeProperty>(
             this TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree)
             where TEdgeProperty : IWeighted

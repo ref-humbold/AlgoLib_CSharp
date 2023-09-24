@@ -49,17 +49,17 @@ namespace AlgoLib.Graphs
         public abstract int GetInputDegree(Vertex<TVertexId> vertex);
 
         /// <summary>Adds new vertex with given property to this graph.</summary>
-        /// <param name="vertexId">Identifier of new vertex.</param>
-        /// <param name="property">Vertex property.</param>
-        /// <returns>Created vertex.</returns>
+        /// <param name="vertexId">The identifier of new vertex.</param>
+        /// <param name="property">The vertex property.</param>
+        /// <returns>The created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(TVertexId vertexId, TVertexProperty property = default) =>
             AddVertex(new Vertex<TVertexId>(vertexId), property);
 
         /// <summary>Adds new vertex with given property to this graph.</summary>
-        /// <param name="vertex">New vertex.</param>
-        /// <param name="property">Vertex property.</param>
-        /// <returns>Created vertex.</returns>
+        /// <param name="vertex">The new vertex.</param>
+        /// <param name="property">The vertex property.</param>
+        /// <returns>The created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(
             Vertex<TVertexId> vertex, TVertexProperty property = default)
@@ -76,10 +76,10 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="source">Source vertex.</param>
-        /// <param name="destination">Destination vertex.</param>
-        /// <param name="property">Edge property.</param>
-        /// <returns>Created edge.</returns>
+        /// <param name="source">The source vertex.</param>
+        /// <param name="destination">The destination vertex.</param>
+        /// <param name="property">The edge property.</param>
+        /// <returns>The created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         public Edge<TVertexId> AddEdgeBetween(
                 Vertex<TVertexId> source,
@@ -88,9 +88,9 @@ namespace AlgoLib.Graphs
             AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="edge">New edge.</param>
-        /// <param name="property">Edge property.</param>
-        /// <returns>Created edge.</returns>
+        /// <param name="edge">The new edge.</param>
+        /// <param name="property">The edge property.</param>
+        /// <returns>The created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         public abstract Edge<TVertexId> AddEdge(
             Edge<TVertexId> edge, TEdgeProperty property = default);

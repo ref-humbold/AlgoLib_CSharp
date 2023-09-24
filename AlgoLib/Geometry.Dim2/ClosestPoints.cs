@@ -8,7 +8,7 @@ namespace AlgoLib.Geometry.Dim2
     public static class ClosestPoints
     {
         /// <summary>Searches for pair of closest points among given points.</summary>
-        /// <param name="points">An enumerable of points.</param>
+        /// <param name="points">The points.</param>
         /// <returns>The pair of closest points.</returns>
         /// <exception cref="InvalidOperationException">If no points specified.</exception>
         public static (Point2D Closest1, Point2D Closest2) FindClosestPoints(

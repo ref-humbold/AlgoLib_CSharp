@@ -6,12 +6,12 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class MinimalSpanningTree
     {
-        /// <summary>Kruskal algorithm.</summary>
-        /// <param name="graph">Undirected weighted graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Minimal spanning tree.</returns>
+        /// <summary>Computes MST using Kruskal algorithm.</summary>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The undirected weighted graph.</param>
+        /// <returns>The minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Kruskal<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
             where TEdgeProperty : IWeighted
@@ -38,13 +38,13 @@ namespace AlgoLib.Graphs.Algorithms
             return mst;
         }
 
-        /// <summary>Prim algorithm.</summary>
-        /// <param name="graph">Undirected weighted graph.</param>
-        /// <param name="source">Starting vertex.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Minimal spanning tree.</returns>
+        /// <summary>Computes MST using Prim algorithm.</summary>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The undirected weighted graph.</param>
+        /// <param name="source">The starting vertex.</param>
+        /// <returns>The minimal spanning tree.</returns>
         public static IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> Prim<TVertexId, TVertexProperty, TEdgeProperty>(
             IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             Vertex<TVertexId> source)

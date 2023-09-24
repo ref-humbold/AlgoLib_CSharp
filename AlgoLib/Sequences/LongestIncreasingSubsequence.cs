@@ -7,17 +7,17 @@ namespace AlgoLib.Sequences
     public static class LongestIncreasingSubsequence
     {
         /// <summary>Constructs longest increasing subsequence according to a comparer.</summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <param name="comparer">A comparer of elements in subsequence.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
+        /// <param name="comparer">The comparer of elements in subsequence.</param>
         /// <returns>The least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, IComparer<T> comparer) =>
             FindLis(sequence, comparer.Compare);
 
         /// <summary>Constructs longest increasing subsequence according to a comparison function.</summary>
-        /// <param name="sequence">A sequence of elements.</param>
-        /// <param name="comparison">A comparison function of elements in subsequence.</param>
-        /// <typeparam name="T">Type of sequence elements.</typeparam>
+        /// <typeparam name="T">The type of sequence elements.</typeparam>
+        /// <param name="sequence">The sequence of elements.</param>
+        /// <param name="comparison">The comparison function of elements in subsequence.</param>
         /// <returns>The least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
         {

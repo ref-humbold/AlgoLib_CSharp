@@ -23,9 +23,9 @@ namespace AlgoLib.Text
             initLcpArray();
         }
 
-        /// <summary>Gets text suffix at given index.</summary>
-        /// <param name="index">Index in this suffix array.</param>
-        /// <returns>Text suffix at the index.</returns>
+        /// <summary>Gets the text suffix at given index.</summary>
+        /// <param name="index">The index in this suffix array.</param>
+        /// <returns>The text suffix at the index.</returns>
         public string this[Index index]
         {
             get
@@ -39,8 +39,8 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Finds suffix in text for given index in this suffix array.</summary>
-        /// <param name="index">Index in the suffix array.</param>
-        /// <returns>Index in the text where the suffix begins.</returns>
+        /// <param name="index">The index in the suffix array.</param>
+        /// <returns>The index in the text where the suffix begins.</returns>
         public int IndexAt(Index index)
         {
             int i = index.GetOffset(suffixArray.Count);
@@ -51,8 +51,8 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Finds index in this suffix array for given text suffix.</summary>
-        /// <param name="index">Index in the text where suffix begins.</param>
-        /// <returns>Index of suffix in the suffix array.</returns>
+        /// <param name="index">The index in the text where suffix begins.</param>
+        /// <returns>The index of suffix in the suffix array.</returns>
         public int IndexOf(Index index)
         {
             int i = index.GetOffset(suffixArray.Count);
@@ -63,9 +63,9 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Counts length of the longest common prefix of given suffixes.</summary>
-        /// <param name="index1">Index in text where first suffix begins.</param>
-        /// <param name="index2">Index in text where second suffix begins.</param>
-        /// <returns>Length of the longest common prefix.</returns>
+        /// <param name="index1">The index in text where first suffix begins.</param>
+        /// <param name="index2">The index in text where second suffix begins.</param>
+        /// <returns>The length of the longest common prefix.</returns>
         public int CountLCP(Index index1, Index index2)
         {
             int i1 = index1.GetOffset(suffixArray.Count);

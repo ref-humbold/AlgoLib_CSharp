@@ -65,9 +65,9 @@ namespace AlgoLib.Graphs
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
             graph.AsDirected();
 
-        /// <summary>Gets vertices of given group.</summary>
-        /// <param name="groupNumber">Group number.</param>
-        /// <returns>Vertices that belong to the group.</returns>
+        /// <summary>Gets the vertices of given group.</summary>
+        /// <param name="groupNumber">The group number.</param>
+        /// <returns>The vertices that belong to the group.</returns>
         public IEnumerable<Vertex<TVertexId>> GetVerticesFromGroup(int groupNumber)
         {
             validateGroup(groupNumber);
@@ -77,20 +77,20 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Adds new vertex with given property to given group in this graph.</summary>
-        /// <param name="groupNumber">Group number.</param>
-        /// <param name="vertexId">Identifier of new vertex.</param>
-        /// <param name="property">Vertex property.</param>
-        /// <returns>Created vertex.</returns>
+        /// <param name="groupNumber">the group number.</param>
+        /// <param name="vertexId">The identifier of new vertex.</param>
+        /// <param name="property">The vertex property.</param>
+        /// <returns>The created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(
                 int groupNumber, TVertexId vertexId, TVertexProperty property = default) =>
             AddVertex(groupNumber, new Vertex<TVertexId>(vertexId), property);
 
         /// <summary>Adds new vertex with given property to given group in this graph.</summary>
-        /// <param name="groupNumber">Group number.</param>
-        /// <param name="vertex">New vertex.</param>
-        /// <param name="property">Vertex property.</param>
-        /// <returns>Created vertex.</returns>
+        /// <param name="groupNumber">The group number.</param>
+        /// <param name="vertex">The new vertex.</param>
+        /// <param name="property">The vertex property.</param>
+        /// <returns>The created vertex.</returns>
         /// <exception cref="ArgumentException">If vertex already exists.</exception>
         public Vertex<TVertexId> AddVertex(
             int groupNumber, Vertex<TVertexId> vertex, TVertexProperty property = default)
@@ -104,10 +104,10 @@ namespace AlgoLib.Graphs
         }
 
         /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
-        /// <param name="source">Source vertex.</param>
-        /// <param name="destination">Destination vertex.</param>
-        /// <param name="property">Edge property.</param>
-        /// <returns>Created edge.</returns>
+        /// <param name="source">The source vertex.</param>
+        /// <param name="destination">The destination vertex.</param>
+        /// <param name="property">The edge property.</param>
+        /// <returns>The created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
         public Edge<TVertexId> AddEdgeBetween(
@@ -117,9 +117,9 @@ namespace AlgoLib.Graphs
             AddEdge(new Edge<TVertexId>(source, destination), property);
 
         /// <summary>Adds new edge with given property to this graph.</summary>
-        /// <param name="edge">New edge.</param>
-        /// <param name="property">Edge property.</param>
-        /// <returns>Created edge.</returns>
+        /// <param name="edge">The new edge.</param>
+        /// <param name="property">The edge property.</param>
+        /// <returns>The created edge.</returns>
         /// <exception cref="ArgumentException">If edge already exists.</exception>
         /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
         public Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default) =>

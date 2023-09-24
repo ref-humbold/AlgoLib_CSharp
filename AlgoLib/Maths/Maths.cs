@@ -118,7 +118,7 @@ namespace AlgoLib.Maths
         /// <summary>Performs fast multiplication of two numbers with modulo taken.</summary>
         /// <param name="factor1">First factor.</param>
         /// <param name="factor2">Second factor.</param>
-        /// <param name="modulo">A modulo.</param>
+        /// <param name="modulo">The modulo.</param>
         /// <returns>The multiplication result with modulo taken.</returns>
         public static int Multiply(int factor1, int factor2, int modulo)
         {
@@ -151,7 +151,7 @@ namespace AlgoLib.Maths
         /// <summary>Performs fast multiplication of two numbers with modulo taken.</summary>
         /// <param name="factor1">First factor.</param>
         /// <param name="factor2">Second factor.</param>
-        /// <param name="modulo">A modulo.</param>
+        /// <param name="modulo">The modulo.</param>
         /// <returns>The multiplication result with modulo taken.</returns>
         public static long Multiply(long factor1, long factor2, long modulo)
         {
@@ -185,8 +185,8 @@ namespace AlgoLib.Maths
         #region Power
 
         /// <summary>Performs fast exponentiation of two numbers.</summary>
-        /// <param name="baseNum">A base.</param>
-        /// <param name="exponent">An exponent.</param>
+        /// <param name="baseNum">The base.</param>
+        /// <param name="exponent">The exponent.</param>
         /// <returns>The exponentiation result.</returns>
         public static int Power(int baseNum, int exponent)
         {
@@ -211,8 +211,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Performs fast exponentiation of two numbers.</summary>
-        /// <param name="baseNum">A base.</param>
-        /// <param name="exponent">An exponent.</param>
+        /// <param name="baseNum">The base.</param>
+        /// <param name="exponent">The exponent.</param>
         /// <returns>The exponentiation result.</returns>
         public static long Power(long baseNum, long exponent)
         {
@@ -237,9 +237,9 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Performs fast exponentiation of two numbers with modulo taken.</summary>
-        /// <param name="baseNum">A base.</param>
-        /// <param name="exponent">An exponent.</param>
-        /// <param name="modulo">A modulo.</param>
+        /// <param name="baseNum">The base.</param>
+        /// <param name="exponent">The exponent.</param>
+        /// <param name="modulo">The modulo.</param>
         /// <returns>The exponentiation result with modulo taken.</returns>
         public static int Power(int baseNum, int exponent, int modulo)
         {
@@ -267,9 +267,9 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Performs fast exponentiation of two numbers with modulo taken.</summary>
-        /// <param name="baseNum">A base.</param>
-        /// <param name="exponent">An exponent.</param>
-        /// <param name="modulo">A modulo.</param>
+        /// <param name="baseNum">The base.</param>
+        /// <param name="exponent">The exponent.</param>
+        /// <param name="modulo">The modulo.</param>
         /// <returns>The exponentiation result with modulo taken.</returns>
         public static long Power(long baseNum, long exponent, long modulo)
         {

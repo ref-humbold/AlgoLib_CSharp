@@ -8,72 +8,72 @@ namespace AlgoLib.Graphs
         IGraphProperties Properties { get; }
 
         /// <summary>Gets the number of vertices in this graph.</summary>
-        /// <value>Number of vertices.</value>
+        /// <value>The number of vertices.</value>
         int VerticesCount { get; }
 
         /// <summary>Gets the number of edges in this graph.</summary>
-        /// <value>Number of edges.</value>
+        /// <value>The number of edges.</value>
         int EdgesCount { get; }
 
         /// <summary>Gets all vertices in this graph.</summary>
-        /// <value>Enumerable of all vertices.</value>
+        /// <value>All vertices.</value>
         IEnumerable<Vertex<TVertexId>> Vertices { get; }
 
         /// <summary>Gets all edges in this graph.</summary>
-        /// <value>Enumerable of all edges.</value>
+        /// <value>All edges.</value>
         IEnumerable<Edge<TVertexId>> Edges { get; }
 
         /// <summary>Gets the vertex from this graph with given identifier.</summary>
-        /// <value>Vertex with the identifier.</value>
-        /// <param name="vertexId">Vertex identifier.</param>
-        /// <exception cref="KeyNotFoundException">If no such vertex.</exception>
+        /// <value>The vertex with the identifier.</value>
+        /// <param name="vertexId">The vertex identifier.</param>
+        /// <exception cref="KeyNotFoundException">If no such vertex exists.</exception>
         Vertex<TVertexId> this[TVertexId vertexId] { get; }
 
         /// <summary>Gets the edge between given vertices.</summary>
-        /// <value>Edge between the vertices.</value>
-        /// <param name="sourceId">Source vertex identifier.</param>
-        /// <param name="destinationId">Destination vertex identifier.</param>
-        /// <exception cref="KeyNotFoundException">If no such edge.</exception>
+        /// <value>The edge between the vertices.</value>
+        /// <param name="sourceId">The source vertex identifier.</param>
+        /// <param name="destinationId">The destination vertex identifier.</param>
+        /// <exception cref="KeyNotFoundException">If no such edge exists.</exception>
         Edge<TVertexId> this[TVertexId sourceId, TVertexId destinationId] { get; }
 
         /// <summary>Gets the edge between given vertices.</summary>
-        /// <value>Edge between the vertices.</value>
-        /// <param name="source">Source vertex.</param>
-        /// <param name="destination">Destination vertex.</param>
-        /// <exception cref="KeyNotFoundException">If no such edge.</exception>
+        /// <value>The edge between the vertices.</value>
+        /// <param name="source">The source vertex.</param>
+        /// <param name="destination">The destination vertex.</param>
+        /// <exception cref="KeyNotFoundException">If no such edge exists.</exception>
         Edge<TVertexId> this[Vertex<TVertexId> source, Vertex<TVertexId> destination] =>
             this[source.Id, destination.Id];
 
-        /// <summary>Gets neighbours of given vertex.</summary>
-        /// <param name="vertex">Vertex from this graph.</param>
-        /// <returns>Enumerable of neighbouring vertices.</returns>
+        /// <summary>Gets the neighbours of given vertex.</summary>
+        /// <param name="vertex">The vertex from this graph.</param>
+        /// <returns>The neighbouring vertices.</returns>
         IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex);
 
-        /// <summary>Gets adjacent edges of given vertex.</summary>
+        /// <summary>Gets the adjacent edges of given vertex.</summary>
         /// <param name="vertex">Vertex from this graph.</param>
-        /// <returns>Enumerable of edges adjacent to the vertex.</returns>
+        /// <returns>The edges adjacent to the vertex.</returns>
         IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex);
 
-        /// <summary>Gets output degree of given vertex.</summary>
-        /// <param name="vertex">Vertex from this graph.</param>
-        /// <returns>Output degree of the vertex.</returns>
+        /// <summary>Gets the output degree of given vertex.</summary>
+        /// <param name="vertex">The vertex from this graph.</param>
+        /// <returns>The output degree of the vertex.</returns>
         int GetOutputDegree(Vertex<TVertexId> vertex);
 
-        /// <summary>Gets input degree of given vertex.</summary>
-        /// <param name="vertex">Vertex from this graph.</param>
-        /// <returns>Input degree of the vertex.</returns>
+        /// <summary>Gets the input degree of given vertex.</summary>
+        /// <param name="vertex">The vertex from this graph.</param>
+        /// <returns>The input degree of the vertex.</returns>
         int GetInputDegree(Vertex<TVertexId> vertex);
 
         public interface IGraphProperties
         {
-            /// <summary>Gets or sets property for given vertex.</summary>
-            /// <value>Property of the vertex.</value>
-            /// <param name="vertex">Vertex from this graph.</param>
+            /// <summary>Gets or sets the property for given vertex.</summary>
+            /// <value>The property of the vertex.</value>
+            /// <param name="vertex">The vertex from this graph.</param>
             TVertexProperty this[Vertex<TVertexId> vertex] { get; set; }
 
-            /// <summary>Gets or sets property for given edge.</summary>
-            /// <value>Property of the edge.</value>
-            /// <param name="edge">Edge from this graph.</param>
+            /// <summary>Gets or sets the property for given edge.</summary>
+            /// <value>The property of the edge.</value>
+            /// <param name="edge">The edge from this graph.</param>
             TEdgeProperty this[Edge<TVertexId> edge] { get; set; }
         }
     }

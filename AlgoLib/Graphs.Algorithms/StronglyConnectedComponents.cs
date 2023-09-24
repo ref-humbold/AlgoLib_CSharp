@@ -6,11 +6,11 @@ namespace AlgoLib.Graphs.Algorithms
     public static class StronglyConnectedComponents
     {
         /// <summary>Finds strongly connected components in given directed graph.</summary>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
         /// <param name="graph">The directed graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>List of vertices in strongly connected components.</returns>
+        /// <returns>The list of vertices in strongly connected components.</returns>
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

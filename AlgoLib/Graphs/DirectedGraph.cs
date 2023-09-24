@@ -12,7 +12,7 @@ namespace AlgoLib.Graphs
         void Reverse();
 
         /// <summary>Returns reversed copy of this graph.</summary>
-        /// <returns>Copy of the graph with reversed directions of edges.</returns>
+        /// <returns>The copy of the graph with reversed directions of edges.</returns>
         IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy();
     }
 

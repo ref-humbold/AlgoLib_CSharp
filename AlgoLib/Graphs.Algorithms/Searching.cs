@@ -6,13 +6,13 @@ namespace AlgoLib.Graphs.Algorithms
     public static class Searching
     {
         /// <summary>Breadth-first-search algorithm.</summary>
-        /// <param name="graph">a graph.</param>
-        /// <param name="strategy">a searching strategy.</param>
-        /// <param name="roots">starting vertices.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>enumerable of visited vertices.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The graph.</param>
+        /// <param name="strategy">The searching strategy.</param>
+        /// <param name="roots">The starting vertices.</param>
+        /// <returns>The visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IBfsStrategy<TVertexId> strategy,
@@ -50,13 +50,13 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Iterative deph-first-search algorithm.</summary>
-        /// <param name="graph">a graph.</param>
-        /// <param name="strategy">a searching strategy.</param>
-        /// <param name="roots">starting vertices.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>enumerable of visited vertices.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The graph.</param>
+        /// <param name="strategy">The searching strategy.</param>
+        /// <param name="roots">The starting vertices.</param>
+        /// <returns>The visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> DfsIterative<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IDfsStrategy<TVertexId> strategy,
@@ -102,13 +102,13 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Recursive deph-first-search algorithm.</summary>
-        /// <param name="graph">a graph.</param>
-        /// <param name="strategy">a searching strategy.</param>
-        /// <param name="roots">starting vertices.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>enumerable of visited vertices.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The graph.</param>
+        /// <param name="strategy">The searching strategy.</param>
+        /// <param name="roots">The starting vertices.</param>
+        /// <returns>The visited vertices.</returns>
         public static IEnumerable<Vertex<TVertexId>> DfsRecursive<TVertexId, TVertexProperty, TEdgeProperty>(
             this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IDfsStrategy<TVertexId> strategy,

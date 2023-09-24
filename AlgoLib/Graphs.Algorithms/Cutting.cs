@@ -7,11 +7,11 @@ namespace AlgoLib.Graphs.Algorithms
     public static class Cutting
     {
         /// <summary>Finds edge cut of given graph.</summary>
-        /// <param name="graph">An undirected graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Edges in the edge cut.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The undirected graph.</param>
+        /// <returns>The edges in the edge cut.</returns>
         public static IEnumerable<Edge<TVertexId>> FindEdgeCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
@@ -24,11 +24,11 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Finds vertex cut of given graph.</summary>
-        /// <param name="graph">An undirected graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Vertices in the vertex cut.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The undirected graph.</param>
+        /// <returns>The vertices in the vertex cut.</returns>
         public static IEnumerable<Vertex<TVertexId>> FindVertexCut<TVertexId, TVertexProperty, TEdgeProperty>(
             this IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

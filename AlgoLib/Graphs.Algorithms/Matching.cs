@@ -8,11 +8,11 @@ namespace AlgoLib.Graphs.Algorithms
     public static class Matching
     {
         /// <summary>Finds maximal matching in given bipartite graph.</summary>
-        /// <param name="graph">Bipartite graph.</param>
-        /// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">Type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">Type of edge properties.</typeparam>
-        /// <returns>Dictionary of matched vertices.</returns>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+        /// <param name="graph">The bipartite graph.</param>
+        /// <returns>The dictionary of matched vertices.</returns>
         public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty, TEdgeProperty>(
             this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

@@ -12,13 +12,13 @@ namespace AlgoLib.Maths
 
         /// <summary>Finds prime numbers less than given number.</summary>
         /// <param name="maximum">Maximal number, exclusive.</param>
-        /// <returns>The enumerable of prime numbers.</returns>
+        /// <returns>The prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int maximum) => FindPrimes(0, maximum);
 
         /// <summary>Finds prime numbers inside given range of numbers.</summary>
         /// <param name="minimum">Minimal number, inclusive.</param>
         /// <param name="maximum">Maximal number, exclusive.</param>
-        /// <returns>The enumerable of prime numbers.</returns>
+        /// <returns>The prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int minimum, int maximum)
         {
             if(maximum <= minimum || maximum <= 2)
@@ -40,7 +40,7 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given number is prime using Fermat's prime test.</summary>
-        /// <param name="number">A number.</param>
+        /// <param name="number">The number.</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestFermat(int number)
         {
@@ -64,7 +64,7 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given number is prime using Miller-Rabin's prime test.</summary>
-        /// <param name="number">A number.</param>
+        /// <param name="number">The number.</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestMiller(int number)
         {

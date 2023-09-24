@@ -10,7 +10,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <summary>
         /// Immutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">A list of points.</param>
+        /// <param name="points">The list of points.</param>
         /// <returns>The sorted list of points.</returns>
         public static List<Point2D> SortByX(this List<Point2D> points) =>
             points == null
@@ -20,7 +20,7 @@ namespace AlgoLib.Geometry.Dim2
         /// <summary>
         /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">A list of points.</param>
+        /// <param name="points">The list of points.</param>
         /// <returns>The sorted list of points.</returns>
         public static List<Point2D> SortByY(this List<Point2D> points) =>
             points == null
@@ -31,7 +31,7 @@ namespace AlgoLib.Geometry.Dim2
         /// Immutably sorts points by their polar coordinates. First sorts by angle, then by radius.
         /// Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">A list of points.</param>
+        /// <param name="points">The list of points.</param>
         /// <returns>The sorted list of points.</returns>
         public static List<Point2D> SortByAngle(this List<Point2D> points) =>
             points == null
@@ -46,15 +46,15 @@ namespace AlgoLib.Geometry.Dim2
             Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
 
         /// <summary>Translates given point by given vector.</summary>
-        /// <param name="p">A point.</param>
-        /// <param name="v">A vector of translation.</param>
+        /// <param name="p">The point.</param>
+        /// <param name="v">The vector of translation.</param>
         /// <returns>The translated point.</returns>
         public static Point2D Translate(this Point2D p, Vector2D v) =>
             new(p.X + v.X, p.Y + v.Y);
 
         /// <summary>Reflects given point in another point.</summary>
-        /// <param name="p">A point.</param>
-        /// <param name="centre">A point of reflection.</param>
+        /// <param name="p">The point.</param>
+        /// <param name="centre">The point of reflection.</param>
         /// <returns>The reflected point.</returns>
         public static Point2D Reflect(this Point2D p, Point2D centre) =>
             new(-p.X + 2 * centre.X, -p.Y + 2 * centre.Y);

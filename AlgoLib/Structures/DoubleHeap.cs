@@ -10,10 +10,12 @@ namespace AlgoLib.Structures
         private static readonly int IndexMax = 1;
         private List<T> heap = new();
 
-        /// <summary>Gets comparer.</summary>
+        /// <summary>Gets the comparer.</summary>
+        /// <value>The comparer.</value>
         public IComparer<T> Comparer { get; }
 
-        /// <summary>Gets number of elements.</summary>
+        /// <summary>Gets the number of elements.</summary>
+        /// <value>The number of elements.</value>
         public int Count => heap.Count;
 
         public DoubleHeap()
@@ -39,7 +41,7 @@ namespace AlgoLib.Structures
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>Retrieves minimal element from this double heap.</summary>
-        /// <returns>Minimal element.</returns>
+        /// <returns>The minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMin() =>
             Count > 0
@@ -49,7 +51,7 @@ namespace AlgoLib.Structures
         /// <summary>
         /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
+        /// <param name="result">The minimal element if it's present, otherwise the default value.</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMin(out T result)
         {
@@ -64,7 +66,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves maximal element from this double heap.</summary>
-        /// <returns>Maximal element.</returns>
+        /// <returns>The maximal element.</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PeekMax() =>
             Count switch
@@ -77,7 +79,7 @@ namespace AlgoLib.Structures
         /// <summary>
         /// Retrieves maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Maximal element if it's present, otherwise the default value.</param>
+        /// <param name="result">The maximal element if it's present, otherwise the default value.</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeekMax(out T result)
         {
@@ -98,7 +100,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Adds new value to this double heap.</summary>
-        /// <param name="item">New value.</param>
+        /// <param name="item">The new value.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -133,7 +135,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Adds new values from given range to this double heap.</summary>
-        /// <param name="items">The enumerable of new values.</param>
+        /// <param name="items">The new values.</param>
         public void PushRange(IEnumerable<T> items)
         {
             foreach(T item in items)
@@ -141,7 +143,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes minimal element from this double heap.</summary>
-        /// <returns>Removed minimal element.</returns>
+        /// <returns>The removed minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PopMin()
         {
@@ -157,7 +159,7 @@ namespace AlgoLib.Structures
         /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed minimal element if it's present, otherwise the default value.
+        /// The removed minimal element if it's present, otherwise the default value.
         /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPopMin(out T result)
@@ -175,7 +177,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes maximal element from this double heap.</summary>
-        /// <returns>Removed maximal element.</returns>
+        /// <returns>The removed maximal element.</returns>
         /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
         public T PopMax()
         {
@@ -194,7 +196,7 @@ namespace AlgoLib.Structures
         /// Removes maximal element from this double heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed maximal element if it's present, otherwise the default value.
+        /// The removed maximal element if it's present, otherwise the default value.
         /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPopMax(out T result)

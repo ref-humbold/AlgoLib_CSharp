@@ -28,18 +28,39 @@ namespace AlgoLib.Maths
 
         public static Fraction Of(long numerator, long denominator = 1) => new(numerator, denominator);
 
+        /// <summary>Performs an explicit conversion to <see cref="int" />.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The result of the conversion.</returns>
         public static explicit operator int(Fraction f) => (int)(f.numerator / f.denominator);
 
+        /// <summary>Performs an explicit conversion to <see cref="long" />.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The result of the conversion.</returns>
         public static explicit operator long(Fraction f) => f.numerator / f.denominator;
 
+        /// <summary>Performs an explicit conversion to <see cref="float" />.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The result of the conversion.</returns>
         public static explicit operator float(Fraction f) => 1.0f * f.numerator / f.denominator;
 
+        /// <summary>Performs an explicit conversion to <see cref="double" />.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The result of the conversion.</returns>
         public static explicit operator double(Fraction f) => 1.0 * f.numerator / f.denominator;
 
+        /// <summary>Performs an explicit conversion to <see cref="decimal" />.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The result of the conversion.</returns>
         public static explicit operator decimal(Fraction f) => 1.0m * f.numerator / f.denominator;
 
+        /// <summary>Performs an implicit conversion from <see cref="int" />.</summary>
+        /// <param name="n">The integer.</param>
+        /// <returns>The result of the conversion.</returns>
         public static implicit operator Fraction(int n) => Of(n);
 
+        /// <summary>Performs an implicit conversion from <see cref="long" />.</summary>
+        /// <param name="n">The long integer.</param>
+        /// <returns>The result of the conversion.</returns>
         public static implicit operator Fraction(long n) => Of(n);
 
         public static bool operator ==(Fraction f1, Fraction f2) => f1.Equals(f2);
@@ -54,26 +75,53 @@ namespace AlgoLib.Maths
 
         public static bool operator >=(Fraction f1, Fraction f2) => f1.CompareTo(f2) >= 0;
 
-        public static Fraction operator +(Fraction f1) => Of(+f1.numerator, +f1.denominator);
+        /// <summary>Copies fraction.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The copied fraction.</returns>
+        public static Fraction operator +(Fraction f) => Of(+f.numerator, +f.denominator);
 
-        public static Fraction operator -(Fraction f1) => Of(-f1.numerator, f1.denominator);
+        /// <summary>Negates fraction.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The negated fraction.</returns>
+        public static Fraction operator -(Fraction f) => Of(-f.numerator, f.denominator);
 
+        /// <summary>Inverts fraction.</summary>
+        /// <param name="f">The fraction.</param>
+        /// <returns>The inverted fraction.</returns>
+        /// <exception cref="InvalidOperationException">If fraction is equal to zero.</exception>
         public static Fraction operator ~(Fraction f) =>
             f.numerator == 0
                 ? throw new InvalidOperationException("Value of zero cannot be inverted")
                 : Of(f.denominator, f.numerator);
 
+        /// <summary>Adds two fractions.</summary>
+        /// <param name="f1">The first fraction.</param>
+        /// <param name="f2">The second fraction.</param>
+        /// <returns>The result of the addition.</returns>
         public static Fraction operator +(Fraction f1, Fraction f2) => Of(
                f1.numerator * f2.denominator + f2.numerator * f1.denominator,
                f1.denominator * f2.denominator);
 
+        /// <summary>Subtracts two fractions.</summary>
+        /// <param name="f1">The first fraction.</param>
+        /// <param name="f2">The second fraction.</param>
+        /// <returns>The result of the subtraction.</returns>
         public static Fraction operator -(Fraction f1, Fraction f2) => Of(
             f1.numerator * f2.denominator - f2.numerator * f1.denominator,
             f1.denominator * f2.denominator);
 
+        /// <summary>Multiplies two fractions.</summary>
+        /// <param name="f1">The first fraction.</param>
+        /// <param name="f2">The second fraction.</param>
+        /// <returns>The result of the multiplication.</returns>
         public static Fraction operator *(Fraction f1, Fraction f2) =>
             Of(f1.numerator * f2.numerator, f1.denominator * f2.denominator);
 
+        /// <summary>Divides two fractions.</summary>
+        /// <param name="f1">The first fraction.</param>
+        /// <param name="f2">The second fraction.</param>
+        /// <returns>The result of the multiplication.</returns>
+        /// <exception cref="DivideByZeroException">If the divisor is equal to zero.</exception>
         public static Fraction operator /(Fraction f1, Fraction f2) =>
             f2.numerator == 0
                 ? throw new DivideByZeroException("Division by zero")

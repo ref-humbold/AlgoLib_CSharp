@@ -15,9 +15,9 @@ namespace AlgoLib.Graphs
             Destination = destination;
         }
 
-        /// <summary>Gets neighbour of adjacent vertex.</summary>
-        /// <param name="vertex">Vertex adjacent to this edge.</param>
-        /// <returns>Neighbour of the vertex along this edge.</returns>
+        /// <summary>Gets the neighbour of adjacent vertex.</summary>
+        /// <param name="vertex">The vertex adjacent to this edge.</param>
+        /// <returns>The neighbour of the vertex along this edge.</returns>
         /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge.</exception>
         public Vertex<TVertexId> GetNeighbour(Vertex<TVertexId> vertex) =>
             Source.Equals(vertex)
@@ -26,8 +26,8 @@ namespace AlgoLib.Graphs
                     ? Source
                     : throw new ArgumentException($"Edge {this} is not adjacent to given vertex {vertex}");
 
-        /// <summary>Gets reversed copy of this edge.</summary>
-        /// <returns>Edge with reversed direction.</returns>
+        /// <summary>Gets the reversed copy of this edge.</summary>
+        /// <returns>The edge with reversed direction.</returns>
         public Edge<TVertexId> Reversed() => new(Destination, Source);
 
         public bool Equals(Edge<TVertexId> other) =>

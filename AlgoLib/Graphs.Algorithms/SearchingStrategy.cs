@@ -20,23 +20,23 @@ namespace AlgoLib.Graphs.Algorithms
 
     public struct EmptyStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        public void ForRoot(Vertex<TVertexId> root)
+        public readonly void ForRoot(Vertex<TVertexId> root)
         {
         }
 
-        public void OnEntry(Vertex<TVertexId> vertex)
+        public readonly void OnEntry(Vertex<TVertexId> vertex)
         {
         }
 
-        public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
+        public readonly void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
         {
         }
 
-        public void OnExit(Vertex<TVertexId> vertex)
+        public readonly void OnExit(Vertex<TVertexId> vertex)
         {
         }
 
-        public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
+        public readonly void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
         {
         }
     }

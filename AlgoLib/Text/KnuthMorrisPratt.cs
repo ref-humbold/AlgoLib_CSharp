@@ -12,7 +12,7 @@ namespace AlgoLib.Text
         /// </summary>
         /// <param name="text">The text.</param>
         /// <param name="pattern">The pattern.</param>
-        /// <returns>Enumerable of indices with pattern occurrences.</returns>
+        /// <returns>The indices with pattern occurrences.</returns>
         public static IEnumerable<int> KmpSearch(this string text, string pattern)
         {
             if(text == null)

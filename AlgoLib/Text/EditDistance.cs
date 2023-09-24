@@ -6,12 +6,12 @@ namespace AlgoLib.Text
     public static class EditDistance
     {
         /// <summary>Computes cost of Levenshtein edit distance between given texts.</summary>
-        /// <param name="source">Initial text.</param>
-        /// <param name="destination">Final text.</param>
-        /// <param name="insertionCost">Cost of insertion operation.</param>
-        /// <param name="deletionCost">Cost of deletion operation.</param>
-        /// <param name="substitutionCost">Cost of substitution operation.</param>
-        /// <returns>Cost of edit distance.</returns>
+        /// <param name="source">The initial text.</param>
+        /// <param name="destination">The final text.</param>
+        /// <param name="insertionCost">The cost of insertion operation.</param>
+        /// <param name="deletionCost">The cost of deletion operation.</param>
+        /// <param name="substitutionCost">The cost of substitution operation.</param>
+        /// <returns>The cost of edit distance.</returns>
         /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
         public static double CountLevenshtein(
             this string source,
@@ -52,11 +52,11 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Computes cost of LCS edit distance between given texts.</summary>
-        /// <param name="source">Initial text.</param>
-        /// <param name="destination">Final text.</param>
-        /// <param name="insertionCost">Cost of insertion operation.</param>
-        /// <param name="deletionCost">Cost of deletion operation.</param>
-        /// <returns>Cost of edit distance.</returns>
+        /// <param name="source">The initial text.</param>
+        /// <param name="destination">The final text.</param>
+        /// <param name="insertionCost">The cost of insertion operation.</param>
+        /// <param name="deletionCost">The cost of deletion operation.</param>
+        /// <returns>The cost of edit distance.</returns>
         /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
         public static double CountLcs(
             this string source,
@@ -93,10 +93,10 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Computes cost of Hamming edit distance between given texts of equal length.</summary>
-        /// <param name="source">Initial text.</param>
-        /// <param name="destination">Final text.</param>
-        /// <param name="substitutionCost">Cost of substitution operation.</param>
-        /// <returns>Cost of edit distance.</returns>
+        /// <param name="source">The initial text.</param>
+        /// <param name="destination">The final text.</param>
+        /// <param name="substitutionCost">The cost of substitution operation.</param>
+        /// <returns>The cost of edit distance.</returns>
         /// <exception cref="ArgumentException">
         /// If any operation cost is negative, or if texts have different length.
         /// </exception>

@@ -7,15 +7,38 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class TopologicalSorting
     {
+        /// <summary>Topological sorting algorithm using predecessors counting.</summary>
+        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <param name="graph">The directed graph.</param>
+        /// <returns>The topological order of vertices.</returns>
+        /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
         public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
             InputsTopologicalSort(graph, Comparer<TVertexId>.Default);
 
+        /// <summary>Inputses the topological sort.</summary>
+        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <param name="graph">The directed graph.</param>
+        /// <param name="vertexIdComparison">The comparison function of vertex identifiers.</param>
+        /// <returns>The topological order of vertices.</returns>
+        /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
         public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             Comparison<TVertexId> vertexIdComparison) =>
             InputsTopologicalSort(graph, Comparer<TVertexId>.Create(vertexIdComparison));
 
+        /// <summary>Inputses the topological sort.</summary>
+        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <param name="graph">The directed graph.</param>
+        /// <param name="vertexIdComparer">The vertex identifier comparer.</param>
+        /// <returns>The topological order of vertices.</returns>
+        /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
         public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
             IComparer<TVertexId> vertexIdComparer)

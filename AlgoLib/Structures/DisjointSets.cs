@@ -9,7 +9,8 @@ namespace AlgoLib.Structures
         // Map of element represents
         private readonly Dictionary<T, T> represents = new();
 
-        /// <summary>Gets number of sets.</summary>
+        /// <summary>Gets the number of sets.</summary>
+        /// <value>The number of sets.</value>
         public int Count { get; private set; }
 
         public DisjointSets(IEnumerable<T> universe)
@@ -20,10 +21,10 @@ namespace AlgoLib.Structures
             Count = represents.Count;
         }
 
-        /// <summary>Finds represent of element in set.</summary>
-        /// <param name="item">Element from structure.</param>
-        /// <returns>Represent of the element.</returns>
-        /// <exception cref="KeyNotFoundException">If element not present.</exception>
+        /// <summary>Finds represent of element.</summary>
+        /// <param name="item">The element from this structure.</param>
+        /// <returns>The represent of the element.</returns>
+        /// <exception cref="KeyNotFoundException">If element is not present.</exception>
         public T this[T item]
         {
             get
@@ -35,15 +36,15 @@ namespace AlgoLib.Structures
             }
         }
 
-        /// <summary>Checks whether element belongs to any set.</summary>
-        /// <param name="item">Element to check.</param>
+        /// <summary>Checks whether given element belongs to any set.</summary>
+        /// <param name="item">The element.</param>
         /// <returns><c>true</c> if element is contained, otherwise <c>false</c>.</returns>
         public bool Contains(T item) => represents.ContainsKey(item);
 
         /// <summary>Adds new element as singleton set.</summary>
-        /// <param name="item">New element.</param>
+        /// <param name="item">The new element.</param>
         /// <returns><c>this</c> for method chaining.</returns>
-        /// <exception cref="ArgumentException">if any value is already present.</exception>
+        /// <exception cref="ArgumentException">If any value is already present.</exception>
         public DisjointSets<T> Add(T item)
         {
             if(Contains(item))
@@ -55,9 +56,9 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Adds new elements as singleton sets.</summary>
-        /// <param name="items">New elements.</param>
+        /// <param name="items">The new elements.</param>
         /// <returns><c>this</c> for method chaining.</returns>
-        /// <exception cref="ArgumentException">if any value is already present.</exception>
+        /// <exception cref="ArgumentException">If any value is already present.</exception>
         public DisjointSets<T> AddRange(IEnumerable<T> items)
         {
             foreach(T elem in items)
@@ -73,10 +74,10 @@ namespace AlgoLib.Structures
             return this;
         }
 
-        /// <summary>Finds represent of an element in set.</summary>
-        /// <param name="item">Element from structure.</param>
+        /// <summary>Finds represent of given element.</summary>
+        /// <param name="item">The element from this structure.</param>
         /// <param name="result">
-        /// Represent of the element if it's present, otherwise the default value.
+        /// The represent of the element if it's present, otherwise the default value.
         /// </param>
         /// <returns><c>true</c> if the represent exists, otherwise <c>false</c>.</returns>
         public bool TryFindSet(T item, out T result)
@@ -94,8 +95,8 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Joins two sets together.</summary>
-        /// <param name="item1">Element from first set.</param>
-        /// <param name="item2">Element from second set.</param>
+        /// <param name="item1">The element from first set.</param>
+        /// <param name="item2">The element from second set.</param>
         /// <returns><c>this</c> for method chaining.</returns>
         /// <exception cref="KeyNotFoundException">If either element is not present.</exception>
         public DisjointSets<T> UnionSet(T item1, T item2)
@@ -109,9 +110,9 @@ namespace AlgoLib.Structures
             return this;
         }
 
-        /// <summary>Checks whether elements belong to the same set.</summary>
-        /// <param name="item1">Element from first set.</param>
-        /// <param name="item2">Element from second set.</param>
+        /// <summary>Checks whether given elements belong to the same set.</summary>
+        /// <param name="item1">The element from first set.</param>
+        /// <param name="item2">The element from second set.</param>
         /// <returns><c>true</c> if elements are in same set, otherwise <c>false</c>.</returns>
         /// <exception cref="KeyNotFoundException">If either element is not present.</exception>
         public bool IsSameSet(T item1, T item2) => this[item1].Equals(this[item2]);

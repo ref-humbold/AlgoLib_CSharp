@@ -9,10 +9,12 @@ namespace AlgoLib.Structures
     {
         private List<T> heap = new();
 
-        /// <summary>Gets comparer.</summary>
+        /// <summary>Gets the comparer.</summary>
+        /// <value>The comparer.</value>
         public IComparer<T> Comparer { get; }
 
-        /// <summary>Gets number of elements.</summary>
+        /// <summary>Gets the number of elelemnts.</summary>
+        /// <value>The number of elements.</value>
         public int Count => heap.Count;
 
         public Heap()
@@ -38,7 +40,7 @@ namespace AlgoLib.Structures
         IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
         /// <summary>Retrieves minimal element from this heap.</summary>
-        /// <returns>Minimal element.</returns>
+        /// <returns>The minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
         public T Peek() =>
             Count > 0
@@ -48,7 +50,7 @@ namespace AlgoLib.Structures
         /// <summary>
         /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
-        /// <param name="result">Minimal element if it's present, otherwise the default value.</param>
+        /// <param name="result">The minimal element if it's present, otherwise the default value.</param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPeek(out T result)
         {
@@ -83,7 +85,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Adds new values from given range to this heap.</summary>
-        /// <param name="items">The enumerable of new values.</param>
+        /// <param name="items">The new values.</param>
         public void PushRange(IEnumerable<T> items)
         {
             foreach(T item in items)
@@ -91,7 +93,7 @@ namespace AlgoLib.Structures
         }
 
         /// <summary>Retrieves and removes minimal element from this heap.</summary>
-        /// <returns>Removed minimal element.</returns>
+        /// <returns>The removed minimal element.</returns>
         /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
         public T Pop()
         {
@@ -105,7 +107,7 @@ namespace AlgoLib.Structures
         /// Removes minimal element from this heap and copies it to the <c>result</c> parameter.
         /// </summary>
         /// <param name="result">
-        /// Removed minimal element if it's present, otherwise the default value.
+        /// The removed minimal element if it's present, otherwise the default value.
         /// </param>
         /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
         public bool TryPop(out T result)

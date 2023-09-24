@@ -18,8 +18,8 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Retrieves code of substring denoted by given range.</summary>
-        /// <param name="range">Range of indices in the text.</param>
-        /// <returns>Code of the substring specified by given indices range.</returns>
+        /// <param name="range">The range of indices in the text.</param>
+        /// <returns>The code of the substring specified by given indices range.</returns>
         public (int CodeStart, int CodeEnd) this[Range range]
         {
             get

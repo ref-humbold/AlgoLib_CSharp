@@ -10,6 +10,7 @@ namespace AlgoLib.Maths
         private readonly Equation[] equations;
 
         /// <summary>Gets the number of equations.</summary>
+        /// <value>The number of equations.</value>
         public int Count => equations.Length;
 
         public EquationSystem(params Equation[] equations)
@@ -23,7 +24,7 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Gets the equation of given index.</summary>
-        /// <param name="i">An index of equation.</param>
+        /// <param name="i">The index of equation.</param>
         /// <returns>The equation of this system specified by given index.</returns>
         public Equation this[Index i] => equations[i];
 
@@ -98,8 +99,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Swaps two equations in this system.</summary>
-        /// <param name="i">An index of first equation.</param>
-        /// <param name="j">An index of second equation.</param>
+        /// <param name="i">The index of first equation.</param>
+        /// <param name="j">The index of second equation.</param>
         public void Swap(Index i, Index j) =>
             (equations[j], equations[i]) = (equations[i], equations[j]);
 
