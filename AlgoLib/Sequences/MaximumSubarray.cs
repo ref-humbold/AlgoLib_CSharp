@@ -7,8 +7,8 @@ namespace AlgoLib.Sequences
     public static class MaximumSubarray
     {
         /// <summary>Dynamically constructs coherent subarray with maximal sum.</summary>
-        /// <param name="sequence">Sequence of numbers.</param>
-        /// <returns>Maximum subarray.</returns>
+        /// <param name="sequence">A sequence of numbers.</param>
+        /// <returns>The maximum subarray.</returns>
         public static List<double> FindMaximumSubarray(this IEnumerable<double> sequence)
         {
             (double Sum, List<double> Subarray) actual = (0.0, new List<double>());
@@ -30,7 +30,7 @@ namespace AlgoLib.Sequences
         }
 
         /// <summary>Counts maximal sum from all coherent subarrays using interval tree.</summary>
-        /// <param name="sequence">Sequence of numbers.</param>
+        /// <param name="sequence">A sequence of numbers.</param>
         /// <returns>The sum of maximum subarray.</returns>
         public static double CountMaximalSubsum(this IEnumerable<double> sequence)
         {

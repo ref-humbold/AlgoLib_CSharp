@@ -7,18 +7,18 @@ namespace AlgoLib.Sequences
     public static class LongestIncreasingSubsequence
     {
         /// <summary>Constructs longest increasing subsequence according to a comparer.</summary>
-        /// <param name="sequence">Sequence of elements.</param>
-        /// <param name="comparer">Comparer of elements in subsequence.</param>
+        /// <param name="sequence">A sequence of elements.</param>
+        /// <param name="comparer">A comparer of elements in subsequence.</param>
         /// <typeparam name="T">Type of sequence elements.</typeparam>
-        /// <returns>Least lexicographically longest increasing subsequence.</returns>
+        /// <returns>The least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, IComparer<T> comparer) =>
             FindLis(sequence, comparer.Compare);
 
         /// <summary>Constructs longest increasing subsequence according to a comparison function.</summary>
-        /// <param name="sequence">Sequence of elements.</param>
-        /// <param name="comparison">Comparison function of elements in subsequence.</param>
+        /// <param name="sequence">A sequence of elements.</param>
+        /// <param name="comparison">A comparison function of elements in subsequence.</param>
         /// <typeparam name="T">Type of sequence elements.</typeparam>
-        /// <returns>Least lexicographically longest increasing subsequence.</returns>
+        /// <returns>The least lexicographically longest increasing subsequence.</returns>
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
         {
             var previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();

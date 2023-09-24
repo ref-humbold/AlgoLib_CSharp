@@ -9,7 +9,7 @@ namespace AlgoLib.Maths
     {
         private readonly Equation[] equations;
 
-        /// <summary>Gets number of equations.</summary>
+        /// <summary>Gets the number of equations.</summary>
         public int Count => equations.Length;
 
         public EquationSystem(params Equation[] equations)
@@ -22,14 +22,14 @@ namespace AlgoLib.Maths
                         $"Equation {eq} has {eq.Count} variables, but was expected to have {equations.Length}");
         }
 
-        /// <summary>Gets equation of given index.</summary>
-        /// <param name="i">Index of equation.</param>
-        /// <returns>I-th equation of this system.</returns>
+        /// <summary>Gets the equation of given index.</summary>
+        /// <param name="i">An index of equation.</param>
+        /// <returns>The equation of this system specified by given index.</returns>
         public Equation this[Index i] => equations[i];
 
-        /// <summary>Gets equations from given indices range.</summary>
+        /// <summary>Gets the equations from given indices range.</summary>
         /// <param name="r">Range of indices in equation system.</param>
-        /// <returns>Equations of this system specified by given indices range.</returns>
+        /// <returns>The equations of this system specified by given indices range.</returns>
         public IEnumerable<Equation> this[Range r] => equations[r];
 
         public override string ToString() =>
@@ -66,7 +66,7 @@ namespace AlgoLib.Maths
             return solution;
         }
 
-        /// <summary>Runs the Gauss elimination algorithm on this equation system.</summary>
+        /// <summary>Runs the Gaussian elimination algorithm on this equation system.</summary>
         public void GaussianReduce()
         {
             for(int i = 0; i < Count - 1; ++i)
@@ -98,13 +98,13 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Swaps two equations in this system.</summary>
-        /// <param name="i">Index of first equation.</param>
-        /// <param name="j">Index of second equation.</param>
+        /// <param name="i">An index of first equation.</param>
+        /// <param name="j">An index of second equation.</param>
         public void Swap(Index i, Index j) =>
             (equations[j], equations[i]) = (equations[i], equations[j]);
 
         /// <summary>Checks whether given values solve this equation system.</summary>
-        /// <param name="solution">Values to check.</param>
+        /// <param name="solution">Values.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool HasSolution(double[] solution) => equations.All(eq => eq.HasSolution(solution));
     }

@@ -12,7 +12,7 @@ namespace AlgoLib.Maths
 
         public double FreeTerm { get; }
 
-        /// <summary>Gets number of coefficients.</summary>
+        /// <summary>Gets the number of coefficients.</summary>
         public int Count => coefficients.Length;
 
         public Equation(double[] coefficients, double freeTerm)
@@ -21,24 +21,24 @@ namespace AlgoLib.Maths
             FreeTerm = freeTerm;
         }
 
-        /// <summary>Gets coefficient by given variable.</summary>
-        /// <param name="i">Index of a variable.</param>
-        /// <returns>Coefficient by i-th variable.</returns>
+        /// <summary>Gets the coefficient by given variable.</summary>
+        /// <param name="i">An index of a variable.</param>
+        /// <returns>The coefficient specified by given index.</returns>
         public double this[Index i] => coefficients[i];
 
         public static Equation operator +(Equation eq) =>
             new(eq.coefficients.Select(c => +c).ToArray(), +eq.FreeTerm);
 
-        /// <summary>Negates this equation.</summary>
-        /// <param name="eq">The equation.</param>
-        /// <returns>Equation with all coefficiants negated.</returns>
+        /// <summary>Negates equation.</summary>
+        /// <param name="eq">An equation.</param>
+        /// <returns>The equation with all coefficiants negated.</returns>
         public static Equation operator -(Equation eq) =>
             new(eq.coefficients.Select(c => -c).ToArray(), -eq.FreeTerm);
 
         /// <summary>Adds two equations.</summary>
         /// <param name="eq1">First equation.</param>
         /// <param name="eq2">Second equation.</param>
-        /// <returns>Equation with coefficients added.</returns>
+        /// <returns>The equation with coefficients added.</returns>
         /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
         public static Equation operator +(Equation eq1, Equation eq2) =>
             eq1.Count != eq2.Count
@@ -50,7 +50,7 @@ namespace AlgoLib.Maths
         /// <summary>Subtracts two equations.</summary>
         /// <param name="eq1">First equation.</param>
         /// <param name="eq2">Second equation.</param>
-        /// <returns>Equation with coefficients subtracted.</returns>
+        /// <returns>The equation with coefficients subtracted.</returns>
         /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
         public static Equation operator -(Equation eq1, Equation eq2) =>
             eq1.Count != eq2.Count
@@ -60,9 +60,9 @@ namespace AlgoLib.Maths
                     eq1.FreeTerm - eq2.FreeTerm);
 
         /// <summary>Multiplies equation by given constant.</summary>
-        /// <param name="eq">The equation.</param>
-        /// <param name="constant">The constant.</param>
-        /// <returns>Equation with all coefficients multiplied.</returns>
+        /// <param name="eq">An equation.</param>
+        /// <param name="constant">A constant.</param>
+        /// <returns>The equation with all coefficients multiplied.</returns>
         /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
         public static Equation operator *(Equation eq, double constant) =>
             constant == 0
@@ -71,16 +71,16 @@ namespace AlgoLib.Maths
                     eq.coefficients.Select(c => c * constant).ToArray(), eq.FreeTerm * constant);
 
         /// <summary>Multiplies equation by given constant.</summary>
-        /// <param name="eq">The equation.</param>
-        /// <param name="constant">The constant.</param>
-        /// <returns>Equation with all coefficients multiplied.</returns>
+        /// <param name="constant">A constant.</param>
+        /// <param name="eq">An equation.</param>
+        /// <returns>The equation with all coefficients multiplied.</returns>
         /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
         public static Equation operator *(double constant, Equation eq) => eq * constant;
 
         /// <summary>Divides equation by given constant.</summary>
-        /// <param name="eq">The equation.</param>
-        /// <param name="constant">The constant.</param>
-        /// <returns>Equation with all coefficients divided.</returns>
+        /// <param name="eq">An equation.</param>
+        /// <param name="constant">A constant.</param>
+        /// <returns>The equation with all coefficients divided.</returns>
         /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
         public static Equation operator /(Equation eq, double constant) =>
             constant == 0
@@ -98,7 +98,7 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given values solve this equation.</summary>
-        /// <param name="solution">The values.</param>
+        /// <param name="solution">Values.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool HasSolution(double[] solution) =>
             solution.Length == coefficients.Length
