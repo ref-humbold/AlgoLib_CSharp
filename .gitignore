@@ -3,3 +3,5 @@ obj/
 doc/
 
 .vs
+.vscode
+*.code-workspace
