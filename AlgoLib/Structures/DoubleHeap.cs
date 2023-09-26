@@ -216,6 +216,7 @@ namespace AlgoLib.Structures
             return wasPresent;
         }
 
+        // Compares two elements using comparator.
         private int compare(int index1, int index2) => Comparer.Compare(heap[index1], heap[index2]);
 
         // Moves element from given index towards minimum.

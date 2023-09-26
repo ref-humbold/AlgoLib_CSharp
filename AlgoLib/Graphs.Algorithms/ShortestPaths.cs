@@ -102,7 +102,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
         /// <param name="graph">The directed weighted graph.</param>
-        /// <returns>The dictionary of distances for each pair of vertices.</returns>
+        /// <returns>The dictionary of distances between each pair of vertices.</returns>
         public static Dictionary<(Vertex<TVertexId> Source, Vertex<TVertexId> Destination), double>
             FloydWarshall<TVertexId, TVertexProperty, TEdgeProperty>(
                 this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)

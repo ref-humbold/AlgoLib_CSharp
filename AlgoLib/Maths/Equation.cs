@@ -23,8 +23,8 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Gets the coefficient by given variable.</summary>
-        /// <param name="i">The index of a variable.</param>
-        /// <returns>The coefficient specified by given index.</returns>
+        /// <param name="i">The index of variable.</param>
+        /// <returns>The coefficient specified by the index.</returns>
         public double this[Index i] => coefficients[i];
 
         /// <summary>Copies equation.</summary>
@@ -40,8 +40,8 @@ namespace AlgoLib.Maths
             new(eq.coefficients.Select(c => -c).ToArray(), -eq.FreeTerm);
 
         /// <summary>Adds two equations.</summary>
-        /// <param name="eq1">First equation.</param>
-        /// <param name="eq2">Second equation.</param>
+        /// <param name="eq1">The first equation.</param>
+        /// <param name="eq2">The second equation.</param>
         /// <returns>The equation with coefficients added.</returns>
         /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
         public static Equation operator +(Equation eq1, Equation eq2) =>
@@ -52,8 +52,8 @@ namespace AlgoLib.Maths
                     eq1.FreeTerm + eq2.FreeTerm);
 
         /// <summary>Subtracts two equations.</summary>
-        /// <param name="eq1">First equation.</param>
-        /// <param name="eq2">Second equation.</param>
+        /// <param name="eq1">The first equation.</param>
+        /// <param name="eq2">The second equation.</param>
         /// <returns>The equation with coefficients subtracted.</returns>
         /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
         public static Equation operator -(Equation eq1, Equation eq2) =>
@@ -102,7 +102,7 @@ namespace AlgoLib.Maths
         }
 
         /// <summary>Checks whether given values solve this equation.</summary>
-        /// <param name="solution">Values.</param>
+        /// <param name="solution">The values.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool HasSolution(double[] solution) =>
             solution.Length == coefficients.Length

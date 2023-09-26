@@ -11,7 +11,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
         /// <param name="tree">The tree graph.</param>
-        /// <returns>The length of tre diameter.</returns>
+        /// <returns>The length of the tree diameter.</returns>
         public static double CountDiameter<TVertexId, TVertexProperty, TEdgeProperty>(
             this TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> tree)
             where TEdgeProperty : IWeighted

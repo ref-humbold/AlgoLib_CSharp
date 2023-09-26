@@ -11,13 +11,13 @@ namespace AlgoLib.Maths
         private static readonly Random Random = new();
 
         /// <summary>Finds prime numbers less than given number.</summary>
-        /// <param name="maximum">Maximal number, exclusive.</param>
+        /// <param name="maximum">The maximal number, exclusive.</param>
         /// <returns>The prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int maximum) => FindPrimes(0, maximum);
 
         /// <summary>Finds prime numbers inside given range of numbers.</summary>
-        /// <param name="minimum">Minimal number, inclusive.</param>
-        /// <param name="maximum">Maximal number, exclusive.</param>
+        /// <param name="minimum">The minimal number, inclusive.</param>
+        /// <param name="maximum">The maximal number, exclusive.</param>
         /// <returns>The prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int minimum, int maximum)
         {
@@ -39,7 +39,7 @@ namespace AlgoLib.Maths
             return primes;
         }
 
-        /// <summary>Checks whether given number is prime using Fermat's prime test.</summary>
+        /// <summary>Checks whether given number is prime using Fermat prime test.</summary>
         /// <param name="number">The number.</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestFermat(int number)
@@ -63,7 +63,7 @@ namespace AlgoLib.Maths
             return true;
         }
 
-        /// <summary>Checks whether given number is prime using Miller-Rabin's prime test.</summary>
+        /// <summary>Checks whether given number is prime using Miller-Rabin prime test.</summary>
         /// <param name="number">The number.</param>
         /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
         public static bool TestMiller(int number)
@@ -100,7 +100,7 @@ namespace AlgoLib.Maths
             return true;
         }
 
-        // Extracts prime numbers between 0 and given maximum value
+        // Extracts prime numbers between 0 and given maximum value.
         private static IEnumerable<int> getBasePrimes(int baseMaximum)
         {
             bool[] isPrime = Enumerable.Repeat(true, (baseMaximum - 1) / 2).ToArray();
@@ -119,7 +119,7 @@ namespace AlgoLib.Maths
                           .Select(elem => elem.Value);
         }
 
-        // Extracts prime numbers from given range using given basic prime numbers
+        // Extracts prime numbers from given range using given basic prime numbers.
         private static IEnumerable<int> getSegmentPrimes(
             int segmentStart, int segmentEnd, IEnumerable<int> basePrimes)
         {

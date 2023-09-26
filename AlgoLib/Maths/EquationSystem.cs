@@ -25,18 +25,18 @@ namespace AlgoLib.Maths
 
         /// <summary>Gets the equation of given index.</summary>
         /// <param name="i">The index of equation.</param>
-        /// <returns>The equation of this system specified by given index.</returns>
+        /// <returns>The equation of this system specified by the index.</returns>
         public Equation this[Index i] => equations[i];
 
         /// <summary>Gets the equations from given indices range.</summary>
         /// <param name="r">Range of indices in equation system.</param>
-        /// <returns>The equations of this system specified by given indices range.</returns>
+        /// <returns>The equations of this system specified by the indices range.</returns>
         public IEnumerable<Equation> this[Range r] => equations[r];
 
         public override string ToString() =>
             $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
 
-        /// <summary>Solves this equation system.</summary>
+        /// <summary>Computes solution of this equation system.</summary>
         /// <returns>The solution.</returns>
         /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions.</exception>
         /// <exception cref="NoSolutionException">If there is no solution.</exception>
@@ -105,7 +105,7 @@ namespace AlgoLib.Maths
             (equations[j], equations[i]) = (equations[i], equations[j]);
 
         /// <summary>Checks whether given values solve this equation system.</summary>
-        /// <param name="solution">Values.</param>
+        /// <param name="solution">The values.</param>
         /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
         public bool HasSolution(double[] solution) => equations.All(eq => eq.HasSolution(solution));
     }

@@ -9,7 +9,7 @@ namespace AlgoLib.Sequences
     {
         private static readonly Random Random = new();
 
-        /// <summary>Mutably sorts given sequence using a heap.</summary>
+        /// <summary>Mutably sorts given sequence using heap.</summary>
         /// <typeparam name="T">The type of sequence elements.</typeparam>
         /// <param name="sequence">The sequence of elements.</param>
         public static void HeapSort<T>(this List<T> sequence)
@@ -37,8 +37,8 @@ namespace AlgoLib.Sequences
         }
 
         /// <summary>
-        /// Mutably sorts given sequence using a top-down merge-sort algorithm. Sorting is
-        /// guaranteed to be stable.
+        /// Mutably sorts given sequence using top-down merge-sort algorithm.
+        /// Sorting is guaranteed to be stable.
         /// </summary>
         /// <typeparam name="T">The type of sequence elements.</typeparam>
         /// <param name="sequence">The sequence of elements.</param>
@@ -52,8 +52,8 @@ namespace AlgoLib.Sequences
         }
 
         /// <summary>
-        /// Mutably sorts given sequence using a bottom-up merge-sort algorithm. Sorting is
-        /// guaranteed to be stable.
+        /// Mutably sorts given sequence using bottom-up merge-sort algorithm.
+        /// Sorting is guaranteed to be stable.
         /// </summary>
         /// <typeparam name="T">The type of sequence elements.</typeparam>
         /// <param name="sequence">The sequence of elements.</param>
@@ -72,7 +72,7 @@ namespace AlgoLib.Sequences
                           Math.Min(i + halfStep + halfStep, sequence.Count));
         }
 
-        /// <summary>Mutably sorts given sequence using a quick-sort algorithm.</summary>
+        /// <summary>Mutably sorts given sequence using quick-sort algorithm.</summary>
         /// <typeparam name="T">The type of sequence elements.</typeparam>
         /// <param name="sequence">The sequence of elements.</param>
         public static void QuickSort<T>(this List<T> sequence)
@@ -109,7 +109,7 @@ namespace AlgoLib.Sequences
             moveDown(heap, nextVertex, indexEnd);
         }
 
-        // Mutably sorts given sequence using a recursive merge-sort algorithm.
+        // Mutably sorts given sequence using recursive merge-sort algorithm.
         private static void doMergeSort<T>(List<T> sequence, Range range)
             where T : IComparable<T>
         {
@@ -126,7 +126,7 @@ namespace AlgoLib.Sequences
             merge(sequence, indexBegin, indexMiddle, indexEnd);
         }
 
-        // Merges two sorted fragments of a sequence. Guaranteed to be stable.
+        // Merges two sorted fragments of given sequence. Guaranteed to be stable.
         private static void merge<T>(List<T> sequence, int indexBegin, int indexMiddle, int indexEnd)
             where T : IComparable<T>
         {
@@ -156,7 +156,7 @@ namespace AlgoLib.Sequences
                 sequence[indexBegin + i] = ordered[i];
         }
 
-        // Mutably sorts given sequence using a quick-sort algorithm.
+        // Mutably sorts given sequence using quick-sort algorithm.
         private static void doQuickSort<T>(List<T> sequence, Range range)
             where T : IComparable<T>
         {

@@ -38,10 +38,10 @@ namespace AlgoLib.Geometry.Dim2
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
 
-        /// <summary>Counts distance between given points.</summary>
-        /// <param name="p1">First point.</param>
-        /// <param name="p2">Second point.</param>
-        /// <returns>The distance between points.</returns>
+        /// <summary>Calculates distance between given points.</summary>
+        /// <param name="p1">The first point.</param>
+        /// <param name="p2">The second point.</param>
+        /// <returns>The distance between the points.</returns>
         public static double Distance(this Point2D p1, Point2D p2) =>
             Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y));
 

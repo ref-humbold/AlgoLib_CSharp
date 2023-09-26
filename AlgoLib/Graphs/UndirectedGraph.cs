@@ -9,7 +9,7 @@ namespace AlgoLib.Graphs
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
         /// <summary>Converts this graph to a directed graph with same vertices.</summary>
-        /// <returns>Directed graph.</returns>
+        /// <returns>The directed copy of this graph.</returns>
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
     }
 

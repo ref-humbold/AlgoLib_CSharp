@@ -39,7 +39,7 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Finds suffix in text for given index in this suffix array.</summary>
-        /// <param name="index">The index in the suffix array.</param>
+        /// <param name="index">The index in this suffix array.</param>
         /// <returns>The index in the text where the suffix begins.</returns>
         public int IndexAt(Index index)
         {
@@ -63,8 +63,8 @@ namespace AlgoLib.Text
         }
 
         /// <summary>Counts length of the longest common prefix of given suffixes.</summary>
-        /// <param name="index1">The index in text where first suffix begins.</param>
-        /// <param name="index2">The index in text where second suffix begins.</param>
+        /// <param name="index1">The index in text where the first suffix begins.</param>
+        /// <param name="index2">The index in text where the second suffix begins.</param>
         /// <returns>The length of the longest common prefix.</returns>
         public int CountLCP(Index index1, Index index2)
         {

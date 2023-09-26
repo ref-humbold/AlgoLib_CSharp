@@ -29,7 +29,7 @@ namespace AlgoLib.Sequences
             return maximal.Subarray;
         }
 
-        /// <summary>Counts maximal sum from all coherent subarrays using interval tree.</summary>
+        /// <summary>Calculates maximal sum from all coherent subarrays using interval tree.</summary>
         /// <param name="sequence">The sequence of numbers.</param>
         /// <returns>The sum of maximum subarray.</returns>
         public static double CountMaximalSubsum(this IEnumerable<double> sequence)
