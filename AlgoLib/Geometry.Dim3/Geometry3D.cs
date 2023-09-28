@@ -8,36 +8,36 @@ namespace AlgoLib.Geometry.Dim3
     public static class Geometry3D
     {
         /// <summary>
-        /// Immutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their X coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point3D> SortByX(this List<Point3D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
-        /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point3D> SortByY(this List<Point3D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
-        /// Immutably sorts points by their Z coordinate. Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their Z coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point3D> SortByZ(this List<Point3D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.Z).ToList();
 
-        /// <summary>Counts distance between given points.</summary>
+        /// <summary>Calculates distance between given points.</summary>
         /// <param name="p1">The first point.</param>
         /// <param name="p2">The second point.</param>
         /// <returns>The distance between the points.</returns>

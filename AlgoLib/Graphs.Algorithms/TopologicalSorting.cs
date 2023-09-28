@@ -8,9 +8,9 @@ namespace AlgoLib.Graphs.Algorithms
     public static class TopologicalSorting
     {
         /// <summary>Topological sorting algorithm using predecessors counting.</summary>
-        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
         /// <param name="graph">The directed graph.</param>
         /// <returns>The topological order of vertices.</returns>
         /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
@@ -19,9 +19,9 @@ namespace AlgoLib.Graphs.Algorithms
             InputsTopologicalSort(graph, Comparer<TVertexId>.Default);
 
         /// <summary>Inputses the topological sort.</summary>
-        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
         /// <param name="graph">The directed graph.</param>
         /// <param name="vertexIdComparison">The comparison function of vertex identifiers.</param>
         /// <returns>The topological order of vertices.</returns>
@@ -32,9 +32,9 @@ namespace AlgoLib.Graphs.Algorithms
             InputsTopologicalSort(graph, Comparer<TVertexId>.Create(vertexIdComparison));
 
         /// <summary>Inputses the topological sort.</summary>
-        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
         /// <param name="graph">The directed graph.</param>
         /// <param name="vertexIdComparer">The comparer of vertex identifiers.</param>
         /// <returns>The topological order of vertices.</returns>
@@ -83,9 +83,9 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         /// <summary>Topological sorting algorithm using DFS.</summary>
-        /// <typeparam name="TVertexId">The type of the vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of the vertex property.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of the edge property.</typeparam>
+        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+        /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
+        /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
         /// <param name="graph">The directed graph.</param>
         /// <returns>The topological order of vertices.</returns>
         /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>

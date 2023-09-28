@@ -1,4 +1,4 @@
-﻿// Structure of suffix array (with longest common prefix)
+﻿// Structure of suffix array
 using System;
 using System.Collections.Generic;
 using System.Linq;

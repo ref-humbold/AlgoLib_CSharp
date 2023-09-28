@@ -7,9 +7,9 @@ namespace AlgoLib.Maths
     {
         #region GCD
 
-        /// <summary>Calculates greatest common divisor of two numbers.</summary>
-        /// <param name="number1">First number.</param>
-        /// <param name="number2">Second number.</param>
+        /// <summary>Calculates greatest common divisor of given numbers.</summary>
+        /// <param name="number1">The first number.</param>
+        /// <param name="number2">The second number.</param>
         /// <returns>The greatest common divisor.</returns>
         public static int GCD(int number1, int number2)
         {
@@ -22,9 +22,9 @@ namespace AlgoLib.Maths
             return numberPair.Max;
         }
 
-        /// <summary>Calculates greatest common divisor of two numbers.</summary>
-        /// <param name="number1">First number.</param>
-        /// <param name="number2">Second number.</param>
+        /// <summary>Calculates greatest common divisor of given numbers.</summary>
+        /// <param name="number1">The first number.</param>
+        /// <param name="number2">The second number.</param>
         /// <returns>The greatest common divisor.</returns>
         public static long GCD(long number1, long number2)
         {
@@ -40,16 +40,16 @@ namespace AlgoLib.Maths
         #endregion
         #region LCM
 
-        /// <summary>Calculates lowest common multiple of two numbers.</summary>
-        /// <param name="number1">First number.</param>
-        /// <param name="number2">Second number.</param>
+        /// <summary>Calculates lowest common multiple of given numbers.</summary>
+        /// <param name="number1">The first number.</param>
+        /// <param name="number2">The second number.</param>
         /// <returns>The lowest common multiple.</returns>
         public static int LCM(int number1, int number2) =>
             Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
 
-        /// <summary>Calculates lowest common multiple of two numbers.</summary>
-        /// <param name="number1">First number.</param>
-        /// <param name="number2">Second number.</param>
+        /// <summary>Calculates lowest common multiple of given numbers.</summary>
+        /// <param name="number1">The first number.</param>
+        /// <param name="number2">The second number.</param>
         /// <returns>The lowest common multiple.</returns>
         public static long LCM(long number1, long number2) =>
             Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
@@ -57,9 +57,9 @@ namespace AlgoLib.Maths
         #endregion
         #region Multiply
 
-        /// <summary>Performs fast multiplication of two numbers.</summary>
-        /// <param name="factor1">First factor.</param>
-        /// <param name="factor2">Second factor.</param>
+        /// <summary>Performs fast multiplication of given numbers.</summary>
+        /// <param name="factor1">The first factor.</param>
+        /// <param name="factor2">The second factor.</param>
         /// <returns>The multiplication result.</returns>
         public static int Multiply(int factor1, int factor2)
         {
@@ -86,9 +86,9 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast multiplication of two numbers.</summary>
-        /// <param name="factor1">First factor.</param>
-        /// <param name="factor2">Second factor.</param>
+        /// <summary>Performs fast multiplication of given numbers.</summary>
+        /// <param name="factor1">The first factor.</param>
+        /// <param name="factor2">The second factor.</param>
         /// <returns>The multiplication result.</returns>
         public static long Multiply(long factor1, long factor2)
         {
@@ -115,9 +115,9 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast multiplication of two numbers with modulo taken.</summary>
-        /// <param name="factor1">First factor.</param>
-        /// <param name="factor2">Second factor.</param>
+        /// <summary>Performs fast multiplication of given numbers with modulo taken.</summary>
+        /// <param name="factor1">The first factor.</param>
+        /// <param name="factor2">The second factor.</param>
         /// <param name="modulo">The modulo.</param>
         /// <returns>The multiplication result with modulo taken.</returns>
         public static int Multiply(int factor1, int factor2, int modulo)
@@ -148,9 +148,9 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast multiplication of two numbers with modulo taken.</summary>
-        /// <param name="factor1">First factor.</param>
-        /// <param name="factor2">Second factor.</param>
+        /// <summary>Performs fast multiplication of given numbers with modulo taken.</summary>
+        /// <param name="factor1">The first factor.</param>
+        /// <param name="factor2">The second factor.</param>
         /// <param name="modulo">The modulo.</param>
         /// <returns>The multiplication result with modulo taken.</returns>
         public static long Multiply(long factor1, long factor2, long modulo)
@@ -184,7 +184,7 @@ namespace AlgoLib.Maths
         #endregion
         #region Power
 
-        /// <summary>Performs fast exponentiation of two numbers.</summary>
+        /// <summary>Performs fast exponentiation of given numbers.</summary>
         /// <param name="baseNum">The base.</param>
         /// <param name="exponent">The exponent.</param>
         /// <returns>The exponentiation result.</returns>
@@ -210,7 +210,7 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast exponentiation of two numbers.</summary>
+        /// <summary>Performs fast exponentiation of given numbers.</summary>
         /// <param name="baseNum">The base.</param>
         /// <param name="exponent">The exponent.</param>
         /// <returns>The exponentiation result.</returns>
@@ -236,7 +236,7 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast exponentiation of two numbers with modulo taken.</summary>
+        /// <summary>Performs fast exponentiation of given numbers with modulo taken.</summary>
         /// <param name="baseNum">The base.</param>
         /// <param name="exponent">The exponent.</param>
         /// <param name="modulo">The modulo.</param>
@@ -266,7 +266,7 @@ namespace AlgoLib.Maths
             return result;
         }
 
-        /// <summary>Performs fast exponentiation of two numbers with modulo taken.</summary>
+        /// <summary>Performs fast exponentiation of given numbers with modulo taken.</summary>
         /// <param name="baseNum">The base.</param>
         /// <param name="exponent">The exponent.</param>
         /// <param name="modulo">The modulo.</param>

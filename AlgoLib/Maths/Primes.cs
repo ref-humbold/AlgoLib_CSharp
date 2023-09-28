@@ -100,7 +100,7 @@ namespace AlgoLib.Maths
             return true;
         }
 
-        // Extracts prime numbers between 0 and given maximum value.
+        // Extracts prime numbers between zero and given maximum value.
         private static IEnumerable<int> getBasePrimes(int baseMaximum)
         {
             bool[] isPrime = Enumerable.Repeat(true, (baseMaximum - 1) / 2).ToArray();

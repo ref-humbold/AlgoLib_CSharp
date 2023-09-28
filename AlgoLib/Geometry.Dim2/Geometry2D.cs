@@ -8,31 +8,31 @@ namespace AlgoLib.Geometry.Dim2
     public static class Geometry2D
     {
         /// <summary>
-        /// Immutably sorts points by their X coordinate. Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their X coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point2D> SortByX(this List<Point2D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.X).ToList();
 
         /// <summary>
-        /// Immutably sorts points by their Y coordinate. Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point2D> SortByY(this List<Point2D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
                 : points.OrderBy(pt => pt.Y).ToList();
 
         /// <summary>
-        /// Immutably sorts points by their polar coordinates. First sorts by angle, then by radius.
-        /// Sorting is guaranteed to be stable.
+        /// Immutably sorts given points by their polar coordinates.
+        /// First sorts by angle, then by radius. Sorting is guaranteed to be stable.
         /// </summary>
-        /// <param name="points">The list of points.</param>
-        /// <returns>The sorted list of points.</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>The sorted points.</returns>
         public static List<Point2D> SortByAngle(this List<Point2D> points) =>
             points == null
                 ? throw new ArgumentNullException(nameof(points))
