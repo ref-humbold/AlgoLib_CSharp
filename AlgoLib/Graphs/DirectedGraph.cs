@@ -8,11 +8,11 @@ namespace AlgoLib.Graphs
     public interface IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        /// <summary>Reverses directions of edges in this graph.</summary>
+        /// <summary>Reverses directions of all edges in this graph.</summary>
         void Reverse();
 
         /// <summary>Returns reversed copy of this graph.</summary>
-        /// <returns>The copy of the graph with reversed directions of edges.</returns>
+        /// <returns>The copy of this graph with reversed directions of all edges.</returns>
         IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy();
     }
 

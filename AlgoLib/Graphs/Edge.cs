@@ -15,7 +15,7 @@ namespace AlgoLib.Graphs
             Destination = destination;
         }
 
-        /// <summary>Gets the neighbour of adjacent vertex.</summary>
+        /// <summary>Gets the neighbour of given adjacent vertex.</summary>
         /// <param name="vertex">The vertex adjacent to this edge.</param>
         /// <returns>The neighbour of the vertex along this edge.</returns>
         /// <exception cref="ArgumentException">If the vertex is not adjacent to this edge.</exception>

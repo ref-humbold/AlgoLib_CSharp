@@ -64,8 +64,8 @@ namespace AlgoLib.Structures
             return true;
         }
 
-        /// <summary>Adds new value to this heap.</summary>
-        /// <param name="item">The new value.</param>
+        /// <summary>Adds new element to this heap.</summary>
+        /// <param name="item">The new element.</param>
         public void Push(T item)
         {
             heap.Add(item);
@@ -84,8 +84,8 @@ namespace AlgoLib.Structures
             }
         }
 
-        /// <summary>Adds new values from given range to this heap.</summary>
-        /// <param name="items">The new values.</param>
+        /// <summary>Adds new elements from given range to this heap.</summary>
+        /// <param name="items">The new elements.</param>
         public void PushRange(IEnumerable<T> items)
         {
             foreach(T item in items)
