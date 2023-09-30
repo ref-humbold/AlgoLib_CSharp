@@ -10,7 +10,7 @@ namespace AlgoLib.Graphs.Algorithms
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
         /// <param name="graph">The directed graph.</param>
-        /// <returns>The list of vertices in strongly connected components.</returns>
+        /// <returns>The vertices in strongly connected components.</returns>
         public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
             this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {

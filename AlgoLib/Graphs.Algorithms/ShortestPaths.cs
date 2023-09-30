@@ -7,7 +7,9 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class ShortestPaths
     {
-        /// <summary>Computes shortest path from given vertex using Bellman-Ford algorithm.</summary>
+        /// <summary>
+        /// Computes shortest paths in given directed graph from given vertex using Bellman-Ford algorithm.
+        /// </summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -43,7 +45,9 @@ namespace AlgoLib.Graphs.Algorithms
             return distances;
         }
 
-        /// <summary>Computes shortest path from given vertex using Dijkstra algorithm.</summary>
+        /// <summary>
+        /// Computes shortest paths in given graph from given vertex using Dijkstra algorithm.
+        /// </summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -97,7 +101,10 @@ namespace AlgoLib.Graphs.Algorithms
             return distances;
         }
 
-        /// <summary>Computes shortest path between all vertices using Floyd-Warshall algorithm.</summary>
+        /// <summary>
+        /// Computes shortest paths in given directed graph between all vertices using
+        /// Floyd-Warshall algorithm.
+        /// </summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

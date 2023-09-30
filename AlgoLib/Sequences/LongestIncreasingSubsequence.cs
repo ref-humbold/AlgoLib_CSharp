@@ -14,7 +14,9 @@ namespace AlgoLib.Sequences
         public static IEnumerable<T> FindLis<T>(this IList<T> sequence, IComparer<T> comparer) =>
             FindLis(sequence, comparer.Compare);
 
-        /// <summary>Constructs longest increasing subsequence according to given comparison function.</summary>
+        /// <summary>
+        /// Constructs longest increasing subsequence according to given comparison function.
+        /// </summary>
         /// <typeparam name="T">The type of sequence elements.</typeparam>
         /// <param name="sequence">The sequence of elements.</param>
         /// <param name="comparison">The comparison function of elements in sequence.</param>
@@ -28,7 +30,7 @@ namespace AlgoLib.Sequences
             {
                 T elem = sequence[i];
 
-                if(comparison.Invoke(elem, sequence[subsequence[^1]]) > 0)
+                if(comparison(elem, sequence[subsequence[^1]]) > 0)
                 {
                     previousElem[i] = subsequence[^1];
                     subsequence.Add(i);
@@ -69,7 +71,7 @@ namespace AlgoLib.Sequences
 
             int indexMiddle = (indexBegin + indexEnd - 1) / 2;
 
-            return comparison.Invoke(sequence[indexElem], sequence[subsequence[indexMiddle]]) > 0
+            return comparison(sequence[indexElem], sequence[subsequence[indexMiddle]]) > 0
                 ? searchIndex(sequence, comparison, subsequence, indexElem, indexMiddle + 1, indexEnd)
                 : searchIndex(sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
         }

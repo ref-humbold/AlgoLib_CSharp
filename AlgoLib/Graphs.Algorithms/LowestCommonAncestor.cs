@@ -29,7 +29,7 @@ namespace AlgoLib.Graphs.Algorithms
             return find(vertex1, vertex2);
         }
 
-        /// <summary>Finds lowest common ancestor of given vertices in a rooted tree.</summary>
+        /// <summary>Finds lowest common ancestor of given vertices in the rooted tree.</summary>
         /// <param name="vertex1">The first vertex.</param>
         /// <param name="vertex2">The second vertex.</param>
         /// <returns>The lowest common ancestor of the vertices.</returns>

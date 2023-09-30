@@ -6,7 +6,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class Cutting
     {
-        /// <summary>Finds edge cut of given graph.</summary>
+        /// <summary>Finds edge cut of given undirected graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -23,7 +23,7 @@ namespace AlgoLib.Graphs.Algorithms
                         .Select(vertex => graph[vertex, strategy.DfsParents[vertex]]);
         }
 
-        /// <summary>Finds vertex cut of given graph.</summary>
+        /// <summary>Finds vertex cut of given undirected graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

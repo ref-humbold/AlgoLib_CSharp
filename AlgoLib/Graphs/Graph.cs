@@ -29,7 +29,7 @@ namespace AlgoLib.Graphs
         /// <exception cref="KeyNotFoundException">If no such vertex exists.</exception>
         Vertex<TVertexId> this[TVertexId vertexId] { get; }
 
-        /// <summary>Gets the edge between given vertices.</summary>
+        /// <summary>Gets the edge between vertices of given identifiers.</summary>
         /// <value>The edge between the vertices.</value>
         /// <param name="sourceId">The source vertex identifier.</param>
         /// <param name="destinationId">The destination vertex identifier.</param>
@@ -66,12 +66,12 @@ namespace AlgoLib.Graphs
 
         public interface IGraphProperties
         {
-            /// <summary>Gets or sets the property for given vertex.</summary>
+            /// <summary>Gets or sets the property of given vertex.</summary>
             /// <value>The property of the vertex.</value>
             /// <param name="vertex">The vertex from this graph.</param>
             TVertexProperty this[Vertex<TVertexId> vertex] { get; set; }
 
-            /// <summary>Gets or sets the property for given edge.</summary>
+            /// <summary>Gets or sets the property of given edge.</summary>
             /// <value>The property of the edge.</value>
             /// <param name="edge">The edge from this graph.</param>
             TEdgeProperty this[Edge<TVertexId> edge] { get; set; }

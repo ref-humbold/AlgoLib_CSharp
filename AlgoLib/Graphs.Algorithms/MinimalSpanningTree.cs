@@ -6,7 +6,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class MinimalSpanningTree
     {
-        /// <summary>Computes MST using Kruskal algorithm.</summary>
+        /// <summary>Computes minimal spanning tree of given undirected graph using Kruskal algorithm.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -38,7 +38,7 @@ namespace AlgoLib.Graphs.Algorithms
             return mst;
         }
 
-        /// <summary>Computes MST using Prim algorithm.</summary>
+        /// <summary>Computes minimal spanning tree of given undirected graph using Prim algorithm.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

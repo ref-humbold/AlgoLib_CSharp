@@ -6,7 +6,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class TreeDiameter
     {
-        /// <summary>Computes length of diameter of given tree.</summary>
+        /// <summary>Computes length of diameter of given tree graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
