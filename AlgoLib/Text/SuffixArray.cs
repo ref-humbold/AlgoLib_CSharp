@@ -66,7 +66,7 @@ namespace AlgoLib.Text
         /// <param name="index1">The index in text where the first suffix begins.</param>
         /// <param name="index2">The index in text where the second suffix begins.</param>
         /// <returns>The length of the longest common prefix.</returns>
-        public int CountLCP(Index index1, Index index2)
+        public int CountLcp(Index index1, Index index2)
         {
             int i1 = index1.GetOffset(suffixArray.Count);
             int i2 = index2.GetOffset(suffixArray.Count);

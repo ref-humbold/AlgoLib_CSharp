@@ -26,7 +26,7 @@ namespace AlgoLib.Graphs.Algorithms
         #region Kruskal
 
         [Test]
-        public void Kruskal_ThenMST()
+        public void Kruskal_ThenMinimalSpanningTree()
         {
             // when
             IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Kruskal(graph);
@@ -47,7 +47,7 @@ namespace AlgoLib.Graphs.Algorithms
         #region Prim
 
         [Test]
-        public void Prim_ThenMST()
+        public void Prim_ThenMinimalSpanningTree()
         {
             // when
             IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Prim(graph, graph[0]);
@@ -65,7 +65,7 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void Prim_WhenDifferentSources_ThenSameMST()
+        public void Prim_WhenDifferentSources_ThenSameMinimalSpanningTree()
         {
             // when
             IUndirectedGraph<int, object, WeightProp> result1 = MinimalSpanningTree.Prim(graph, graph[1]);

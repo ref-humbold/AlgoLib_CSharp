@@ -23,7 +23,7 @@ namespace AlgoLib.Graphs.Algorithms
                                             .Select(kv => kv.Key)
                                             .ToList();
             IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph = graph.ReversedCopy();
-            var sccStrategy = new SCCStrategy<TVertexId>();
+            var sccStrategy = new SccStrategy<TVertexId>();
 
             Searching.DfsRecursive(reversedGraph, sccStrategy, vertices);
             return sccStrategy.Components;
@@ -58,7 +58,7 @@ namespace AlgoLib.Graphs.Algorithms
             }
         }
 
-        private class SCCStrategy<TVertexId> : IDfsStrategy<TVertexId>
+        private class SccStrategy<TVertexId> : IDfsStrategy<TVertexId>
         {
             public List<HashSet<Vertex<TVertexId>>> Components { get; } = new();
 

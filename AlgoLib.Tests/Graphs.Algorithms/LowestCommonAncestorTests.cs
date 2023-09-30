@@ -27,7 +27,7 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void FindLca_WhenSameVertex_ThenVertexIsLCA()
+        public void FindLca_WhenSameVertex_ThenVertexIsLowestCommonAncestor()
         {
             // given
             Vertex<int> vertex = tree[6];
@@ -38,7 +38,7 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void FindLca_WhenVerticesInDifferentSubtrees_ThenLCA()
+        public void FindLca_WhenVerticesInDifferentSubtrees_ThenLowestCommonAncestor()
         {
             // when
             Vertex<int> result = testObject.FindLca(tree[5], tree[7]);
@@ -47,7 +47,7 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void FindLca_WhenVerticesSwapped_ThenSameLCA()
+        public void FindLca_WhenVerticesSwapped_ThenSameLowestCommonAncestor()
         {
             // when
             Vertex<int> result1 = testObject.FindLca(tree[5], tree[7]);
@@ -67,7 +67,7 @@ namespace AlgoLib.Graphs.Algorithms
         }
 
         [Test]
-        public void FindLca_WhenVerticesAreOnSamePathFromRoot_ThenLCAIsCloserToRoot()
+        public void FindLca_WhenVerticesAreOnSamePathFromRoot_ThenCloserToRoot()
         {
             // given
             Vertex<int> vertex1 = tree[8];

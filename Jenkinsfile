@@ -4,12 +4,16 @@ pipeline {
   }
 
   parameters {
-    booleanParam(name: "archive", description: "Should artifacts be archived?", defaultValue: false)
+    booleanParam(
+      name: "archive",
+      description: "Should NuGet package be archived?",
+      defaultValue: false
+    )
   }
 
   environment {
     CONFIGURATION = "Release"
-    PACKAGE_DIR = "package"
+    PACKAGE_DIR = "Package"
   }
 
   options {
@@ -75,7 +79,7 @@ pipeline {
       }
     }
 
-    stage("Archive artifacts") {
+    stage("Archive NuGet package") {
       when {
         beforeAgent true
         expression {

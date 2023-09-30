@@ -20,7 +20,7 @@ namespace AlgoLib.Maths
                 denominator = -denominator;
             }
 
-            long gcd = Maths.GCD(numerator, denominator);
+            long gcd = Maths.Gcd(numerator, denominator);
 
             this.numerator = numerator / gcd;
             this.denominator = denominator / gcd;
@@ -136,7 +136,7 @@ namespace AlgoLib.Maths
 
         public int CompareTo(Fraction other)
         {
-            long lcm = Maths.LCM(denominator, other.denominator);
+            long lcm = Maths.Lcm(denominator, other.denominator);
             long thisNumerator = lcm / denominator * numerator;
             long otherNumerator = lcm / other.denominator * other.numerator;
 

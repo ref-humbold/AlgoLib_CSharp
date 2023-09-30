@@ -105,38 +105,38 @@ namespace AlgoLib.Text
         }
 
         [Test]
-        public void CountLCP_WhenSameSuffix_ThenLengthOfPrefix()
+        public void CountLcp_WhenSameSuffix_ThenLengthOfPrefix()
         {
             // when
-            int result = testObject.CountLCP(4, 4);
+            int result = testObject.CountLcp(4, 4);
             // then
             result.Should().Be(7);
         }
 
         [Test]
-        public void CountLCP_WhenFirstEarlierThanSecondSuffix_ThenLengthOfPrefix()
+        public void CountLcp_WhenFirstEarlierThanSecondSuffix_ThenLengthOfPrefix()
         {
             // when
-            int result = testObject.CountLCP(1, ^1);
+            int result = testObject.CountLcp(1, ^1);
             // then
             result.Should().Be(1);
         }
 
         [Test]
-        public void CountLCP_WhenFirstFurtherThanSecondSuffix_ThenLengthOfPrefix()
+        public void CountLcp_WhenFirstFurtherThanSecondSuffix_ThenLengthOfPrefix()
         {
             // when
-            int result = testObject.CountLCP(^2, 6);
+            int result = testObject.CountLcp(^2, 6);
             // then
             result.Should().Be(0);
         }
 
         [Test]
-        public void CountLCP_WhenSwapSuffix_ThenSameLength()
+        public void CountLcp_WhenSwapSuffix_ThenSameLength()
         {
             // when
-            int result0 = testObject.CountLCP(2, 5);
-            int result1 = testObject.CountLCP(5, 2);
+            int result0 = testObject.CountLcp(2, 5);
+            int result1 = testObject.CountLcp(5, 2);
             // then
             result0.Should().Be(3);
             result1.Should().Be(result0);

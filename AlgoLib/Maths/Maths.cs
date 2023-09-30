@@ -5,13 +5,13 @@ namespace AlgoLib.Maths
 {
     public static class Maths
     {
-        #region GCD
+        #region GreatestCommonDivisor
 
         /// <summary>Calculates greatest common divisor of given numbers.</summary>
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The greatest common divisor.</returns>
-        public static int GCD(int number1, int number2)
+        public static int Gcd(int number1, int number2)
         {
             (int Min, int Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
                                              Math.Abs(Math.Max(number1, number2)));
@@ -26,7 +26,7 @@ namespace AlgoLib.Maths
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The greatest common divisor.</returns>
-        public static long GCD(long number1, long number2)
+        public static long Gcd(long number1, long number2)
         {
             (long Min, long Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
                                                Math.Abs(Math.Max(number1, number2)));
@@ -38,21 +38,21 @@ namespace AlgoLib.Maths
         }
 
         #endregion
-        #region LCM
+        #region LowestCommonMultiple
 
         /// <summary>Calculates lowest common multiple of given numbers.</summary>
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The lowest common multiple.</returns>
-        public static int LCM(int number1, int number2) =>
-            Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
+        public static int Lcm(int number1, int number2) =>
+            Math.Max(number1, number2) / Gcd(number1, number2) * Math.Min(number1, number2);
 
         /// <summary>Calculates lowest common multiple of given numbers.</summary>
         /// <param name="number1">The first number.</param>
         /// <param name="number2">The second number.</param>
         /// <returns>The lowest common multiple.</returns>
-        public static long LCM(long number1, long number2) =>
-            Math.Max(number1, number2) / GCD(number1, number2) * Math.Min(number1, number2);
+        public static long Lcm(long number1, long number2) =>
+            Math.Max(number1, number2) / Gcd(number1, number2) * Math.Min(number1, number2);
 
         #endregion
         #region Multiply

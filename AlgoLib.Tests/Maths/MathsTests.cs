@@ -8,103 +8,103 @@ namespace AlgoLib.Maths
     [TestFixture]
     public class MathsTests
     {
-        #region GCD
+        #region Gcd
 
         [Test]
-        public void GCD_WhenNumbersAreComposite_ThenGCD()
+        public void Gcd_WhenNumbersAreComposite_ThenGreatestCommonDivisor()
         {
             // when
-            int result = Maths.GCD(161, 46);
+            int result = Maths.Gcd(161, 46);
             // then
             result.Should().Be(23);
         }
 
         [Test]
-        public void GCD_WhenNumbersArePrime_ThenOne()
+        public void Gcd_WhenNumbersArePrime_ThenOne()
         {
             // when
-            long result = Maths.GCD(127L, 41L);
+            long result = Maths.Gcd(127L, 41L);
             // then
             result.Should().Be(1L);
         }
 
         [Test]
-        public void GCD_WhenNumbersAreMutuallyPrime_ThenOne()
+        public void Gcd_WhenNumbersAreMutuallyPrime_ThenOne()
         {
             // when
-            int result = Maths.GCD(119, 57);
+            int result = Maths.Gcd(119, 57);
             // then
             result.Should().Be(1);
         }
 
         [Test]
-        public void GCD_WhenOneOfNumbersIsMultipleOfAnother_ThenLessNumber()
+        public void Gcd_WhenOneOfNumbersIsMultipleOfAnother_ThenLessNumber()
         {
             // given
             int number = 34;
             // when
-            int result = Maths.GCD(number, number * 6);
+            int result = Maths.Gcd(number, number * 6);
             // then
             result.Should().Be(number);
         }
 
         [Test]
-        public void GCD_WhenOneOfNumbersIsZero_ThenAnotherNumber()
+        public void Gcd_WhenOneOfNumbersIsZero_ThenAnotherNumber()
         {
             // given
             int number = 96;
             // when
-            int result = Maths.GCD(number, 0);
+            int result = Maths.Gcd(number, 0);
             // then
             result.Should().Be(number);
         }
 
         #endregion
-        #region LCM
+        #region Lcm
 
         [Test]
-        public void LCM_WhenNumbersAreComposite_ThenLCM()
+        public void Lcm_WhenNumbersAreComposite_ThenLowestCommonMultiple()
         {
             // when
-            int result = Maths.LCM(161, 46);
+            int result = Maths.Lcm(161, 46);
             // then
             result.Should().Be(322);
         }
 
         [Test]
-        public void LCM_WhenNumbersArePrime_ThenProduct()
+        public void Lcm_WhenNumbersArePrime_ThenProduct()
         {
             // when
-            long result = Maths.LCM(127L, 41L);
+            long result = Maths.Lcm(127L, 41L);
             // then
             result.Should().Be(5207L);
         }
 
         [Test]
-        public void LCM_WhenNumbersAreMutuallyPrime_ThenProduct()
+        public void Lcm_WhenNumbersAreMutuallyPrime_ThenProduct()
         {
             // when
-            int result = Maths.LCM(119, 57);
+            int result = Maths.Lcm(119, 57);
             // then
             result.Should().Be(6783);
         }
 
         [Test]
-        public void LCM_WhenOneOfNumbersIsMultipleOfAnother_ThenGreaterNumber()
+        public void Lcm_WhenOneOfNumbersIsMultipleOfAnother_ThenGreaterNumber()
         {
             // given
             int number = 34;
             // when
-            int result = Maths.LCM(number, number * 6);
+            int result = Maths.Lcm(number, number * 6);
             // then
             result.Should().Be(number * 6);
         }
 
         [Test]
-        public void LCM_WhenOneOfNumbersIsZero_ThenZero()
+        public void Lcm_WhenOneOfNumbersIsZero_ThenZero()
         {
             // when
-            int result = Maths.LCM(96, 0);
+            int result = Maths.Lcm(96, 0);
             // then
             result.Should().Be(0);
         }

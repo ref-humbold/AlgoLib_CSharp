@@ -51,7 +51,7 @@ namespace AlgoLib.Graphs.Algorithms
             where TEdgeProperty : IWeighted
         {
             var mst = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
-                            graph.Vertices.Select(v => v.Id).ToArray());
+                    graph.Vertices.Select(v => v.Id).ToArray());
             var visited = new HashSet<Vertex<TVertexId>>();
             var heap = new Heap<(Edge<TVertexId>, Vertex<TVertexId>)>(
                     (pair1, pair2) => graph.Properties[pair1.Item1].Weight.CompareTo(

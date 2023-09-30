@@ -210,7 +210,7 @@ namespace AlgoLib.Maths
         #region binary operators
 
         [Test]
-        public void OperatorPlus_WhenFraction_ThenDenominatorEqualsLCM()
+        public void OperatorPlus_WhenFraction_ThenDenominatorEqualsLowestCommonMultiple()
         {
             // when
             Fraction result = Fraction.Of(1, 2) + Fraction.Of(5, 7);

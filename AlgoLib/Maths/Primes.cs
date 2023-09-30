@@ -56,7 +56,7 @@ namespace AlgoLib.Maths
             {
                 int witness = Random.Next(1, number - 1);
 
-                if(Maths.GCD(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
+                if(Maths.Gcd(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
                     return false;
             }
 
