@@ -1,4 +1,4 @@
-﻿// Structure of graph representation
+﻿// Structure of graph representation.
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿// Tests: Algorithms for basic mathematical operations
+﻿// Tests: Algorithms for basic mathematical operations.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

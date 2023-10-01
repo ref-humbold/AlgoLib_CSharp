@@ -1,4 +1,4 @@
-// Algorithms for graph searching
+// Algorithms for graph searching.
 using System.Collections.Generic;
 
 namespace AlgoLib.Graphs.Algorithms

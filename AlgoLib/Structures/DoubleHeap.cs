@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Structure of double heap.
+using System;
 using System.Collections;
 using System.Collections.Generic;
 

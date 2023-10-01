@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Algorithms for maximum subarray.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace AlgoLib.Sequences
 {
     public static class MaximumSubarray
     {
-        /// <summary>Dynamically constructs coherent subarray with maximal sum.</summary>
+        /// <summary>Dynamically computes coherent subarray with maximal sum.</summary>
         /// <param name="sequence">The sequence of numbers.</param>
         /// <returns>The maximum subarray.</returns>
         public static List<double> FindMaximumSubarray(this IEnumerable<double> sequence)

@@ -1,4 +1,4 @@
-﻿// Tests: Structure of disjoint sets (union-find)
+﻿// Tests: Structure of disjoint sets (union-find).
 using System;
 using System.Collections.Generic;
 using System.Linq;

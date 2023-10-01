@@ -1,4 +1,4 @@
-﻿// Structure of linear equation
+﻿// Structure of linear equation.
 using System;
 using System.Collections.Generic;
 using System.Globalization;

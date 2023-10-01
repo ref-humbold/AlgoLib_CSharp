@@ -1,4 +1,4 @@
-﻿// Tests: Structure of vector in 2D
+﻿// Tests: Structure of vector in 2D.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

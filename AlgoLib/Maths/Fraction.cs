@@ -1,4 +1,4 @@
-﻿// Structure of fraction
+﻿// Structure of fraction.
 using System;
 
 namespace AlgoLib.Maths

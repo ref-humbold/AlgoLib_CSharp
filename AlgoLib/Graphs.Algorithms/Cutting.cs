@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Algorithms for graph cutting (edge cut and vertex cut).
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class Cutting
     {
-        /// <summary>Finds edge cut of given undirected graph.</summary>
+        /// <summary>Computes edge cut of given undirected graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -23,7 +24,7 @@ namespace AlgoLib.Graphs.Algorithms
                         .Select(vertex => graph[vertex, strategy.DfsParents[vertex]]);
         }
 
-        /// <summary>Finds vertex cut of given undirected graph.</summary>
+        /// <summary>Computes vertex cut of given undirected graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

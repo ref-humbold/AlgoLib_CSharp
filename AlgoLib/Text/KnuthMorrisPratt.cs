@@ -1,4 +1,4 @@
-﻿// Knuth-Morris-Pratt algorithm for pattern searching
+﻿// Knuth-Morris-Pratt algorithm for pattern searching.
 using System;
 using System.Collections.Generic;
 using System.Linq;

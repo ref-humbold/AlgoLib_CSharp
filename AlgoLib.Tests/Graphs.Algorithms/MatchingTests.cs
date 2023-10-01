@@ -1,4 +1,4 @@
-﻿// Tests: Hopcroft-Karp algorithm for matching in bipartite graph
+﻿// Tests: Hopcroft-Karp algorithm for matching in bipartite graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

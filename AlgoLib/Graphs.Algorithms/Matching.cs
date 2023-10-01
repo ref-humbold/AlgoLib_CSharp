@@ -1,4 +1,4 @@
-﻿// Hopcroft-Karp algorithm for matching in bipartite graph
+﻿// Hopcroft-Karp algorithm for matching in a bipartite graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ namespace AlgoLib.Graphs.Algorithms
 {
     public static class Matching
     {
-        /// <summary>Finds maximal matching in given bipartite graph.</summary>
+        /// <summary>Computes maximal matching in given bipartite graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

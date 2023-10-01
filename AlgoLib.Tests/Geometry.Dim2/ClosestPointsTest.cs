@@ -1,4 +1,4 @@
-// Tests: Algorithm for pair of closest points
+// Tests: Algorithm for pair of closest points.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

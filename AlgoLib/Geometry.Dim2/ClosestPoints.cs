@@ -1,4 +1,4 @@
-﻿// Algorithm for pair of closest points in 2D
+﻿// Algorithm for pair of closest points in 2D.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ namespace AlgoLib.Geometry.Dim2
 {
     public static class ClosestPoints
     {
-        /// <summary>Searches for a pair of closest points among given points.</summary>
+        /// <summary>Searches for the pair of closest points among given points.</summary>
         /// <param name="points">The points.</param>
         /// <returns>The pair of closest points.</returns>
         /// <exception cref="InvalidOperationException">If no points specified.</exception>

@@ -1,4 +1,4 @@
-﻿// Tests: Structure of suffix array
+﻿// Tests: Structure of suffix array.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

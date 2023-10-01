@@ -1,4 +1,4 @@
-﻿// Algorithm for counting diameter of a tree
+﻿// Algorithm for counting diameter of a tree.
 using System;
 using System.Linq;
 

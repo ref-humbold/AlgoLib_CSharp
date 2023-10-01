@@ -1,4 +1,4 @@
-﻿// Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm
+﻿// Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

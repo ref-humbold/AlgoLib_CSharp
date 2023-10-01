@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Algorithm for lowest common ancestors in a rooted tree.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,6 +22,10 @@ namespace AlgoLib.Graphs.Algorithms
             Root = root;
         }
 
+        /// <summary>Searches for lowest common ancestor of given vertices in this rooted tree.</summary>
+        /// <param name="vertex1">The first vertex.</param>
+        /// <param name="vertex2">The second vertex.</param>
+        /// <returns>The lowest common ancestor of the vertices.</returns>
         public Vertex<TVertexId> FindLca(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(empty)
@@ -29,10 +34,6 @@ namespace AlgoLib.Graphs.Algorithms
             return find(vertex1, vertex2);
         }
 
-        /// <summary>Finds lowest common ancestor of given vertices in the rooted tree.</summary>
-        /// <param name="vertex1">The first vertex.</param>
-        /// <param name="vertex2">The second vertex.</param>
-        /// <returns>The lowest common ancestor of the vertices.</returns>
         private Vertex<TVertexId> find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
         {
             if(isOffspring(vertex1, vertex2))

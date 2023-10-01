@@ -1,4 +1,4 @@
-// Tests: Algorithm for convex hull (monotone chain)
+// Tests: Algorithm for convex hull (monotone chain).
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;

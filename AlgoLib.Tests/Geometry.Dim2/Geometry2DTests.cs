@@ -1,4 +1,4 @@
-﻿// Tests: Algorithms for basic geometrical operations in 2D
+﻿// Tests: Algorithms for basic geometrical operations in 2D.
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;

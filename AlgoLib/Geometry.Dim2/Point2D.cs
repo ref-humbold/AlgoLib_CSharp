@@ -1,4 +1,4 @@
-﻿// Structure of point in 2D
+﻿// Structure of point in 2D.
 using System;
 
 namespace AlgoLib.Geometry.Dim2

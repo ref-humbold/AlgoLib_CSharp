@@ -1,4 +1,4 @@
-﻿// Structure of graph edge
+﻿// Structure of graph edge.
 using System;
 
 namespace AlgoLib.Graphs

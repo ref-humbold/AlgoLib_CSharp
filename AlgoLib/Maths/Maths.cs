@@ -1,4 +1,4 @@
-// Algorithms for basic mathematical operations
+// Algorithms for basic mathematical operations.
 using System;
 
 namespace AlgoLib.Maths

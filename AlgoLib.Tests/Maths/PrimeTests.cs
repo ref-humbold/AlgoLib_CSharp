@@ -1,4 +1,4 @@
-﻿// Tests: Algorithms for prime numbers
+﻿// Tests: Algorithms for prime numbers.
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;

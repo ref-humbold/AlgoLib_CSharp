@@ -1,4 +1,4 @@
-﻿// Algorithms for prime numbers
+﻿// Algorithms for prime numbers.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +10,12 @@ namespace AlgoLib.Maths
         private const int Attempts = 17;
         private static readonly Random Random = new();
 
-        /// <summary>Finds prime numbers less than given number.</summary>
+        /// <summary>Searches for prime numbers less than given number.</summary>
         /// <param name="maximum">The maximal number, exclusive.</param>
         /// <returns>The prime numbers.</returns>
         public static IEnumerable<int> FindPrimes(int maximum) => FindPrimes(0, maximum);
 
-        /// <summary>Finds prime numbers inside given range of numbers.</summary>
+        /// <summary>Searches for prime numbers inside given range of numbers.</summary>
         /// <param name="minimum">The minimal number, inclusive.</param>
         /// <param name="maximum">The maximal number, exclusive.</param>
         /// <returns>The prime numbers.</returns>

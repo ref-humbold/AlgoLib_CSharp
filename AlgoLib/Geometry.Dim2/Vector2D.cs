@@ -1,4 +1,4 @@
-﻿// Structure of vector in 2D
+﻿// Structure of vector in 2D.
 using System;
 
 namespace AlgoLib.Geometry.Dim2

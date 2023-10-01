@@ -1,4 +1,4 @@
-﻿// Structure of graph vertex
+﻿// Structure of graph vertex.
 using System;
 
 namespace AlgoLib.Graphs

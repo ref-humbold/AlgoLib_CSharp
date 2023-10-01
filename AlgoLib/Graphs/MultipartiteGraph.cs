@@ -1,4 +1,4 @@
-﻿// Structure of multipartite graph
+﻿// Structure of multipartite graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

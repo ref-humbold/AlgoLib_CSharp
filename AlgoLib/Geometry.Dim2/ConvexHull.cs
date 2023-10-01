@@ -1,4 +1,4 @@
-﻿// Algorithm for convex hull in 2D (monotone chain)
+﻿// Algorithm for convex hull in 2D (monotone chain).
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +6,7 @@ namespace AlgoLib.Geometry.Dim2
 {
     public static class ConvexHull
     {
-        /// <summary>Constructs convex hull of given points.</summary>
+        /// <summary>Computes convex hull of given points.</summary>
         /// <param name="points">The points.</param>
         /// <returns>The points in the convex hull.</returns>
         public static IEnumerable<Point2D> FindConvexHull(IEnumerable<Point2D> points)
@@ -24,7 +24,7 @@ namespace AlgoLib.Geometry.Dim2
             return lowerHull;
         }
 
-        // Creates half of convex hull for given points.
+        // Computes half of convex hull for given points.
         private static List<Point2D> createHalfHull(IEnumerable<Point2D> points)
         {
             var hull = new List<Point2D>();

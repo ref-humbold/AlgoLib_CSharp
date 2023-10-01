@@ -1,4 +1,4 @@
-﻿// Tests: Algorithm for longest common subsequence
+﻿// Tests: Algorithm for longest common subsequence.
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;

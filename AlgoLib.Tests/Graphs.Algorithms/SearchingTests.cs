@@ -1,4 +1,4 @@
-﻿// Tests: Algorithms for graph searching
+﻿// Tests: Algorithms for graph searching.
 using System;
 using System.Collections.Generic;
 using System.Linq;

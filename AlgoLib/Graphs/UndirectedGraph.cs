@@ -1,4 +1,4 @@
-﻿// Structures of undirected graphs
+﻿// Structures of undirected graphs.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace AlgoLib.Graphs
     public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        /// <summary>Converts this graph to a directed graph with same vertices.</summary>
+        /// <summary>Converts this graph to the directed graph with same vertices.</summary>
         /// <returns>The directed copy of this graph.</returns>
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
     }

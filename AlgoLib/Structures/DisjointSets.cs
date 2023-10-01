@@ -1,4 +1,4 @@
-// Structure of disjoint sets (union-find)
+// Structure of disjoint sets (union-find).
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace AlgoLib.Structures
     {
         private readonly Dictionary<T, T> represents = new();
 
-        /// <summary>Gets the number of sets.</summary>
+        /// <summary>Gets the number of sets in this structure.</summary>
         /// <value>The number of sets.</value>
         public int Count { get; private set; }
 
@@ -20,7 +20,7 @@ namespace AlgoLib.Structures
             Count = represents.Count;
         }
 
-        /// <summary>Finds represent of given element.</summary>
+        /// <summary>Searches for represent of given element.</summary>
         /// <param name="item">The element.</param>
         /// <returns>The represent of the element.</returns>
         /// <exception cref="KeyNotFoundException">If element is not present.</exception>
@@ -73,7 +73,7 @@ namespace AlgoLib.Structures
             return this;
         }
 
-        /// <summary>Finds represent of given element.</summary>
+        /// <summary>Searches for represent of given element.</summary>
         /// <param name="item">The element.</param>
         /// <param name="result">
         /// The represent of the element if it's present, otherwise the default value.

@@ -1,4 +1,4 @@
-﻿// Structure of simple graph
+﻿// Structure of simple graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

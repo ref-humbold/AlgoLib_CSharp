@@ -1,4 +1,4 @@
-﻿// Tests: Structure of heap
+﻿// Tests: Structure of heap.
 using System;
 using System.Collections.Generic;
 using System.Linq;

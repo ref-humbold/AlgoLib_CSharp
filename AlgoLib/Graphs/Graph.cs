@@ -1,4 +1,4 @@
-// Structure of basic graph
+// Structure of basic graph.
 using System.Collections.Generic;
 
 namespace AlgoLib.Graphs
@@ -29,7 +29,7 @@ namespace AlgoLib.Graphs
         /// <exception cref="KeyNotFoundException">If no such vertex exists.</exception>
         Vertex<TVertexId> this[TVertexId vertexId] { get; }
 
-        /// <summary>Gets the edge between vertices of given identifiers.</summary>
+        /// <summary>Gets the edge between vertices with given identifiers.</summary>
         /// <value>The edge between the vertices.</value>
         /// <param name="sourceId">The source vertex identifier.</param>
         /// <param name="destinationId">The destination vertex identifier.</param>

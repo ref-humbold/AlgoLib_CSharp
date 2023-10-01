@@ -1,4 +1,4 @@
-﻿// Tests: Structure of linear equations system
+﻿// Tests: Structure of linear equations system.
 using System;
 using FluentAssertions;
 using NUnit.Framework;

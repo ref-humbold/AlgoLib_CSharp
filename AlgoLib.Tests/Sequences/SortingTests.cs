@@ -1,4 +1,4 @@
-﻿// Tests: Algorithms for sorting
+﻿// Tests: Algorithms for sorting.
 using System;
 using System.Collections.Generic;
 using FluentAssertions;

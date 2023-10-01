@@ -1,4 +1,4 @@
-﻿// Tests: Structures of undirected graphs
+﻿// Tests: Structures of undirected graphs.
 using System;
 using System.Collections.Generic;
 using System.Linq;

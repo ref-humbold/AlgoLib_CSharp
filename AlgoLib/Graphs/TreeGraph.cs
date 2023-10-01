@@ -1,4 +1,4 @@
-﻿// Structure of tree graph
+﻿// Structure of tree graph.
 using System.Collections.Generic;
 
 namespace AlgoLib.Graphs
@@ -43,7 +43,7 @@ namespace AlgoLib.Graphs
         public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected() =>
             graph.AsDirected();
 
-        /// <summary>Adds new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <summary>Adds new vertex to this graph and creates an edge to given existing vertex.</summary>
         /// <param name="vertexId">The identifier of new vertex.</param>
         /// <param name="neighbour">The existing vertex.</param>
         /// <param name="vertexProperty">The vertex property.</param>
@@ -56,7 +56,7 @@ namespace AlgoLib.Graphs
                 TEdgeProperty edgeProperty = default) =>
             AddVertex(new Vertex<TVertexId>(vertexId), neighbour, vertexProperty, edgeProperty);
 
-        /// <summary>Adds new vertex to this graph and creates an edge to an existing vertex.</summary>
+        /// <summary>Adds new vertex to this graph and creates an edge to given existing vertex.</summary>
         /// <param name="vertex">The new vertex.</param>
         /// <param name="neighbour">The existing vertex.</param>
         /// <param name="vertexProperty">The vertex property.</param>

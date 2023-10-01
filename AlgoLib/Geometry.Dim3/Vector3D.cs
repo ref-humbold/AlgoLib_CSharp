@@ -1,4 +1,4 @@
-﻿// Structure of vector in 3D
+﻿// Structure of vector in 3D.
 using System;
 
 namespace AlgoLib.Geometry.Dim3

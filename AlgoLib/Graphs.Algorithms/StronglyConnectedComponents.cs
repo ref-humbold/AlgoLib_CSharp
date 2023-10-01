@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿// Algorithm for strongly connected components of a directed graph.
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms
 {
     public static class StronglyConnectedComponents
     {
-        /// <summary>Finds strongly connected components in given directed graph.</summary>
+        /// <summary>Computes strongly connected components in given directed graph.</summary>
         /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
         /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
         /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>

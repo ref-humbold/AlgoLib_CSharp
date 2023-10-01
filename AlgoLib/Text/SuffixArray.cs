@@ -1,4 +1,4 @@
-﻿// Structure of suffix array
+﻿// Structure of suffix array.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace AlgoLib.Text
             }
         }
 
-        /// <summary>Finds suffix in text for given index in this suffix array.</summary>
+        /// <summary>Searches for suffix in text for given index in this suffix array.</summary>
         /// <param name="index">The index in this suffix array.</param>
         /// <returns>The index in the text where the suffix begins.</returns>
         public int IndexAt(Index index)
@@ -50,7 +50,7 @@ namespace AlgoLib.Text
                 : suffixArray[index];
         }
 
-        /// <summary>Finds index in this suffix array for given text suffix.</summary>
+        /// <summary>Searches for index in this suffix array for given text suffix.</summary>
         /// <param name="index">The index in the text where suffix begins.</param>
         /// <returns>The index of suffix in the suffix array.</returns>
         public int IndexOf(Index index)
@@ -62,7 +62,7 @@ namespace AlgoLib.Text
                 : inverseArray[index];
         }
 
-        /// <summary>Counts length of the longest common prefix of given suffixes.</summary>
+        /// <summary>Computes length of the longest common prefix of given suffixes.</summary>
         /// <param name="index1">The index in text where the first suffix begins.</param>
         /// <param name="index2">The index in text where the second suffix begins.</param>
         /// <returns>The length of the longest common prefix.</returns>

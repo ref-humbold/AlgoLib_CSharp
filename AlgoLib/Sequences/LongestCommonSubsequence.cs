@@ -1,4 +1,4 @@
-﻿// Algorithm for longest common subsequence
+﻿// Algorithm for longest common subsequence.
 using System;
 using System.Collections.Generic;
 using System.Linq;

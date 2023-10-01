@@ -1,4 +1,4 @@
-﻿// Strategies for algorithms for graph searching
+﻿// Strategies for algorithms for graph searching.
 
 namespace AlgoLib.Graphs.Algorithms
 {

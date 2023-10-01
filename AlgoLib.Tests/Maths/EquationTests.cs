@@ -1,4 +1,4 @@
-﻿// Tests: Structure of linear equation
+﻿// Tests: Structure of linear equation.
 using System;
 using System.Linq;
 using FluentAssertions;

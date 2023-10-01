@@ -1,4 +1,4 @@
-﻿// Structure of point in 3D
+﻿// Structure of point in 3D.
 using System;
 
 namespace AlgoLib.Geometry.Dim3

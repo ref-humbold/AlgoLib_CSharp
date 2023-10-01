@@ -1,4 +1,4 @@
-﻿// Structure of heap
+﻿// Structure of heap.
 using System;
 using System.Collections;
 using System.Collections.Generic;

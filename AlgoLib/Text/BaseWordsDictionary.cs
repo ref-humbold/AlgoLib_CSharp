@@ -1,4 +1,4 @@
-﻿// Structure of base words dictionary using Karp-Miller-Rosenberg algorithm
+﻿// Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.
 using System;
 using System.Collections.Generic;
 using System.Linq;

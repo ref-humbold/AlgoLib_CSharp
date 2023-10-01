@@ -1,4 +1,4 @@
-﻿// Structure of trie tree
+﻿// Structure of trie tree.
 using System.Collections.Generic;
 
 namespace AlgoLib.Text
