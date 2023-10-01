@@ -97,7 +97,7 @@ namespace AlgoLib.Maths
         /// <summary>Adds two fractions.</summary>
         /// <param name="f1">The first fraction.</param>
         /// <param name="f2">The second fraction.</param>
-        /// <returns>The result of the addition.</returns>
+        /// <returns>The result of addition.</returns>
         public static Fraction operator +(Fraction f1, Fraction f2) => Of(
                f1.numerator * f2.denominator + f2.numerator * f1.denominator,
                f1.denominator * f2.denominator);
@@ -105,7 +105,7 @@ namespace AlgoLib.Maths
         /// <summary>Subtracts two fractions.</summary>
         /// <param name="f1">The first fraction.</param>
         /// <param name="f2">The second fraction.</param>
-        /// <returns>The result of the subtraction.</returns>
+        /// <returns>The result of subtraction.</returns>
         public static Fraction operator -(Fraction f1, Fraction f2) => Of(
             f1.numerator * f2.denominator - f2.numerator * f1.denominator,
             f1.denominator * f2.denominator);
@@ -113,15 +113,15 @@ namespace AlgoLib.Maths
         /// <summary>Multiplies two fractions.</summary>
         /// <param name="f1">The first fraction.</param>
         /// <param name="f2">The second fraction.</param>
-        /// <returns>The result of the multiplication.</returns>
+        /// <returns>The result of multiplication.</returns>
         public static Fraction operator *(Fraction f1, Fraction f2) =>
             Of(f1.numerator * f2.numerator, f1.denominator * f2.denominator);
 
         /// <summary>Divides two fractions.</summary>
         /// <param name="f1">The first fraction.</param>
         /// <param name="f2">The second fraction.</param>
-        /// <returns>The result of the multiplication.</returns>
-        /// <exception cref="DivideByZeroException">If the divisor is equal to zero.</exception>
+        /// <returns>The result of division.</returns>
+        /// <exception cref="DivideByZeroException">If divisor is equal to zero.</exception>
         public static Fraction operator /(Fraction f1, Fraction f2) =>
             f2.numerator == 0
                 ? throw new DivideByZeroException("Division by zero")

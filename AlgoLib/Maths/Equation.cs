@@ -22,7 +22,7 @@ namespace AlgoLib.Maths
             FreeTerm = freeTerm;
         }
 
-        /// <summary>Gets the coefficient by given variable.</summary>
+        /// <summary>Gets the coefficient by the variable at given index.</summary>
         /// <param name="i">The index of variable.</param>
         /// <returns>The coefficient specified by the index.</returns>
         public double this[Index i] => coefficients[i];

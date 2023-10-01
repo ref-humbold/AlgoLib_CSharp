@@ -23,7 +23,7 @@ namespace AlgoLib.Maths
                         $"Equation {eq} has {eq.Count} variables, but was expected to have {equations.Length}");
         }
 
-        /// <summary>Gets the equation of given index.</summary>
+        /// <summary>Gets the equation at given index.</summary>
         /// <param name="i">The index of equation.</param>
         /// <returns>The equation of this system specified by the index.</returns>
         public Equation this[Index i] => equations[i];
