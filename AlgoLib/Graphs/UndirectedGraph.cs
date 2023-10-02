@@ -1,4 +1,4 @@
-﻿// Structures of undirected graphs.
+﻿// Structure of undirected graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

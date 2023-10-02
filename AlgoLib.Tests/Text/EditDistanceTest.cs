@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Algorithms for edit distance.
+using System;
 using FluentAssertions;
 using NUnit.Framework;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Tests: Algorithms for maximum subarray.
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 

@@ -1,4 +1,4 @@
-﻿//Algorithms for minimal spanning tree of an undirected weighted graph.
+﻿// Algorithms for minimal spanning tree.
 using System.Collections.Generic;
 using System.Linq;
 using AlgoLib.Structures;

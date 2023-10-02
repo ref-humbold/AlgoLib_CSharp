@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿// Tests: Algorithms for minimal spanning tree.
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 

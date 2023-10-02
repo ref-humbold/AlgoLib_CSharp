@@ -1,4 +1,4 @@
-// Structures of directed graphs.
+// Structure of directed graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

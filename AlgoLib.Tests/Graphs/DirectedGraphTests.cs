@@ -1,4 +1,4 @@
-﻿// Tests: Structures of directed graphs.
+﻿// Tests: Structure of directed graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿// Algorithm for strongly connected components of a directed graph.
+﻿// Algorithm for strongly connected components.
 using System.Collections.Generic;
 using System.Linq;
 

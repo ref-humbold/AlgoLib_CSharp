@@ -1,4 +1,4 @@
-﻿// Algorithms for sorting.
+﻿// Algorithms for sequence sorting.
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Structure of multipartite graph.
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;

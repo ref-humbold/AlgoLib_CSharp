@@ -1,4 +1,4 @@
-﻿// Tests: Structure of tree testObject.
+﻿// Tests: Structure of tree graph.
 using System;
 using System.Collections.Generic;
 using FluentAssertions;

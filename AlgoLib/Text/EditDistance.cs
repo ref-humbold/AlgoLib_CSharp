@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Algorithms for edit distance.
+using System;
 using System.Linq;
 
 namespace AlgoLib.Text

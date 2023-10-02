@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Tests: Structure of pairing heap.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;

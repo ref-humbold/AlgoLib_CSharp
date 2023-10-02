@@ -1,4 +1,4 @@
-﻿// Algorithm for pair of closest points in 2D.
+﻿// Algorithm for searching pair of closest points in 2D.
 using System;
 using System.Collections.Generic;
 using System.Linq;

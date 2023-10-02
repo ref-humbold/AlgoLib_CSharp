@@ -1,4 +1,4 @@
-﻿// Algorithms for topological sorting of a directed acyclic graph.
+﻿// Algorithms for topological sorting of a graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;
