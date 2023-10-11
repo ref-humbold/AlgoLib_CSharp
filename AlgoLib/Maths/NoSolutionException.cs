@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace AlgoLib.Maths
+namespace AlgoLib.Maths;
+
+public class NoSolutionException : Exception
 {
-    public class NoSolutionException : Exception
+    public NoSolutionException()
+        : base()
     {
-        public NoSolutionException()
-            : base()
-        {
-        }
     }
 }

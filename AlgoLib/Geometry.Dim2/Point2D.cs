@@ -1,47 +1,46 @@
 ﻿// Structure of point in 2D.
 using System;
 
-namespace AlgoLib.Geometry.Dim2
+namespace AlgoLib.Geometry.Dim2;
+
+public readonly struct Point2D : IGeometryObject, IEquatable<Point2D>
 {
-    public readonly struct Point2D : IGeometryObject, IEquatable<Point2D>
+    public readonly double X { get; init; }
+
+    public readonly double Y { get; init; }
+
+    public double[] Coordinates => new[] { X, Y };
+
+    public double Radius => Math.Sqrt(X * X + Y * Y);
+
+    public double AngleRad => Math.Atan2(Y, X);
+
+    public double AngleDeg => (Math.Atan2(Y, X) * 180 / Math.PI + 360) % 360;
+
+    public Point2D(double x, double y)
     {
-        public readonly double X { get; init; }
+        X = x;
+        Y = y;
+    }
 
-        public readonly double Y { get; init; }
+    public static Point2D Of(double x, double y) => new(x, y);
 
-        public double[] Coordinates => new[] { X, Y };
+    public static bool operator ==(Point2D left, Point2D right) => left.Equals(right);
 
-        public double Radius => Math.Sqrt(X * X + Y * Y);
+    public static bool operator !=(Point2D left, Point2D right) => !(left == right);
 
-        public double AngleRad => Math.Atan2(Y, X);
+    public override bool Equals(object obj) => obj is Point2D p && Equals(p);
 
-        public double AngleDeg => (Math.Atan2(Y, X) * 180 / Math.PI + 360) % 360;
+    public bool Equals(Point2D p) =>
+        IGeometryObject.AreEqual(X, p.X) && IGeometryObject.AreEqual(Y, p.Y);
 
-        public Point2D(double x, double y)
-        {
-            X = x;
-            Y = y;
-        }
+    public override int GetHashCode() => HashCode.Combine(X, Y);
 
-        public static Point2D Of(double x, double y) => new(x, y);
+    public override string ToString() => $"({X}, {Y})";
 
-        public static bool operator ==(Point2D left, Point2D right) => left.Equals(right);
-
-        public static bool operator !=(Point2D left, Point2D right) => !(left == right);
-
-        public override bool Equals(object obj) => obj is Point2D p && Equals(p);
-
-        public bool Equals(Point2D p) =>
-            IGeometryObject.AreEqual(X, p.X) && IGeometryObject.AreEqual(Y, p.Y);
-
-        public override int GetHashCode() => HashCode.Combine(X, Y);
-
-        public override string ToString() => $"({X}, {Y})";
-
-        public void Deconstruct(out double x, out double y)
-        {
-            x = X;
-            y = Y;
-        }
+    public void Deconstruct(out double x, out double y)
+    {
+        x = X;
+        y = Y;
     }
 }

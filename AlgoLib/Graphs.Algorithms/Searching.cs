@@ -1,168 +1,167 @@
 // Algorithms for graph searching.
 using System.Collections.Generic;
 
-namespace AlgoLib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms;
+
+public static class Searching
 {
-    public static class Searching
+    /// <summary>Breadth-first-search algorithm.</summary>
+    /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+    /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+    /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+    /// <param name="graph">The graph.</param>
+    /// <param name="strategy">The searching strategy.</param>
+    /// <param name="roots">The starting vertices.</param>
+    /// <returns>The visited vertices.</returns>
+    public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
+        this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+        IBfsStrategy<TVertexId> strategy,
+        IEnumerable<Vertex<TVertexId>> roots)
     {
-        /// <summary>Breadth-first-search algorithm.</summary>
-        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
-        /// <param name="graph">The graph.</param>
-        /// <param name="strategy">The searching strategy.</param>
-        /// <param name="roots">The starting vertices.</param>
-        /// <returns>The visited vertices.</returns>
-        public static IEnumerable<Vertex<TVertexId>> Bfs<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
-            IBfsStrategy<TVertexId> strategy,
-            IEnumerable<Vertex<TVertexId>> roots)
-        {
-            var reached = new HashSet<Vertex<TVertexId>>();
-            var vertexQueue = new Queue<Vertex<TVertexId>>();
+        var reached = new HashSet<Vertex<TVertexId>>();
+        var vertexQueue = new Queue<Vertex<TVertexId>>();
 
-            foreach(Vertex<TVertexId> root in roots)
-                if(!reached.Contains(root))
+        foreach(Vertex<TVertexId> root in roots)
+            if(!reached.Contains(root))
+            {
+                strategy.ForRoot(root);
+                vertexQueue.Enqueue(root);
+                reached.Add(root);
+
+                while(vertexQueue.Count != 0)
                 {
-                    strategy.ForRoot(root);
-                    vertexQueue.Enqueue(root);
-                    reached.Add(root);
+                    Vertex<TVertexId> vertex = vertexQueue.Dequeue();
 
-                    while(vertexQueue.Count != 0)
+                    strategy.OnEntry(vertex);
+
+                    foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
+                        if(!reached.Contains(neighbour))
+                        {
+                            strategy.OnNextVertex(vertex, neighbour);
+                            reached.Add(neighbour);
+                            vertexQueue.Enqueue(neighbour);
+                        }
+
+                    strategy.OnExit(vertex);
+                }
+            }
+
+        return reached;
+    }
+
+    /// <summary>Iterative deph-first-search algorithm.</summary>
+    /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+    /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+    /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+    /// <param name="graph">The graph.</param>
+    /// <param name="strategy">The searching strategy.</param>
+    /// <param name="roots">The starting vertices.</param>
+    /// <returns>The visited vertices.</returns>
+    public static IEnumerable<Vertex<TVertexId>> DfsIterative<TVertexId, TVertexProperty, TEdgeProperty>(
+        this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+        IDfsStrategy<TVertexId> strategy,
+        IEnumerable<Vertex<TVertexId>> roots)
+    {
+        var reached = new Dictionary<Vertex<TVertexId>, int>();
+        var vertexStack = new Stack<Vertex<TVertexId>>();
+        int iteration = 1;
+
+        foreach(Vertex<TVertexId> root in roots)
+            if(!reached.ContainsKey(root))
+            {
+                strategy.ForRoot(root);
+                vertexStack.Push(root);
+
+                while(vertexStack.Count != 0)
+                {
+                    Vertex<TVertexId> vertex = vertexStack.Pop();
+
+                    if(!reached.ContainsKey(vertex))
                     {
-                        Vertex<TVertexId> vertex = vertexQueue.Dequeue();
-
+                        reached[vertex] = iteration;
                         strategy.OnEntry(vertex);
 
                         foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
-                            if(!reached.Contains(neighbour))
+                            if(!reached.ContainsKey(neighbour))
                             {
                                 strategy.OnNextVertex(vertex, neighbour);
-                                reached.Add(neighbour);
-                                vertexQueue.Enqueue(neighbour);
+                                vertexStack.Push(neighbour);
                             }
+                            else if(reached[neighbour] == iteration)
+                                strategy.OnEdgeToVisited(vertex, neighbour);
 
                         strategy.OnExit(vertex);
+                        reached[root] = -iteration;
                     }
                 }
 
-            return reached;
-        }
+                ++iteration;
+            }
 
-        /// <summary>Iterative deph-first-search algorithm.</summary>
-        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
-        /// <param name="graph">The graph.</param>
-        /// <param name="strategy">The searching strategy.</param>
-        /// <param name="roots">The starting vertices.</param>
-        /// <returns>The visited vertices.</returns>
-        public static IEnumerable<Vertex<TVertexId>> DfsIterative<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
-            IDfsStrategy<TVertexId> strategy,
-            IEnumerable<Vertex<TVertexId>> roots)
-        {
-            var reached = new Dictionary<Vertex<TVertexId>, int>();
-            var vertexStack = new Stack<Vertex<TVertexId>>();
-            int iteration = 1;
+        return reached.Keys;
+    }
 
-            foreach(Vertex<TVertexId> root in roots)
-                if(!reached.ContainsKey(root))
-                {
-                    strategy.ForRoot(root);
-                    vertexStack.Push(root);
+    /// <summary>Recursive deph-first-search algorithm.</summary>
+    /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+    /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+    /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
+    /// <param name="graph">The graph.</param>
+    /// <param name="strategy">The searching strategy.</param>
+    /// <param name="roots">The starting vertices.</param>
+    /// <returns>The visited vertices.</returns>
+    public static IEnumerable<Vertex<TVertexId>> DfsRecursive<TVertexId, TVertexProperty, TEdgeProperty>(
+        this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+        IDfsStrategy<TVertexId> strategy,
+        IEnumerable<Vertex<TVertexId>> roots)
+    {
+        var state = new DfsRecursiveState<TVertexId>();
 
-                    while(vertexStack.Count != 0)
-                    {
-                        Vertex<TVertexId> vertex = vertexStack.Pop();
+        foreach(Vertex<TVertexId> root in roots)
+            if(!state.Reached.ContainsKey(root))
+            {
+                strategy.ForRoot(root);
+                state.Vertex = root;
+                graph.dfsRecursiveStep(strategy, state);
+                ++state.Iteration;
+            }
 
-                        if(!reached.ContainsKey(vertex))
-                        {
-                            reached[vertex] = iteration;
-                            strategy.OnEntry(vertex);
+        return state.Reached.Keys;
+    }
 
-                            foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
-                                if(!reached.ContainsKey(neighbour))
-                                {
-                                    strategy.OnNextVertex(vertex, neighbour);
-                                    vertexStack.Push(neighbour);
-                                }
-                                else if(reached[neighbour] == iteration)
-                                    strategy.OnEdgeToVisited(vertex, neighbour);
+    // Single step of recursive DFS.
+    private static void dfsRecursiveStep<TVertexId, TVertexProperty, TEdgeProperty>(
+        this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
+        IDfsStrategy<TVertexId> strategy,
+        DfsRecursiveState<TVertexId> state)
+    {
+        Vertex<TVertexId> vertex = state.Vertex;
+        state.onEntry(vertex);
+        strategy.OnEntry(vertex);
 
-                            strategy.OnExit(vertex);
-                            reached[root] = -iteration;
-                        }
-                    }
+        foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
+            if(!state.Reached.ContainsKey(neighbour))
+            {
+                strategy.OnNextVertex(vertex, neighbour);
+                state.Vertex = neighbour;
+                graph.dfsRecursiveStep(strategy, state);
+            }
+            else if(state.Reached[neighbour] == state.Iteration)
+                strategy.OnEdgeToVisited(vertex, neighbour);
 
-                    ++iteration;
-                }
+        strategy.OnExit(vertex);
+        state.onExit(vertex);
+    }
 
-            return reached.Keys;
-        }
+    private class DfsRecursiveState<TVertexId>
+    {
+        public Dictionary<Vertex<TVertexId>, int> Reached { get; } = new();
 
-        /// <summary>Recursive deph-first-search algorithm.</summary>
-        /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
-        /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
-        /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
-        /// <param name="graph">The graph.</param>
-        /// <param name="strategy">The searching strategy.</param>
-        /// <param name="roots">The starting vertices.</param>
-        /// <returns>The visited vertices.</returns>
-        public static IEnumerable<Vertex<TVertexId>> DfsRecursive<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
-            IDfsStrategy<TVertexId> strategy,
-            IEnumerable<Vertex<TVertexId>> roots)
-        {
-            var state = new DfsRecursiveState<TVertexId>();
+        public Vertex<TVertexId> Vertex { get; set; }
 
-            foreach(Vertex<TVertexId> root in roots)
-                if(!state.Reached.ContainsKey(root))
-                {
-                    strategy.ForRoot(root);
-                    state.Vertex = root;
-                    graph.dfsRecursiveStep(strategy, state);
-                    ++state.Iteration;
-                }
+        public int Iteration { get; set; } = 1;
 
-            return state.Reached.Keys;
-        }
+        public void onEntry(Vertex<TVertexId> vertex) => Reached[vertex] = Iteration;
 
-        // Single step of recursive DFS.
-        private static void dfsRecursiveStep<TVertexId, TVertexProperty, TEdgeProperty>(
-            this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
-            IDfsStrategy<TVertexId> strategy,
-            DfsRecursiveState<TVertexId> state)
-        {
-            Vertex<TVertexId> vertex = state.Vertex;
-            state.onEntry(vertex);
-            strategy.OnEntry(vertex);
-
-            foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
-                if(!state.Reached.ContainsKey(neighbour))
-                {
-                    strategy.OnNextVertex(vertex, neighbour);
-                    state.Vertex = neighbour;
-                    graph.dfsRecursiveStep(strategy, state);
-                }
-                else if(state.Reached[neighbour] == state.Iteration)
-                    strategy.OnEdgeToVisited(vertex, neighbour);
-
-            strategy.OnExit(vertex);
-            state.onExit(vertex);
-        }
-
-        private class DfsRecursiveState<TVertexId>
-        {
-            public Dictionary<Vertex<TVertexId>, int> Reached { get; } = new();
-
-            public Vertex<TVertexId> Vertex { get; set; }
-
-            public int Iteration { get; set; } = 1;
-
-            public void onEntry(Vertex<TVertexId> vertex) => Reached[vertex] = Iteration;
-
-            public void onExit(Vertex<TVertexId> vertex) => Reached[vertex] = -Iteration;
-        }
+        public void onExit(Vertex<TVertexId> vertex) => Reached[vertex] = -Iteration;
     }
 }

@@ -4,212 +4,211 @@ using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Sequences
+namespace AlgoLib.Sequences;
+
+[TestFixture]
+public class SortingTests
 {
-    [TestFixture]
-    public class SortingTests
+    #region HeapSort
+
+    [Test]
+    public void HeapSort_ThenSortedAscending()
     {
-        #region HeapSort
+        // given
+        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        // when
+        sequence.HeapSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+    }
 
-        [Test]
-        public void HeapSort_ThenSortedAscending()
+    [Test]
+    public void HeapSort_WhenEmptyList_ThenEmpty()
+    {
+        // given
+        var sequence = new List<int>();
+        // when
+        sequence.HeapSort();
+        // then
+        sequence.Should().BeEmpty();
+    }
+
+    [Test]
+    public void HeapSort_WhenNull_ThenArgumentNullException()
+    {
+        // when
+        Action action = () => Sorting.HeapSort<int>(null);
+        // then
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    #endregion
+    #region TopDownMergeSort
+
+    [Test]
+    public void TopDownMergeSort_ThenSortedAscending()
+    {
+        // given
+        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        // when
+        sequence.TopDownMergeSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+    }
+
+    [Test]
+    public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
+    {
+        // given
+        var sequence = new List<IntPair>() {
+            new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
+            new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+        };
+        // when
+        sequence.TopDownMergeSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+        sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
+        sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
+    }
+
+    [Test]
+    public void TopDownMergeSort_WhenEmptyList_ThenEmpty()
+    {
+        // given
+        var sequence = new List<int>();
+        // when
+        sequence.TopDownMergeSort();
+        // then
+        sequence.Should().BeEmpty();
+    }
+
+    [Test]
+    public void TopDownMergeSort_WhenNull_ThenArgumentNullException()
+    {
+        // when
+        Action action = () => Sorting.TopDownMergeSort<int>(null);
+        // then
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    #endregion
+    #region BottomUpMergeSort
+
+    [Test]
+    public void BottomUpMergeSort_ThenSortedAscending()
+    {
+        // given
+        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        // when
+        sequence.BottomUpMergeSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+    }
+
+    [Test]
+    public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
+    {
+        // given
+        var sequence = new List<IntPair>() {
+            new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
+            new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+        };
+        // when
+        sequence.BottomUpMergeSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+        sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
+        sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
+    }
+
+    [Test]
+    public void BottomUpMergeSort_WhenEmptyList_ThenEmpty()
+    {
+        // given
+        var sequence = new List<int>();
+        // when
+        sequence.BottomUpMergeSort();
+        // then
+        sequence.Should().BeEmpty();
+    }
+
+    [Test]
+    public void BottomUpMergeSort_WhenNull_ThenArgumentNullException()
+    {
+        // when
+        Action action = () => Sorting.BottomUpMergeSort<int>(null);
+        // then
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    #endregion
+    #region QuickSort
+
+    [Test]
+    public void QuickSort_ThenSortedAscending()
+    {
+        // given
+        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        // when
+        sequence.QuickSort();
+        // then
+        sequence.Should().BeInAscendingOrder();
+    }
+
+    [Test]
+    public void QuickSort_WhenEmptyList_ThenEmpty()
+    {
+        // given
+        var sequence = new List<int>();
+        // when
+        sequence.QuickSort();
+        // then
+        sequence.Should().BeEmpty();
+    }
+
+    [Test]
+    public void QuickSort_WhenNull_ThenArgumentNullException()
+    {
+        // when
+        Action action = () => Sorting.QuickSort<int>(null);
+        // then
+        action.Should().Throw<ArgumentNullException>();
+    }
+
+    #endregion
+
+    private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
+    {
+        public int First
         {
-            // given
-            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
-            // when
-            sequence.HeapSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
+            get; set;
         }
 
-        [Test]
-        public void HeapSort_WhenEmptyList_ThenEmpty()
+        public int Second
         {
-            // given
-            var sequence = new List<int>();
-            // when
-            sequence.HeapSort();
-            // then
-            sequence.Should().BeEmpty();
+            get; set;
         }
 
-        [Test]
-        public void HeapSort_WhenNull_ThenArgumentNullException()
+        public IntPair(int first, int second)
         {
-            // when
-            Action action = () => Sorting.HeapSort<int>(null);
-            // then
-            action.Should().Throw<ArgumentNullException>();
+            First = first;
+            Second = second;
         }
 
-        #endregion
-        #region TopDownMergeSort
+        public int CompareTo(object obj) =>
+            obj is IntPair pair
+                ? CompareTo(pair)
+                : throw new ArgumentException("Compared object is not of type IntPair", nameof(obj));
 
-        [Test]
-        public void TopDownMergeSort_ThenSortedAscending()
-        {
-            // given
-            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
-            // when
-            sequence.TopDownMergeSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
-        }
+        public int CompareTo(IntPair other) => First.CompareTo(other.First);
 
-        [Test]
-        public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
-        {
-            // given
-            var sequence = new List<IntPair>() {
-                new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
-                new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
-            };
-            // when
-            sequence.TopDownMergeSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
-            sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
-            sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
-        }
+        public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
 
-        [Test]
-        public void TopDownMergeSort_WhenEmptyList_ThenEmpty()
-        {
-            // given
-            var sequence = new List<int>();
-            // when
-            sequence.TopDownMergeSort();
-            // then
-            sequence.Should().BeEmpty();
-        }
+        public bool Equals(IntPair other) => First == other.First && Second == other.Second;
 
-        [Test]
-        public void TopDownMergeSort_WhenNull_ThenArgumentNullException()
-        {
-            // when
-            Action action = () => Sorting.TopDownMergeSort<int>(null);
-            // then
-            action.Should().Throw<ArgumentNullException>();
-        }
+        public override int GetHashCode() => (First, Second).GetHashCode();
 
-        #endregion
-        #region BottomUpMergeSort
-
-        [Test]
-        public void BottomUpMergeSort_ThenSortedAscending()
-        {
-            // given
-            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
-            // when
-            sequence.BottomUpMergeSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
-        }
-
-        [Test]
-        public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
-        {
-            // given
-            var sequence = new List<IntPair>() {
-                new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
-                new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
-            };
-            // when
-            sequence.BottomUpMergeSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
-            sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
-            sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
-        }
-
-        [Test]
-        public void BottomUpMergeSort_WhenEmptyList_ThenEmpty()
-        {
-            // given
-            var sequence = new List<int>();
-            // when
-            sequence.BottomUpMergeSort();
-            // then
-            sequence.Should().BeEmpty();
-        }
-
-        [Test]
-        public void BottomUpMergeSort_WhenNull_ThenArgumentNullException()
-        {
-            // when
-            Action action = () => Sorting.BottomUpMergeSort<int>(null);
-            // then
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        #endregion
-        #region QuickSort
-
-        [Test]
-        public void QuickSort_ThenSortedAscending()
-        {
-            // given
-            var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
-            // when
-            sequence.QuickSort();
-            // then
-            sequence.Should().BeInAscendingOrder();
-        }
-
-        [Test]
-        public void QuickSort_WhenEmptyList_ThenEmpty()
-        {
-            // given
-            var sequence = new List<int>();
-            // when
-            sequence.QuickSort();
-            // then
-            sequence.Should().BeEmpty();
-        }
-
-        [Test]
-        public void QuickSort_WhenNull_ThenArgumentNullException()
-        {
-            // when
-            Action action = () => Sorting.QuickSort<int>(null);
-            // then
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        #endregion
-
-        private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
-        {
-            public int First
-            {
-                get; set;
-            }
-
-            public int Second
-            {
-                get; set;
-            }
-
-            public IntPair(int first, int second)
-            {
-                First = first;
-                Second = second;
-            }
-
-            public int CompareTo(object obj) =>
-                obj is IntPair pair
-                    ? CompareTo(pair)
-                    : throw new ArgumentException("Compared object is not of type IntPair", nameof(obj));
-
-            public int CompareTo(IntPair other) => First.CompareTo(other.First);
-
-            public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
-
-            public bool Equals(IntPair other) => First == other.First && Second == other.Second;
-
-            public override int GetHashCode() => (First, Second).GetHashCode();
-
-            public override string ToString() => $"IntPair({First}, {Second})";
-        }
+        public override string ToString() => $"IntPair({First}, {Second})";
     }
 }

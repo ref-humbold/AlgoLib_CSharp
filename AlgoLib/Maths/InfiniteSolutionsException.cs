@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace AlgoLib.Maths
+namespace AlgoLib.Maths;
+
+public class InfiniteSolutionsException : Exception
 {
-    public class InfiniteSolutionsException : Exception
+    public InfiniteSolutionsException()
+        : base()
     {
-        public InfiniteSolutionsException()
-            : base()
-        {
-        }
     }
 }

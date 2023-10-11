@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace AlgoLib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms;
+
+[Serializable]
+public class DirectedCyclicGraphException : Exception
 {
-    [Serializable]
-    public class DirectedCyclicGraphException : Exception
+    public DirectedCyclicGraphException(string message)
+        : base(message)
     {
-        public DirectedCyclicGraphException(string message)
-            : base(message)
-        {
-        }
     }
 }

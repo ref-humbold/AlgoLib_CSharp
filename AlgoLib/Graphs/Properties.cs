@@ -1,9 +1,8 @@
-﻿namespace AlgoLib.Graphs
-{
-    public interface IWeighted
-    {
-        static double Infinity => double.PositiveInfinity;
+﻿namespace AlgoLib.Graphs;
 
-        double Weight { get; }
-    }
+public interface IWeighted
+{
+    static double Infinity => double.PositiveInfinity;
+
+    double Weight { get; }
 }

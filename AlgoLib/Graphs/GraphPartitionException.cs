@@ -1,13 +1,12 @@
 ﻿using System;
 
-namespace AlgoLib.Graphs
+namespace AlgoLib.Graphs;
+
+[Serializable]
+public class GraphPartitionException : Exception
 {
-    [Serializable]
-    public class GraphPartitionException : Exception
+    public GraphPartitionException(string message)
+        : base(message)
     {
-        public GraphPartitionException(string message)
-            : base(message)
-        {
-        }
     }
 }

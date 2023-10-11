@@ -3,102 +3,101 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgoLib.Graphs.Algorithms
+namespace AlgoLib.Graphs.Algorithms;
+
+public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
 {
-    public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
+    private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();
+    private readonly LcaStrategy strategy = new();
+    private bool empty = true;
+
+    public TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> Graph { get; }
+
+    public Vertex<TVertexId> Root { get; }
+
+    public LowestCommonAncestor(
+        TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> root)
     {
-        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();
-        private readonly LcaStrategy strategy = new();
-        private bool empty = true;
+        Graph = graph;
+        Root = root;
+    }
 
-        public TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> Graph { get; }
+    /// <summary>Searches for lowest common ancestor of given vertices in this rooted tree.</summary>
+    /// <param name="vertex1">The first vertex.</param>
+    /// <param name="vertex2">The second vertex.</param>
+    /// <returns>The lowest common ancestor of the vertices.</returns>
+    public Vertex<TVertexId> FindLca(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
+    {
+        if(empty)
+            initialize();
 
-        public Vertex<TVertexId> Root { get; }
+        return find(vertex1, vertex2);
+    }
 
-        public LowestCommonAncestor(
-            TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> root)
-        {
-            Graph = graph;
-            Root = root;
-        }
+    private Vertex<TVertexId> find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
+    {
+        if(isOffspring(vertex1, vertex2))
+            return vertex2;
 
-        /// <summary>Searches for lowest common ancestor of given vertices in this rooted tree.</summary>
-        /// <param name="vertex1">The first vertex.</param>
-        /// <param name="vertex2">The second vertex.</param>
-        /// <returns>The lowest common ancestor of the vertices.</returns>
-        public Vertex<TVertexId> FindLca(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
-        {
-            if(empty)
-                initialize();
+        if(isOffspring(vertex2, vertex1))
+            return vertex1;
 
-            return find(vertex1, vertex2);
-        }
+        var candidates = paths[vertex1].Reverse<Vertex<TVertexId>>()
+                                       .Where(candidate => !isOffspring(vertex2, candidate))
+                                       .ToList();
 
-        private Vertex<TVertexId> find(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2)
-        {
-            if(isOffspring(vertex1, vertex2))
-                return vertex2;
+        return candidates.Count > 0
+            ? find(candidates[0], vertex2)
+            : find(paths[vertex1][0], vertex2);
+    }
 
-            if(isOffspring(vertex2, vertex1))
-                return vertex1;
+    private void initialize()
+    {
+        Searching.DfsRecursive(Graph, strategy, new List<Vertex<TVertexId>> { Root });
 
-            var candidates = paths[vertex1].Reverse<Vertex<TVertexId>>()
-                                           .Where(candidate => !isOffspring(vertex2, candidate))
-                                           .ToList();
+        foreach(Vertex<TVertexId> vertex in Graph.Vertices)
+            paths[vertex] = new List<Vertex<TVertexId>> { strategy.Parents[vertex] };
 
-            return candidates.Count > 0
-                ? find(candidates[0], vertex2)
-                : find(paths[vertex1][0], vertex2);
-        }
-
-        private void initialize()
-        {
-            Searching.DfsRecursive(Graph, strategy, new List<Vertex<TVertexId>> { Root });
-
+        for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
             foreach(Vertex<TVertexId> vertex in Graph.Vertices)
-                paths[vertex] = new List<Vertex<TVertexId>> { strategy.Parents[vertex] };
+                paths[vertex].Add(paths[paths[vertex][i]][i]);
 
-            for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
-                foreach(Vertex<TVertexId> vertex in Graph.Vertices)
-                    paths[vertex].Add(paths[paths[vertex][i]][i]);
+        empty = false;
+    }
 
-            empty = false;
+    private bool isOffspring(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2) =>
+        strategy.PreTimes[vertex1] >= strategy.PreTimes[vertex2]
+            && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
+
+    private class LcaStrategy : IDfsStrategy<TVertexId>
+    {
+        private int timer = 0;
+
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = new();
+
+        public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = new();
+
+        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
+
+        public void ForRoot(Vertex<TVertexId> root) => Parents[root] = root;
+
+        public void OnEntry(Vertex<TVertexId> vertex)
+        {
+            PreTimes[vertex] = timer;
+            ++timer;
         }
 
-        private bool isOffspring(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2) =>
-            strategy.PreTimes[vertex1] >= strategy.PreTimes[vertex2]
-                && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
+        public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
+            Parents[neighbour] = vertex;
 
-        private class LcaStrategy : IDfsStrategy<TVertexId>
+        public void OnExit(Vertex<TVertexId> vertex)
         {
-            private int timer = 0;
+            PostTimes[vertex] = timer;
+            ++timer;
+        }
 
-            public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = new();
-
-            public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = new();
-
-            public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
-
-            public void ForRoot(Vertex<TVertexId> root) => Parents[root] = root;
-
-            public void OnEntry(Vertex<TVertexId> vertex)
-            {
-                PreTimes[vertex] = timer;
-                ++timer;
-            }
-
-            public void OnNextVertex(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour) =>
-                Parents[neighbour] = vertex;
-
-            public void OnExit(Vertex<TVertexId> vertex)
-            {
-                PostTimes[vertex] = timer;
-                ++timer;
-            }
-
-            public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
-            {
-            }
+        public void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour)
+        {
         }
     }
 }

@@ -2,118 +2,117 @@
 using System;
 using System.Linq;
 
-namespace AlgoLib.Text
+namespace AlgoLib.Text;
+
+public static class EditDistance
 {
-    public static class EditDistance
+    /// <summary>Computes cost of Levenshtein edit distance between given texts.</summary>
+    /// <param name="source">The initial text.</param>
+    /// <param name="destination">The final text.</param>
+    /// <param name="insertionCost">The cost of insertion operation.</param>
+    /// <param name="deletionCost">The cost of deletion operation.</param>
+    /// <param name="substitutionCost">The cost of substitution operation.</param>
+    /// <returns>The cost of edit distance.</returns>
+    /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
+    public static double CountLevenshtein(
+        this string source,
+        string destination,
+        double insertionCost = 1.0,
+        double deletionCost = 1.0,
+        double substitutionCost = 1.0)
     {
-        /// <summary>Computes cost of Levenshtein edit distance between given texts.</summary>
-        /// <param name="source">The initial text.</param>
-        /// <param name="destination">The final text.</param>
-        /// <param name="insertionCost">The cost of insertion operation.</param>
-        /// <param name="deletionCost">The cost of deletion operation.</param>
-        /// <param name="substitutionCost">The cost of substitution operation.</param>
-        /// <returns>The cost of edit distance.</returns>
-        /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
-        public static double CountLevenshtein(
-            this string source,
-            string destination,
-            double insertionCost = 1.0,
-            double deletionCost = 1.0,
-            double substitutionCost = 1.0)
+        if(insertionCost < 0 || deletionCost < 0 || substitutionCost < 0)
+            throw new ArgumentException("Cost of operation cannot be negative");
+
+        double[] distance = Enumerable.Range(0, destination.Length + 1)
+                                      .Select(i => i * insertionCost)
+                                      .ToArray();
+
+        foreach(char element in source)
         {
-            if(insertionCost < 0 || deletionCost < 0 || substitutionCost < 0)
-                throw new ArgumentException("Cost of operation cannot be negative");
+            double previousAbove = distance[0];
 
-            double[] distance = Enumerable.Range(0, destination.Length + 1)
-                                          .Select(i => i * insertionCost)
-                                          .ToArray();
+            distance[0] += deletionCost;
 
-            foreach(char element in source)
+            for(int i = 0; i < destination.Length; ++i)
             {
-                double previousAbove = distance[0];
+                double previousDiagonal = previousAbove;
 
-                distance[0] += deletionCost;
-
-                for(int i = 0; i < destination.Length; ++i)
-                {
-                    double previousDiagonal = previousAbove;
-
-                    previousAbove = distance[i + 1];
-                    distance[i + 1] = element == destination[i]
-                                      ? previousDiagonal
-                                      : Math.Min(
-                                          Math.Min(
-                                              previousAbove + deletionCost,
-                                              distance[i] + insertionCost),
-                                          previousDiagonal + substitutionCost);
-                }
+                previousAbove = distance[i + 1];
+                distance[i + 1] = element == destination[i]
+                                  ? previousDiagonal
+                                  : Math.Min(
+                                      Math.Min(
+                                          previousAbove + deletionCost,
+                                          distance[i] + insertionCost),
+                                      previousDiagonal + substitutionCost);
             }
-
-            return distance[^1];
         }
 
-        /// <summary>Computes cost of LCS edit distance between given texts.</summary>
-        /// <param name="source">The initial text.</param>
-        /// <param name="destination">The final text.</param>
-        /// <param name="insertionCost">The cost of insertion operation.</param>
-        /// <param name="deletionCost">The cost of deletion operation.</param>
-        /// <returns>The cost of edit distance.</returns>
-        /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
-        public static double CountLcs(
-            this string source,
-            string destination,
-            double insertionCost = 1.0,
-            double deletionCost = 1.0)
+        return distance[^1];
+    }
+
+    /// <summary>Computes cost of LCS edit distance between given texts.</summary>
+    /// <param name="source">The initial text.</param>
+    /// <param name="destination">The final text.</param>
+    /// <param name="insertionCost">The cost of insertion operation.</param>
+    /// <param name="deletionCost">The cost of deletion operation.</param>
+    /// <returns>The cost of edit distance.</returns>
+    /// <exception cref="ArgumentException">If any operation cost is negative.</exception>
+    public static double CountLcs(
+        this string source,
+        string destination,
+        double insertionCost = 1.0,
+        double deletionCost = 1.0)
+    {
+        if(insertionCost < 0 || deletionCost < 0)
+            throw new ArgumentException("Cost of operation cannot be negative");
+
+        double[] distance = Enumerable.Range(0, destination.Length + 1)
+                                      .Select(i => i * insertionCost)
+                                      .ToArray();
+
+        foreach(char element in source)
         {
-            if(insertionCost < 0 || deletionCost < 0)
-                throw new ArgumentException("Cost of operation cannot be negative");
+            double previousAbove = distance[0];
 
-            double[] distance = Enumerable.Range(0, destination.Length + 1)
-                                          .Select(i => i * insertionCost)
-                                          .ToArray();
+            distance[0] += deletionCost;
 
-            foreach(char element in source)
+            for(int i = 0; i < destination.Length; ++i)
             {
-                double previousAbove = distance[0];
+                double previousDiagonal = previousAbove;
 
-                distance[0] += deletionCost;
-
-                for(int i = 0; i < destination.Length; ++i)
-                {
-                    double previousDiagonal = previousAbove;
-
-                    previousAbove = distance[i + 1];
-                    distance[i + 1] = element == destination[i]
-                                      ? previousDiagonal
-                                      : Math.Min(
-                                          previousAbove + deletionCost, distance[i] + insertionCost);
-                }
+                previousAbove = distance[i + 1];
+                distance[i + 1] = element == destination[i]
+                                  ? previousDiagonal
+                                  : Math.Min(
+                                      previousAbove + deletionCost, distance[i] + insertionCost);
             }
-
-            return distance[^1];
         }
 
-        /// <summary>Computes cost of Hamming edit distance between given texts of equal length.</summary>
-        /// <param name="source">The initial text.</param>
-        /// <param name="destination">The final text.</param>
-        /// <param name="substitutionCost">The cost of substitution operation.</param>
-        /// <returns>The cost of edit distance.</returns>
-        /// <exception cref="ArgumentException">
-        /// If any operation cost is negative, or if texts have different length.
-        /// </exception>
-        public static double CountHamming(
-            this string source, string destination, double substitutionCost = 1.0)
-        {
-            if(substitutionCost < 0)
-                throw new ArgumentException("Cost of operation cannot be negative");
+        return distance[^1];
+    }
 
-            if(source.Length != destination.Length)
-                throw new ArgumentException("Texts should have equal length");
+    /// <summary>Computes cost of Hamming edit distance between given texts of equal length.</summary>
+    /// <param name="source">The initial text.</param>
+    /// <param name="destination">The final text.</param>
+    /// <param name="substitutionCost">The cost of substitution operation.</param>
+    /// <returns>The cost of edit distance.</returns>
+    /// <exception cref="ArgumentException">
+    /// If any operation cost is negative, or if texts have different length.
+    /// </exception>
+    public static double CountHamming(
+        this string source, string destination, double substitutionCost = 1.0)
+    {
+        if(substitutionCost < 0)
+            throw new ArgumentException("Cost of operation cannot be negative");
 
-            return source.Zip(destination)
-                         .Where(p => p.First != p.Second)
-                         .Select(_ => substitutionCost)
-                         .Sum();
-        }
+        if(source.Length != destination.Length)
+            throw new ArgumentException("Texts should have equal length");
+
+        return source.Zip(destination)
+                     .Where(p => p.First != p.Second)
+                     .Select(_ => substitutionCost)
+                     .Sum();
     }
 }
