@@ -81,7 +81,7 @@ public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
     /// <param name="vertexId">The identifier of new vertex.</param>
     /// <param name="property">The vertex property.</param>
     /// <returns>The created vertex.</returns>
-    /// <exception cref="ArgumentException">If vertex already exists.</exception>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Vertex<TVertexId> AddVertex(
             int groupNumber, TVertexId vertexId, TVertexProperty property = default) =>
         AddVertex(groupNumber, new Vertex<TVertexId>(vertexId), property);
@@ -91,7 +91,7 @@ public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
     /// <param name="vertex">The new vertex.</param>
     /// <param name="property">The vertex property.</param>
     /// <returns>The created vertex.</returns>
-    /// <exception cref="ArgumentException">If vertex already exists.</exception>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Vertex<TVertexId> AddVertex(
         int groupNumber, Vertex<TVertexId> vertex, TVertexProperty property = default)
     {
@@ -108,8 +108,8 @@ public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
     /// <param name="destination">The destination vertex.</param>
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>
-    /// <exception cref="ArgumentException">If edge already exists.</exception>
-    /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
+    /// <exception cref="ArgumentException">If the edge already exists.</exception>
+    /// <exception cref="GraphPartitionException">If the vertices belong to same group.</exception>
     public Edge<TVertexId> AddEdgeBetween(
             Vertex<TVertexId> source,
             Vertex<TVertexId> destination,
@@ -120,8 +120,8 @@ public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
     /// <param name="edge">The new edge.</param>
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>
-    /// <exception cref="ArgumentException">If edge already exists.</exception>
-    /// <exception cref="GraphPartitionException">If vertices belong to same group.</exception>
+    /// <exception cref="ArgumentException">If the edge already exists.</exception>
+    /// <exception cref="GraphPartitionException">If the vertices belong to same group.</exception>
     public Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default) =>
         areInSameGroup(edge.Source, edge.Destination)
             ? throw new GraphPartitionException("Cannot create an edge between vertices in the same group")

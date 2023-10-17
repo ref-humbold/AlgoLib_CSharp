@@ -11,11 +11,11 @@ public class DoubleHeap<T> : IEnumerable<T>
     private static readonly int IndexMax = 1;
     private List<T> heap = new();
 
-    /// <summary>Gets the comparer.</summary>
+    /// <summary>Gets the comparer of this double heap.</summary>
     /// <value>The comparer.</value>
     public IComparer<T> Comparer { get; }
 
-    /// <summary>Gets the number of elements.</summary>
+    /// <summary>Gets the number of elements in this double heap.</summary>
     /// <value>The number of elements.</value>
     public int Count => heap.Count;
 
@@ -135,7 +135,7 @@ public class DoubleHeap<T> : IEnumerable<T>
         }
     }
 
-    /// <summary>Adds new elements from given range to this double heap.</summary>
+    /// <summary>Adds new elements to this double heap.</summary>
     /// <param name="items">The new elements.</param>
     public void PushRange(IEnumerable<T> items)
     {

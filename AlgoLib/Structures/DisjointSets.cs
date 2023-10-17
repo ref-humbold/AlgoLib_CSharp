@@ -23,7 +23,7 @@ public class DisjointSets<T>
     /// <summary>Searches for represent of given element.</summary>
     /// <param name="item">The element.</param>
     /// <returns>The represent of the element.</returns>
-    /// <exception cref="KeyNotFoundException">If element is not present.</exception>
+    /// <exception cref="KeyNotFoundException">If the element is not present.</exception>
     public T this[T item]
     {
         get
@@ -37,7 +37,7 @@ public class DisjointSets<T>
 
     /// <summary>Checks whether given element belongs to any set.</summary>
     /// <param name="item">The element.</param>
-    /// <returns><c>true</c> if element is contained, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the element belongs to the structure, otherwise <c>false</c>.</returns>
     public bool Contains(T item) => represents.ContainsKey(item);
 
     /// <summary>Adds new element as singleton set.</summary>
@@ -112,7 +112,7 @@ public class DisjointSets<T>
     /// <summary>Checks whether given elements belong to the same set.</summary>
     /// <param name="item1">The element from the first set.</param>
     /// <param name="item2">The element from the second set.</param>
-    /// <returns><c>true</c> if elements are in same set, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the elements are in same set, otherwise <c>false</c>.</returns>
     /// <exception cref="KeyNotFoundException">If either element is not present.</exception>
     public bool IsSameSet(T item1, T item2) => this[item1].Equals(this[item2]);
 }

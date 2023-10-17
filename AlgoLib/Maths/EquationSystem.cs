@@ -1,4 +1,4 @@
-﻿// Structure of linear equations system.
+﻿// Structure of system of linear equations.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ public class EquationSystem
 {
     private readonly Equation[] equations;
 
-    /// <summary>Gets the number of equations.</summary>
+    /// <summary>Gets the number of equations in this system.</summary>
     /// <value>The number of equations.</value>
     public int Count => equations.Length;
 
@@ -24,13 +24,13 @@ public class EquationSystem
     }
 
     /// <summary>Gets the equation at given index.</summary>
-    /// <param name="i">The index of equation.</param>
-    /// <returns>The equation of this system specified by the index.</returns>
+    /// <param name="i">The index.</param>
+    /// <returns>The equation specified by the index.</returns>
     public Equation this[Index i] => equations[i];
 
     /// <summary>Gets the equations from given indices range.</summary>
-    /// <param name="r">Range of indices in equation system.</param>
-    /// <returns>The equations of this system specified by the indices range.</returns>
+    /// <param name="r">The range of indices.</param>
+    /// <returns>The equations specified by the indices range.</returns>
     public IEnumerable<Equation> this[Range r] => equations[r];
 
     public override string ToString() =>
@@ -38,8 +38,8 @@ public class EquationSystem
 
     /// <summary>Computes solution of this equation system.</summary>
     /// <returns>The solution.</returns>
-    /// <exception cref="InfiniteSolutionsException">If there are infinitely many solutions.</exception>
-    /// <exception cref="NoSolutionException">If there is no solution.</exception>
+    /// <exception cref="InfiniteSolutionsException">If infinitely many solutions.</exception>
+    /// <exception cref="NoSolutionException">If no solution.</exception>
     public double[] Solve()
     {
         GaussianReduce();
@@ -106,6 +106,6 @@ public class EquationSystem
 
     /// <summary>Checks whether given values solve this equation system.</summary>
     /// <param name="solution">The values.</param>
-    /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the solution is correct, otherwise <c>false</c>.</returns>
     public bool HasSolution(double[] solution) => equations.All(eq => eq.HasSolution(solution));
 }

@@ -88,7 +88,7 @@ public class Fraction :
     /// <summary>Inverts fraction.</summary>
     /// <param name="f">The fraction.</param>
     /// <returns>The inverted fraction.</returns>
-    /// <exception cref="InvalidOperationException">If fraction is equal to zero.</exception>
+    /// <exception cref="InvalidOperationException">If the fraction is equal to zero.</exception>
     public static Fraction operator ~(Fraction f) =>
         f.numerator == 0
             ? throw new InvalidOperationException("Value of zero cannot be inverted")
@@ -99,8 +99,8 @@ public class Fraction :
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of addition.</returns>
     public static Fraction operator +(Fraction f1, Fraction f2) => Of(
-           f1.numerator * f2.denominator + f2.numerator * f1.denominator,
-           f1.denominator * f2.denominator);
+        f1.numerator * f2.denominator + f2.numerator * f1.denominator,
+        f1.denominator * f2.denominator);
 
     /// <summary>Subtracts two fractions.</summary>
     /// <param name="f1">The first fraction.</param>
@@ -121,7 +121,7 @@ public class Fraction :
     /// <param name="f1">The first fraction.</param>
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of division.</returns>
-    /// <exception cref="DivideByZeroException">If divisor is equal to zero.</exception>
+    /// <exception cref="DivideByZeroException">If the divisor is equal to zero.</exception>
     public static Fraction operator /(Fraction f1, Fraction f2) =>
         f2.numerator == 0
             ? throw new DivideByZeroException("Division by zero")

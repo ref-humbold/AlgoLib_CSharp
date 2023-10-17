@@ -17,7 +17,7 @@ public static class ShortestPaths
     /// <param name="graph">The directed weighted graph.</param>
     /// <param name="source">The source vertex.</param>
     /// <returns>The dictionary of distances to each vertex.</returns>
-    /// <exception cref="InvalidOperationException">If graph contains a negative cycle.</exception>
+    /// <exception cref="InvalidOperationException">If the graph contains a negative cycle.</exception>
     public static Dictionary<Vertex<TVertexId>, double> BellmanFord<TVertexId, TVertexProperty, TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
         Vertex<TVertexId> source)
@@ -56,7 +56,7 @@ public static class ShortestPaths
     /// <param name="source">The source vertex.</param>
     /// <returns>The dictionary of distances to each vertex.</returns>
     /// <exception cref="InvalidOperationException">
-    /// If graph contains an edge with negative weight.
+    /// If the graph contains an edge with negative weight.
     /// </exception>
     public static Dictionary<Vertex<TVertexId>, double> Dijkstra<TVertexId, TVertexProperty, TEdgeProperty>(
         this IGraph<TVertexId, TVertexProperty, TEdgeProperty> graph, Vertex<TVertexId> source)

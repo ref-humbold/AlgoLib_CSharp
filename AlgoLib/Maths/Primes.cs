@@ -41,7 +41,7 @@ public static class Primes
 
     /// <summary>Checks whether given number is prime using Fermat prime test.</summary>
     /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the number is prime, otherwise <c>false</c>.</returns>
     public static bool TestFermat(int number)
     {
         number = Math.Abs(number);
@@ -65,7 +65,7 @@ public static class Primes
 
     /// <summary>Checks whether given number is prime using Miller-Rabin prime test.</summary>
     /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if number is prime, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the number is prime, otherwise <c>false</c>.</returns>
     public static bool TestMiller(int number)
     {
         number = Math.Abs(number);

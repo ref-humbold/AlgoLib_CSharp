@@ -14,7 +14,7 @@ public static class TopologicalSorting
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
     /// <param name="graph">The directed acyclic graph.</param>
     /// <returns>The topological order of vertices.</returns>
-    /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
+    /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
     public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
         InputsTopologicalSort(graph, Comparer<TVertexId>.Default.Compare);
@@ -26,7 +26,7 @@ public static class TopologicalSorting
     /// <param name="graph">The directed acyclic graph.</param>
     /// <param name="comparer">The comparer of vertex identifiers.</param>
     /// <returns>The topological order of vertices.</returns>
-    /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
+    /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
     public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
         IComparer<TVertexId> comparer) =>
@@ -39,7 +39,7 @@ public static class TopologicalSorting
     /// <param name="graph">The directed acyclic graph.</param>
     /// <param name="comparison">The comparison function of vertex identifiers.</param>
     /// <returns>The topological order of vertices.</returns>
-    /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
+    /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
     public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
         Comparison<TVertexId> comparison)
@@ -89,7 +89,7 @@ public static class TopologicalSorting
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
     /// <param name="graph">The directed acyclic graph.</param>
     /// <returns>The topological order of vertices.</returns>
-    /// <exception cref="DirectedCyclicGraphException">If given graph contains a cycle.</exception>
+    /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
     public static IEnumerable<Vertex<TVertexId>> DfsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
     {

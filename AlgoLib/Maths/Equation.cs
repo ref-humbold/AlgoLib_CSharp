@@ -12,8 +12,8 @@ public class Equation
 
     public double FreeTerm { get; }
 
-    /// <summary>Gets the number of coefficients.</summary>
-    /// <value>The number of coefficients.</value>
+    /// <summary>Gets the number of variables in this equation.</summary>
+    /// <value>The number of variables.</value>
     public int Count => coefficients.Length;
 
     public Equation(double[] coefficients, double freeTerm)
@@ -43,7 +43,7 @@ public class Equation
     /// <param name="eq1">The first equation.</param>
     /// <param name="eq2">The second equation.</param>
     /// <returns>The equation with coefficients added.</returns>
-    /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
+    /// <exception cref="ArgumentException">If the equations have different number of variables.</exception>
     public static Equation operator +(Equation eq1, Equation eq2) =>
         eq1.Count != eq2.Count
             ? throw new ArgumentException("Equations have different number of variables")
@@ -55,7 +55,7 @@ public class Equation
     /// <param name="eq1">The first equation.</param>
     /// <param name="eq2">The second equation.</param>
     /// <returns>The equation with coefficients subtracted.</returns>
-    /// <exception cref="ArgumentException">If equations have different number of variables.</exception>
+    /// <exception cref="ArgumentException">If the equations have different number of variables.</exception>
     public static Equation operator -(Equation eq1, Equation eq2) =>
         eq1.Count != eq2.Count
             ? throw new ArgumentException("Equations have different number of variables")
@@ -67,7 +67,7 @@ public class Equation
     /// <param name="eq">The equation.</param>
     /// <param name="constant">The constant.</param>
     /// <returns>The equation with all coefficients multiplied.</returns>
-    /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
+    /// <exception cref="ArithmeticException">If the constant is equal to zero.</exception>
     public static Equation operator *(Equation eq, double constant) =>
         constant == 0
             ? throw new ArithmeticException("Constant cannot be zero")
@@ -78,14 +78,14 @@ public class Equation
     /// <param name="constant">The constant.</param>
     /// <param name="eq">The equation.</param>
     /// <returns>The equation with all coefficients multiplied.</returns>
-    /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
+    /// <exception cref="ArithmeticException">If the constant is equal to zero.</exception>
     public static Equation operator *(double constant, Equation eq) => eq * constant;
 
     /// <summary>Divides equation by given constant.</summary>
     /// <param name="eq">The equation.</param>
     /// <param name="constant">The constant.</param>
     /// <returns>The equation with all coefficients divided.</returns>
-    /// <exception cref="ArithmeticException">If constant is equal to zero.</exception>
+    /// <exception cref="ArithmeticException">If the constant is equal to zero.</exception>
     public static Equation operator /(Equation eq, double constant) =>
         constant == 0
             ? throw new ArithmeticException("Constant cannot be zero")
@@ -103,7 +103,7 @@ public class Equation
 
     /// <summary>Checks whether given values solve this equation.</summary>
     /// <param name="solution">The values.</param>
-    /// <returns><c>true</c> if solution is correct, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the solution is correct, otherwise <c>false</c>.</returns>
     public bool HasSolution(double[] solution) =>
         solution.Length == coefficients.Length
             && coefficients.Zip(solution, (c, s) => c * s).Sum() == FreeTerm;

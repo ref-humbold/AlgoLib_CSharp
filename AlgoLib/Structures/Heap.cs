@@ -9,11 +9,11 @@ public class Heap<T> : IEnumerable<T>
 {
     private List<T> heap = new();
 
-    /// <summary>Gets the comparer.</summary>
+    /// <summary>Gets the comparer of this heap.</summary>
     /// <value>The comparer.</value>
     public IComparer<T> Comparer { get; }
 
-    /// <summary>Gets the number of elelemnts.</summary>
+    /// <summary>Gets the number of elements in this heap.</summary>
     /// <value>The number of elements.</value>
     public int Count => heap.Count;
 

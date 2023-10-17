@@ -52,7 +52,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="vertexId">The identifier of new vertex.</param>
     /// <param name="property">The vertex property.</param>
     /// <returns>The created vertex.</returns>
-    /// <exception cref="ArgumentException">If vertex already exists.</exception>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Vertex<TVertexId> AddVertex(TVertexId vertexId, TVertexProperty property = default) =>
         AddVertex(new Vertex<TVertexId>(vertexId), property);
 
@@ -60,7 +60,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="vertex">The new vertex.</param>
     /// <param name="property">The vertex property.</param>
     /// <returns>The created vertex.</returns>
-    /// <exception cref="ArgumentException">If vertex already exists.</exception>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Vertex<TVertexId> AddVertex(
         Vertex<TVertexId> vertex, TVertexProperty property = default)
     {
@@ -80,7 +80,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="destination">The destination vertex.</param>
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>
-    /// <exception cref="ArgumentException">If edge already exists.</exception>
+    /// <exception cref="ArgumentException">If the edge already exists.</exception>
     public Edge<TVertexId> AddEdgeBetween(
             Vertex<TVertexId> source,
             Vertex<TVertexId> destination,
@@ -91,7 +91,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="edge">The new edge.</param>
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>
-    /// <exception cref="ArgumentException">If edge already exists.</exception>
+    /// <exception cref="ArgumentException">If the edge already exists.</exception>
     public abstract Edge<TVertexId> AddEdge(
         Edge<TVertexId> edge, TEdgeProperty property = default);
 

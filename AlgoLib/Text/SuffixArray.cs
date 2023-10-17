@@ -24,7 +24,7 @@ public class SuffixArray
     }
 
     /// <summary>Gets the text suffix at given index.</summary>
-    /// <param name="index">The index in this suffix array.</param>
+    /// <param name="index">The index in suffix array.</param>
     /// <returns>The text suffix at the index.</returns>
     public string this[Index index]
     {
@@ -39,8 +39,8 @@ public class SuffixArray
     }
 
     /// <summary>Searches for suffix in text for given index in this suffix array.</summary>
-    /// <param name="index">The index in this suffix array.</param>
-    /// <returns>The index in the text where the suffix begins.</returns>
+    /// <param name="index">The index in suffix array.</param>
+    /// <returns>The index in text where the suffix begins.</returns>
     public int IndexAt(Index index)
     {
         int i = index.GetOffset(suffixArray.Count);
@@ -51,8 +51,8 @@ public class SuffixArray
     }
 
     /// <summary>Searches for index in this suffix array for given text suffix.</summary>
-    /// <param name="index">The index in the text where suffix begins.</param>
-    /// <returns>The index of suffix in the suffix array.</returns>
+    /// <param name="index">The index in text where suffix begins.</param>
+    /// <returns>The index in suffix array.</returns>
     public int IndexOf(Index index)
     {
         int i = index.GetOffset(suffixArray.Count);

@@ -10,7 +10,7 @@ public class PairingHeap<T> : IEnumerable<T>
 {
     private HeapNode heap;
 
-    /// <summary>Gets the number of elements.</summary>
+    /// <summary>Gets the number of elements in this pairing heap.</summary>
     /// <value>The number of elements.</value>
     public int Count { get; private set; }
 
