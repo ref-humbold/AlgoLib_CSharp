@@ -1,10 +1,11 @@
-﻿// Structure of heap.
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace AlgoLib.Structures;
 
+/// <summary>Structure of heap.</summary>
+/// <typeparam name="T">Type of heap elements.</typeparam>
 public class Heap<T> : IEnumerable<T>
 {
     private List<T> heap = new();
@@ -103,9 +104,7 @@ public class Heap<T> : IEnumerable<T>
         return element;
     }
 
-    /// <summary>
-    /// Removes minimal element from this heap and copies it to the <c>result</c> parameter.
-    /// </summary>
+    /// <summary>Removes minimal element from this heap and copies it to the <c>result</c> parameter.</summary>
     /// <param name="result">
     /// The removed minimal element if it's present, otherwise the default value.
     /// </param>

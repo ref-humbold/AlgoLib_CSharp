@@ -1,8 +1,8 @@
-// Algorithms for basic mathematical operations.
 using System;
 
 namespace AlgoLib.Maths;
 
+/// <summary>Algorithms for basic mathematical operations.</summary>
 public static class Maths
 {
     #region GreatestCommonDivisor

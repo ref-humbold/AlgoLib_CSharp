@@ -1,10 +1,10 @@
-﻿// Algorithm for longest common subsequence.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Sequences;
 
+/// <summary>Algorithm for longest common subsequence.</summary>
 public static class LongestCommonSubsequence
 {
     /// <summary>Computes length of the longest common subsequence of given sequences.</summary>

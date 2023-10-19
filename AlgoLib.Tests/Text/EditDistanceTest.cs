@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for edit distance.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
 
+// Tests: Algorithms for edit distance.
 [TestFixture]
 public class EditDistanceTest
 {
@@ -57,7 +57,6 @@ public class EditDistanceTest
     }
 
     #endregion
-
     #region CountLcs
 
     [Test]

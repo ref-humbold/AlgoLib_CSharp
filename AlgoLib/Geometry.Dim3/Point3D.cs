@@ -1,8 +1,8 @@
-﻿// Structure of point in 3D.
-using System;
+﻿using System;
 
 namespace AlgoLib.Geometry.Dim3;
 
+/// <summary>Structure of point in 3D.</summary>
 public readonly struct Point3D : IGeometryObject, IEquatable<Point3D>
 {
     public readonly double X { get; init; }

@@ -1,8 +1,8 @@
-﻿// Structure of fraction.
-using System;
+﻿using System;
 
 namespace AlgoLib.Maths;
 
+/// <summary>Structure of fraction.</summary>
 public class Fraction :
     IComparable<Fraction>, IComparable<int>, IComparable<long>
 {

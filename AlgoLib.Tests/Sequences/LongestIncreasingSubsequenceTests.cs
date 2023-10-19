@@ -1,10 +1,10 @@
-﻿// Tests: Algorithm for longest increasing subsequence.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
 
+// Tests: Algorithm for longest increasing subsequence.
 [TestFixture]
 public class FindLisSubsequenceTests
 {

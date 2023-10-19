@@ -1,10 +1,11 @@
-﻿// Tests: Algorithms for minimal spanning tree.
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Tests: Algorithms for minimal spanning tree.
+[TestFixture]
 public class MinimalSpanningTreeTest
 {
     private static readonly double Precision = 1e-6;

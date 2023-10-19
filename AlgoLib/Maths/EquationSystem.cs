@@ -1,10 +1,10 @@
-﻿// Structure of system of linear equations.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Maths;
 
+/// <summary>Structure of system of linear equations.</summary>
 public class EquationSystem
 {
     private readonly Equation[] equations;

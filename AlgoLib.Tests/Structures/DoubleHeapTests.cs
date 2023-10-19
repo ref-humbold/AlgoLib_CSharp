@@ -1,5 +1,4 @@
-﻿// Tests: Structure of double heap.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Structures;
 
+// Tests: Structure of double heap.
 [TestFixture]
 public class DoubleHeapTests
 {

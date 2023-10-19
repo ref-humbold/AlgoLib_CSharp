@@ -1,10 +1,10 @@
-﻿// Tests: Structure of vector in 3D.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
 
+// Tests: Structure of vector in 3D.
 [TestFixture]
 public class Vector3DTests
 {

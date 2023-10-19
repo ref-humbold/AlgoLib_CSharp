@@ -1,10 +1,10 @@
-﻿// Algorithms for basic geometrical operations in 2D.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Geometry.Dim2;
 
+/// <summary>Algorithms for basic geometrical operations in 2D.</summary>
 public static class Geometry2D
 {
     /// <summary>
@@ -28,8 +28,8 @@ public static class Geometry2D
             : points.OrderBy(pt => pt.Y).ToList();
 
     /// <summary>
-    /// Immutably sorts given points by their polar coordinates.
-    /// First sorts by angle, then by radius. Sorting is guaranteed to be stable.
+    /// Immutably sorts given points by their polar coordinates. First sorts by angle, then by
+    /// radius. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>

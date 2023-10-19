@@ -1,11 +1,11 @@
-﻿// Algorithms for shortest paths in a graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithms for shortest paths in a graph.</summary>
 public static class ShortestPaths
 {
     /// <summary>
@@ -46,9 +46,7 @@ public static class ShortestPaths
         return distances;
     }
 
-    /// <summary>
-    /// Computes shortest paths in given graph from given vertex using Dijkstra algorithm.
-    /// </summary>
+    /// <summary>Computes shortest paths in given graph from given vertex using Dijkstra algorithm.</summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
     /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
@@ -103,8 +101,7 @@ public static class ShortestPaths
     }
 
     /// <summary>
-    /// Computes shortest paths in given directed graph between all vertices using
-    /// Floyd-Warshall algorithm.
+    /// Computes shortest paths in given directed graph between all vertices using Floyd-Warshall algorithm.
     /// </summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>

@@ -1,10 +1,10 @@
-﻿// Structure of suffix array.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Text;
 
+/// <summary>Structure of suffix array.</summary>
 public class SuffixArray
 {
     private readonly List<int> suffixArray;

@@ -1,11 +1,11 @@
-﻿// Structure of linear equation.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
 namespace AlgoLib.Maths;
 
+/// <summary>Structure of linear equation.</summary>
 public class Equation
 {
     private readonly double[] coefficients;

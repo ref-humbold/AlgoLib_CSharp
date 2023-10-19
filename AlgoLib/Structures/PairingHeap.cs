@@ -1,10 +1,11 @@
-﻿// Structure of pairing heap.
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace AlgoLib.Structures;
 
+/// <summary>Structure of pairing heap.</summary>
+/// <typeparam name="T">Type of heap selements.</typeparam>
 public class PairingHeap<T> : IEnumerable<T>
     where T : IComparable<T>
 {

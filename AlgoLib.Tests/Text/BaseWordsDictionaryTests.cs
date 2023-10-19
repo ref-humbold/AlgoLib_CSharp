@@ -1,10 +1,10 @@
-﻿// Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
 
+// Tests: Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.
 [TestFixture]
 public class BaseWordsDictionaryTests
 {

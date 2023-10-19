@@ -1,8 +1,11 @@
-﻿// Structure of tree graph.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of tree graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {

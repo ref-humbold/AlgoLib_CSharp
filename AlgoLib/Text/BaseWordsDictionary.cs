@@ -1,10 +1,10 @@
-﻿// Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Text;
 
+/// <summary>Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.</summary>
 public class BaseWordsDictionary
 {
     private readonly Dictionary<(int, int), int> factors = new();

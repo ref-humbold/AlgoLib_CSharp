@@ -1,9 +1,9 @@
-﻿// Algorithms for edit distance.
-using System;
+﻿using System;
 using System.Linq;
 
 namespace AlgoLib.Text;
 
+/// <summary>Algorithms for edit distance.</summary>
 public static class EditDistance
 {
     /// <summary>Computes cost of Levenshtein edit distance between given texts.</summary>

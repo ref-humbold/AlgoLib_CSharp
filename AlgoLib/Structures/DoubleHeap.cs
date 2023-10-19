@@ -1,10 +1,11 @@
-﻿// Structure of double heap.
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace AlgoLib.Structures;
 
+/// <summary>Structure of double heap.</summary>
+/// <typeparam name="T">Type of heap elements.</typeparam>
 public class DoubleHeap<T> : IEnumerable<T>
 {
     private static readonly int IndexMin = 0;

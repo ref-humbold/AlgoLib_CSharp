@@ -1,11 +1,11 @@
-﻿// Tests: Structure of multipartite graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs;
 
+// Tests: Structure of multipartite graph.
 [TestFixture]
 public class MultipartiteGraphTest
 {

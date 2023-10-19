@@ -1,10 +1,10 @@
-﻿// Tests: Structure of vector in 2D.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
+// Tests: Structure of vector in 2D.
 [TestFixture]
 public class Vector2DTests
 {

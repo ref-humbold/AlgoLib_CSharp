@@ -1,5 +1,4 @@
-﻿// Tests: Algorithms for shortest paths in a graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Tests: Algorithms for shortest paths in a graph.
 [TestFixture]
 public class ShortestPathsTests
 {

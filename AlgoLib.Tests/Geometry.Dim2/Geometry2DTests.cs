@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for basic geometrical operations in 2D.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
+// Tests: Algorithms for basic geometrical operations in 2D.
 [TestFixture]
 public class Geometry2DTests
 {

@@ -1,10 +1,13 @@
-// Structure of directed graph.
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of directed graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public interface IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {
@@ -16,6 +19,10 @@ public interface IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> ReversedCopy();
 }
 
+/// <summary>Structure of directed simple graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public class DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
     IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>

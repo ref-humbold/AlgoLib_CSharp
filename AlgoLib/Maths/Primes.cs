@@ -1,10 +1,10 @@
-﻿// Algorithms for prime numbers.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Maths;
 
+/// <summary>Algorithms for prime numbers.</summary>
 public static class Primes
 {
     private const int Attempts = 17;

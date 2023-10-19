@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for basic mathematical operations.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
+// Tests: Algorithms for basic mathematical operations.
 [TestFixture]
 public class MathsTests
 {

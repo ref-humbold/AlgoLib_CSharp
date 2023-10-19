@@ -1,11 +1,11 @@
-﻿// Tests: Algorithms for sequence sorting.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
 
+// Tests: Algorithms for sequence sorting.
 [TestFixture]
 public class SortingTests
 {

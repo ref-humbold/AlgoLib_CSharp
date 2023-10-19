@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for basic geometrical operations in 3D.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
 
+// Tests: Algorithms for basic geometrical operations in 3D.
 [TestFixture]
 public class Geometry3DTests
 {

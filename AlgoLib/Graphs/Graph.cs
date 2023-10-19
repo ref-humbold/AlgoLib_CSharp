@@ -1,8 +1,11 @@
-// Structure of basic graph.
 using System.Collections.Generic;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of basic graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public interface IGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {
     IGraphProperties Properties { get; }

@@ -1,10 +1,10 @@
-// Tests: Algorithm for searching pair of closest points in 2D.
 using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
+// Tests: Algorithm for searching pair of closest points in 2D.
 [TestFixture]
 public class ClosestPointsTest
 {

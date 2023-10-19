@@ -1,7 +1,7 @@
-﻿// Strategies for algorithms for graph searching.
+﻿namespace AlgoLib.Graphs.Algorithms;
 
-namespace AlgoLib.Graphs.Algorithms;
-
+/// <summary>Strategy for BFS searching.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
 public interface IBfsStrategy<TVertexId>
 {
     void ForRoot(Vertex<TVertexId> root);
@@ -13,6 +13,8 @@ public interface IBfsStrategy<TVertexId>
     void OnExit(Vertex<TVertexId> vertex);
 }
 
+/// <summary>Strategy for DFS searching.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
 public interface IDfsStrategy<TVertexId> : IBfsStrategy<TVertexId>
 {
     void OnEdgeToVisited(Vertex<TVertexId> vertex, Vertex<TVertexId> neighbour);

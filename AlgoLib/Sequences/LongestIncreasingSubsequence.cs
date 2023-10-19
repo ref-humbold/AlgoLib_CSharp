@@ -1,10 +1,10 @@
-﻿// Algorithm for longest increasing subsequence.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Sequences;
 
+/// <summary>Algorithm for longest increasing subsequence.</summary>
 public static class LongestIncreasingSubsequence
 {
     /// <summary>Computes longest increasing subsequence according to given comparer.</summary>
@@ -15,9 +15,7 @@ public static class LongestIncreasingSubsequence
     public static IEnumerable<T> FindLis<T>(this IList<T> sequence, IComparer<T> comparer) =>
         FindLis(sequence, comparer.Compare);
 
-    /// <summary>
-    /// Computes longest increasing subsequence according to given comparison function.
-    /// </summary>
+    /// <summary>Computes longest increasing subsequence according to given comparison function.</summary>
     /// <typeparam name="T">The type of sequence elements.</typeparam>
     /// <param name="sequence">The sequence of elements.</param>
     /// <param name="comparison">The comparison function of elements in sequence.</param>

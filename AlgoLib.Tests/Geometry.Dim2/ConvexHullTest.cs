@@ -1,10 +1,10 @@
-// Tests: Algorithm for convex hull in 2D (monotone chain).
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
+// Tests: Algorithm for convex hull in 2D (monotone chain).
 [TestFixture]
 public class ConvexHullTest
 {

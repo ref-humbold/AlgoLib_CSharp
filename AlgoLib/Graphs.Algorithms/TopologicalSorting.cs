@@ -1,14 +1,16 @@
-﻿// Algorithms for topological sorting of a graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithms for topological sorting of a graph.</summary>
 public static class TopologicalSorting
 {
-    /// <summary>Topologically sorts the vertices of given directed acyclic graph using predecessors counting.</summary>
+    /// <summary>
+    /// Topologically sorts the vertices of given directed acyclic graph using predecessors counting.
+    /// </summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
@@ -19,7 +21,9 @@ public static class TopologicalSorting
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
         InputsTopologicalSort(graph, Comparer<TVertexId>.Default.Compare);
 
-    /// <summary>Topologically sorts the vertices of given directed acyclic graph using predecessors counting.</summary>
+    /// <summary>
+    /// Topologically sorts the vertices of given directed acyclic graph using predecessors counting.
+    /// </summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
@@ -32,7 +36,9 @@ public static class TopologicalSorting
         IComparer<TVertexId> comparer) =>
         InputsTopologicalSort(graph, comparer.Compare);
 
-    /// <summary>Topologically sorts the vertices of given directed acyclic graph using predecessors counting.</summary>
+    /// <summary>
+    /// Topologically sorts the vertices of given directed acyclic graph using predecessors counting.
+    /// </summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>
@@ -83,7 +89,9 @@ public static class TopologicalSorting
             : throw new DirectedCyclicGraphException("Given graph contains a cycle");
     }
 
-    /// <summary>Topologically sorts the vertices of given directed acyclic graph using depth-first search.</summary>
+    /// <summary>
+    /// Topologically sorts the vertices of given directed acyclic graph using depth-first search.
+    /// </summary>
     /// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
     /// <typeparam name="TVertexProperty">The type of vertex property.</typeparam>
     /// <typeparam name="TEdgeProperty">The type of edge property.</typeparam>

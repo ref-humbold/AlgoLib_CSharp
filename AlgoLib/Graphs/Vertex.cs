@@ -1,8 +1,9 @@
-﻿// Structure of graph vertex.
-using System;
+﻿using System;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of graph vertex.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
 public class Vertex<TVertexId> : IEquatable<Vertex<TVertexId>>
 {
     public TVertexId Id { get; }

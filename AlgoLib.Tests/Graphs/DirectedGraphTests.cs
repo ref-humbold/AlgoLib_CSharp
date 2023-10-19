@@ -1,5 +1,4 @@
-﻿// Tests: Structure of directed graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Graphs;
 
+// Tests: Structure of directed graph.
 [TestFixture]
 public class DirectedGraphTests
 {

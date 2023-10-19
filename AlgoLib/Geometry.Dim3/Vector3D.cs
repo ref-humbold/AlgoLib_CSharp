@@ -1,8 +1,8 @@
-﻿// Structure of vector in 3D.
-using System;
+﻿using System;
 
 namespace AlgoLib.Geometry.Dim3;
 
+/// <summary>Structure of vector in 3D.</summary>
 public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
 {
     public readonly double X { get; init; }

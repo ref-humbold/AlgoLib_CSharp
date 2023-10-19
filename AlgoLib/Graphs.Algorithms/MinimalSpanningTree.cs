@@ -1,10 +1,10 @@
-﻿// Algorithms for minimal spanning tree.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithms for minimal spanning tree.</summary>
 public static class MinimalSpanningTree
 {
     /// <summary>Computes minimal spanning tree of given undirected graph using Kruskal algorithm.</summary>

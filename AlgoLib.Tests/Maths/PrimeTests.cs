@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for prime numbers.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
+// Tests: Algorithms for prime numbers.
 [TestFixture]
 public class PrimeTests
 {

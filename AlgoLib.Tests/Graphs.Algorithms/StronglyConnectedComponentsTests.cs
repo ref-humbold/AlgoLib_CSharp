@@ -1,11 +1,11 @@
-﻿// Tests: Algorithm for strongly connected components.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Tests: Algorithm for strongly connected components.
 [TestFixture]
 public class StronglyConnectedComponentsTests
 {

@@ -1,10 +1,10 @@
-﻿// Algorithms for basic geometrical operations in 3D.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Geometry.Dim3;
 
+/// <summary>Algorithms for basic geometrical operations in 3D.</summary>
 public static class Geometry3D
 {
     /// <summary>

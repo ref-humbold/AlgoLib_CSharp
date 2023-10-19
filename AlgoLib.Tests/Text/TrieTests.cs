@@ -1,11 +1,11 @@
-﻿// Tests: Structure of trie tree.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
 
+// Tests: Structure of trie tree.
 [TestFixture]
 public class TrieTests
 {

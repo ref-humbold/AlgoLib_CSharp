@@ -1,10 +1,10 @@
-﻿// Hopcroft-Karp algorithm for matching in a bipartite graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Hopcroft-Karp algorithm for matching in a bipartite graph.</summary>
 public static class Matching
 {
     /// <summary>Computes maximal matching in given bipartite graph.</summary>

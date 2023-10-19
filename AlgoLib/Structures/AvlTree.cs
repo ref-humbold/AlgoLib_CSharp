@@ -1,11 +1,12 @@
-﻿// Structure of AVL tree.
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Structures;
 
+/// <summary>Structure of AVL tree.</summary>
+/// <typeparam name="T">Type of tree elements.</typeparam>
 public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 {
     private readonly IComparer<T> comparer;

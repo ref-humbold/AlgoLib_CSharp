@@ -1,8 +1,8 @@
-﻿// Structure of point in 2D.
-using System;
+﻿using System;
 
 namespace AlgoLib.Geometry.Dim2;
 
+/// <summary>Structure of point in 2D.</summary>
 public readonly struct Point2D : IGeometryObject, IEquatable<Point2D>
 {
     public readonly double X { get; init; }

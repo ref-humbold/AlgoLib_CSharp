@@ -1,10 +1,13 @@
-﻿// Structure of multipartite graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of multipartite graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
     : IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {

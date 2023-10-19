@@ -1,9 +1,10 @@
-// Structure of disjoint sets (union-find).
 using System;
 using System.Collections.Generic;
 
 namespace AlgoLib.Structures;
 
+/// <summary>Structure of disjoint sets (union-find).</summary>
+/// <typeparam name="T">Type of sets elements.</typeparam>
 public class DisjointSets<T>
 {
     private readonly Dictionary<T, T> represents = new();

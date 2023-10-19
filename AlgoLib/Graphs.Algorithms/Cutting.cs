@@ -1,10 +1,10 @@
-﻿// Algorithms for graph cutting (edge cut and vertex cut).
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithms for graph cutting (edge cut and vertex cut).</summary>
 public static class Cutting
 {
     /// <summary>Computes edge cut of given undirected graph.</summary>

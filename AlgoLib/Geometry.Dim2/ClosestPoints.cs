@@ -1,10 +1,10 @@
-﻿// Algorithm for searching pair of closest points in 2D.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Geometry.Dim2;
 
+/// <summary>Algorithm for searching pair of closest points in 2D.</summary>
 public static class ClosestPoints
 {
     /// <summary>Searches for the pair of closest points among given points.</summary>
@@ -39,8 +39,8 @@ public static class ClosestPoints
                 : (point1, point3);
     }
 
-    // Searches for closest points inside a belt of given width.
-    // The resulting distance should not be less than belt width.
+    // Searches for closest points inside a belt of given width. The resulting distance should not
+    // be less than belt width.
     private static (Point2D Closest1, Point2D Closest2)? checkBelt(
         List<Point2D> pointsY, double middleX, double width)
     {
@@ -76,8 +76,8 @@ public static class ClosestPoints
         return closestPoints;
     }
 
-    // Searches for closest points in given sublist of points.
-    // Points are given sorted by X coordinate and by Y coordinate.
+    // Searches for closest points in given sublist of points. Points are given sorted by X
+    // coordinate and by Y coordinate.
     private static (Point2D Closest1, Point2D Closest2) searchClosest(
         List<Point2D> pointsX, List<Point2D> pointsY, Range range)
     {

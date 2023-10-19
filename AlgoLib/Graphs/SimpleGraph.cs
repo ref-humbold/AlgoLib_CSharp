@@ -1,10 +1,13 @@
-﻿// Structure of simple graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of simple graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {

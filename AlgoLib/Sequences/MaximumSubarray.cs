@@ -1,10 +1,10 @@
-﻿// Algorithms for maximum subarray.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Sequences;
 
+/// <summary>Algorithms for maximum subarray.</summary>
 public static class MaximumSubarray
 {
     /// <summary>Dynamically computes coherent subarray with maximal sum.</summary>

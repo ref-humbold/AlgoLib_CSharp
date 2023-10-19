@@ -1,8 +1,8 @@
-﻿// Structure of vector in 2D.
-using System;
+﻿using System;
 
 namespace AlgoLib.Geometry.Dim2;
 
+/// <summary>Structure of vector in 2D.</summary>
 public readonly struct Vector2D : IGeometryObject, IEquatable<Vector2D>
 {
     public readonly double X { get; init; }

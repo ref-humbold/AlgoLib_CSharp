@@ -1,9 +1,9 @@
-﻿// Algorithm for computing diameter of a tree.
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Algorithm for computing diameter of a tree.
 [TestFixture]
 public class TreeDiameterTests
 {

@@ -1,8 +1,8 @@
-﻿// Structure of trie tree.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AlgoLib.Text;
 
+/// <summary>Structure of trie tree.</summary>
 public class Trie
 {
     private TrieNode tree = new();

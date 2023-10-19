@@ -1,15 +1,13 @@
-﻿// Knuth-Morris-Pratt algorithm for pattern searching.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Text;
 
+/// <summary>Knuth-Morris-Pratt algorithm for pattern searching.</summary>
 public static class KnuthMorrisPratt
 {
-    /// <summary>
-    /// Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.
-    /// </summary>
+    /// <summary>Searches for pattern occurrences in given text using Knuth-Morris-Pratt algorithm.</summary>
     /// <param name="text">The text.</param>
     /// <param name="pattern">The pattern.</param>
     /// <returns>The indices with pattern occurrences.</returns>

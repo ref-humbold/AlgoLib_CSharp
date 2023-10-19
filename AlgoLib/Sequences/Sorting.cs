@@ -1,10 +1,10 @@
-﻿// Algorithms for sequence sorting.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Sequences;
 
+/// <summary>Algorithms for sequence sorting.</summary>
 public static class Sorting
 {
     private static readonly Random Random = new();
@@ -37,8 +37,8 @@ public static class Sorting
     }
 
     /// <summary>
-    /// Mutably sorts given sequence using top-down merge-sort algorithm.
-    /// Sorting is guaranteed to be stable.
+    /// Mutably sorts given sequence using top-down merge-sort algorithm. Sorting is guaranteed to
+    /// be stable.
     /// </summary>
     /// <typeparam name="T">The type of sequence elements.</typeparam>
     /// <param name="sequence">The sequence of elements.</param>
@@ -52,8 +52,8 @@ public static class Sorting
     }
 
     /// <summary>
-    /// Mutably sorts given sequence using bottom-up merge-sort algorithm.
-    /// Sorting is guaranteed to be stable.
+    /// Mutably sorts given sequence using bottom-up merge-sort algorithm. Sorting is guaranteed to
+    /// be stable.
     /// </summary>
     /// <typeparam name="T">The type of sequence elements.</typeparam>
     /// <param name="sequence">The sequence of elements.</param>

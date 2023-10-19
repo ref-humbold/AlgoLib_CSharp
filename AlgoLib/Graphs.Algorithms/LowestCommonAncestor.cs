@@ -1,10 +1,13 @@
-﻿// Algorithm for lowest common ancestors in a rooted tree.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithm for lowest common ancestors in a rooted tree.</summary>
+/// <typeparam name="TVertexId">The type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">The type of vertex properties.</typeparam>
+/// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
 public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
 {
     private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();

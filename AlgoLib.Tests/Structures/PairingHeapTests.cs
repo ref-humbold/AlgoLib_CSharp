@@ -1,5 +1,4 @@
-﻿// Tests: Structure of pairing heap.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Structures;
 
+// Tests: Structure of pairing heap.
 [TestFixture]
 public class PairingHeapTests
 {

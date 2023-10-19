@@ -1,9 +1,9 @@
-﻿// Algorithm for computing diameter of a tree.
-using System;
+﻿using System;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithm for computing diameter of a tree.</summary>
 public static class TreeDiameter
 {
     /// <summary>Computes length of diameter of given tree graph.</summary>

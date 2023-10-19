@@ -1,11 +1,11 @@
-﻿// Tests: Knuth-Morris-Pratt algorithm for pattern searching.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
 
+// Tests: Knuth-Morris-Pratt algorithm for pattern searching.
 [TestFixture]
 public class KnuthMorrisPrattTests
 {

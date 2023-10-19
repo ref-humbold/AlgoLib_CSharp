@@ -1,10 +1,10 @@
-﻿// Tests: Structure of suffix array.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
 
+// Tests: Structure of suffix array.
 [TestFixture]
 public class SuffixArrayTests
 {

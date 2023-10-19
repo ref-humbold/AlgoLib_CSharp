@@ -1,10 +1,10 @@
-﻿// Tests: Algorithms for maximum subarray.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
 
+// Tests: Algorithms for maximum subarray.
 [TestFixture]
 public class MaximumSubarrayTests
 {

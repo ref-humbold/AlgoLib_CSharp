@@ -1,8 +1,8 @@
-// Algorithms for graph searching.
 using System.Collections.Generic;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithms for graph searching.</summary>
 public static class Searching
 {
     /// <summary>Breadth-first-search algorithm.</summary>

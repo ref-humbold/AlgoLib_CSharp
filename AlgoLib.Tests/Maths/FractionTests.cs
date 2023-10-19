@@ -1,10 +1,10 @@
-﻿// Tests: Structure of fraction.
-using System;
+﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
+// Tests: Structure of fraction.
 [TestFixture]
 public class FractionTests
 {

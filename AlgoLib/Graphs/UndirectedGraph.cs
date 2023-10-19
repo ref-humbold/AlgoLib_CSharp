@@ -1,10 +1,13 @@
-﻿// Structure of undirected graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of undirected graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {
@@ -13,6 +16,10 @@ public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
 }
 
+/// <summary>Structure of undirected simple graph.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
+/// <typeparam name="TVertexProperty">Type of vertex property.</typeparam>
+/// <typeparam name="TEdgeProperty">Type of edge property.</typeparam>
 public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>,
     IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty>

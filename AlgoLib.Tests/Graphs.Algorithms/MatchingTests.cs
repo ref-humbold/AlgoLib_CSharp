@@ -1,5 +1,4 @@
-﻿// Tests: Hopcroft-Karp algorithm for matching in a bipartite graph.
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -7,6 +6,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Tests: Hopcroft-Karp algorithm for matching in a bipartite graph.
 [TestFixture]
 public class MatchingTests
 {

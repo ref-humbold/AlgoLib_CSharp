@@ -1,11 +1,11 @@
-﻿// Tests: Structure of linear equation.
-using System;
+﻿using System;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
+// Tests: Structure of linear equation.
 [TestFixture]
 public class EquationTests
 {

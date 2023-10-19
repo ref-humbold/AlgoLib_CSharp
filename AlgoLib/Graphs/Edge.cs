@@ -1,8 +1,9 @@
-﻿// Structure of graph edge.
-using System;
+﻿using System;
 
 namespace AlgoLib.Graphs;
 
+/// <summary>Structure of graph edge.</summary>
+/// <typeparam name="TVertexId">Type of vertex identifier.</typeparam>
 public class Edge<TVertexId> : IEquatable<Edge<TVertexId>>
 {
     public Vertex<TVertexId> Source { get; }

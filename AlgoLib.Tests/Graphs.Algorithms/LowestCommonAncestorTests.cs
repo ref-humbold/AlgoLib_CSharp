@@ -1,9 +1,9 @@
-﻿// Tests: Algorithm for lowest common ancestors in a rooted tree.
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+// Tests: Algorithm for lowest common ancestors in a rooted tree.
 [TestFixture]
 public class LowestCommonAncestorTests
 {

@@ -1,11 +1,11 @@
-﻿// Structure of AVL tree.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures;
 
+// Tests: Structure of AVL tree.
 [TestFixture]
 public class AvlTreeTests
 {

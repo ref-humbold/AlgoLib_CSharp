@@ -1,9 +1,9 @@
-﻿// Algorithm for strongly connected components.
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
 
+/// <summary>Algorithm for strongly connected components.</summary>
 public static class StronglyConnectedComponents
 {
     /// <summary>Computes strongly connected components in given directed graph.</summary>
