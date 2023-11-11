@@ -5,7 +5,7 @@ using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms;
 
-/// <summary>Algorithms for topological sorting of a graph.</summary>
+/// <summary>Algorithms for topological sorting of a directed acyclic graph.</summary>
 public static class TopologicalSorting
 {
     /// <summary>

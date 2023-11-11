@@ -51,7 +51,8 @@ public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="neighbour">The existing vertex.</param>
     /// <param name="vertexProperty">The vertex property.</param>
     /// <param name="edgeProperty">The edge property.</param>
-    /// <returns>The edge between the vertices.</returns>
+    /// <returns>The created edge between the vertices.</returns>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Edge<TVertexId> AddVertex(
             TVertexId vertexId,
             Vertex<TVertexId> neighbour,
@@ -64,7 +65,8 @@ public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="neighbour">The existing vertex.</param>
     /// <param name="vertexProperty">The vertex property.</param>
     /// <param name="edgeProperty">The edge property.</param>
-    /// <returns>The edge between the vertices.</returns>
+    /// <returns>The created edge between the vertices.</returns>
+    /// <exception cref="ArgumentException">If the vertex already exists.</exception>
     public Edge<TVertexId> AddVertex(
         Vertex<TVertexId> vertex,
         Vertex<TVertexId> neighbour,

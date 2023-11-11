@@ -5,7 +5,7 @@ using AlgoLib.Structures;
 
 namespace AlgoLib.Graphs.Algorithms;
 
-/// <summary>Algorithms for shortest paths in a graph.</summary>
+/// <summary>Algorithms for shortest paths in a weighted graph.</summary>
 public static class ShortestPaths
 {
     /// <summary>

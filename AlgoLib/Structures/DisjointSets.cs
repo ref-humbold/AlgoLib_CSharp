@@ -113,7 +113,7 @@ public class DisjointSets<T>
     /// <summary>Checks whether given elements belong to the same set.</summary>
     /// <param name="item1">The element from the first set.</param>
     /// <param name="item2">The element from the second set.</param>
-    /// <returns><c>true</c> if the elements are in same set, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the elements are in the same set, otherwise <c>false</c>.</returns>
     /// <exception cref="KeyNotFoundException">If either element is not present.</exception>
     public bool IsSameSet(T item1, T item2) => this[item1].Equals(this[item2]);
 }

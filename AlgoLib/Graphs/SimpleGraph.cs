@@ -90,7 +90,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
             TEdgeProperty property = default) =>
         AddEdge(new Edge<TVertexId>(source, destination), property);
 
-    /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
+    /// <summary>Adds new edge with given property to this graph.</summary>
     /// <param name="edge">The new edge.</param>
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>

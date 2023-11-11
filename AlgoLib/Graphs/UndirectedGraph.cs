@@ -11,7 +11,7 @@ namespace AlgoLib.Graphs;
 public interface IUndirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     IGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {
-    /// <summary>Converts this graph to the directed graph with same vertices.</summary>
+    /// <summary>Converts this graph to the directed graph with the same vertices.</summary>
     /// <returns>The directed copy of this graph.</returns>
     public IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> AsDirected();
 }
