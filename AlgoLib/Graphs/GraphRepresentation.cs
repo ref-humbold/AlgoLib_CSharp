@@ -67,63 +67,66 @@ internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
 
     public TVertexProperty getProperty(Vertex<TVertexId> vertex)
     {
-        validate(vertex);
+        validateVertex(vertex);
         vertexProperties.TryGetValue(vertex, out TVertexProperty val);
         return val;
     }
 
     public void setProperty(Vertex<TVertexId> vertex, TVertexProperty property)
     {
-        validate(vertex);
+        validateVertex(vertex);
         vertexProperties[vertex] = property;
     }
 
     public TEdgeProperty getProperty(Edge<TVertexId> edge)
     {
-        validate(edge, true);
+        validateEdge(edge);
         edgeProperties.TryGetValue(edge, out TEdgeProperty val);
         return val;
     }
 
     public void setProperty(Edge<TVertexId> edge, TEdgeProperty property)
     {
-        validate(edge, true);
+        validateEdge(edge);
         edgeProperties[edge] = property;
     }
 
     public IEnumerable<Edge<TVertexId>> getAdjacentEdges(Vertex<TVertexId> vertex)
     {
-        validate(vertex);
+        validateVertex(vertex);
         return graphDict[vertex];
     }
 
-    public bool addVertex(Vertex<TVertexId> vertex) =>
+    public void addVertex(Vertex<TVertexId> vertex) =>
         graphDict.TryAdd(vertex, new HashSet<Edge<TVertexId>>());
 
     public void addEdgeToSource(Edge<TVertexId> edge)
     {
-        validate(edge, false);
+        validateEdgeVertices(edge);
         graphDict[edge.Source].Add(edge);
     }
 
     public void addEdgeToDestination(Edge<TVertexId> edge)
     {
-        validate(edge, false);
+        validateEdgeVertices(edge);
         graphDict[edge.Destination].Add(edge);
     }
 
-    private void validate(Vertex<TVertexId> vertex)
+    private void validateVertex(Vertex<TVertexId> vertex)
     {
         if(!graphDict.ContainsKey(vertex))
             throw new ArgumentException($"Vertex {vertex} does not belong to this graph");
     }
 
-    private void validate(Edge<TVertexId> edge, bool existing)
+    private void validateEdgeVertices(Edge<TVertexId> edge)
     {
         if(!graphDict.ContainsKey(edge.Source) || !graphDict.ContainsKey(edge.Destination))
             throw new ArgumentException($"Edge {edge} does not belong to this graph");
+    }
 
-        if(existing && !graphDict[edge.Source].Contains(edge)
+    private void validateEdge(Edge<TVertexId> edge)
+    {
+        if(!graphDict[edge.Source].Contains(edge)
            && !graphDict[edge.Destination].Contains(edge))
             throw new ArgumentException($"Edge {edge} does not belong to this graph");
     }

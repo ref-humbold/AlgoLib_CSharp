@@ -67,15 +67,18 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     public Vertex<TVertexId> AddVertex(
         Vertex<TVertexId> vertex, TVertexProperty property = default)
     {
-        bool wasAdded = Representation.addVertex(vertex);
-
-        if(wasAdded)
+        try
         {
+            Vertex<TVertexId> existingVertex = this[vertex.Id];
+
+            throw new ArgumentException($"Vertex {existingVertex} already exists");
+        }
+        catch(KeyNotFoundException)
+        {
+            Representation.addVertex(vertex);
             Properties[vertex] = property;
             return vertex;
         }
-
-        throw new ArgumentException($"Vertex {vertex} already exists");
     }
 
     /// <summary>Adds new edge between given vertices with given property to this graph.</summary>
