@@ -4,12 +4,9 @@ using System.Linq;
 
 namespace AlgoLib.Maths;
 
-/// <summary>Algorithms for prime numbers.</summary>
-public static class Primes
+/// <summary>Algorithms for searching for prime numbers.</summary>
+public static class PrimesSearching
 {
-    private const int Attempts = 17;
-    private static readonly Random Random = new();
-
     /// <summary>Searches for prime numbers less than given number.</summary>
     /// <param name="maximum">The maximal number, exclusive.</param>
     /// <returns>The prime numbers.</returns>
@@ -37,67 +34,6 @@ public static class Primes
             primes.AddRange(getSegmentPrimes(i, Math.Min(i + segmentSize, maximum), basePrimes));
 
         return primes;
-    }
-
-    /// <summary>Checks whether given number is prime using Fermat prime test.</summary>
-    /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if the number is prime, otherwise <c>false</c>.</returns>
-    public static bool TestFermat(int number)
-    {
-        number = Math.Abs(number);
-
-        if(number == 2 || number == 3)
-            return true;
-
-        if(number < 2 || number % 2 == 0 || number % 3 == 0)
-            return false;
-
-        for(int i = 0; i < Attempts; ++i)
-        {
-            int witness = Random.Next(1, number - 1);
-
-            if(Maths.Gcd(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
-                return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>Checks whether given number is prime using Miller-Rabin prime test.</summary>
-    /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if the number is prime, otherwise <c>false</c>.</returns>
-    public static bool TestMiller(int number)
-    {
-        number = Math.Abs(number);
-
-        if(number == 2 || number == 3)
-            return true;
-
-        if(number < 2 || number % 2 == 0 || number % 3 == 0)
-            return false;
-
-        int multiplicand = number - 1;
-
-        while(multiplicand % 2 == 0)
-            multiplicand /= 2;
-
-        for(int i = 0; i < Attempts; ++i)
-        {
-            int witness = Random.Next(1, number - 1);
-
-            if(Maths.Power(witness, multiplicand, number) != 1)
-            {
-                var exponents = new List<int>();
-
-                for(int d = multiplicand; d <= number / 2; d *= 2)
-                    exponents.Add(d);
-
-                if(exponents.All(d => Maths.Power(witness, d, number) != number - 1))
-                    return false;
-            }
-        }
-
-        return true;
     }
 
     // Extracts prime numbers between zero and given maximum value.
