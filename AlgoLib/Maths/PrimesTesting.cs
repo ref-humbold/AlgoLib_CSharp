@@ -12,7 +12,7 @@ public static class PrimesTesting
 
     /// <summary>Checks whether given number is prime using Fermat prime test.</summary>
     /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if the number is (probably) prime, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the number is probably prime, otherwise <c>false</c>.</returns>
     public static bool TestPrimeFermat(this int number)
     {
         number = Math.Abs(number);
@@ -36,7 +36,7 @@ public static class PrimesTesting
 
     /// <summary>Checks whether given number is prime using Miller-Rabin prime test.</summary>
     /// <param name="number">The number.</param>
-    /// <returns><c>true</c> if the number is (probably) prime, otherwise <c>false</c>.</returns>
+    /// <returns><c>true</c> if the number is probably prime, otherwise <c>false</c>.</returns>
     public static bool TestPrimeMiller(this int number)
     {
         number = Math.Abs(number);
