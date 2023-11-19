@@ -46,19 +46,37 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeFermat_WhenComposite1_ThenFalse()
+    public void TestPrimeFermat_WhenPrimeLong_ThenTrue()
     {
         // when
-        bool result = 1001.TestPrimeFermat();
+        bool result = 2131L.TestPrimeFermat();
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void TestPrimeFermat_WhenComposite_ThenFalse()
+    {
+        // when
+        bool result = 1001.TestPrimeFermat(); // 1001 = 7 * 11 * 13
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeFermat_WhenComposite2_ThenFalse()
+    public void TestPrimeFermat_WhenCompositeSquareOfPrime_ThenFalse()
     {
         // when
-        bool result = 41041.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41 is a Carmichael number
+        bool result = 3481L.TestPrimeFermat(); // 3481 = 59 ^ 2
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void TestPrimeFermat_WhenCompositeCarmichaelNumber_ThenFalse()
+    {
+        // when
+        bool result = 41041.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41
         // then
         result.Should().BeFalse();
     }
@@ -103,7 +121,16 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeMiller_WhenComposite1_ThenFalse()
+    public void TestPrimeMiller_WhenPrimeLong_ThenTrue()
+    {
+        // when
+        bool result = 2131L.TestPrimeMiller();
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void TestPrimeMiller_WhenComposite_ThenFalse()
     {
         // when
         bool result = 1001.TestPrimeMiller();
@@ -112,7 +139,16 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeMiller_WhenComposite2_ThenFalse()
+    public void TestPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse()
+    {
+        // when
+        bool result = 3481L.TestPrimeMiller();
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void TestPrimeMiller_WhenCompositeCarmichaelNumber_ThenFalse()
     {
         // when
         bool result = 41041.TestPrimeMiller();
