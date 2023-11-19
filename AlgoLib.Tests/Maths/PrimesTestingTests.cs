@@ -46,10 +46,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeFermat_WhenPrimeLong_ThenTrue()
+    public void TestPrimeFermat_WhenPrimeLong1_ThenTrue()
     {
         // when
         bool result = 2131L.TestPrimeFermat();
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void TestPrimeFermat_WhenPrimeLong2_ThenTrue()
+    {
+        // when
+        bool result = 6199L.TestPrimeFermat();
         // then
         result.Should().BeTrue();
     }
@@ -64,10 +73,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeFermat_WhenCompositeLong_ThenFalse()
+    public void TestPrimeFermat_WhenCompositeLong1_ThenFalse()
     {
         // when
         bool result = 41041L.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void TestPrimeFermat_WhenCompositeLong2_ThenFalse()
+    {
+        // when
+        bool result = 73627L.TestPrimeFermat(); // 73627 = 17 * 61 * 71
         // then
         result.Should().BeFalse();
     }
@@ -121,10 +139,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeMiller_WhenPrimeLong_ThenTrue()
+    public void TestPrimeMiller_WhenPrimeLong1_ThenTrue()
     {
         // when
         bool result = 2131L.TestPrimeMiller();
+        // then
+        result.Should().BeTrue();
+    }
+
+    [Test]
+    public void TestPrimeMiller_WhenPrimeLong2_ThenTrue()
+    {
+        // when
+        bool result = 6199L.TestPrimeMiller();
         // then
         result.Should().BeTrue();
     }
@@ -139,10 +166,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeMiller_WhenCompositeLong_ThenFalse()
+    public void TestPrimeMiller_WhenCompositeLong1_ThenFalse()
     {
         // when
         bool result = 41041L.TestPrimeMiller();
+        // then
+        result.Should().BeFalse();
+    }
+
+    [Test]
+    public void TestPrimeMiller_WhenCompositeLong2_ThenFalse()
+    {
+        // when
+        bool result = 73627L.TestPrimeMiller();
         // then
         result.Should().BeFalse();
     }
