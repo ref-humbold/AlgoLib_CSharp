@@ -64,19 +64,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeFermat_WhenCompositeSquareOfPrime_ThenFalse()
+    public void TestPrimeFermat_WhenCompositeLong_ThenFalse()
     {
         // when
-        bool result = 3481L.TestPrimeFermat(); // 3481 = 59 ^ 2
+        bool result = 41041L.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeFermat_WhenCompositeCarmichaelNumber_ThenFalse()
+    public void TestPrimeFermat_WhenCompositeSquareOfPrime_ThenFalse()
     {
         // when
-        bool result = 41041.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41
+        bool result = 3481.TestPrimeFermat(); // 3481 = 59 ^ 2
         // then
         result.Should().BeFalse();
     }
@@ -139,19 +139,19 @@ public class PrimesTestingTests
     }
 
     [Test]
-    public void TestPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse()
+    public void TestPrimeMiller_WhenCompositeLong_ThenFalse()
     {
         // when
-        bool result = 3481L.TestPrimeMiller();
+        bool result = 41041L.TestPrimeMiller();
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeMiller_WhenCompositeCarmichaelNumber_ThenFalse()
+    public void TestPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse()
     {
         // when
-        bool result = 41041.TestPrimeMiller();
+        bool result = 3481.TestPrimeMiller();
         // then
         result.Should().BeFalse();
     }
