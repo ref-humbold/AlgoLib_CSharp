@@ -8,8 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8ABA41C8-E41E-46B2-821B-5F61C2B3A147}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		CSharp.ruleset = CSharp.ruleset
 		Jenkinsfile = Jenkinsfile
-		AlgoLib_CSharp.ruleset = AlgoLib_CSharp.ruleset
 		LICENSE = LICENSE
 		README.md = README.md
 		stylecop.json = stylecop.json

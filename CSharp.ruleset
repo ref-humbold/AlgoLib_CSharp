@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Rules for AlgoLib_CSharp" Description="Code analysis rules for AlgoLib_CSharp." ToolsVersion="17.0">
+<RuleSet Name="Rules for C#" Description="Code analysis rules for C#" ToolsVersion="17.0">
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
     <Rule Id="CS1591" Action="None" />
     <Rule Id="CS1701" Action="None" />
     <Rule Id="CS1702" Action="None" />
   </Rules>
-  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features"
+    RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0058" Action="None" />
     <Rule Id="IDE0160" Action="None" />
   </Rules>
