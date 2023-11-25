@@ -3,21 +3,11 @@
 namespace AlgoLib.Geometry.Dim2;
 
 /// <summary>Structure of vector in 2D.</summary>
-public readonly struct Vector2D : IGeometryObject, IEquatable<Vector2D>
+public readonly record struct Vector2D(double X, double Y) : IGeometryObject, IEquatable<Vector2D>
 {
-    public readonly double X { get; init; }
-
-    public readonly double Y { get; init; }
-
     public double[] Coordinates => new[] { X, Y };
 
     public double Length => Math.Sqrt(X * X + Y * Y);
-
-    private Vector2D(double x, double y)
-    {
-        X = x;
-        Y = y;
-    }
 
     public static Vector2D Of(double x, double y) => new(x, y);
 
@@ -27,10 +17,6 @@ public readonly struct Vector2D : IGeometryObject, IEquatable<Vector2D>
     public static double Dot(Vector2D v1, Vector2D v2) => v1.X * v2.X + v1.Y * v2.Y;
 
     public static double Area(Vector2D v1, Vector2D v2) => v1.X * v2.Y - v1.Y * v2.X;
-
-    public static bool operator ==(Vector2D v1, Vector2D v2) => v1.Equals(v2);
-
-    public static bool operator !=(Vector2D v1, Vector2D v2) => !(v1 == v2);
 
     public static Vector2D operator +(Vector2D v) => Of(+v.X, +v.Y);
 
@@ -46,8 +32,6 @@ public readonly struct Vector2D : IGeometryObject, IEquatable<Vector2D>
 
     public static Vector2D operator /(Vector2D v, double c) =>
         c == 0 ? throw new DivideByZeroException() : Of(v.X / c, v.Y / c);
-
-    public override bool Equals(object obj) => obj is Vector2D v && Equals(v);
 
     public bool Equals(Vector2D v) =>
         IGeometryObject.AreEqual(X, v.X) && IGeometryObject.AreEqual(Y, v.Y);

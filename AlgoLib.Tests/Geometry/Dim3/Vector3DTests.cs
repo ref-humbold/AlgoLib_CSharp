@@ -174,7 +174,7 @@ public class Vector3DTests
     public void OperatorAsterisk_WhenMultiplicationByZero_ThenZeroVector()
     {
         // when
-        Vector3D result = Vector3D.Of(5.4, 9.0, -12.3) * 0;
+        Vector3D result = 0 * Vector3D.Of(5.4, 9.0, -12.3);
         // then
         result.Should().Be(Vector3D.Of(0.0, 0.0, 0.0));
     }

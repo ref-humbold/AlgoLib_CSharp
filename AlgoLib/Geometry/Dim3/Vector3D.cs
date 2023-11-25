@@ -3,24 +3,11 @@
 namespace AlgoLib.Geometry.Dim3;
 
 /// <summary>Structure of vector in 3D.</summary>
-public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
+public readonly record struct Vector3D(double X, double Y, double Z) : IGeometryObject
 {
-    public readonly double X { get; init; }
-
-    public readonly double Y { get; init; }
-
-    public readonly double Z { get; init; }
-
     public double[] Coordinates => new[] { X, Y, Z };
 
     public double Length => Math.Sqrt(X * X + Y * Y + Z * Z);
-
-    private Vector3D(double x, double y, double z)
-    {
-        X = x;
-        Y = y;
-        Z = z;
-    }
 
     public static Vector3D Of(double x, double y, double z) => new(x, y, z);
 
@@ -36,10 +23,6 @@ public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
     public static double Area(Vector3D v1, Vector3D v2) => Cross(v1, v2).Length;
 
     public static double Volume(Vector3D v1, Vector3D v2, Vector3D v3) => Dot(v1, Cross(v2, v3));
-
-    public static bool operator ==(Vector3D v1, Vector3D v2) => v1.Equals(v2);
-
-    public static bool operator !=(Vector3D v1, Vector3D v2) => !(v1 == v2);
 
     public static Vector3D operator +(Vector3D v) => Of(+v.X, +v.Y, +v.Z);
 
@@ -57,8 +40,6 @@ public readonly struct Vector3D : IGeometryObject, IEquatable<Vector3D>
 
     public static Vector3D operator /(Vector3D v, double c) =>
         c == 0 ? throw new DivideByZeroException() : Of(v.X / c, v.Y / c, v.Z / c);
-
-    public override bool Equals(object obj) => obj is Vector3D v && Equals(v);
 
     public bool Equals(Vector3D v) =>
         IGeometryObject.AreEqual(X, v.X) && IGeometryObject.AreEqual(Y, v.Y)

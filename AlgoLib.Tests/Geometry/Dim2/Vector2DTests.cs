@@ -125,7 +125,7 @@ public class Vector2DTests
     public void OperatorAsterisk_WhenMultiplicationByZero_ThenZeroVector()
     {
         // when
-        Vector2D result = Vector2D.Of(5.4, 9.0) * 0;
+        Vector2D result = 0 * Vector2D.Of(5.4, 9.0);
         // then
         result.Should().Be(Vector2D.Of(0, 0));
     }
