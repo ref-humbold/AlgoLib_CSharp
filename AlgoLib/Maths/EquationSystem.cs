@@ -72,16 +72,7 @@ public class EquationSystem
     {
         for(int i = 0; i < Count - 1; ++i)
         {
-            int indexMin = i;
-
-            for(int j = i + 1; j < Count; ++j)
-            {
-                double minCoef = equations[indexMin].Coefficients[i];
-                double actCoef = equations[j].Coefficients[i];
-
-                if(actCoef != 0 && (minCoef == 0 || Math.Abs(actCoef) < Math.Abs(minCoef)))
-                    indexMin = j;
-            }
+            int indexMin = getMinimalCoefficientIndex(i);
 
             if(equations[indexMin].Coefficients[i] != 0)
             {
@@ -108,4 +99,21 @@ public class EquationSystem
     /// <param name="solution">The values.</param>
     /// <returns><c>true</c> if the solution is correct, otherwise <c>false</c>.</returns>
     public bool HasSolution(double[] solution) => equations.All(eq => eq.HasSolution(solution));
+
+    private int getMinimalCoefficientIndex(int startingIndex)
+    {
+        int indexMin = startingIndex;
+
+        for(int i = startingIndex + 1; i < Count; ++i)
+        {
+            double minCoefficient = equations[indexMin].Coefficients[startingIndex];
+            double currentCoefficient = equations[i].Coefficients[startingIndex];
+
+            if(currentCoefficient != 0 &&
+                    (minCoefficient == 0 || Math.Abs(currentCoefficient) < Math.Abs(minCoefficient)))
+                indexMin = i;
+        }
+
+        return indexMin;
+    }
 }
