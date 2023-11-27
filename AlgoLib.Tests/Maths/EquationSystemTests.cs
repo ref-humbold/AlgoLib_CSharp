@@ -9,6 +9,21 @@ namespace AlgoLib.Maths;
 public class EquationSystemTests
 {
     [Test]
+    public void ToString_ThenStringRepresentation()
+    {
+        // given
+        var testObject = new EquationSystem(
+            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
+            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
+            new Equation(new[] { -1.0, 6.0, 4.0 }, 9));
+        // when
+        string result = testObject.ToString();
+        // then
+        result.Should().Be(
+            "{ 2 x_0 + 3 x_1 + -2 x_2 = 15 ; 7 x_0 + -1 x_1 = 4 ; -1 x_0 + 6 x_1 + 4 x_2 = 9 }");
+    }
+
+    [Test]
     public void Solve_WhenSingleSolution_ThenSolution()
     {
         // given

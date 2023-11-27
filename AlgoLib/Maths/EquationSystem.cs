@@ -44,24 +44,24 @@ public class EquationSystem
     {
         GaussianReduce();
 
-        if(equations[^1][^1] == 0 && equations[^1].FreeTerm == 0)
+        if(equations[^1].Coefficients[^1] == 0 && equations[^1].FreeTerm == 0)
             throw new InfiniteSolutionsException();
 
-        if(equations[^1][^1] == 0 && equations[^1].FreeTerm != 0)
+        if(equations[^1].Coefficients[^1] == 0 && equations[^1].FreeTerm != 0)
             throw new NoSolutionException();
 
         double[] solution = new double[Count];
 
-        solution[^1] = equations[^1].FreeTerm / equations[^1][^1];
+        solution[^1] = equations[^1].FreeTerm / equations[^1].Coefficients[^1];
 
         for(int i = Count - 2; i >= 0; --i)
         {
             double value = equations[i].FreeTerm;
 
             for(int j = Count - 1; j > i; --j)
-                value -= equations[i][j] * solution[j];
+                value -= equations[i].Coefficients[j] * solution[j];
 
-            solution[i] = value / equations[i][i];
+            solution[i] = value / equations[i].Coefficients[i];
         }
 
         return solution;
@@ -76,20 +76,20 @@ public class EquationSystem
 
             for(int j = i + 1; j < Count; ++j)
             {
-                double minCoef = equations[indexMin][i];
-                double actCoef = equations[j][i];
+                double minCoef = equations[indexMin].Coefficients[i];
+                double actCoef = equations[j].Coefficients[i];
 
                 if(actCoef != 0 && (minCoef == 0 || Math.Abs(actCoef) < Math.Abs(minCoef)))
                     indexMin = j;
             }
 
-            if(equations[indexMin][i] != 0)
+            if(equations[indexMin].Coefficients[i] != 0)
             {
                 Swap(indexMin, i);
 
                 for(int j = i + 1; j < Count; ++j)
                 {
-                    double param = -equations[j][i] / equations[i][i];
+                    double param = -equations[j].Coefficients[i] / equations[i].Coefficients[i];
 
                     if(param != 0)
                         equations[j] += equations[i] * param;
