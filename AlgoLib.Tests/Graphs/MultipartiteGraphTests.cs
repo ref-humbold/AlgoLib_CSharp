@@ -24,7 +24,7 @@ public class MultipartiteGraphTest
     }
 
     [Test]
-    public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
+    public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
         var vertex = new Vertex<int>(2);

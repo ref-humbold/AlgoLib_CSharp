@@ -17,7 +17,7 @@ public class UndirectedGraphTests
         testObject = new UndirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
 
     [Test]
-    public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
+    public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
         string vertexProperty = "x";
@@ -36,7 +36,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void PropertiesIndexerGet_WhenNoProperty_ThenNull()
+    public void PropertiesIndexer_WhenNoProperty_ThenNull()
     {
         // given
         Edge<int> edge = testObject.AddEdgeBetween(testObject[6], testObject[7]);
@@ -49,7 +49,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void PropertiesIndexerGet_WhenNotExistingEdge_ThenIllegalArgumentException()
+    public void PropertiesIndexer_WhenNotExistingEdge_ThenIllegalArgumentException()
     {
         // when
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
@@ -114,7 +114,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetVertex_WhenExisting_ThenVertex()
+    public void Indexer_WhenExistingVertex_ThenVertex()
     {
         // given
         int vertexId = 4;
@@ -125,7 +125,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetVertex_WhenNotExists_ThenKeyNotFoundException()
+    public void Indexer_WhenNotExistingVertex_ThenKeyNotFoundException()
     {
         // when
         Action action = () => _ = testObject[12];
@@ -134,7 +134,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenInDirection_ThenEdge()
+    public void Indexer_WhenEdgeInDirection_ThenEdge()
     {
         // given
         Vertex<int> source = testObject[9];
@@ -149,7 +149,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenReversedDirection_ThenEdge()
+    public void Indexer_WhenEdgeInReversedDirection_ThenEdge()
     {
         // given
         Vertex<int> source = testObject[9];
@@ -164,7 +164,7 @@ public class UndirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenNotExists_ThenKeyNotFoundException()
+    public void Indexer_WhenNotExistingEdge_ThenKeyNotFoundException()
     {
         // when
         Action action = () => _ = testObject[1, 2];

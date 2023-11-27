@@ -88,7 +88,7 @@ public class DisjointSetsTests
     }
 
     [Test]
-    public void IndexerGet_WhenPresentElement_ThenRepresent()
+    public void Indexer_WhenPresentElement_ThenRepresent()
     {
         // given
         int elem = 4;
@@ -99,7 +99,7 @@ public class DisjointSetsTests
     }
 
     [Test]
-    public void IndexerGet_WhenAbsentElement_Then()
+    public void Indexer_WhenAbsentElement_Then()
     {
         // when
         Action action = () => _ = testObject[17];

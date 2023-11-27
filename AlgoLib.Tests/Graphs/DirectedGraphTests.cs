@@ -17,7 +17,7 @@ public class DirectedGraphTests
         testObject = new DirectedSimpleGraph<int, string, string>(Enumerable.Range(0, 10));
 
     [Test]
-    public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
+    public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
         string vertexProperty = "x";
@@ -36,7 +36,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void PropertiesIndexerGet_WhenNoProperty_ThenDefault()
+    public void PropertiesIndexer_WhenNoProperty_ThenDefault()
     {
         // given
         Edge<int> edge = testObject.AddEdgeBetween(testObject[6], testObject[7]);
@@ -49,7 +49,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void PropertiesIndexerGet_WhenNotExistingEdge_ThenArgumentException()
+    public void PropertiesIndexer_WhenNotExistingEdge_ThenArgumentException()
     {
         // when
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
@@ -73,10 +73,10 @@ public class DirectedGraphTests
         IEnumerable<Vertex<int>> result = testObject.Vertices;
         // then
         result.Should().BeEquivalentTo(
-            new Vertex<int>[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
-                                new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
-                                new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
-                                new Vertex<int>(9) });
+            new Vertex<int>[] { new(0), new(1), new(2),
+                                new(3), new(4), new(5),
+                                new(6), new(7), new(8),
+                                new(9) });
     }
 
     [Test]
@@ -111,17 +111,17 @@ public class DirectedGraphTests
         IEnumerable<Edge<int>> result = testObject.Edges;
         // then
         result.Should().BeEquivalentTo(
-            new Edge<int>[] { new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
-                              new Edge<int>(new Vertex<int>(2), new Vertex<int>(4)),
-                              new Edge<int>(new Vertex<int>(3), new Vertex<int>(6)),
-                              new Edge<int>(new Vertex<int>(6), new Vertex<int>(3)),
-                              new Edge<int>(new Vertex<int>(7), new Vertex<int>(7)),
-                              new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
-                              new Edge<int>(new Vertex<int>(9), new Vertex<int>(3)) });
+            new Edge<int>[] { new(new Vertex<int>(1), new Vertex<int>(5)),
+                              new(new Vertex<int>(2), new Vertex<int>(4)),
+                              new(new Vertex<int>(3), new Vertex<int>(6)),
+                              new(new Vertex<int>(6), new Vertex<int>(3)),
+                              new(new Vertex<int>(7), new Vertex<int>(7)),
+                              new(new Vertex<int>(8), new Vertex<int>(0)),
+                              new(new Vertex<int>(9), new Vertex<int>(3)) });
     }
 
     [Test]
-    public void IndexerGetVertex_WhenExisting_ThenVertex()
+    public void Indexer_WhenExistingVertex_ThenVertex()
     {
         // given
         int vertexId = 4;
@@ -132,7 +132,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetVertex_WhenNotExists_ThenKeyNotFoundException()
+    public void Indexer_WhenNotExistingVertex_ThenKeyNotFoundException()
     {
         // when
         Action action = () => _ = testObject[12];
@@ -141,7 +141,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenInDirection_ThenEdge()
+    public void Indexer_WhenEdgeInDirection_ThenEdge()
     {
         // given
         Vertex<int> source = testObject[9];
@@ -156,7 +156,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenReversedDirection_ThenKeyNotFoundException()
+    public void Indexer_WhenEdgeInReversedDirection_ThenKeyNotFoundException()
     {
         // given
         Vertex<int> source = testObject[9];
@@ -170,7 +170,7 @@ public class DirectedGraphTests
     }
 
     [Test]
-    public void IndexerGetEdge_WhenNotExists_ThenKeyNotFoundException()
+    public void Indexer_WhenNotExistingEdge_ThenKeyNotFoundException()
     {
         // when
         Action action = () => _ = testObject[1, 2];

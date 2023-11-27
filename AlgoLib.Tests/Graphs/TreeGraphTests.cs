@@ -25,7 +25,7 @@ public class TreeGraphTests
     }
 
     [Test]
-    public void PropertiesIndexerGetSet_WhenSettingProperty_ThenProperty()
+    public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
         string vertexProperty = "x";
