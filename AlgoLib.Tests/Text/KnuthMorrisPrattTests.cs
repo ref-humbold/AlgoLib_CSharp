@@ -10,6 +10,16 @@ namespace AlgoLib.Text;
 public class KnuthMorrisPrattTests
 {
     [Test]
+    public void KmpSearch_WhenPatternFound_ThenAllOccurrences()
+    {
+        // when
+        IEnumerable<int> result =
+            "abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek".KmpSearch("cdecdcde");
+        // then
+        result.Should().ContainInOrder(2, 14, 19, 30);
+    }
+
+    [Test]
     public void KmpSearch_WhenPatternFoundOnce_ThenSingleOccurrence()
     {
         // when
@@ -31,7 +41,7 @@ public class KnuthMorrisPrattTests
     public void KmpSearch_WhenPatternFoundTwiceAndIntersects_ThenTwoOccurrences()
     {
         // when
-        IEnumerable<int> result = "aaabcde".KmpSearch("aa");
+        IEnumerable<int> result = "aaaabcde".KmpSearch("aaa");
         // then
         result.Should().ContainInOrder(0, 1);
     }

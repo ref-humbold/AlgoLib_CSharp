@@ -13,6 +13,18 @@ public class EditDistanceTest
     #region CountLevenshtein
 
     [Test]
+    public void CountLevenshtein_WhenDifferentText_ThenDistance()
+    {
+        // given
+        string source = "qwertyuiop";
+        string destination = "wertzuiopsx";
+        // when
+        double result = source.CountLevenshtein(destination);
+        // then
+        result.Should().BeApproximately(4.0, Precision);
+    }
+
+    [Test]
     public void CountLevenshtein_WhenSameText_ThenZero()
     {
         // given
@@ -60,6 +72,18 @@ public class EditDistanceTest
     #region CountLcs
 
     [Test]
+    public void CountLcs_WhenDifferentText_ThenDistance()
+    {
+        // given
+        string source = "qwertyuiop";
+        string destination = "wertzuiopsx";
+        // when
+        double result = source.CountLcs(destination);
+        // then
+        result.Should().BeApproximately(5.0, Precision);
+    }
+
+    [Test]
     public void CountLcs_WhenSameText_ThenZero()
     {
         // given
@@ -105,6 +129,19 @@ public class EditDistanceTest
 
     #endregion
     #region CountHamming
+
+    [Test]
+    public void CountHamming_WhenDifferentText_ThenDistance()
+    {
+        // given
+        string source = "qwertyuiop";
+        string destination = "qvertzuimp";
+        double substitutionCost = 2.0;
+        // when
+        double result = source.CountHamming(destination, substitutionCost);
+        // then
+        result.Should().BeApproximately(3 * substitutionCost, Precision);
+    }
 
     [Test]
     public void CountHamming_WhenSameText_ThenZero()

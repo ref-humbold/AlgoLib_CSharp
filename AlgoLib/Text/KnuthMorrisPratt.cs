@@ -50,7 +50,7 @@ public static class KnuthMorrisPratt
         var pi = new List<int>() { 0 };
         int position = 0;
 
-        foreach(char letter in pattern)
+        foreach(char letter in pattern.Skip(1))
         {
             while(position > 0 && pattern[position] != letter)
                 position = pi[position - 1];

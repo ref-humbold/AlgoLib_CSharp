@@ -77,6 +77,15 @@ public class FractionTests
     }
 
     [Test]
+    public void OperatorDecimal_WhenToDouble_ThenDecimalValue()
+    {
+        // when
+        decimal result = (decimal)Fraction.Of(-129, 20);
+        // then
+        result.Should().Be(-6.45m);
+    }
+
+    [Test]
     public void OperatorInt_WhenToInt_ThenIntegerValueRoundedTowardsZero()
     {
         // when
