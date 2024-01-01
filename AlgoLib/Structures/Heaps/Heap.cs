@@ -2,24 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 /// <summary>Structure of heap.</summary>
 /// <typeparam name="T">Type of heap elements.</typeparam>
-public class Heap<T> : IEnumerable<T>
+public class Heap<T> : IHeap<T>
 {
     private List<T> heap = new();
 
-    /// <summary>Gets the comparer of this heap.</summary>
-    /// <value>The comparer.</value>
-    public IComparer<T> Comparer { get; }
+    public IComparer<T> Comparer { get; } = Comparer<T>.Default;
 
-    /// <summary>Gets the number of elements in this heap.</summary>
-    /// <value>The number of elements.</value>
     public int Count => heap.Count;
 
     public Heap()
-        : this(Comparer<T>.Default)
     {
     }
 
@@ -33,26 +28,17 @@ public class Heap<T> : IEnumerable<T>
 
     public Heap(IComparer<T> comparer) => Comparer = comparer;
 
-    /// <summary>Removes all elements from this heap.</summary>
     public void Clear() => heap = new List<T>();
 
     public IEnumerator<T> GetEnumerator() => heap.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
 
-    /// <summary>Retrieves minimal element from this heap.</summary>
-    /// <returns>The minimal element.</returns>
-    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T Peek() =>
         Count > 0
             ? heap[0]
             : throw new InvalidOperationException("The heap is empty");
 
-    /// <summary>
-    /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
-    /// </summary>
-    /// <param name="result">The minimal element if it's present, otherwise the default value.</param>
-    /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
     public bool TryPeek(out T result)
     {
         if(Count == 0)
@@ -65,8 +51,6 @@ public class Heap<T> : IEnumerable<T>
         return true;
     }
 
-    /// <summary>Adds new element to this heap.</summary>
-    /// <param name="item">The new element.</param>
     public void Push(T item)
     {
         heap.Add(item);
@@ -85,17 +69,12 @@ public class Heap<T> : IEnumerable<T>
         }
     }
 
-    /// <summary>Adds new elements from given range to this heap.</summary>
-    /// <param name="items">The new elements.</param>
     public void PushRange(IEnumerable<T> items)
     {
         foreach(T item in items)
             Push(item);
     }
 
-    /// <summary>Retrieves and removes minimal element from this heap.</summary>
-    /// <returns>The removed minimal element.</returns>
-    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T Pop()
     {
         T element = Peek();
@@ -104,11 +83,6 @@ public class Heap<T> : IEnumerable<T>
         return element;
     }
 
-    /// <summary>Removes minimal element from this heap and copies it to the <c>result</c> parameter.</summary>
-    /// <param name="result">
-    /// The removed minimal element if it's present, otherwise the default value.
-    /// </param>
-    /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
     public bool TryPop(out T result)
     {
         bool wasPresent = TryPeek(out result);

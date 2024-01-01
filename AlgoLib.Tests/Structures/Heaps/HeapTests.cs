@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 // Tests: Structure of heap.
 [TestFixture]
@@ -78,7 +78,7 @@ public class HeapTests
         var result = new List<int>();
         IEnumerator<int> enumerator = testObject.GetEnumerator();
 
-        while(enumerator.MoveNext())
+        while (enumerator.MoveNext())
             result.Add(enumerator.Current);
         // then
         result.Should().HaveElementAt(0, numbers.Min());
@@ -239,7 +239,7 @@ public class HeapTests
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());

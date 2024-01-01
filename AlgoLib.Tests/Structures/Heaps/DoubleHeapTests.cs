@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 // Tests: Structure of double heap.
 [TestFixture]
@@ -85,7 +85,16 @@ public class DoubleHeapTests
             .And.HaveElementAt(result.Count - 1, numbers.Max());
     }
 
-    #region PeekMin & PeekMax
+    #region Peek*
+
+    [Test]
+    public void Peek_WhenMultipleElements_ThenMinimalElement()
+    {
+        // when
+        int result = testObject.Peek();
+        // then
+        result.Should().Be(numbers.Min());
+    }
 
     [Test]
     public void PeekMin_WhenEmpty_ThenInvalidOperationException()
@@ -154,7 +163,17 @@ public class DoubleHeapTests
     }
 
     #endregion
-    #region TryPeekMin & TryPeekMax
+    #region TryPeek*
+
+    [Test]
+    public void TryPeek_WhenMultipleElements_ThenMinimalElement()
+    {
+        // when
+        bool result = testObject.TryPeek(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(numbers.Min());
+    }
 
     [Test]
     public void TryPeekMin_WhenEmpty_ThenDefaultValue()
@@ -169,7 +188,21 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void TryPeekMin_WhenNotEmpty_ThenMinimalElement()
+    public void TryPeekMin_WhenSingleElement_ThenThisElement()
+    {
+        // given
+        int element = 35;
+
+        testObject = new DoubleHeap<int>(new[] { element });
+        // when
+        bool result = testObject.TryPeekMin(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(element);
+    }
+
+    [Test]
+    public void TryPeekMin_WhenMultipleElements_ThenMinimalElement()
     {
         // when
         bool result = testObject.TryPeekMin(out int resultValue);
@@ -191,7 +224,21 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void TryPeekMax_WhenNotEmpty_ThenMaximalElement()
+    public void TryPeekMax_WhenSingleElement_ThenThisElement()
+    {
+        // given
+        int element = 35;
+
+        testObject = new DoubleHeap<int>(new[] { element });
+        // when
+        bool result = testObject.TryPeekMax(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(element);
+    }
+
+    [Test]
+    public void TryPeekMax_WhenMultipleElements_ThenMaximalElement()
     {
         // when
         bool result = testObject.TryPeekMax(out int resultValue);
@@ -201,7 +248,7 @@ public class DoubleHeapTests
     }
 
     #endregion
-    #region Push & PushRange
+    #region Push*
 
     [Test]
     public void Push_WhenNewElement_ThenAdded()
@@ -271,7 +318,17 @@ public class DoubleHeapTests
     }
 
     #endregion
-    #region PopMin & PopMax
+    #region Pop*
+
+    [Test]
+    public void Pop_WhenMultipleElements_ThenMinimalElementRemoved()
+    {
+        // when
+        int result = testObject.Pop();
+        // then
+        result.Should().Be(numbers.Min());
+        testObject.Should().HaveCount(numbers.Length - 1);
+    }
 
     [Test]
     public void PopMin_WhenEmpty_ThenInvalidOperationException()
@@ -376,7 +433,18 @@ public class DoubleHeapTests
     }
 
     #endregion
-    #region TryPopMin & TryPopMax
+    #region TryPop*
+
+    [Test]
+    public void TryPop_WhenMultipleElements_ThenMinimalElementRemoved()
+    {
+        // when
+        bool result = testObject.TryPop(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(numbers.Min());
+        testObject.Should().HaveCount(numbers.Length - 1);
+    }
 
     [Test]
     public void TryPopMin_WhenEmpty_ThenDefaultValue()
@@ -391,7 +459,22 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void TryPopMin_WhenNotEmpty_ThenMinimalElementRemoved()
+    public void TryPopMin_WhenSingleElement_ThenThisElementRemoved()
+    {
+        // given
+        int element = 35;
+
+        testObject = new DoubleHeap<int>(new[] { element });
+        // when
+        bool result = testObject.TryPopMin(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(element);
+        testObject.Should().BeEmpty();
+    }
+
+    [Test]
+    public void TryPopMin_WhenMultipleElements_ThenMinimalElementRemoved()
     {
         // when
         bool result = testObject.TryPopMin(out int resultValue);
@@ -414,7 +497,22 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void TryPopMax_WhenNotEmpty_ThenMaximalElementRemoved()
+    public void TryPopMax_WhenSingleElement_ThenThisElementRemoved()
+    {
+        // given
+        int element = 35;
+
+        testObject = new DoubleHeap<int>(new[] { element });
+        // when
+        bool result = testObject.TryPopMax(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(element);
+        testObject.Should().BeEmpty();
+    }
+
+    [Test]
+    public void TryPopMax_WhenMultipleElements_ThenMaximalElementRemoved()
     {
         // when
         bool result = testObject.TryPopMax(out int resultValue);

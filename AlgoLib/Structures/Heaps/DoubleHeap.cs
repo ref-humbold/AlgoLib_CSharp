@@ -2,26 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 /// <summary>Structure of double heap.</summary>
 /// <typeparam name="T">Type of heap elements.</typeparam>
-public class DoubleHeap<T> : IEnumerable<T>
+public class DoubleHeap<T> : IHeap<T>
 {
-    private static readonly int IndexMin = 0;
-    private static readonly int IndexMax = 1;
+    private const int IndexMin = 0;
+    private const int IndexMax = 1;
     private List<T> heap = new();
 
     /// <summary>Gets the comparer of this double heap.</summary>
     /// <value>The comparer.</value>
-    public IComparer<T> Comparer { get; }
+    public IComparer<T> Comparer { get; } = Comparer<T>.Default;
 
     /// <summary>Gets the number of elements in this double heap.</summary>
     /// <value>The number of elements.</value>
     public int Count => heap.Count;
 
     public DoubleHeap()
-        : this(Comparer<T>.Default)
     {
     }
 
@@ -50,6 +49,8 @@ public class DoubleHeap<T> : IEnumerable<T>
             ? heap[IndexMin]
             : throw new InvalidOperationException("The double heap is empty");
 
+    public T Peek() => PeekMin();
+
     /// <summary>
     /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
     /// </summary>
@@ -66,6 +67,8 @@ public class DoubleHeap<T> : IEnumerable<T>
         result = heap[IndexMin];
         return true;
     }
+
+    public bool TryPeek(out T result) => TryPeekMin(out result);
 
     /// <summary>Retrieves maximal element from this double heap.</summary>
     /// <returns>The maximal element.</returns>
@@ -157,6 +160,8 @@ public class DoubleHeap<T> : IEnumerable<T>
         return minimal;
     }
 
+    public T Pop() => PopMin();
+
     /// <summary>
     /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
     /// </summary>
@@ -177,6 +182,8 @@ public class DoubleHeap<T> : IEnumerable<T>
 
         return wasPresent;
     }
+
+    public bool TryPop(out T result) => TryPopMin(out result);
 
     /// <summary>Retrieves and removes maximal element from this double heap.</summary>
     /// <returns>The removed maximal element.</returns>
@@ -204,7 +211,7 @@ public class DoubleHeap<T> : IEnumerable<T>
     public bool TryPopMax(out T result)
     {
         if(Count == 1)
-            return TryPeekMin(out result);
+            return TryPopMin(out result);
 
         bool wasPresent = TryPeekMax(out result);
 

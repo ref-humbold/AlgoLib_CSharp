@@ -4,7 +4,7 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 // Tests: Structure of pairing heap.
 [TestFixture]
