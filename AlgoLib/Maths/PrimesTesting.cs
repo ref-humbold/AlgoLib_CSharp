@@ -29,7 +29,7 @@ public static class PrimesTesting
         {
             int witness = Random.Next(1, number - 1);
 
-            if(Maths.Gcd(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
+            if(Integers.Gcd(witness, number) > 1 || Integers.Power(witness, number - 1, number) != 1)
                 return false;
         }
 
@@ -53,7 +53,7 @@ public static class PrimesTesting
         {
             long witness = Random.NextInt64(1, number - 1);
 
-            if(Maths.Gcd(witness, number) > 1 || Maths.Power(witness, number - 1, number) != 1)
+            if(Integers.Gcd(witness, number) > 1 || Integers.Power(witness, number - 1, number) != 1)
                 return false;
         }
 
@@ -85,14 +85,14 @@ public static class PrimesTesting
         {
             int witness = Random.Next(1, number - 1);
 
-            if(Maths.Power(witness, multiplicand, number) != 1)
+            if(Integers.Power(witness, multiplicand, number) != 1)
             {
                 var exponents = new List<int>();
 
                 for(int d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);
 
-                if(exponents.All(d => Maths.Power(witness, d, number) != number - 1))
+                if(exponents.All(d => Integers.Power(witness, d, number) != number - 1))
                     return false;
             }
         }
@@ -122,14 +122,14 @@ public static class PrimesTesting
         {
             long witness = Random.NextInt64(1, number - 1);
 
-            if(Maths.Power(witness, multiplicand, number) != 1)
+            if(Integers.Power(witness, multiplicand, number) != 1)
             {
                 var exponents = new List<long>();
 
                 for(long d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);
 
-                if(exponents.All(d => Maths.Power(witness, d, number) != number - 1))
+                if(exponents.All(d => Integers.Power(witness, d, number) != number - 1))
                     return false;
             }
         }
