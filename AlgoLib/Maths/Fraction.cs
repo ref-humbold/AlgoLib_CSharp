@@ -20,7 +20,7 @@ public class Fraction :
             denominator = -denominator;
         }
 
-        long gcd = Maths.Gcd(numerator, denominator);
+        long gcd = Integers.Gcd(numerator, denominator);
 
         this.numerator = numerator / gcd;
         this.denominator = denominator / gcd;
@@ -136,7 +136,7 @@ public class Fraction :
 
     public int CompareTo(Fraction other)
     {
-        long lcm = Maths.Lcm(denominator, other.denominator);
+        long lcm = Integers.Lcm(denominator, other.denominator);
         long thisNumerator = lcm / denominator * numerator;
         long otherNumerator = lcm / other.denominator * other.numerator;
 

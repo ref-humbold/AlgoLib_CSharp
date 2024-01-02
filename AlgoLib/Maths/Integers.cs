@@ -2,8 +2,8 @@ using System;
 
 namespace AlgoLib.Maths;
 
-/// <summary>Algorithms for basic mathematical operations.</summary>
-public static class Maths
+/// <summary>Algorithms for basic mathematical operations on integers.</summary>
+public static class Integers
 {
     #region GreatestCommonDivisor
 
