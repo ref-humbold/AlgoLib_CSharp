@@ -39,14 +39,45 @@ public class AvlTreeTests
     }
 
     [Test]
-    public void GetEnumerator_WhenNotEmpty_ThenSortedElements()
+    public void ToString_WhenNotEmpty_ThenTextRepresentation()
+    {
+        // when
+        string result = testObject.ToString();
+        // then
+        result.Should().Be("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}");
+    }
+
+    [Test]
+    public void GetEnumerator_WhenEmpty_ThenNoElements()
     {
         // given
-        var result = new List<int>();
-        IEnumerator<int> enumerator = testObject.GetEnumerator();
+        testObject = new AvlTree<int>();
         // when
-        while(enumerator.MoveNext())
-            result.Add(enumerator.Current);
+        IEnumerator<int> result = testObject.GetEnumerator();
+        // then
+        result.MoveNext().Should().BeFalse();
+    }
+
+    [Test]
+    public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
+    {
+        // given
+        int element = 17;
+
+        testObject = new AvlTree<int>(new[] { element });
+        // when
+        IEnumerator<int> result = testObject.GetEnumerator();
+        // then
+        result.MoveNext().Should().BeTrue();
+        result.Current.Should().Be(element);
+        result.MoveNext().Should().BeFalse();
+    }
+
+    [Test]
+    public void GetEnumerator_WhenMultipleElements_ThenSortedElements()
+    {
+        // given
+        var result = testObject.ToList();
         // then
         result.Should().BeInAscendingOrder();
         result.Should().BeEquivalentTo(numbers);

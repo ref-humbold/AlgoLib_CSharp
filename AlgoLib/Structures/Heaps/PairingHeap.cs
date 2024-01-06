@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlgoLib.Structures.Heaps;
 
@@ -9,9 +10,10 @@ namespace AlgoLib.Structures.Heaps;
 public class PairingHeap<T> : IHeap<T>
     where T : IComparable<T>
 {
+    private static readonly IComparer<T> DefaultComparer = Comparer<T>.Default;
     private HeapNode heap = null;
 
-    public IComparer<T> Comparer { get; } = Comparer<T>.Default;
+    public IComparer<T> Comparer => DefaultComparer;
 
     public int Count { get; private set; } = 0;
 
@@ -32,13 +34,13 @@ public class PairingHeap<T> : IHeap<T>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public T Peek() =>
-        heap != null
+        heap is not null
             ? heap.Element
             : throw new InvalidOperationException("The pairing heap is empty");
 
     public bool TryPeek(out T result)
     {
-        if(heap == null)
+        if(heap is null)
         {
             result = default;
             return false;
@@ -50,9 +52,7 @@ public class PairingHeap<T> : IHeap<T>
 
     public void Push(T item)
     {
-        heap = heap == null
-            ? new HeapNode(Comparer) { Element = item, Children = null }
-            : heap.Add(item);
+        heap = heap?.Add(item) ?? new HeapNode { Element = item };
         ++Count;
     }
 
@@ -84,7 +84,7 @@ public class PairingHeap<T> : IHeap<T>
     /// <param name="other">The pairing heap.</param>
     public void Merge(PairingHeap<T> other)
     {
-        heap = heap == null ? other.heap : heap.Merge(other.heap);
+        heap += other.heap;
         Count += other.Count;
     }
 
@@ -95,103 +95,94 @@ public class PairingHeap<T> : IHeap<T>
         --Count;
     }
 
-    private class HeapNodeList
-    {
-        public HeapNode Node { get; set; }
-
-        public HeapNodeList Next { get; set; }
-    }
-
     private class HeapNode
     {
         public T Element { get; set; }
 
-        public HeapNodeList Children { get; set; }
+        public HeapNode[] Children { get; set; } = Array.Empty<HeapNode>();
 
-        private IComparer<T> Comparer { get; }
-
-        public HeapNode(IComparer<T> comparer) => Comparer = comparer;
+        public static HeapNode operator +(HeapNode node1, HeapNode node2) =>
+            node1 is null
+                ? node2
+                : node2 is null
+                    ? node1
+                    : DefaultComparer.Compare(node1.Element, node2.Element) <= 0
+                        ? new HeapNode
+                        {
+                            Element = node1.Element,
+                            Children = node1.Children.Prepend(node2).ToArray()
+                        }
+                        : new HeapNode
+                        {
+                            Element = node2.Element,
+                            Children = node2.Children.Prepend(node1).ToArray()
+                        };
 
         public HeapNode Add(T item) =>
-            Comparer.Compare(Element, item) <= 0
-                ? new HeapNode(Comparer)
+            DefaultComparer.Compare(Element, item) <= 0
+                ? new HeapNode
                 {
                     Element = Element,
-                    Children = new HeapNodeList
-                    {
-                        Node = new HeapNode(Comparer) { Element = item, Children = null },
-                        Next = Children
-                    }
+                    Children = Children.Prepend(new HeapNode { Element = item }).ToArray()
                 }
-                : new HeapNode(Comparer)
+                : new HeapNode
                 {
                     Element = item,
-                    Children = new HeapNodeList { Node = this, Next = null }
+                    Children = new[] { this }
                 };
 
-        public HeapNode Pop() => mergePairs(Children);
+        public HeapNode Pop() => mergePairs(0);
 
-        public HeapNode Merge(HeapNode node) =>
-            node == null
-                ? this
-                : Comparer.Compare(Element, node.Element) <= 0
-                    ? new HeapNode(Comparer)
-                    {
-                        Element = Element,
-                        Children = new HeapNodeList { Node = node, Next = Children }
-                    }
-                    : new HeapNode(Comparer)
-                    {
-                        Element = node.Element,
-                        Children = new HeapNodeList { Node = this, Next = node.Children }
-                    };
-
-        private static HeapNode mergePairs(HeapNodeList list) =>
-            list?.Next == null
-                ? list?.Node
-                : list.Node.Merge(list.Next.Node).Merge(mergePairs(list.Next.Next));
+        private HeapNode mergePairs(int index) =>
+            index >= Children.Length
+                ? null
+                : index == Children.Length - 1
+                    ? Children[^1]
+                    : Children[index] + Children[index + 1] + mergePairs(index + 2);
     }
 
     private sealed class HeapEnumerator : IEnumerator<T>
     {
-        private readonly List<T> elements = new();
-        private readonly IEnumerator<T> elementsEnumerator;
+        private readonly HeapNode heapNode;
+        private readonly Queue<HeapNode> queue = new();
+        private HeapNode currentNode;
 
-        public T Current => elementsEnumerator.Current;
+        public T Current => currentNode != default
+            ? currentNode.Element
+            : throw new InvalidOperationException();
 
         object IEnumerator.Current => Current;
 
         public HeapEnumerator(HeapNode node)
         {
-            if(node != null)
-                extractElements(node);
-
-            elementsEnumerator = elements.GetEnumerator();
+            heapNode = node;
+            Reset();
         }
 
-        public bool MoveNext() => elementsEnumerator.MoveNext();
-
-        public void Reset() => elementsEnumerator.Reset();
-
-        public void Dispose() => elementsEnumerator.Dispose();
-
-        private void extractElements(HeapNode node)
+        public bool MoveNext()
         {
-            var queue = new Queue<HeapNode>(new[] { node });
+            bool hasNode = queue.TryDequeue(out HeapNode node);
 
-            while(queue.Count > 0)
+            if(hasNode)
             {
-                HeapNode current = queue.Dequeue();
-                HeapNodeList list = current.Children;
-
-                elements.Add(current.Element);
-
-                while(list != null)
-                {
-                    queue.Enqueue(list.Node);
-                    list = list.Next;
-                }
+                foreach(HeapNode child in node.Children)
+                    queue.Enqueue(child);
             }
+
+            currentNode = node;
+            return hasNode;
+        }
+
+        public void Reset()
+        {
+            queue.Clear();
+
+            if(heapNode is not null)
+                queue.Enqueue(heapNode);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

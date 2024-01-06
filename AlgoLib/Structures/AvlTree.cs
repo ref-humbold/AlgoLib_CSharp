@@ -73,7 +73,13 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     public bool Contains(T item) =>
         Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) != null;
 
-    public void CopyTo(T[] array, int arrayIndex) => throw new NotImplementedException();
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        IEnumerator<T> enumerator = GetEnumerator();
+
+        for(int i = arrayIndex; enumerator.MoveNext(); ++i)
+            array[i] = enumerator.Current;
+    }
 
     public void ExceptWith(IEnumerable<T> other)
     {

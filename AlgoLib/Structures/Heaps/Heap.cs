@@ -32,7 +32,7 @@ public class Heap<T> : IHeap<T>
 
     public IEnumerator<T> GetEnumerator() => heap.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() => heap.GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     public T Peek() =>
         Count > 0

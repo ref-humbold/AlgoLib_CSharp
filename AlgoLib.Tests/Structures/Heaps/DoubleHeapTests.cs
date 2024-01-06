@@ -72,15 +72,12 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+    public void GetEnumerator_WhenMultipleElements_ThenAllElementsMinimumFirstMaximumLast()
     {
         // when
-        var result = new List<int>();
-        IEnumerator<int> enumerator = testObject.GetEnumerator();
-
-        while(enumerator.MoveNext())
-            result.Add(enumerator.Current);
+        var result = testObject.ToList();
         // then
+        result.Should().BeEquivalentTo(numbers);
         result.Should().HaveElementAt(0, numbers.Min())
             .And.HaveElementAt(result.Count - 1, numbers.Max());
     }

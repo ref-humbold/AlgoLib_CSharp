@@ -72,15 +72,12 @@ public class HeapTests
     }
 
     [Test]
-    public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+    public void GetEnumerator_WhenMultipleElements_ThenAllElementsMinimumFirst()
     {
         // when
-        var result = new List<int>();
-        IEnumerator<int> enumerator = testObject.GetEnumerator();
-
-        while (enumerator.MoveNext())
-            result.Add(enumerator.Current);
+        var result = testObject.ToList();
         // then
+        result.Should().BeEquivalentTo(numbers);
         result.Should().HaveElementAt(0, numbers.Min());
     }
 
@@ -239,7 +236,7 @@ public class HeapTests
         // when
         var result = new List<int>();
 
-        while (testObject.Count > 0)
+        while(testObject.Count > 0)
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
