@@ -42,6 +42,7 @@ public class HeapTests
         // when
         testObject.Clear();
         // then
+        testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
     }
 

@@ -45,6 +45,7 @@ public class PairingHeapTests
         // when
         testObject.Clear();
         // then
+        testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
     }
 
@@ -232,7 +233,7 @@ public class PairingHeapTests
         // when
         int result = testObject.Pop();
         // then
-        testObject.Count.Should().Be(0);
+        testObject.Should().BeEmpty();
         result.Should().Be(element);
     }
 
@@ -281,7 +282,7 @@ public class PairingHeapTests
         // when
         bool result = testObject.TryPop(out int resultValue);
         // then
-        testObject.Count.Should().Be(0);
+        testObject.Should().BeEmpty();
         result.Should().BeTrue();
         resultValue.Should().Be(element);
     }
@@ -298,55 +299,98 @@ public class PairingHeapTests
     }
 
     #endregion
-    #region Merge
+    #region OperatorPlus
 
     [Test]
-    public void Merge_WhenEmptyAndNotEmpty_ThenSameAsOther()
+    public void OperatorPlus_WhenEmptyAndNotEmpty_ThenSameAsOther()
+    {
+        // when
+        PairingHeap<int> result = new PairingHeap<int>() + testObject;
+        // then
+        result.Count.Should().Be(numbers.Length);
+        result.Peek().Should().Be(testObject.Peek());
+    }
+
+    [Test]
+    public void OperatorPlus_WhenNotEmptyAndEmpty_ThenNoChanges()
+    {
+        // when
+        PairingHeap<int> result = testObject + new PairingHeap<int>();
+        // then
+        result.Count.Should().Be(numbers.Length);
+        result.Peek().Should().Be(numbers.Min());
+    }
+
+    [Test]
+    public void OperatorPlus_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
     {
         // given
-        testObject = new PairingHeap<int>();
-
-        var other = new PairingHeap<int>(numbers);
+        var other = new PairingHeap<int>(new[] {
+            numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20
+        });
         // when
-        testObject.Merge(other);
+        PairingHeap<int> result = testObject + other;
         // then
-        testObject.Count.Should().Be(numbers.Length);
-        testObject.Peek().Should().Be(other.Peek());
+        result.Count.Should().Be(numbers.Length + other.Count);
+        result.Peek().Should().Be(numbers.Min());
     }
 
     [Test]
-    public void Merge_WhenNotEmptyAndEmpty_ThenNoChanges()
-    {
-        // when
-        testObject.Merge(new PairingHeap<int>());
-        // then
-        testObject.Count.Should().Be(numbers.Length);
-        testObject.Peek().Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void Merge_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
-    {
-        // given
-        var other = new PairingHeap<int>(new[] { numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20 });
-        // when
-        testObject.Merge(other);
-        // then
-        testObject.Count.Should().Be(numbers.Length + other.Count);
-        testObject.Peek().Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void Merge_WhenOtherHasLessMinimum_ThenNewMinimum()
+    public void OperatorPlus_WhenOtherHasLessMinimum_ThenNewMinimum()
     {
         // given
         int newMinimum = numbers.Min() - 4;
-        var other = new PairingHeap<int>(new[] { newMinimum, numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20 });
+        var other = new PairingHeap<int>(new[] {
+            newMinimum, numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20
+        });
         // when
-        testObject.Merge(other);
+        PairingHeap<int> result = testObject + other;
         // then
-        testObject.Count.Should().Be(numbers.Length + other.Count);
-        testObject.Peek().Should().Be(newMinimum);
+        result.Count.Should().Be(numbers.Length + other.Count);
+        result.Peek().Should().Be(newMinimum);
+    }
+
+    [Test]
+    public void OperatorPlus_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
+    {
+        // given
+        int[] firstElements = new[] { 10, 20 };
+        int[] secondElements = new[] { 4, 8 };
+
+        testObject = new PairingHeap<int>();
+        var first = new PairingHeap<int>(firstElements);
+        var second = new PairingHeap<int>(secondElements);
+        // when
+        PairingHeap<int> result1 = testObject + first;
+        PairingHeap<int> result2 = result1 + second;
+        // then
+        result1.Peek().Should().Be(10);
+        result1.ToArray().Should().BeEquivalentTo(firstElements);
+        result2.Peek().Should().Be(4);
+        result2.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
+        testObject.Should().BeEmpty();
+        first.ToArray().Should().BeEquivalentTo(firstElements);
+        second.ToArray().Should().BeEquivalentTo(secondElements);
+    }
+
+    [Test]
+    public void OperatorPlusEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
+    {
+        // given
+        int[] firstElements = new[] { 10, 20 };
+        int[] secondElements = new[] { 4, 8 };
+
+        testObject = new PairingHeap<int>();
+        var first = new PairingHeap<int>(firstElements);
+        var second = new PairingHeap<int>(secondElements);
+        // when
+        testObject += first;
+        testObject += second;
+        // then
+        testObject.Peek().Should().Be(4);
+        testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
+        first.ToArray().Should().BeEquivalentTo(firstElements);
+        second.ToArray().Should().BeEquivalentTo(secondElements);
     }
 
     #endregion

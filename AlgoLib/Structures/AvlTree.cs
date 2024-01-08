@@ -14,7 +14,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public int Count { get; private set; }
 
-    public bool IsReadOnly => false;
+    bool ICollection<T>.IsReadOnly => false;
 
     private AvlInnerNode<T> Root
     {

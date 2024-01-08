@@ -23,6 +23,17 @@ public class PairingHeap<T> : IHeap<T>
 
     public PairingHeap(IEnumerable<T> enumerable) => PushRange(enumerable);
 
+    /// <summary>Merges given heaps.</summary>
+    /// <param name="heap1">The first heap.</param>
+    /// <param name="heap2">The second heap.</param>
+    /// <returns>The merged heap.</returns>
+    public static PairingHeap<T> operator +(PairingHeap<T> heap1, PairingHeap<T> heap2) =>
+        new()
+        {
+            heap = heap1.heap + heap2.heap,
+            Count = heap1.Count + heap2.Count
+        };
+
     public void Clear()
     {
         heap = null;
@@ -36,7 +47,7 @@ public class PairingHeap<T> : IHeap<T>
     public T Peek() =>
         heap is not null
             ? heap.Element
-            : throw new InvalidOperationException("The pairing heap is empty");
+            : throw new InvalidOperationException("The heap is empty");
 
     public bool TryPeek(out T result)
     {
@@ -78,14 +89,6 @@ public class PairingHeap<T> : IHeap<T>
             doPop();
 
         return wasPresent;
-    }
-
-    /// <summary>Merges given pairing heap to this heap.</summary>
-    /// <param name="other">The pairing heap.</param>
-    public void Merge(PairingHeap<T> other)
-    {
-        heap += other.heap;
-        Count += other.Count;
     }
 
     // Removes minimal element.
