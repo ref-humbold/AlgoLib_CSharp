@@ -101,11 +101,11 @@ public class LeftistHeap<T> : IHeap<T>
     {
         public int Rank { get; }
 
-        public T Element { get; set; }
+        public T Element { get; }
 
-        public HeapNode Left { get; set; }
+        public HeapNode Left { get; }
 
-        public HeapNode Right { get; set; }
+        public HeapNode Right { get; }
 
         public HeapNode(T element, HeapNode node1 = null, HeapNode node2 = null)
         {
