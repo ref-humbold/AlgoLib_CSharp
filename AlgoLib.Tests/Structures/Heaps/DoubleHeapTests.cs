@@ -11,7 +11,15 @@ namespace AlgoLib.Structures.Heaps;
 public class DoubleHeapTests
 {
     private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int minimum;
+    private readonly int maximum;
     private DoubleHeap<int> testObject;
+
+    public DoubleHeapTests()
+    {
+        minimum = numbers.Min();
+        maximum = numbers.Max();
+    }
 
     [SetUp]
     public void SetUp() => testObject = new DoubleHeap<int>(numbers);
@@ -19,10 +27,8 @@ public class DoubleHeapTests
     [Test]
     public void Count_WhenEmpty_ThenZero()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        int result = testObject.Count;
+        int result = new DoubleHeap<int>().Count;
         // then
         result.Should().Be(0);
     }
@@ -46,13 +52,13 @@ public class DoubleHeapTests
         testObject.Count.Should().Be(0);
     }
 
+    #region GetEnumerator
+
     [Test]
     public void GetEnumerator_WhenEmpty_ThenNoElements()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new DoubleHeap<int>().GetEnumerator();
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -61,11 +67,9 @@ public class DoubleHeapTests
     public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
     {
         // given
-        int element = 17;
-
-        testObject = new DoubleHeap<int>(new[] { element });
+        int element = numbers[0];
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new DoubleHeap<int>(new[] { element }).GetEnumerator();
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -79,193 +83,18 @@ public class DoubleHeapTests
         var result = testObject.ToList();
         // then
         result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, numbers.Min())
-            .And.HaveElementAt(result.Count - 1, numbers.Max());
-    }
-
-    #region Peek*
-
-    [Test]
-    public void Peek_WhenMultipleElements_ThenMinimalElement()
-    {
-        // when
-        int result = testObject.Peek();
-        // then
-        result.Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void PeekMin_WhenEmpty_ThenInvalidOperationException()
-    {
-        // given
-        testObject = new DoubleHeap<int>();
-        // when
-        Action action = () => testObject.PeekMin();
-        // then
-        action.Should().Throw<InvalidOperationException>();
-    }
-
-    [Test]
-    public void PeekMin_WhenSingleElement_ThenThisElement()
-    {
-        // given
-        int element = 19;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        int result = testObject.PeekMin();
-        // then
-        result.Should().Be(element);
-    }
-
-    [Test]
-    public void PeekMin_WhenMultipleElements_ThenMinimalElement()
-    {
-        // when
-        int result = testObject.PeekMin();
-        // then
-        result.Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void PeekMax_WhenEmpty_ThenInvalidOperationException()
-    {
-        // given
-        testObject = new DoubleHeap<int>();
-        // when
-        Action action = () => testObject.PeekMax();
-        // then
-        action.Should().Throw<InvalidOperationException>();
-    }
-
-    [Test]
-    public void PeekMax_WhenSingleElement_ThenThisElement()
-    {
-        // given
-        int element = 19;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        int result = testObject.PeekMax();
-        // then
-        result.Should().Be(element);
-    }
-
-    [Test]
-    public void PeekMax_WhenMultipleElements_ThenMaximalElement()
-    {
-        // when
-        int result = testObject.PeekMax();
-        // then
-        result.Should().Be(numbers.Max());
-    }
-
-    #endregion
-    #region TryPeek*
-
-    [Test]
-    public void TryPeek_WhenMultipleElements_ThenMinimalElement()
-    {
-        // when
-        bool result = testObject.TryPeek(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void TryPeekMin_WhenEmpty_ThenDefaultValue()
-    {
-        // given
-        testObject = new DoubleHeap<int>();
-        // when
-        bool result = testObject.TryPeekMin(out int resultValue);
-        // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
-    }
-
-    [Test]
-    public void TryPeekMin_WhenSingleElement_ThenThisElement()
-    {
-        // given
-        int element = 35;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPeekMin(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-    }
-
-    [Test]
-    public void TryPeekMin_WhenMultipleElements_ThenMinimalElement()
-    {
-        // when
-        bool result = testObject.TryPeekMin(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void TryPeekMax_WhenEmpty_ThenDefaultValue()
-    {
-        // given
-        testObject = new DoubleHeap<int>();
-        // when
-        bool result = testObject.TryPeekMax(out int resultValue);
-        // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
-    }
-
-    [Test]
-    public void TryPeekMax_WhenSingleElement_ThenThisElement()
-    {
-        // given
-        int element = 35;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPeekMax(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-    }
-
-    [Test]
-    public void TryPeekMax_WhenMultipleElements_ThenMaximalElement()
-    {
-        // when
-        bool result = testObject.TryPeekMax(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Max());
+        result.Should().HaveElementAt(0, minimum)
+            .And.HaveElementAt(result.Count - 1, maximum);
     }
 
     #endregion
     #region Push*
 
     [Test]
-    public void Push_WhenNewElement_ThenAdded()
-    {
-        // given
-        int element = 46;
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.PeekMin().Should().Be(numbers.Min());
-        testObject.PeekMax().Should().Be(numbers.Max());
-    }
-
-    [Test]
     public void Push_WhenEmpty_ThenAdded()
     {
         // given
-        int element = 19;
+        int element = numbers[0];
 
         testObject = new DoubleHeap<int>();
         // when
@@ -277,28 +106,39 @@ public class DoubleHeapTests
     }
 
     [Test]
-    public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
+    public void Push_WhenNewElementBetweenMinimumAndMaximum_ThenAdded()
+    {
+        // when
+        testObject.Push((minimum + maximum) / 2);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.PeekMin().Should().Be(minimum);
+        testObject.PeekMax().Should().Be(maximum);
+    }
+
+    [Test]
+    public void Push_WhenNewElementLessThanMinimum_ThenNewMinimum()
     {
         // given
-        int element = numbers.Min() - 3;
+        int element = minimum - 3;
         // when
         testObject.Push(element);
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.PeekMin().Should().Be(element);
-        testObject.PeekMax().Should().Be(numbers.Max());
+        testObject.PeekMax().Should().Be(maximum);
     }
 
     [Test]
-    public void Push_WhenNewElementIsGreaterThanMaximum_ThenNewMaximum()
+    public void Push_WhenNewElementGreaterThanMaximum_ThenNewMaximum()
     {
         // given
-        int element = numbers.Max() + 3;
+        int element = maximum + 3;
         // when
         testObject.Push(element);
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.PeekMin().Should().Be(numbers.Min());
+        testObject.PeekMin().Should().Be(minimum);
         testObject.PeekMax().Should().Be(element);
     }
 
@@ -306,13 +146,136 @@ public class DoubleHeapTests
     public void PushRange_WhenNewElements_ThenAllAdded()
     {
         // given
-        int[] elements = new[] { 46, 111, 14, 29 };
+        int[] elements = new[] { minimum - 4, minimum + 5, minimum + 13, minimum + 20, maximum + 4 };
         // when
         testObject.PushRange(elements);
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.PeekMin().Should().Be(Math.Min(numbers.Min(), elements.Min()));
-        testObject.PeekMax().Should().Be(Math.Max(numbers.Max(), elements.Max()));
+        testObject.PeekMin().Should().Be(elements.Min());
+        testObject.PeekMax().Should().Be(elements.Max());
+    }
+
+    #endregion
+    #region Peek*
+
+    [Test]
+    public void Peek_WhenMultipleElements_ThenMinimalElement()
+    {
+        // when
+        int result = testObject.Peek();
+        // then
+        result.Should().Be(minimum);
+    }
+
+    [Test]
+    public void PeekMin_WhenEmpty_ThenInvalidOperationException()
+    {
+        // when
+        Action action = () => new DoubleHeap<int>().PeekMin();
+        // then
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Test]
+    public void PeekMin_WhenSingleElement_ThenThisElement()
+    {
+        // given
+        int element = numbers[0];
+        // when
+        int result = new DoubleHeap<int>(new[] { element }).PeekMin();
+        // then
+        result.Should().Be(element);
+    }
+
+    [Test]
+    public void PeekMin_WhenMultipleElements_ThenMinimalElement()
+    {
+        // when
+        int result = testObject.PeekMin();
+        // then
+        result.Should().Be(minimum);
+    }
+
+    [Test]
+    public void PeekMax_WhenEmpty_ThenInvalidOperationException()
+    {
+        // when
+        Action action = () => new DoubleHeap<int>().PeekMax();
+        // then
+        action.Should().Throw<InvalidOperationException>();
+    }
+
+    [Test]
+    public void PeekMax_WhenSingleElement_ThenThisElement()
+    {
+        // given
+        int element = numbers[0];
+        // when
+        int result = new DoubleHeap<int>(new[] { element }).PeekMax();
+        // then
+        result.Should().Be(element);
+    }
+
+    [Test]
+    public void PeekMax_WhenMultipleElements_ThenMaximalElement()
+    {
+        // when
+        int result = testObject.PeekMax();
+        // then
+        result.Should().Be(maximum);
+    }
+
+    #endregion
+    #region TryPeek*
+
+    [Test]
+    public void TryPeek_WhenNotEmpty_ThenMinimalElement()
+    {
+        // when
+        bool result = testObject.TryPeek(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(minimum);
+    }
+
+    [Test]
+    public void TryPeekMin_WhenEmpty_ThenDefaultValue()
+    {
+        // when
+        bool result = new DoubleHeap<int>().TryPeekMin(out int resultValue);
+        // then
+        result.Should().BeFalse();
+        resultValue.Should().Be(default);
+    }
+
+    [Test]
+    public void TryPeekMin_WhenNotEmpty_ThenMinimalElement()
+    {
+        // when
+        bool result = testObject.TryPeekMin(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(minimum);
+    }
+
+    [Test]
+    public void TryPeekMax_WhenEmpty_ThenDefaultValue()
+    {
+        // when
+        bool result = new DoubleHeap<int>().TryPeekMax(out int resultValue);
+        // then
+        result.Should().BeFalse();
+        resultValue.Should().Be(default);
+    }
+
+    [Test]
+    public void TryPeekMax_WhenNotEmpty_ThenMaximalElement()
+    {
+        // when
+        bool result = testObject.TryPeekMax(out int resultValue);
+        // then
+        result.Should().BeTrue();
+        resultValue.Should().Be(maximum);
     }
 
     #endregion
@@ -324,17 +287,15 @@ public class DoubleHeapTests
         // when
         int result = testObject.Pop();
         // then
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
     public void PopMin_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        Action action = () => testObject.PopMin();
+        Action action = () => new DoubleHeap<int>().PopMin();
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -343,7 +304,7 @@ public class DoubleHeapTests
     public void PopMin_WhenSingleElement_ThenThisElementRemoved()
     {
         // given
-        int element = 19;
+        int element = numbers[0];
 
         testObject = new DoubleHeap<int>(new[] { element });
         // when
@@ -359,16 +320,13 @@ public class DoubleHeapTests
         // when
         int result = testObject.PopMin();
         // then
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
-    public void PopMin_WhenMultipleCalls_ThenSortedAsComparer()
+    public void PopMin_WhenMultipleCalls_ThenSortedAscendingToComparer()
     {
-        // given
-        testObject = new DoubleHeap<int>((n, m) => m.CompareTo(n));
-        Array.ForEach(numbers, n => testObject.Push(n));
         // when
         var result = new List<int>();
 
@@ -382,10 +340,8 @@ public class DoubleHeapTests
     [Test]
     public void PopMax_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        Action action = () => testObject.PopMax();
+        Action action = () => new DoubleHeap<int>().PopMax();
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -394,7 +350,7 @@ public class DoubleHeapTests
     public void PopMax_WhenSingleElement_ThenThisElementRemoved()
     {
         // given
-        int element = 19;
+        int element = numbers[0];
 
         testObject = new DoubleHeap<int>(new[] { element });
         // when
@@ -410,16 +366,13 @@ public class DoubleHeapTests
         // when
         int result = testObject.PopMax();
         // then
-        result.Should().Be(numbers.Max());
+        result.Should().Be(maximum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
-    public void PopMax_WhenMultipleCalls_ThenSortedAsComparer()
+    public void PopMax_WhenMultipleCalls_ThenSortedDescendingToComparer()
     {
-        // given
-        testObject = new DoubleHeap<int>((n, m) => m.CompareTo(n));
-        Array.ForEach(numbers, n => testObject.Push(n));
         // when
         var result = new List<int>();
 
@@ -434,89 +387,55 @@ public class DoubleHeapTests
     #region TryPop*
 
     [Test]
-    public void TryPop_WhenMultipleElements_ThenMinimalElementRemoved()
+    public void TryPop_WhenNotEmpty_ThenMinimalElementRemoved()
     {
         // when
         bool result = testObject.TryPop(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
+        resultValue.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
     public void TryPopMin_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        bool result = testObject.TryPopMin(out int resultValue);
+        bool result = new DoubleHeap<int>().TryPopMin(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
     }
 
     [Test]
-    public void TryPopMin_WhenSingleElement_ThenThisElementRemoved()
-    {
-        // given
-        int element = 35;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPopMin(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-        testObject.Should().BeEmpty();
-    }
-
-    [Test]
-    public void TryPopMin_WhenMultipleElements_ThenMinimalElementRemoved()
+    public void TryPopMin_WhenNotEmpty_ThenMinimalElementRemoved()
     {
         // when
         bool result = testObject.TryPopMin(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
+        resultValue.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
     public void TryPopMax_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new DoubleHeap<int>();
         // when
-        bool result = testObject.TryPopMax(out int resultValue);
+        bool result = new DoubleHeap<int>().TryPopMax(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
     }
 
     [Test]
-    public void TryPopMax_WhenSingleElement_ThenThisElementRemoved()
-    {
-        // given
-        int element = 35;
-
-        testObject = new DoubleHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPopMax(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-        testObject.Should().BeEmpty();
-    }
-
-    [Test]
-    public void TryPopMax_WhenMultipleElements_ThenMaximalElementRemoved()
+    public void TryPopMax_WhenNotEmpty_ThenMaximalElementRemoved()
     {
         // when
         bool result = testObject.TryPopMax(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Max());
+        resultValue.Should().Be(maximum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 

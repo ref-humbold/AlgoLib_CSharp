@@ -13,6 +13,10 @@ public class DisjointSets<T>
     /// <value>The number of sets.</value>
     public int Count { get; private set; }
 
+    public DisjointSets()
+    {
+    }
+
     public DisjointSets(IEnumerable<T> universe)
     {
         foreach(T e in universe)
@@ -34,6 +38,13 @@ public class DisjointSets<T>
 
             return represents[item];
         }
+    }
+
+    /// <summary>Removes all sets from this structure.</summary>
+    public void Clear()
+    {
+        represents.Clear();
+        Count = 0;
     }
 
     /// <summary>Checks whether given element belongs to any set.</summary>

@@ -11,21 +11,19 @@ namespace AlgoLib.Structures.Heaps;
 public class PairingHeapTests
 {
     private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int minimum;
     private PairingHeap<int> testObject;
 
+    public PairingHeapTests() => minimum = numbers.Min();
+
     [SetUp]
-    public void SetUp()
-    {
-        testObject = new PairingHeap<int>(numbers);
-    }
+    public void SetUp() => testObject = new PairingHeap<int>(numbers);
 
     [Test]
     public void Count_WhenEmpty_ThenZero()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        int result = testObject.Count;
+        int result = new PairingHeap<int>().Count;
         // then
         result.Should().Be(0);
     }
@@ -49,13 +47,13 @@ public class PairingHeapTests
         testObject.Count.Should().Be(0);
     }
 
+    #region GetEnumerator
+
     [Test]
     public void GetEnumerator_WhenEmpty_ThenNoElements()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new PairingHeap<int>().GetEnumerator();
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -64,11 +62,9 @@ public class PairingHeapTests
     public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
     {
         // given
-        int element = 17;
-
-        testObject = new PairingHeap<int>(new[] { element });
+        int element = numbers[0];
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new PairingHeap<int>(new[] { element }).GetEnumerator();
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -82,18 +78,68 @@ public class PairingHeapTests
         var result = testObject.ToList();
         // then
         result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, numbers.Min());
+        result.Should().HaveElementAt(0, minimum);
     }
 
+    #endregion
+    #region Push & PushRange
+
+    [Test]
+    public void Push_WhenEmpty_ThenAdded()
+    {
+        // given
+        int element = numbers[0];
+
+        testObject = new PairingHeap<int>();
+        // when
+        testObject.Push(element);
+        // then
+        testObject.Should().HaveCount(1);
+        testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
+    {
+        // when
+        testObject.Push(minimum + 3);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(minimum);
+    }
+
+    [Test]
+    public void Push_WhenNewElementLessThanMinimum_ThenNewMinimum()
+    {
+        // given
+        int element = minimum - 3;
+        // when
+        testObject.Push(element);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void PushRange_WhenNewElements_ThenAllAdded()
+    {
+        // given
+        int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 };
+        // when
+        testObject.PushRange(elements);
+        // then
+        testObject.Should().HaveCount(numbers.Length + elements.Length);
+        testObject.Peek().Should().Be(Math.Min(minimum, elements.Min()));
+    }
+
+    #endregion
     #region Peek & TryPeek
 
     [Test]
     public void Peek_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        Action action = () => testObject.Peek();
+        Action action = () => _ = new PairingHeap<int>().Peek();
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -102,11 +148,9 @@ public class PairingHeapTests
     public void Peek_WhenSingleElement_ThenThisElement()
     {
         // given
-        int element = 19;
-
-        testObject = new PairingHeap<int>(new[] { element });
+        int element = numbers[0];
         // when
-        int result = testObject.Peek();
+        int result = new PairingHeap<int>(new[] { element }).Peek();
         // then
         result.Should().Be(element);
     }
@@ -117,96 +161,27 @@ public class PairingHeapTests
         // when
         int result = testObject.Peek();
         // then
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
     }
 
     [Test]
     public void TryPeek_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        bool result = testObject.TryPeek(out int resultValue);
+        bool result = new PairingHeap<int>().TryPeek(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
     }
 
     [Test]
-    public void TryPeek_WhenSingleElement_ThenThisElement()
-    {
-        // given
-        int element = 19;
-
-        testObject = new PairingHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPeek(out int resultValue);
-        // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-    }
-
-    [Test]
-    public void TryPeek_WhenMultipleElements_ThenMinimalElement()
+    public void TryPeek_WhenNotEmpty_ThenMinimalElement()
     {
         // when
         bool result = testObject.TryPeek(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
-    }
-
-    #endregion
-    #region Push & PushRange
-
-    [Test]
-    public void Push_WhenNewElement_ThenAdded()
-    {
-        // given
-        int element = 46;
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Count.Should().Be(numbers.Length + 1);
-        testObject.Peek().Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void Push_WhenEmpty_ThenAdded()
-    {
-        // given
-        int element = 19;
-
-        testObject = new PairingHeap<int>();
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Count.Should().Be(1);
-        testObject.Peek().Should().Be(element);
-    }
-
-    [Test]
-    public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
-    {
-        // given
-        int element = numbers.Min() - 3;
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Count.Should().Be(numbers.Length + 1);
-        testObject.Peek().Should().Be(element);
-    }
-
-    [Test]
-    public void PushRange_WhenNewElements_ThenAllAdded()
-    {
-        // given
-        int[] elements = new[] { 46, 111, 14, 29 };
-        // when
-        testObject.PushRange(elements);
-        // then
-        testObject.Count.Should().Be(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(Math.Min(numbers.Min(), elements.Min()));
+        resultValue.Should().Be(minimum);
     }
 
     #endregion
@@ -215,11 +190,9 @@ public class PairingHeapTests
     [Test]
     public void Pop_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        Action action = () => testObject.Pop();
-        // then
+        Action action = () => _ = new PairingHeap<int>().Pop();
+        // then then
         action.Should().Throw<InvalidOperationException>();
     }
 
@@ -227,14 +200,14 @@ public class PairingHeapTests
     public void Pop_WhenSingleElement_ThenThisElementRemoved()
     {
         // given
-        int element = 19;
+        int element = numbers[0];
 
         testObject = new PairingHeap<int>(new[] { element });
         // when
         int result = testObject.Pop();
         // then
-        testObject.Should().BeEmpty();
         result.Should().Be(element);
+        testObject.Should().BeEmpty();
     }
 
     [Test]
@@ -243,12 +216,12 @@ public class PairingHeapTests
         // when
         int result = testObject.Pop();
         // then
-        testObject.Count.Should().Be(numbers.Length - 1);
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
+        testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
-    public void Pop_WhenMultipleCalls_ThenSorted()
+    public void Pop_WhenMultipleCalls_ThenSortedAscendingToComparer()
     {
         // when
         var result = new List<int>();
@@ -257,45 +230,28 @@ public class PairingHeapTests
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder();
+        result.Should().BeInAscendingOrder(testObject.Comparer);
     }
 
     [Test]
     public void TryPop_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new PairingHeap<int>();
         // when
-        bool result = testObject.TryPop(out int resultValue);
+        bool result = new PairingHeap<int>().TryPop(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
     }
 
     [Test]
-    public void TryPop_WhenSingleElement_ThenThisElementRemoved()
-    {
-        // given
-        int element = 19;
-
-        testObject = new PairingHeap<int>(new[] { element });
-        // when
-        bool result = testObject.TryPop(out int resultValue);
-        // then
-        testObject.Should().BeEmpty();
-        result.Should().BeTrue();
-        resultValue.Should().Be(element);
-    }
-
-    [Test]
-    public void TryPop_WhenMultipleElements_ThenMinimalElementRemoved()
+    public void TryPop_WhenNotEmpty_ThenMinimalElementRemoved()
     {
         // when
         bool result = testObject.TryPop(out int resultValue);
         // then
-        testObject.Count.Should().Be(numbers.Length - 1);
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
+        resultValue.Should().Be(minimum);
+        testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     #endregion
@@ -318,36 +274,32 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + new PairingHeap<int>();
         // then
         result.Count.Should().Be(numbers.Length);
-        result.Peek().Should().Be(numbers.Min());
+        result.Peek().Should().Be(minimum);
     }
 
     [Test]
     public void OperatorPlus_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
     {
         // given
-        var other = new PairingHeap<int>(new[] {
-            numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20
-        });
+        var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
         // when
         PairingHeap<int> result = testObject + other;
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(numbers.Min());
+        result.Peek().Should().Be(minimum);
     }
 
     [Test]
     public void OperatorPlus_WhenOtherHasLessMinimum_ThenNewMinimum()
     {
         // given
-        int newMinimum = numbers.Min() - 4;
-        var other = new PairingHeap<int>(new[] {
-            newMinimum, numbers.Min() + 5, numbers.Min() + 13, numbers.Min() + 20
-        });
+        var other = new PairingHeap<int>(
+            new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 });
         // when
         PairingHeap<int> result = testObject + other;
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(newMinimum);
+        result.Peek().Should().Be(other.Peek());
     }
 
     [Test]
@@ -364,9 +316,9 @@ public class PairingHeapTests
         PairingHeap<int> result1 = testObject + first;
         PairingHeap<int> result2 = result1 + second;
         // then
-        result1.Peek().Should().Be(10);
+        result1.Peek().Should().Be(firstElements.Min());
         result1.ToArray().Should().BeEquivalentTo(firstElements);
-        result2.Peek().Should().Be(4);
+        result2.Peek().Should().Be(secondElements.Min());
         result2.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
         testObject.Should().BeEmpty();
         first.ToArray().Should().BeEquivalentTo(firstElements);
@@ -387,7 +339,7 @@ public class PairingHeapTests
         testObject += first;
         testObject += second;
         // then
-        testObject.Peek().Should().Be(4);
+        testObject.Peek().Should().Be(secondElements.Min());
         testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
         first.ToArray().Should().BeEquivalentTo(firstElements);
         second.ToArray().Should().BeEquivalentTo(secondElements);

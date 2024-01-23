@@ -75,6 +75,16 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public void CopyTo(T[] array, int arrayIndex)
     {
+        if(array is null)
+            throw new ArgumentNullException(nameof(array));
+
+        if(arrayIndex < 0)
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+
+        if(array.Length - arrayIndex < Count)
+            throw new ArgumentException(
+                "Destination array is not long enough to copy all the items in the collection. Check array index and length.");
+
         IEnumerator<T> enumerator = GetEnumerator();
 
         for(int i = arrayIndex; enumerator.MoveNext(); ++i)
