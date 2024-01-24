@@ -146,7 +146,7 @@ public class DoubleHeapTests
     public void PushRange_WhenNewElements_ThenAllAdded()
     {
         // given
-        int[] elements = new[] { minimum - 4, minimum + 5, minimum + 13, minimum + 20, maximum + 4 };
+        int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3 };
         // when
         testObject.PushRange(elements);
         // then
@@ -330,7 +330,7 @@ public class DoubleHeapTests
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.PopMin());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
@@ -376,7 +376,7 @@ public class DoubleHeapTests
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.PopMax());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());

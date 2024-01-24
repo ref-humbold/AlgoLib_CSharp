@@ -129,7 +129,7 @@ public class HeapTests
         testObject.PushRange(elements);
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(Math.Min(minimum, elements.Min()));
+        testObject.Peek().Should().Be(elements.Min());
     }
 
     #endregion
@@ -226,7 +226,7 @@ public class HeapTests
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());

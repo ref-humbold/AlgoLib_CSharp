@@ -129,7 +129,7 @@ public class PairingHeapTests
         testObject.PushRange(elements);
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(Math.Min(minimum, elements.Min()));
+        testObject.Peek().Should().Be(elements.Min());
     }
 
     #endregion
@@ -226,7 +226,7 @@ public class PairingHeapTests
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
@@ -274,7 +274,7 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + new PairingHeap<int>();
         // then
         result.Count.Should().Be(numbers.Length);
-        result.Peek().Should().Be(minimum);
+        result.Peek().Should().Be(testObject.Peek());
     }
 
     [Test]
@@ -286,7 +286,7 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + other;
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(minimum);
+        result.Peek().Should().Be(testObject.Peek());
     }
 
     [Test]
@@ -339,7 +339,7 @@ public class PairingHeapTests
         testObject += first;
         testObject += second;
         // then
-        testObject.Peek().Should().Be(secondElements.Min());
+        testObject.Peek().Should().Be(firstElements.Concat(secondElements).Min());
         testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
         first.ToArray().Should().BeEquivalentTo(firstElements);
         second.ToArray().Should().BeEquivalentTo(secondElements);
