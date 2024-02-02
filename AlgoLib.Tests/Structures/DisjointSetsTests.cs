@@ -69,7 +69,7 @@ public class DisjointSetsTests
     }
 
     [Test]
-    public void Contains_WhenPresentElement_ThenFalse()
+    public void Contains_WhenAbsentElement_ThenFalse()
     {
         // when
         bool result = testObject.Contains(absent[0]);
@@ -127,7 +127,7 @@ public class DisjointSetsTests
         // when
         testObject.AddRange(elements);
         // then
-        foreach(int e in elements)
+        foreach (int e in elements)
         {
             testObject.Contains(e).Should().BeTrue();
             testObject[e].Should().Be(e);
@@ -144,7 +144,7 @@ public class DisjointSetsTests
         // when
         testObject.AddRange(elements);
         // then
-        foreach(int e in elements)
+        foreach (int e in elements)
         {
             testObject.Contains(e).Should().BeTrue();
             testObject[e].Should().Be(e);
@@ -276,7 +276,7 @@ public class DisjointSetsTests
         int last = present[^1];
 
         // when
-        for(int i = 1; i < present.Length; ++i)
+        for (int i = 1; i < present.Length; ++i)
             testObject.UnionSet(present[i - 1], present[i]);
 
         // then
