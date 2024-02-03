@@ -99,16 +99,6 @@ public class PairingHeapTests
     }
 
     [Test]
-    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
-    {
-        // when
-        testObject.Push(minimum + 3);
-        // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(minimum);
-    }
-
-    [Test]
     public void Push_WhenNewElementLessThanMinimum_ThenNewMinimum()
     {
         // given
@@ -118,6 +108,16 @@ public class PairingHeapTests
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
+    {
+        // when
+        testObject.Push(minimum + 3);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(minimum);
     }
 
     [Test]
@@ -278,18 +278,6 @@ public class PairingHeapTests
     }
 
     [Test]
-    public void OperatorPlus_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
-    {
-        // given
-        var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
-        // when
-        PairingHeap<int> result = testObject + other;
-        // then
-        result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(testObject.Peek());
-    }
-
-    [Test]
     public void OperatorPlus_WhenOtherHasLessMinimum_ThenNewMinimum()
     {
         // given
@@ -300,6 +288,18 @@ public class PairingHeapTests
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
         result.Peek().Should().Be(other.Peek());
+    }
+
+    [Test]
+    public void OperatorPlus_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
+    {
+        // given
+        var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
+        // when
+        PairingHeap<int> result = testObject + other;
+        // then
+        result.Count.Should().Be(numbers.Length + other.Count);
+        result.Peek().Should().Be(testObject.Peek());
     }
 
     [Test]

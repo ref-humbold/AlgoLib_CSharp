@@ -99,16 +99,6 @@ public class HeapTests
     }
 
     [Test]
-    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
-    {
-        // when
-        testObject.Push(minimum + 3);
-        // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(minimum);
-    }
-
-    [Test]
     public void Push_WhenNewElementLessThanMinimum_ThenNewMinimum()
     {
         // given
@@ -118,6 +108,16 @@ public class HeapTests
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
+    {
+        // when
+        testObject.Push(minimum + 3);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(minimum);
     }
 
     [Test]

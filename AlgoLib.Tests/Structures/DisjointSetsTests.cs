@@ -239,6 +239,7 @@ public class DisjointSetsTests
         // then
         testObject.IsSameSet(element1, element2).Should().BeTrue();
         testObject[element2].Should().Be(testObject[element1]);
+        testObject.Count.Should().Be(numbers.Length - 1);
     }
 
     [Test]
@@ -249,8 +250,7 @@ public class DisjointSetsTests
         // when
         testObject.UnionSet(element, element);
         // then
-        testObject.IsSameSet(element, element).Should().BeTrue();
-        testObject[element].Should().Be(testObject[element]);
+        testObject.Count.Should().Be(numbers.Length);
     }
 
     [Test]
@@ -266,6 +266,7 @@ public class DisjointSetsTests
         // then
         testObject.IsSameSet(element1, element2).Should().BeTrue();
         testObject[element2].Should().Be(testObject[element1]);
+        testObject.Count.Should().Be(numbers.Length - 1);
     }
 
     [Test]
@@ -282,6 +283,7 @@ public class DisjointSetsTests
         // then
         testObject.IsSameSet(first, last).Should().BeTrue();
         testObject[last].Should().Be(testObject[first]);
+        testObject.Count.Should().Be(numbers.Length - present.Length + 1);
     }
 
     #endregion
