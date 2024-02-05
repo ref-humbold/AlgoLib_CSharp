@@ -19,7 +19,28 @@ public class DisjointSetsTests
     public DisjointSetsTests() => present = numbers.Where((_, i) => i % 3 == 2).ToArray();
 
     [SetUp]
-    public void SetUp() => testObject = new DisjointSets<int>(numbers);
+    public void SetUp() => testObject = new DisjointSets<int>(numbers.Select(n => new int[] { n }));
+
+    [Test]
+    public void Constructor_WhenDuplicatesInDifferentSets_ThenArgumentException()
+    {
+        // when
+        Action action = () => _ = new DisjointSets<int>(
+            new int[][] { new int[] { 1, 2, 3 }, new int[] { 1, 11, 21, 31 } });
+        // then
+        action.Should().Throw<ArgumentException>();
+    }
+
+    [Test]
+    public void Constructor_WhenDuplicatesInSameSet_ThenConstructed()
+    {
+        // given
+        int[][] sets = new int[][] { new int[] { 1, 2, 3 }, new int[] { 10, 100, 10 } };
+        // when
+        testObject = new DisjointSets<int>(sets);
+        // then
+        testObject.Count.Should().Be(sets.Length);
+    }
 
     [Test]
     public void Count_WhenEmpty_ThenZero()
@@ -78,95 +99,89 @@ public class DisjointSetsTests
     }
 
     #endregion
-    #region Add & AddRange
+    #region Add
 
     [Test]
-    public void Add_WhenEmpty_ThenNewSingletonSet()
+    public void Add_WhenEmpty_ThenNewSet()
     {
         // given
         testObject = new DisjointSets<int>();
-
-        int element = numbers[0];
         // when
-        testObject.Add(element);
+        testObject.Add(numbers);
         // then
-        testObject.Contains(element).Should().BeTrue();
-        testObject[element].Should().Be(element);
+        foreach(int element in numbers)
+        {
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(numbers[0]);
+        }
+
         testObject.Count.Should().Be(1);
     }
 
     [Test]
-    public void Add_WhenNewElement_ThenAdded()
+    public void Add_WhenNewElements_ThenNewSet()
     {
-        // given
-        int element = absent[0];
         // when
-        testObject.Add(element);
+        testObject.Add(absent);
         // then
-        testObject.Contains(element).Should().BeTrue();
-        testObject[element].Should().Be(element);
+        foreach(int element in absent)
+        {
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(absent[0]);
+        }
+
         testObject.Count.Should().Be(numbers.Length + 1);
     }
 
     [Test]
-    public void Add_WhenPresentElement_ThenArgumentException()
+    public void Add_WhenPresentElements_ThenArgumentException()
     {
         // when
-        Action action = () => testObject.Add(present[0]);
+        Action action = () => testObject.Add(present);
         // then
         action.Should().Throw<ArgumentException>();
     }
 
     [Test]
-    public void AddRange_WhenEmpty_ThenNewSingletonSets()
-    {
-        // given
-        int[] elements = numbers;
-
-        testObject = new DisjointSets<int>();
-        // when
-        testObject.AddRange(elements);
-        // then
-        foreach (int e in elements)
-        {
-            testObject.Contains(e).Should().BeTrue();
-            testObject[e].Should().Be(e);
-        }
-
-        testObject.Count.Should().Be(elements.Length);
-    }
-
-    [Test]
-    public void AddRange_WhenNewElements_ThenNewSingletonSets()
-    {
-        // given
-        int[] elements = absent;
-        // when
-        testObject.AddRange(elements);
-        // then
-        foreach (int e in elements)
-        {
-            testObject.Contains(e).Should().BeTrue();
-            testObject[e].Should().Be(e);
-        }
-
-        testObject.Count.Should().Be(numbers.Length + absent.Length);
-    }
-
-    [Test]
-    public void AddRange_WhenPresentElements_ThenArgumentException()
+    public void Add_WhenNewAndPresentElements_ThenArgumentException()
     {
         // when
-        Action action = () => testObject.AddRange(present);
+        Action action = () => testObject.Add(absent.Concat(present));
         // then
         action.Should().Throw<ArgumentException>();
     }
 
     [Test]
-    public void AddRange_WhenNewAndPresentElements_ThenArgumentException()
+    public void Add_WhenNewElementsToPresentRepresent_ThenAddedToExistingSet()
+    {
+        // given
+        int represent = present[0];
+        // when
+        testObject.Add(absent, represent);
+        // then
+        foreach(int element in absent)
+        {
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(testObject[represent]);
+        }
+
+        testObject.Count.Should().Be(numbers.Length);
+    }
+
+    [Test]
+    public void Add_WhenNewElementsToAbsentRepresent_ThenKeyNotFoundException()
     {
         // when
-        Action action = () => testObject.AddRange(absent.Concat(present));
+        Action action = () => testObject.Add(absent, absent[0]);
+        // then
+        action.Should().Throw<KeyNotFoundException>();
+    }
+
+    [Test]
+    public void Add_WhenPresentElementsToAbsentRepresent_ThenArgumentException()
+    {
+        // when
+        Action action = () => testObject.Add(present, absent[0]);
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -277,7 +292,7 @@ public class DisjointSetsTests
         int last = present[^1];
 
         // when
-        for (int i = 1; i < present.Length; ++i)
+        for(int i = 1; i < present.Length; ++i)
             testObject.UnionSet(present[i - 1], present[i]);
 
         // then

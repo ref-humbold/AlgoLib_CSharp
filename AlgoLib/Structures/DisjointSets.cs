@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlgoLib.Structures;
 
@@ -17,12 +18,16 @@ public class DisjointSets<T>
     {
     }
 
-    public DisjointSets(IEnumerable<T> universe)
+    public DisjointSets(IEnumerable<IEnumerable<T>> sets)
     {
-        foreach(T e in universe)
-            represents[e] = e;
+        T[][] setsArray = sets.Select(s => s.Distinct().ToArray()).ToArray();
+        validateDuplicates(setsArray);
 
-        Count = represents.Count;
+        foreach(T[] set in setsArray)
+            foreach(T element in set)
+                represents[element] = set[0];
+
+        Count = setsArray.Length;
     }
 
     /// <summary>Searches for represent of given element.</summary>
@@ -52,35 +57,39 @@ public class DisjointSets<T>
     /// <returns><c>true</c> if the element belongs to the structure, otherwise <c>false</c>.</returns>
     public bool Contains(T item) => represents.ContainsKey(item);
 
-    /// <summary>Adds new element as singleton set.</summary>
-    /// <param name="item">The new element.</param>
+    /// <summary>Adds new elements as a new set.</summary>
+    /// <param name="items">The new elements.</param>
     /// <returns><c>this</c> for method chaining.</returns>
-    /// <exception cref="ArgumentException">If the element is already present.</exception>
-    public DisjointSets<T> Add(T item)
+    /// <exception cref="ArgumentException">If any of the elements is already present.</exception>
+    public DisjointSets<T> Add(IEnumerable<T> items)
     {
-        if(Contains(item))
-            throw new ArgumentException($"Value {item} already present.");
+        T[] itemsArray = items.ToArray();
 
-        represents[item] = item;
+        foreach(T item in itemsArray)
+            if(Contains(item))
+                throw new ArgumentException($"Value {item} already present.");
+
+        foreach(T item in itemsArray)
+            represents[item] = itemsArray[0];
+
         ++Count;
         return this;
     }
 
-    /// <summary>Adds new elements as singleton sets.</summary>
+    /// <summary>Adds new elements to the existing set represented by another element.</summary>
     /// <param name="items">The new elements.</param>
+    /// <param name="represent">The represent of the set.</param>
     /// <returns><c>this</c> for method chaining.</returns>
     /// <exception cref="ArgumentException">If any of the elements is already present.</exception>
-    public DisjointSets<T> AddRange(IEnumerable<T> items)
+    /// <exception cref="KeyNotFoundException">If the represent is not present.</exception>
+    public DisjointSets<T> Add(IEnumerable<T> items, T represent)
     {
-        foreach(T elem in items)
-            if(Contains(elem))
-                throw new ArgumentException($"Value {elem} already present.");
+        foreach(T item in items)
+            if(Contains(item))
+                throw new ArgumentException($"Value {item} already present.");
 
-        foreach(T elem in items)
-        {
-            represents[elem] = elem;
-            ++Count;
-        }
+        foreach(T item in items)
+            represents[item] = this[represent];
 
         return this;
     }
@@ -127,4 +136,17 @@ public class DisjointSets<T>
     /// <returns><c>true</c> if the elements are in the same set, otherwise <c>false</c>.</returns>
     /// <exception cref="KeyNotFoundException">If either element is not present.</exception>
     public bool IsSameSet(T item1, T item2) => this[item1].Equals(this[item2]);
+
+    private static void validateDuplicates(T[][] setsArray)
+    {
+        T[] duplicates = setsArray.SelectMany(s => s)
+                                  .GroupBy(e => e)
+                                  .Where(group => group.Count() != 1)
+                                  .Select(group => group.Key)
+                                  .ToArray();
+
+        if(duplicates.Length > 0)
+            throw new ArgumentException(
+                $"Duplicate elements found: {string.Join(", ", duplicates)}");
+    }
 }

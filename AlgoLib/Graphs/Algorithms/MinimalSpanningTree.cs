@@ -20,7 +20,7 @@ public static class MinimalSpanningTree
     {
         var mst = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(
                         graph.Vertices.Select(v => v.Id).ToArray());
-        var vertexSets = new DisjointSets<Vertex<TVertexId>>(graph.Vertices);
+        var vertexSets = new DisjointSets<Vertex<TVertexId>>(graph.Vertices.Select(v => new Vertex<TVertexId>[] { v }));
         var edgeHeap = new Heap<Edge<TVertexId>>(
                 (edge1, edge2) => graph.Properties[edge1].Weight.CompareTo(graph.Properties[edge2].Weight));
 

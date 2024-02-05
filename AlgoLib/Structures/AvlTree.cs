@@ -32,7 +32,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     }
 
     public override string ToString() =>
-        $"{{|{string.Join(", ", this.Select(elem => elem.ToString()))}|}}";
+        $"{{|{string.Join(", ", this)}|}}";
 
     public bool Add(T item)
     {
