@@ -4,14 +4,17 @@ using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 // Tests: Structure of heap.
 [TestFixture]
 public class HeapTests
 {
     private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int minimum;
     private Heap<int> testObject;
+
+    public HeapTests() => minimum = numbers.Min();
 
     [SetUp]
     public void SetUp() => testObject = new Heap<int>(numbers);
@@ -19,10 +22,8 @@ public class HeapTests
     [Test]
     public void Count_WhenEmpty_ThenZero()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        int result = testObject.Count;
+        int result = new Heap<int>().Count;
         // then
         result.Should().Be(0);
     }
@@ -42,16 +43,17 @@ public class HeapTests
         // when
         testObject.Clear();
         // then
+        testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
     }
+
+    #region GetEnumerator
 
     [Test]
     public void GetEnumerator_WhenEmpty_ThenNoElements()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new Heap<int>().GetEnumerator();
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -60,11 +62,9 @@ public class HeapTests
     public void GetEnumerator_WhenSingleElement_ThenThisElementOnly()
     {
         // given
-        int element = 17;
-
-        testObject = new Heap<int>(new[] { element });
+        int element = numbers[0];
         // when
-        IEnumerator<int> result = testObject.GetEnumerator();
+        IEnumerator<int> result = new Heap<int>(new[] { element }).GetEnumerator();
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -72,27 +72,74 @@ public class HeapTests
     }
 
     [Test]
-    public void GetEnumerator_WhenMultipleElements_ThenFirstMinimumAndLastMaximum()
+    public void GetEnumerator_WhenMultipleElements_ThenAllElementsMinimumFirst()
     {
         // when
-        var result = new List<int>();
-        IEnumerator<int> enumerator = testObject.GetEnumerator();
-
-        while(enumerator.MoveNext())
-            result.Add(enumerator.Current);
+        var result = testObject.ToList();
         // then
-        result.Should().HaveElementAt(0, numbers.Min());
+        result.Should().BeEquivalentTo(numbers);
+        result.Should().HaveElementAt(0, minimum);
     }
 
+    #endregion
+    #region Push & PushRange
+
+    [Test]
+    public void Push_WhenEmpty_ThenAdded()
+    {
+        // given
+        int element = numbers[0];
+
+        testObject = new Heap<int>();
+        // when
+        testObject.Push(element);
+        // then
+        testObject.Should().HaveCount(1);
+        testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void Push_WhenNewElementLessThanMinimum_ThenNewMinimum()
+    {
+        // given
+        int element = minimum - 3;
+        // when
+        testObject.Push(element);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(element);
+    }
+
+    [Test]
+    public void Push_WhenNewElementGreaterThanMinimum_ThenAdded()
+    {
+        // when
+        testObject.Push(minimum + 3);
+        // then
+        testObject.Should().HaveCount(numbers.Length + 1);
+        testObject.Peek().Should().Be(minimum);
+    }
+
+    [Test]
+    public void PushRange_WhenNewElements_ThenAllAdded()
+    {
+        // given
+        int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 };
+        // when
+        testObject.PushRange(elements);
+        // then
+        testObject.Should().HaveCount(numbers.Length + elements.Length);
+        testObject.Peek().Should().Be(elements.Min());
+    }
+
+    #endregion
     #region Peek & TryPeek
 
     [Test]
     public void Peek_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        Action action = () => _ = testObject.Peek();
+        Action action = () => _ = new Heap<int>().Peek();
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -101,11 +148,9 @@ public class HeapTests
     public void Peek_WhenSingleElement_ThenThisElement()
     {
         // given
-        int element = 19;
-
-        testObject = new Heap<int>(new[] { element });
+        int element = numbers[0];
         // when
-        int result = testObject.Peek();
+        int result = new Heap<int>(new[] { element }).Peek();
         // then
         result.Should().Be(element);
     }
@@ -116,16 +161,14 @@ public class HeapTests
         // when
         int result = testObject.Peek();
         // then
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
     }
 
     [Test]
     public void TryPeek_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        bool result = testObject.TryPeek(out int resultValue);
+        bool result = new Heap<int>().TryPeek(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -138,58 +181,7 @@ public class HeapTests
         bool result = testObject.TryPeek(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
-    }
-
-    #endregion
-    #region Push & PushRange
-
-    [Test]
-    public void Push_WhenNewElement_ThenAdded()
-    {
-        // when
-        testObject.Push(46);
-        // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(numbers.Min());
-    }
-
-    [Test]
-    public void Push_WhenEmpty_ThenAdded()
-    {
-        // given
-        int element = 19;
-
-        testObject = new Heap<int>();
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Should().HaveCount(1);
-        testObject.Peek().Should().Be(element);
-    }
-
-    [Test]
-    public void Push_WhenNewElementIsLessThanMinimum_ThenNewMinimum()
-    {
-        // given
-        int element = numbers.Min() - 3;
-        // when
-        testObject.Push(element);
-        // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(element);
-    }
-
-    [Test]
-    public void PushRange_WhenNewElements_ThenAllAdded()
-    {
-        // given
-        int[] elements = new[] { 46, 111, 14, 29 };
-        // when
-        testObject.PushRange(elements);
-        // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(Math.Min(numbers.Min(), elements.Min()));
+        resultValue.Should().Be(minimum);
     }
 
     #endregion
@@ -198,10 +190,8 @@ public class HeapTests
     [Test]
     public void Pop_WhenEmpty_ThenInvalidOperationException()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        Action action = () => _ = testObject.Pop();
+        Action action = () => _ = new Heap<int>().Pop();
         // then then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -210,7 +200,7 @@ public class HeapTests
     public void Pop_WhenSingleElement_ThenThisElementRemoved()
     {
         // given
-        int element = 19;
+        int element = numbers[0];
 
         testObject = new Heap<int>(new[] { element });
         // when
@@ -226,20 +216,17 @@ public class HeapTests
         // when
         int result = testObject.Pop();
         // then
-        result.Should().Be(numbers.Min());
+        result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 
     [Test]
-    public void Pop_WhenMultipleCalls_ThenSortedAsComparer()
+    public void Pop_WhenMultipleCalls_ThenSortedAscendingToComparer()
     {
-        // given
-        testObject = new Heap<int>((n, m) => m.CompareTo(n));
-        Array.ForEach(numbers, e => testObject.Push(e));
         // when
         var result = new List<int>();
 
-        while(testObject.Count > 0)
+        while (testObject.Count > 0)
             result.Add(testObject.Pop());
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
@@ -249,10 +236,8 @@ public class HeapTests
     [Test]
     public void TryPop_WhenEmpty_ThenDefaultValue()
     {
-        // given
-        testObject = new Heap<int>();
         // when
-        bool result = testObject.TryPop(out int resultValue);
+        bool result = new Heap<int>().TryPop(out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -265,7 +250,7 @@ public class HeapTests
         bool result = testObject.TryPop(out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(numbers.Min());
+        resultValue.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
     }
 

@@ -14,7 +14,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public int Count { get; private set; }
 
-    public bool IsReadOnly => false;
+    bool ICollection<T>.IsReadOnly => false;
 
     private AvlInnerNode<T> Root
     {
@@ -32,7 +32,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     }
 
     public override string ToString() =>
-        $"{{|{string.Join(", ", this.Select(elem => elem.ToString()))}|}}";
+        $"{{|{string.Join(", ", this)}|}}";
 
     public bool Add(T item)
     {
@@ -73,7 +73,23 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     public bool Contains(T item) =>
         Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) != null;
 
-    public void CopyTo(T[] array, int arrayIndex) => throw new NotImplementedException();
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        if(array is null)
+            throw new ArgumentNullException(nameof(array));
+
+        if(arrayIndex < 0)
+            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+
+        if(array.Length - arrayIndex < Count)
+            throw new ArgumentException(
+                "Destination array is not long enough to copy all the items in the collection. Check array index and length.");
+
+        IEnumerator<T> enumerator = GetEnumerator();
+
+        for(int i = arrayIndex; enumerator.MoveNext(); ++i)
+            array[i] = enumerator.Current;
+    }
 
     public void ExceptWith(IEnumerable<T> other)
     {

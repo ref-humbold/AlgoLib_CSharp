@@ -2,26 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace AlgoLib.Structures;
+namespace AlgoLib.Structures.Heaps;
 
 /// <summary>Structure of double heap.</summary>
 /// <typeparam name="T">Type of heap elements.</typeparam>
-public class DoubleHeap<T> : IEnumerable<T>
+public class DoubleHeap<T> : IHeap<T>
 {
-    private static readonly int IndexMin = 0;
-    private static readonly int IndexMax = 1;
+    private const int IndexMin = 0;
+    private const int IndexMax = 1;
     private List<T> heap = new();
 
-    /// <summary>Gets the comparer of this double heap.</summary>
+    /// <summary>Gets the comparer of this heap.</summary>
     /// <value>The comparer.</value>
-    public IComparer<T> Comparer { get; }
+    public IComparer<T> Comparer { get; } = Comparer<T>.Default;
 
-    /// <summary>Gets the number of elements in this double heap.</summary>
+    /// <summary>Gets the number of elements in this heap.</summary>
     /// <value>The number of elements.</value>
     public int Count => heap.Count;
 
     public DoubleHeap()
-        : this(Comparer<T>.Default)
     {
     }
 
@@ -35,23 +34,25 @@ public class DoubleHeap<T> : IEnumerable<T>
 
     public DoubleHeap(IComparer<T> comparer) => Comparer = comparer;
 
-    /// <summary>Removes all elements from this double heap.</summary>
+    /// <summary>Removes all elements from this heap.</summary>
     public void Clear() => heap = new List<T>();
 
     public IEnumerator<T> GetEnumerator() => new HeapEnumerator(heap);
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    /// <summary>Retrieves minimal element from this double heap.</summary>
+    /// <summary>Retrieves minimal element from this heap.</summary>
     /// <returns>The minimal element.</returns>
-    /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
+    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T PeekMin() =>
         Count > 0
             ? heap[IndexMin]
-            : throw new InvalidOperationException("The double heap is empty");
+            : throw new InvalidOperationException("The heap is empty");
+
+    public T Peek() => PeekMin();
 
     /// <summary>
-    /// Retrieves minimal element from this double heap and copies it to the <c>result</c> parameter.
+    /// Retrieves minimal element from this heap and copies it to the <c>result</c> parameter.
     /// </summary>
     /// <param name="result">The minimal element if it's present, otherwise the default value.</param>
     /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
@@ -67,19 +68,21 @@ public class DoubleHeap<T> : IEnumerable<T>
         return true;
     }
 
-    /// <summary>Retrieves maximal element from this double heap.</summary>
+    public bool TryPeek(out T result) => TryPeekMin(out result);
+
+    /// <summary>Retrieves maximal element from this heap.</summary>
     /// <returns>The maximal element.</returns>
-    /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
+    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T PeekMax() =>
         Count switch
         {
-            0 => throw new InvalidOperationException("The double heap is empty"),
+            0 => throw new InvalidOperationException("The heap is empty"),
             1 => heap[IndexMin],
             _ => heap[IndexMax]
         };
 
     /// <summary>
-    /// Retrieves maximal element from this double heap and copies it to the <c>result</c> parameter.
+    /// Retrieves maximal element from this heap and copies it to the <c>result</c> parameter.
     /// </summary>
     /// <param name="result">The maximal element if it's present, otherwise the default value.</param>
     /// <returns><c>true</c> if the element exists, otherwise <c>false</c>.</returns>
@@ -101,7 +104,7 @@ public class DoubleHeap<T> : IEnumerable<T>
         }
     }
 
-    /// <summary>Adds new element to this double heap.</summary>
+    /// <summary>Adds new element to this heap.</summary>
     /// <param name="item">The new element.</param>
     public void Push(T item)
     {
@@ -136,7 +139,7 @@ public class DoubleHeap<T> : IEnumerable<T>
         }
     }
 
-    /// <summary>Adds new elements to this double heap.</summary>
+    /// <summary>Adds new elements to this heap.</summary>
     /// <param name="items">The new elements.</param>
     public void PushRange(IEnumerable<T> items)
     {
@@ -144,9 +147,9 @@ public class DoubleHeap<T> : IEnumerable<T>
             Push(item);
     }
 
-    /// <summary>Retrieves and removes minimal element from this double heap.</summary>
+    /// <summary>Retrieves and removes minimal element from this heap.</summary>
     /// <returns>The removed minimal element.</returns>
-    /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
+    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T PopMin()
     {
         T minimal = PeekMin();
@@ -157,9 +160,9 @@ public class DoubleHeap<T> : IEnumerable<T>
         return minimal;
     }
 
-    /// <summary>
-    /// Removes minimal element from this double heap and copies it to the <c>result</c> parameter.
-    /// </summary>
+    public T Pop() => PopMin();
+
+    /// <summary>Removes minimal element from this heap and copies it to the <c>result</c> parameter.</summary>
     /// <param name="result">
     /// The removed minimal element if it's present, otherwise the default value.
     /// </param>
@@ -178,9 +181,11 @@ public class DoubleHeap<T> : IEnumerable<T>
         return wasPresent;
     }
 
-    /// <summary>Retrieves and removes maximal element from this double heap.</summary>
+    public bool TryPop(out T result) => TryPopMin(out result);
+
+    /// <summary>Retrieves and removes maximal element from this heap.</summary>
     /// <returns>The removed maximal element.</returns>
-    /// <exception cref="InvalidOperationException">If the double heap is empty.</exception>
+    /// <exception cref="InvalidOperationException">If the heap is empty.</exception>
     public T PopMax()
     {
         if(Count == 1)
@@ -194,9 +199,7 @@ public class DoubleHeap<T> : IEnumerable<T>
         return maximal;
     }
 
-    /// <summary>
-    /// Removes maximal element from this double heap and copies it to the <c>result</c> parameter.
-    /// </summary>
+    /// <summary>Removes maximal element from this heap and copies it to the <c>result</c> parameter.</summary>
     /// <param name="result">
     /// The removed maximal element if it's present, otherwise the default value.
     /// </param>
@@ -204,7 +207,7 @@ public class DoubleHeap<T> : IEnumerable<T>
     public bool TryPopMax(out T result)
     {
         if(Count == 1)
-            return TryPeekMin(out result);
+            return TryPopMin(out result);
 
         bool wasPresent = TryPeekMax(out result);
 
@@ -293,7 +296,7 @@ public class DoubleHeap<T> : IEnumerable<T>
         }
     }
 
-    // Swaps two elements in the double heap.
+    // Swaps two elements in the heap.
     private void swap(int index1, int index2) =>
         (heap[index2], heap[index1]) = (heap[index1], heap[index2]);
 

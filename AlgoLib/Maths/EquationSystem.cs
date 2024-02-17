@@ -34,7 +34,7 @@ public class EquationSystem
     public IEnumerable<Equation> this[Range r] => equations[r];
 
     public override string ToString() =>
-        $"{{ {string.Join(" ; ", equations.Select(eq => eq.ToString()))} }}";
+        $"{{ {string.Join(" ; ", (IEnumerable<Equation>)equations)} }}";
 
     /// <summary>Computes solution of this equation system.</summary>
     /// <returns>The solution.</returns>

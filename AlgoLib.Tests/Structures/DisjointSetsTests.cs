@@ -10,99 +10,210 @@ namespace AlgoLib.Structures;
 [TestFixture]
 public class DisjointSetsTests
 {
+    private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int[] absent = new[] { 111, 140, 187, 253 };
+    private readonly int[] present;
+
     private DisjointSets<int> testObject;
 
+    public DisjointSetsTests() => present = numbers.Where((_, i) => i % 3 == 2).ToArray();
+
     [SetUp]
-    public void SetUp() => testObject = new DisjointSets<int>(Enumerable.Range(0, 10));
+    public void SetUp() => testObject = new DisjointSets<int>(numbers.Select(n => new int[] { n }));
 
     [Test]
-    public void Count_WhenElements_ThenSetsCount()
+    public void Constructor_WhenDuplicatesInDifferentSets_ThenArgumentException()
+    {
+        // when
+        Action action = () => _ = new DisjointSets<int>(
+            new int[][] { new int[] { 1, 2, 3 }, new int[] { 1, 11, 21, 31 } });
+        // then
+        action.Should().Throw<ArgumentException>();
+    }
+
+    [Test]
+    public void Constructor_WhenDuplicatesInSameSet_ThenConstructed()
+    {
+        // given
+        int[][] sets = new int[][] { new int[] { 1, 2, 3 }, new int[] { 10, 100, 10 } };
+        // when
+        testObject = new DisjointSets<int>(sets);
+        // then
+        testObject.Count.Should().Be(sets.Length);
+    }
+
+    [Test]
+    public void Count_WhenEmpty_ThenZero()
+    {
+        // when
+        int result = new DisjointSets<int>().Count;
+        // then
+        result.Should().Be(0);
+    }
+
+    [Test]
+    public void Count_WhenElements_ThenNumberOfSets()
     {
         // when
         int result = testObject.Count;
         // then
-        result.Should().Be(10);
+        result.Should().Be(numbers.Length);
+    }
+
+    [Test]
+    public void Clear_WhenNotEmpty_ThenEmpty()
+    {
+        // when
+        testObject.Clear();
+        // then
+        testObject.Count.Should().Be(0);
+    }
+
+    #region Contains
+
+    [Test]
+    public void Contains_WhenEmpty_ThenFalse()
+    {
+        // when
+        bool result = new DisjointSets<int>().Contains(numbers[0]);
+        // then
+        result.Should().BeFalse();
     }
 
     [Test]
     public void Contains_WhenPresentElement_ThenTrue()
     {
         // when
-        bool result = testObject.Contains(4);
+        bool result = testObject.Contains(present[0]);
         // then
         result.Should().BeTrue();
     }
 
     [Test]
-    public void Contains_WhenPresentElement_ThenFalse()
+    public void Contains_WhenAbsentElement_ThenFalse()
     {
         // when
-        bool result = testObject.Contains(12);
+        bool result = testObject.Contains(absent[0]);
         // then
         result.Should().BeFalse();
     }
 
-    [Test]
-    public void Add_WhenNewElement_ThenAdded()
-    {
-        // given
-        int elem = 24;
-        // when
-        testObject.Add(24);
-        // then
-        testObject.Contains(elem).Should().BeTrue();
-        testObject[elem].Should().Be(elem);
-    }
+    #endregion
+    #region Add
 
     [Test]
-    public void Add_WhenPresentElement_ThenArgumentException()
-    {
-        // when
-        Action action = () => testObject.Add(6);
-        // then
-        action.Should().Throw<ArgumentException>();
-    }
-
-    [Test]
-    public void AddAll_WhenNewElements_ThenAllAdded()
+    public void Add_WhenEmpty_ThenNewSet()
     {
         // given
-        var elems = new List<int> { 20, 17, 35 };
+        testObject = new DisjointSets<int>();
         // when
-        testObject.AddRange(elems);
+        testObject.Add(numbers);
         // then
-        foreach(int e in elems)
+        foreach(int element in numbers)
         {
-            testObject.Contains(e).Should().BeTrue();
-            testObject[e].Should().Be(e);
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(numbers[0]);
         }
+
+        testObject.Count.Should().Be(1);
     }
 
     [Test]
-    public void AddAll_WhenPresentElements_ThenArgumentException()
+    public void Add_WhenNewElements_ThenNewSet()
     {
         // when
-        Action action = () => testObject.AddRange(new List<int> { 20, 7, 35 });
+        testObject.Add(absent);
+        // then
+        foreach(int element in absent)
+        {
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(absent[0]);
+        }
+
+        testObject.Count.Should().Be(numbers.Length + 1);
+    }
+
+    [Test]
+    public void Add_WhenPresentElements_ThenArgumentException()
+    {
+        // when
+        Action action = () => testObject.Add(present);
         // then
         action.Should().Throw<ArgumentException>();
+    }
+
+    [Test]
+    public void Add_WhenNewAndPresentElements_ThenArgumentException()
+    {
+        // when
+        Action action = () => testObject.Add(absent.Concat(present));
+        // then
+        action.Should().Throw<ArgumentException>();
+    }
+
+    [Test]
+    public void Add_WhenNewElementsToPresentRepresent_ThenAddedToExistingSet()
+    {
+        // given
+        int represent = present[0];
+        // when
+        testObject.Add(absent, represent);
+        // then
+        foreach(int element in absent)
+        {
+            testObject.Contains(element).Should().BeTrue();
+            testObject[element].Should().Be(testObject[represent]);
+        }
+
+        testObject.Count.Should().Be(numbers.Length);
+    }
+
+    [Test]
+    public void Add_WhenNewElementsToAbsentRepresent_ThenKeyNotFoundException()
+    {
+        // when
+        Action action = () => testObject.Add(absent, absent[0]);
+        // then
+        action.Should().Throw<KeyNotFoundException>();
+    }
+
+    [Test]
+    public void Add_WhenPresentElementsToAbsentRepresent_ThenArgumentException()
+    {
+        // when
+        Action action = () => testObject.Add(present, absent[0]);
+        // then
+        action.Should().Throw<ArgumentException>();
+    }
+
+    #endregion
+    #region Indexer & TryFindSet
+
+    [Test]
+    public void Indexer_WhenEmpty_ThenKeyNotFoundException()
+    {
+        // when
+        Action action = () => _ = new DisjointSets<int>()[numbers[0]];
+        // then
+        action.Should().Throw<KeyNotFoundException>();
     }
 
     [Test]
     public void Indexer_WhenPresentElement_ThenRepresent()
     {
         // given
-        int elem = 4;
+        int element = present[0];
         // when
-        int result = testObject[elem];
+        int result = testObject[element];
         // then
-        result.Should().Be(elem);
+        result.Should().Be(element);
     }
 
     [Test]
-    public void Indexer_WhenAbsentElement_Then()
+    public void Indexer_WhenAbsentElement_ThenKeyNotFoundException()
     {
         // when
-        Action action = () => _ = testObject[17];
+        Action action = () => _ = testObject[absent[0]];
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -111,85 +222,93 @@ public class DisjointSetsTests
     public void TryFindSet_WhenPresentElement_ThenRepresent()
     {
         // given
-        int elem = 4;
+        int element = present[0];
         // when
-        bool result = testObject.TryFindSet(elem, out int resultValue);
+        bool result = testObject.TryFindSet(element, out int resultValue);
         // then
         result.Should().BeTrue();
-        resultValue.Should().Be(elem);
+        resultValue.Should().Be(element);
     }
 
     [Test]
     public void TryFindSet_WhenAbsentElement_ThenDefaultValue()
     {
         // when
-        bool result = testObject.TryFindSet(22, out int resultValue);
+        bool result = testObject.TryFindSet(absent[0], out int resultValue);
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
     }
 
+    #endregion
+    #region UnionSet
+
     [Test]
     public void UnionSet_WhenDifferentSets_ThenSameRepresent()
     {
         // given
-        int elem1 = 4;
-        int elem2 = 6;
+        int element1 = present[0];
+        int element2 = present[1];
         // when
-        testObject.UnionSet(elem1, elem2);
+        testObject.UnionSet(element1, element2);
         // then
-        testObject.IsSameSet(elem1, elem2).Should().BeTrue();
-        testObject[elem2].Should().Be(testObject[elem1]);
+        testObject.IsSameSet(element1, element2).Should().BeTrue();
+        testObject[element2].Should().Be(testObject[element1]);
+        testObject.Count.Should().Be(numbers.Length - 1);
     }
 
     [Test]
     public void UnionSet_WhenSingleElement_ThenSameRepresent()
     {
         // given
-        int elem = 4;
+        int element = present[0];
         // when
-        testObject.UnionSet(elem, elem);
+        testObject.UnionSet(element, element);
         // then
-        testObject.IsSameSet(elem, elem).Should().BeTrue();
-        testObject[elem].Should().Be(testObject[elem]);
+        testObject.Count.Should().Be(numbers.Length);
     }
 
     [Test]
     public void UnionSet_WhenSameSet_ThenSameRepresent()
     {
         // given
-        int elem1 = 3;
-        int elem2 = 8;
-        testObject.UnionSet(elem1, elem2);
+        int element1 = present[0];
+        int element2 = present[1];
+
+        testObject.UnionSet(element1, element2);
         // when
-        testObject.UnionSet(elem2, elem1);
+        testObject.UnionSet(element2, element1);
         // then
-        testObject.IsSameSet(elem1, elem2).Should().BeTrue();
-        testObject[elem2].Should().Be(testObject[elem1]);
+        testObject.IsSameSet(element1, element2).Should().BeTrue();
+        testObject[element2].Should().Be(testObject[element1]);
+        testObject.Count.Should().Be(numbers.Length - 1);
     }
 
     [Test]
     public void UnionSet_WhenNewElementsInChain_ThenSameRepresent()
     {
         // given
-        var elems = new List<int> { 20, 17, 35 };
+        int first = present[0];
+        int last = present[^1];
+
         // when
-        testObject.AddRange(elems)
-                  .UnionSet(elems[0], elems[1])
-                  .UnionSet(elems[1], elems[2]);
+        for(int i = 1; i < present.Length; ++i)
+            testObject.UnionSet(present[i - 1], present[i]);
+
         // then
-        testObject.IsSameSet(elems[0], elems[2]).Should().BeTrue();
-        testObject[elems[2]].Should().Be(testObject[elems[0]]);
+        testObject.IsSameSet(first, last).Should().BeTrue();
+        testObject[last].Should().Be(testObject[first]);
+        testObject.Count.Should().Be(numbers.Length - present.Length + 1);
     }
+
+    #endregion
+    #region IsSameSet
 
     [Test]
     public void IsSameSet_WhenDifferentSets_ThenFalse()
     {
-        // given
-        int elem1 = 4;
-        int elem2 = 6;
         // when
-        bool result = testObject.IsSameSet(elem1, elem2);
+        bool result = testObject.IsSameSet(present[0], present[1]);
         // then
         result.Should().BeFalse();
     }
@@ -198,9 +317,9 @@ public class DisjointSetsTests
     public void IsSameSet_WhenSingleElement_ThenTrue()
     {
         // given
-        int elem = 4;
+        int element = present[0];
         // when
-        bool result = testObject.IsSameSet(elem, elem);
+        bool result = testObject.IsSameSet(element, element);
         // then
         result.Should().BeTrue();
     }
@@ -209,12 +328,15 @@ public class DisjointSetsTests
     public void IsSameSet_WhenSameSet_ThenTrue()
     {
         // given
-        int elem1 = 3;
-        int elem2 = 8;
-        testObject.UnionSet(elem1, elem2);
+        int element1 = present[0];
+        int element2 = present[1];
+
+        testObject.UnionSet(element1, element2);
         // when
-        bool result = testObject.IsSameSet(elem2, elem1);
+        bool result = testObject.IsSameSet(element2, element1);
         // then
         result.Should().BeTrue();
     }
+
+    #endregion
 }
