@@ -72,7 +72,9 @@ public class DisjointSets<T>
         foreach(T item in itemsArray)
             represents[item] = itemsArray[0];
 
-        ++Count;
+        if(itemsArray.Length > 0)
+            ++Count;
+
         return this;
     }
 
