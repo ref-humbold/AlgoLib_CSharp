@@ -285,7 +285,7 @@ public class DisjointSetsTests
     }
 
     [Test]
-    public void UnionSet_WhenSingleElement_ThenSameRepresent()
+    public void UnionSet_WhenSingleElement_ThenNoChanges()
     {
         // given
         int element = present[0];
@@ -297,24 +297,23 @@ public class DisjointSetsTests
     }
 
     [Test]
-    public void UnionSet_WhenSameSet_ThenSameRepresent()
+    public void UnionSet_WhenSameSet_ThenNoChanges()
     {
         // given
-        int element1 = present[0];
-        int element2 = present[1];
+        int element1 = numbers[1];
+        int element2 = numbers[2];
 
-        testObject.UnionSet(element1, element2);
+        testObject = new DisjointSets<int>(new[] { absent, numbers });
         // when
-        DisjointSets<int> result = testObject.UnionSet(element2, element1);
+        DisjointSets<int> result = testObject.UnionSet(element1, element2);
         // then
         result.Should().BeSameAs(testObject);
         testObject.IsSameSet(element1, element2).Should().BeTrue();
-        testObject[element2].Should().Be(testObject[element1]);
-        testObject.Count.Should().Be(numbers.Length - 1);
+        testObject.Count.Should().Be(2);
     }
 
     [Test]
-    public void UnionSet_WhenNewElementsInChain_ThenSameRepresent()
+    public void UnionSet_WhenDifferentSetsInChain_ThenSameRepresent()
     {
         // given
         int first = present[0];

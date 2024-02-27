@@ -143,7 +143,7 @@ public class DisjointSets<T>
     {
         T[] duplicates = setsArray.SelectMany(s => s)
                                   .GroupBy(e => e)
-                                  .Where(group => group.Count() != 1)
+                                  .Where(group => group.Count() > 1)
                                   .Select(group => group.Key)
                                   .ToArray();
 
