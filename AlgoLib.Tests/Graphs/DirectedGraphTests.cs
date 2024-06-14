@@ -24,12 +24,14 @@ public class DirectedGraphTests
         string edgeProperty = "y";
         Vertex<int> vertex = testObject[2];
         Edge<int> edge = testObject.AddEdgeBetween(testObject[0], testObject[1]);
+
         // when
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
 
         string resultVertex = testObject.Properties[vertex];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().Be(vertexProperty);
         resultEdge.Should().Be(edgeProperty);
@@ -40,9 +42,11 @@ public class DirectedGraphTests
     {
         // given
         Edge<int> edge = testObject.AddEdgeBetween(testObject[6], testObject[7]);
+
         // when
         string resultVertex = testObject.Properties[testObject[4]];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().Be(default);
         resultEdge.Should().Be(default);
@@ -53,6 +57,7 @@ public class DirectedGraphTests
     {
         // when
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -62,6 +67,7 @@ public class DirectedGraphTests
     {
         // when
         int result = testObject.VerticesCount;
+
         // then
         result.Should().Be(10);
     }
@@ -71,6 +77,7 @@ public class DirectedGraphTests
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.Vertices;
+
         // then
         result.Should().BeEquivalentTo(
             new Vertex<int>[] { new(0), new(1), new(2),
@@ -90,8 +97,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[6], testObject[3]);
         testObject.AddEdgeBetween(testObject[3], testObject[6]);
         testObject.AddEdgeBetween(testObject[9], testObject[3]);
+
         // when
         long result = testObject.EdgesCount;
+
         // then
         result.Should().Be(7);
     }
@@ -107,8 +116,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[6], testObject[3]);
         testObject.AddEdgeBetween(testObject[3], testObject[6]);
         testObject.AddEdgeBetween(testObject[9], testObject[3]);
+
         // when
         IEnumerable<Edge<int>> result = testObject.Edges;
+
         // then
         result.Should().BeEquivalentTo(
             new Edge<int>[] { new(new Vertex<int>(1), new Vertex<int>(5)),
@@ -125,8 +136,10 @@ public class DirectedGraphTests
     {
         // given
         int vertexId = 4;
+
         // when
         Vertex<int> result = testObject[vertexId];
+
         // then
         result.Id.Should().Be(vertexId);
     }
@@ -136,6 +149,7 @@ public class DirectedGraphTests
     {
         // when
         Action action = () => _ = testObject[12];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -148,8 +162,10 @@ public class DirectedGraphTests
         Vertex<int> destination = testObject[5];
 
         testObject.AddEdgeBetween(source, destination);
+
         // when
         Edge<int> result = testObject[source, destination];
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -163,8 +179,10 @@ public class DirectedGraphTests
         Vertex<int> destination = testObject[5];
 
         testObject.AddEdgeBetween(source, destination);
+
         // when
         Action action = () => _ = testObject[destination, source];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -174,6 +192,7 @@ public class DirectedGraphTests
     {
         // when
         Action action = () => _ = testObject[1, 2];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -184,8 +203,10 @@ public class DirectedGraphTests
         // given
         int newVertexId = 13;
         string property = "qwerty";
+
         // when
         Vertex<int> result = testObject.AddVertex(newVertexId, property);
+
         // then
         result.Id.Should().Be(newVertexId);
         testObject.VerticesCount.Should().Be(11);
@@ -201,8 +222,10 @@ public class DirectedGraphTests
         string property = "qwerty";
 
         testObject.Properties[vertex] = property;
+
         // when
         Action action = () => testObject.AddVertex(vertex.Id, "abcdefg");
+
         // then
         action.Should().Throw<ArgumentException>();
         testObject.VerticesCount.Should().Be(10);
@@ -214,9 +237,11 @@ public class DirectedGraphTests
     {
         // given
         string property = "asdfgh";
+
         // when
         Edge<int> result = testObject.AddEdgeBetween(testObject[1], testObject[5], property);
         testObject.AddEdgeBetween(testObject[1], testObject[1]);
+
         // then
         result.Source.Should().Be(new Vertex<int>(1));
         result.Destination.Should().Be(new Vertex<int>(5));
@@ -233,8 +258,10 @@ public class DirectedGraphTests
         Vertex<int> source = testObject[3];
         Vertex<int> destination = testObject[7];
         Edge<int> expected = testObject.AddEdgeBetween(source, destination);
+
         // when
         Action action = () => testObject.AddEdgeBetween(source, destination);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -250,8 +277,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new Vertex<int>(1), new Vertex<int>(3), new Vertex<int>(4),
@@ -269,8 +298,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -293,8 +324,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         long result = testObject.GetOutputDegree(testObject[1]);
+
         // then
         result.Should().Be(5);
     }
@@ -310,8 +343,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[9], testObject[1]);
         testObject.AddEdgeBetween(testObject[1], testObject[2]);
         testObject.AddEdgeBetween(testObject[1], testObject[6]);
+
         // when
         long result = testObject.GetInputDegree(testObject[1]);
+
         // then
         result.Should().Be(5);
     }
@@ -335,8 +370,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[9], testObject[6]);
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
+
         // when
         testObject.Reverse();
+
         // then
         testObject.Edges.Should().BeEquivalentTo(
             new[] {
@@ -376,8 +413,10 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[9], testObject[6]);
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
+
         // when
         IDirectedGraph<int, string, string> result = testObject.ReversedCopy();
+
         // then
         result.Vertices.Should().BeEquivalentTo(testObject.Vertices);
         result.Edges.Should().BeEquivalentTo(

@@ -29,8 +29,10 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[1]);
         graph.AddEdgeBetween(graph[5], graph[2]);
         graph.AddEdgeBetween(graph[5], graph[4]);
+
         // when
         IEnumerable<Vertex<int>> result = TopologicalSorting.InputsTopologicalSort(graph);
+
         // then
         result.Should().ContainInOrder(graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]);
     }
@@ -53,8 +55,10 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[1]);
         graph.AddEdgeBetween(graph[5], graph[2]);
         graph.AddEdgeBetween(graph[5], graph[4]);
+
         // when
         Action action = () => TopologicalSorting.InputsTopologicalSort(graph);
+
         // then
         action.Should().Throw<DirectedCyclicGraphException>();
     }
@@ -65,8 +69,10 @@ public class TopologicalSortingTests
         // given
         IDirectedGraph<int, object, object> graph =
             new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
+
         // when
         IEnumerable<Vertex<int>> result = graph.InputsTopologicalSort();
+
         // then
         result.Should().Equal(graph.Vertices);
     }
@@ -98,8 +104,10 @@ public class TopologicalSortingTests
             new Vertex<int>[] { graph[3], graph[5], graph[1], graph[0], graph[4], graph[2] },
             new Vertex<int>[] { graph[5], graph[3], graph[1], graph[0], graph[4], graph[2] }
         };
+
         // when
         IEnumerable<Vertex<int>> result = TopologicalSorting.DfsTopologicalSort(graph);
+
         // then
         expecteds.Should().ContainEquivalentOf(result.ToArray());
     }
@@ -122,8 +130,10 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[1]);
         graph.AddEdgeBetween(graph[5], graph[2]);
         graph.AddEdgeBetween(graph[5], graph[4]);
+
         // when
         Action action = () => TopologicalSorting.DfsTopologicalSort(graph);
+
         // then
         action.Should().Throw<DirectedCyclicGraphException>();
     }
@@ -134,8 +144,10 @@ public class TopologicalSortingTests
         // given
         IDirectedGraph<int, object, object> graph =
             new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
+
         // when
         IEnumerable<Vertex<int>> result = graph.DfsTopologicalSort();
+
         // then
         result.Should().Equal(graph.Vertices);
     }

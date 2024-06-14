@@ -24,6 +24,7 @@ public class HeapTests
     {
         // when
         int result = new Heap<int>().Count;
+
         // then
         result.Should().Be(0);
     }
@@ -33,6 +34,7 @@ public class HeapTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(numbers.Length);
     }
@@ -42,6 +44,7 @@ public class HeapTests
     {
         // when
         testObject.Clear();
+
         // then
         testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
@@ -54,6 +57,7 @@ public class HeapTests
     {
         // when
         IEnumerator<int> result = new Heap<int>().GetEnumerator();
+
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -63,8 +67,10 @@ public class HeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         IEnumerator<int> result = new Heap<int>(new[] { element }).GetEnumerator();
+
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -76,6 +82,7 @@ public class HeapTests
     {
         // when
         var result = testObject.ToList();
+
         // then
         result.Should().BeEquivalentTo(numbers);
         result.Should().HaveElementAt(0, minimum);
@@ -91,8 +98,10 @@ public class HeapTests
         int element = numbers[0];
 
         testObject = new Heap<int>();
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(1);
         testObject.Peek().Should().Be(element);
@@ -103,8 +112,10 @@ public class HeapTests
     {
         // given
         int element = minimum - 3;
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(element);
@@ -115,6 +126,7 @@ public class HeapTests
     {
         // when
         testObject.Push(minimum + 3);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(minimum);
@@ -125,8 +137,10 @@ public class HeapTests
     {
         // given
         int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 };
+
         // when
         testObject.PushRange(elements);
+
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
         testObject.Peek().Should().Be(elements.Min());
@@ -140,6 +154,7 @@ public class HeapTests
     {
         // when
         Action action = () => _ = new Heap<int>().Peek();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -149,8 +164,10 @@ public class HeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         int result = new Heap<int>(new[] { element }).Peek();
+
         // then
         result.Should().Be(element);
     }
@@ -160,6 +177,7 @@ public class HeapTests
     {
         // when
         int result = testObject.Peek();
+
         // then
         result.Should().Be(minimum);
     }
@@ -169,6 +187,7 @@ public class HeapTests
     {
         // when
         bool result = new Heap<int>().TryPeek(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -179,6 +198,7 @@ public class HeapTests
     {
         // when
         bool result = testObject.TryPeek(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -192,6 +212,7 @@ public class HeapTests
     {
         // when
         Action action = () => _ = new Heap<int>().Pop();
+
         // then then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -203,8 +224,10 @@ public class HeapTests
         int element = numbers[0];
 
         testObject = new Heap<int>(new[] { element });
+
         // when
         int result = testObject.Pop();
+
         // then
         result.Should().Be(element);
         testObject.Should().BeEmpty();
@@ -215,6 +238,7 @@ public class HeapTests
     {
         // when
         int result = testObject.Pop();
+
         // then
         result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
@@ -228,6 +252,7 @@ public class HeapTests
 
         while (testObject.Count > 0)
             result.Add(testObject.Pop());
+
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
         result.Should().BeInAscendingOrder(testObject.Comparer);
@@ -238,6 +263,7 @@ public class HeapTests
     {
         // when
         bool result = new Heap<int>().TryPop(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -248,6 +274,7 @@ public class HeapTests
     {
         // when
         bool result = testObject.TryPop(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);

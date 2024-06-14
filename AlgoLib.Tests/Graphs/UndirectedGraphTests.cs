@@ -24,12 +24,14 @@ public class UndirectedGraphTests
         string edgeProperty = "y";
         Vertex<int> vertex = testObject[2];
         Edge<int> edge = testObject.AddEdgeBetween(testObject[0], testObject[1]);
+
         // when
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
 
         string resultVertex = testObject.Properties[vertex];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().Be(vertexProperty);
         resultEdge.Should().Be(edgeProperty);
@@ -40,9 +42,11 @@ public class UndirectedGraphTests
     {
         // given
         Edge<int> edge = testObject.AddEdgeBetween(testObject[6], testObject[7]);
+
         // when
         string resultVertex = testObject.Properties[testObject[4]];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().BeNull();
         resultEdge.Should().BeNull();
@@ -53,6 +57,7 @@ public class UndirectedGraphTests
     {
         // when
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -62,6 +67,7 @@ public class UndirectedGraphTests
     {
         // when
         long result = testObject.VerticesCount;
+
         // then
         result.Should().Be(10);
     }
@@ -71,6 +77,7 @@ public class UndirectedGraphTests
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.Vertices;
+
         // then
         result.Should().BeEquivalentTo(Enumerable.Range(0, 10).Select(i => new Vertex<int>(i)));
     }
@@ -85,8 +92,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[8], testObject[0]);
         testObject.AddEdgeBetween(testObject[6], testObject[3]);
         testObject.AddEdgeBetween(testObject[9], testObject[3]);
+
         // when
         long result = testObject.EdgesCount;
+
         // then
         result.Should().Be(6);
     }
@@ -101,8 +110,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[8], testObject[0]);
         testObject.AddEdgeBetween(testObject[6], testObject[3]);
         testObject.AddEdgeBetween(testObject[9], testObject[3]);
+
         // when
         IEnumerable<Edge<int>> result = testObject.Edges;
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new Edge<int>(new Vertex<int>(7), new Vertex<int>(7)),
@@ -118,8 +129,10 @@ public class UndirectedGraphTests
     {
         // given
         int vertexId = 4;
+
         // when
         Vertex<int> result = testObject[vertexId];
+
         // then
         result.Id.Should().Be(vertexId);
     }
@@ -129,6 +142,7 @@ public class UndirectedGraphTests
     {
         // when
         Action action = () => _ = testObject[12];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -141,8 +155,10 @@ public class UndirectedGraphTests
         Vertex<int> destination = testObject[5];
 
         testObject.AddEdgeBetween(source, destination);
+
         // when
         Edge<int> result = testObject[source, destination];
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -156,8 +172,10 @@ public class UndirectedGraphTests
         Vertex<int> destination = testObject[5];
 
         testObject.AddEdgeBetween(source, destination);
+
         // when
         Edge<int> result = testObject[destination, source];
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -168,6 +186,7 @@ public class UndirectedGraphTests
     {
         // when
         Action action = () => _ = testObject[1, 2];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -178,8 +197,10 @@ public class UndirectedGraphTests
         // given
         int newVertexId = 13;
         string property = "qwerty";
+
         // when
         Vertex<int> result = testObject.AddVertex(newVertexId, property);
+
         // then
         result.Id.Should().Be(newVertexId);
         testObject.VerticesCount.Should().Be(11);
@@ -195,8 +216,10 @@ public class UndirectedGraphTests
         string property = "qwerty";
 
         testObject.Properties[vertex] = property;
+
         // when
         Action action = () => testObject.AddVertex(vertex, "abcdefg");
+
         // then
         action.Should().Throw<ArgumentException>();
         testObject.VerticesCount.Should().Be(10);
@@ -208,9 +231,11 @@ public class UndirectedGraphTests
     {
         // given
         string property = "asdfgh";
+
         // when
         Edge<int> result = testObject.AddEdgeBetween(testObject[1], testObject[5], property);
         testObject.AddEdgeBetween(testObject[1], testObject[1]);
+
         // then
         result.Source.Should().Be(new Vertex<int>(1));
         result.Destination.Should().Be(new Vertex<int>(5));
@@ -228,8 +253,10 @@ public class UndirectedGraphTests
         Vertex<int> source = testObject[3];
         Vertex<int> destination = testObject[7];
         Edge<int> expected = testObject.AddEdgeBetween(source, destination);
+
         // when
         Action action = () => testObject.AddEdgeBetween(source, destination);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -241,8 +268,10 @@ public class UndirectedGraphTests
         Vertex<int> source = testObject[3];
         Vertex<int> destination = testObject[7];
         Edge<int> expected = testObject.AddEdgeBetween(source, destination);
+
         // when
         Action action = () => testObject.AddEdgeBetween(destination, source);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -258,8 +287,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -280,8 +311,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -306,8 +339,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[9]);
         testObject.AddEdgeBetween(testObject[2], testObject[1]);
         testObject.AddEdgeBetween(testObject[6], testObject[1]);
+
         // when
         long result = testObject.GetOutputDegree(testObject[1]);
+
         // then
         result.Should().Be(7);
     }
@@ -323,8 +358,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[9], testObject[1]);
         testObject.AddEdgeBetween(testObject[1], testObject[2]);
         testObject.AddEdgeBetween(testObject[1], testObject[6]);
+
         // when
         long result = testObject.GetInputDegree(testObject[1]);
+
         // then
         result.Should().Be(7);
     }
@@ -344,8 +381,10 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[9], testObject[3]);
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
+
         // when
         IDirectedGraph<int, string, string> result = testObject.AsDirected();
+
         // then
         result.Vertices.Should().BeEquivalentTo(testObject.Vertices);
         result.Edges.Should().BeEquivalentTo(

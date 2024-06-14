@@ -15,6 +15,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Gcd(161, 46);
+
         // then
         result.Should().Be(23);
     }
@@ -24,6 +25,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Gcd(127L, 41L);
+
         // then
         result.Should().Be(1L);
     }
@@ -33,6 +35,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Gcd(119, 57);
+
         // then
         result.Should().Be(1);
     }
@@ -42,8 +45,10 @@ public class IntegersTests
     {
         // given
         int number = 34;
+
         // when
         int result = Integers.Gcd(number, number * 6);
+
         // then
         result.Should().Be(number);
     }
@@ -53,8 +58,10 @@ public class IntegersTests
     {
         // given
         int number = 96;
+
         // when
         int result = Integers.Gcd(number, 0);
+
         // then
         result.Should().Be(number);
     }
@@ -67,6 +74,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Lcm(161, 46);
+
         // then
         result.Should().Be(322);
     }
@@ -76,6 +84,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Lcm(127L, 41L);
+
         // then
         result.Should().Be(5207L);
     }
@@ -85,6 +94,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Lcm(119, 57);
+
         // then
         result.Should().Be(6783);
     }
@@ -94,8 +104,10 @@ public class IntegersTests
     {
         // given
         int number = 34;
+
         // when
         int result = Integers.Lcm(number, number * 6);
+
         // then
         result.Should().Be(number * 6);
     }
@@ -105,6 +117,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Lcm(96, 0);
+
         // then
         result.Should().Be(0);
     }
@@ -117,6 +130,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(0, 14);
+
         // then
         result.Should().Be(0);
     }
@@ -126,6 +140,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(14, 0);
+
         // then
         result.Should().Be(0);
     }
@@ -135,6 +150,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(0, 0);
+
         // then
         result.Should().Be(0);
     }
@@ -144,6 +160,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Multiply(3, 10);
+
         // then
         result.Should().Be(30);
     }
@@ -153,6 +170,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(-3, 10);
+
         // then
         result.Should().Be(-30);
     }
@@ -162,6 +180,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(3, -10);
+
         // then
         result.Should().Be(-30);
     }
@@ -171,6 +190,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Multiply(-3L, -10L);
+
         // then
         result.Should().Be(30L);
     }
@@ -180,6 +200,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(547, 312, 10000);
+
         // then
         result.Should().Be(664);
     }
@@ -189,6 +210,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(-547, 312, 10000);
+
         // then
         result.Should().Be(9336);
     }
@@ -198,6 +220,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Multiply(547, -312, 10000);
+
         // then
         result.Should().Be(9336);
     }
@@ -207,6 +230,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Multiply(-547L, -312L, 10000L);
+
         // then
         result.Should().Be(664L);
     }
@@ -216,6 +240,7 @@ public class IntegersTests
     {
         // when
         Action action = () => _ = Integers.Multiply(547, 312, -10000);
+
         // then
         action.Should().Throw<ArithmeticException>();
     }
@@ -228,6 +253,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(0, 14);
+
         // then
         result.Should().Be(0);
     }
@@ -237,6 +263,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(14, 0);
+
         // then
         result.Should().Be(1);
     }
@@ -246,6 +273,7 @@ public class IntegersTests
     {
         // when
         Action action = () => _ = Integers.Power(0, 0);
+
         // then
         action.Should().Throw<NotFiniteNumberException>();
     }
@@ -255,6 +283,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(3, 10);
+
         // then
         result.Should().Be(59049);
     }
@@ -264,6 +293,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(-3, 10);
+
         // then
         result.Should().Be(59049);
     }
@@ -273,6 +303,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Power(-3L, 9L);
+
         // then
         result.Should().Be(-19683L);
     }
@@ -282,6 +313,7 @@ public class IntegersTests
     {
         // when
         Action action = () => _ = Integers.Power(3, -10);
+
         // then
         action.Should().Throw<ArithmeticException>();
     }
@@ -291,6 +323,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(5, 11, 10000);
+
         // then
         result.Should().Be(8125);
     }
@@ -300,6 +333,7 @@ public class IntegersTests
     {
         // when
         int result = Integers.Power(-5, 11, 10000);
+
         // then
         result.Should().Be(1875);
     }
@@ -309,6 +343,7 @@ public class IntegersTests
     {
         // when
         long result = Integers.Power(-5L, 12L, 10000L);
+
         // then
         result.Should().Be(625L);
     }
@@ -318,6 +353,7 @@ public class IntegersTests
     {
         // when
         Action action = () => _ = Integers.Power(5, 11, -10000);
+
         // then
         action.Should().Throw<ArithmeticException>();
     }

@@ -25,8 +25,10 @@ public class MatchingTests
 
         int[] matches = new[] { 5, 2, 1, 4, 3, 0, 7, 6 };
         var expected = Enumerable.Range(0, matches.Length).ToDictionary(i => graph[i], i => graph[matches[i]]);
+
         // when
         Dictionary<Vertex<int>, Vertex<int>> result = graph.Match();
+
         // then
         result.Should().ContainKeys(graph.Vertices);
         result.Should().Contain(expected);
@@ -37,8 +39,10 @@ public class MatchingTests
     {
         // given
         var graph = new MultipartiteGraph<int, object, object>(2, new[] { new[] { 0, 1, 2, 3, 4 } });
+
         // when
         Dictionary<Vertex<int>, Vertex<int>> result = graph.Match();
+
         // then
         result.Should().BeEmpty();
     }
@@ -49,8 +53,10 @@ public class MatchingTests
         // given
         var graph = new MultipartiteGraph<int, object, object>(
             2, new[] { new int[] { }, new[] { 0, 1, 2, 3, 4 } });
+
         // when
         Dictionary<Vertex<int>, Vertex<int>> result = graph.Match();
+
         // then
         result.Should().BeEmpty();
     }
@@ -61,8 +67,10 @@ public class MatchingTests
         // given
         var graph = new MultipartiteGraph<int, object, object>(
             3, new[] { new[] { 0 }, new[] { 1, 2 }, new[] { 3, 4 } });
+
         // when
         Action action = () => graph.Match();
+
         // then
         action.Should().Throw<ArgumentException>();
     }

@@ -20,8 +20,10 @@ public class TrieTests
     {
         // given
         testObject = new Trie();
+
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(0);
     }
@@ -31,6 +33,7 @@ public class TrieTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(texts.Count);
     }
@@ -40,8 +43,10 @@ public class TrieTests
     {
         // given
         string text = "abcd";
+
         // when
         testObject.Add(text);
+
         // then
         testObject.Contains(text).Should().BeTrue();
         testObject.Count.Should().Be(texts.Count);
@@ -52,8 +57,10 @@ public class TrieTests
     {
         // given
         string text = "abxx";
+
         // when
         testObject.Add(text);
+
         // then
         testObject.Contains(text).Should().BeTrue();
         testObject.Count.Should().Be(texts.Count + 1);
@@ -64,8 +71,10 @@ public class TrieTests
     {
         // given
         string text = "xy";
+
         // when
         testObject.Add(text);
+
         // then
         testObject.Contains(text).Should().BeTrue();
         testObject.Count.Should().Be(texts.Count + 1);
@@ -76,8 +85,10 @@ public class TrieTests
     {
         // given
         var textsToAdd = new List<string> { "abxx", "x", "abcdef", "xyz" };
+
         // when
         testObject.AddRange(textsToAdd);
+
         // then
         foreach(string text in textsToAdd)
             testObject.Contains(text).Should().BeTrue();
@@ -90,6 +101,7 @@ public class TrieTests
     {
         // when
         testObject.Clear();
+
         // then
         testObject.Count.Should().Be(0);
     }
@@ -99,6 +111,7 @@ public class TrieTests
     {
         // when
         bool result = testObject.Contains("abcd");
+
         // then
         result.Should().BeTrue();
     }
@@ -108,6 +121,7 @@ public class TrieTests
     {
         // when
         bool result = testObject.Contains("abxx");
+
         // then
         result.Should().BeFalse();
     }
@@ -117,6 +131,7 @@ public class TrieTests
     {
         // when
         bool result = testObject.Contains("xy");
+
         // then
         result.Should().BeFalse();
     }
@@ -126,8 +141,10 @@ public class TrieTests
     {
         // given
         string text = "abcd";
+
         // when
         testObject.Remove(text);
+
         // then
         testObject.Contains(text).Should().BeFalse();
         testObject.Count.Should().Be(texts.Count - 1);
@@ -138,8 +155,10 @@ public class TrieTests
     {
         // given
         string text = "abxx";
+
         // when
         testObject.Remove(text);
+
         // then
         testObject.Contains(text).Should().BeFalse();
         testObject.Count.Should().Be(texts.Count);
@@ -150,8 +169,10 @@ public class TrieTests
     {
         // given
         string text = "xy";
+
         // when
         testObject.Remove(text);
+
         // then
         testObject.Contains("xyz").Should().BeTrue();
         testObject.Contains(text).Should().BeFalse();
@@ -163,8 +184,10 @@ public class TrieTests
     {
         // given
         var textsToRemove = new List<string> { "abxx", "x", "abcdef", "xyz" };
+
         // when
         testObject.RemoveRange(textsToRemove);
+
         // then
         foreach(string text in textsToRemove)
             testObject.Contains(text).Should().BeFalse();

@@ -15,8 +15,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
+
         // when
         List<double> result = sequence.FindMaximumSubarray();
+
         // then
         result.Should().Equal(3.5, 4.8, -1.6, 7.7, 2.1);
     }
@@ -26,8 +28,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
+
         // when
         List<double> result = sequence.FindMaximumSubarray();
+
         // then
         result.Should().Equal(7.7, 2.1, 0.8, 4.0);
     }
@@ -37,8 +41,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
+
         // when
         List<double> result = sequence.FindMaximumSubarray();
+
         // then
         result.Should().BeEmpty();
     }
@@ -51,8 +57,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
+
         // when
         double result = sequence.CountMaximalSubsum();
+
         // then
         result.Should().BeApproximately(16.5, 1e-6);
     }
@@ -62,8 +70,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
+
         // when
         double result = sequence.CountMaximalSubsum();
+
         // then
         result.Should().BeApproximately(14.6, 1e-6);
     }
@@ -73,8 +83,10 @@ public class MaximumSubarrayTests
     {
         // given
         var sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
+
         // when
         double result = sequence.CountMaximalSubsum();
+
         // then
         result.Should().Be(0.0);
     }

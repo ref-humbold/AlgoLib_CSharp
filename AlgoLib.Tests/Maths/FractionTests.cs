@@ -15,6 +15,7 @@ public class FractionTests
     {
         // when
         var result = Fraction.Of(32, 104);
+
         // then
         result.Should().Be(Fraction.Of(4, 13));
     }
@@ -24,6 +25,7 @@ public class FractionTests
     {
         // when
         var result = Fraction.Of(29);
+
         // then
         result.Should().Be(Fraction.Of(29, 1));
     }
@@ -33,6 +35,7 @@ public class FractionTests
     {
         // when
         Action action = () => _ = Fraction.Of(1, 0);
+
         // then
         action.Should().Throw<ArithmeticException>();
     }
@@ -42,6 +45,7 @@ public class FractionTests
     {
         // when
         var result = Fraction.Of(-4, 11);
+
         // then
         result.As<IComparable<int>>().Should().BeLessThan(0);
     }
@@ -51,6 +55,7 @@ public class FractionTests
     {
         // when
         var result = Fraction.Of(4, -11);
+
         // then
         result.As<IComparable<int>>().Should().BeLessThan(0);
     }
@@ -60,6 +65,7 @@ public class FractionTests
     {
         // when
         var result = Fraction.Of(-4, -11);
+
         // then
         result.As<IComparable<int>>().Should().BeGreaterThan(0);
     }
@@ -72,6 +78,7 @@ public class FractionTests
     {
         // when
         double result = (double)Fraction.Of(-129, 20);
+
         // then
         result.Should().Be(-6.45);
     }
@@ -81,6 +88,7 @@ public class FractionTests
     {
         // when
         decimal result = (decimal)Fraction.Of(-129, 20);
+
         // then
         result.Should().Be(-6.45m);
     }
@@ -90,6 +98,7 @@ public class FractionTests
     {
         // when
         int result = (int)Fraction.Of(-129, 20);
+
         // then
         result.Should().Be(-6);
     }
@@ -99,6 +108,7 @@ public class FractionTests
     {
         // when
         Fraction result = 18;
+
         // then
         result.Should().Be(Fraction.Of(18));
     }
@@ -111,6 +121,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(9, 15) == Fraction.Of(3, 5);
+
         // then
         result.Should().BeTrue();
     }
@@ -120,9 +131,11 @@ public class FractionTests
     {
         // given
         int integer = 25;
+
         // when
         bool result1 = Fraction.Of(125, 5) == integer;
         bool result2 = integer == Fraction.Of(125, 5);
+
         // then
         result1.Should().BeTrue();
         result2.Should().BeTrue();
@@ -133,6 +146,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(9, 14) != Fraction.Of(3, 5);
+
         // then
         result.Should().BeTrue();
     }
@@ -142,6 +156,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(9, 14) < Fraction.Of(17, 14);
+
         // then
         result.Should().BeTrue();
     }
@@ -151,6 +166,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(-31, 6) < -4;
+
         // then
         result.Should().BeTrue();
     }
@@ -160,6 +176,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(9, 14) > Fraction.Of(9, 26);
+
         // then
         result.Should().BeTrue();
     }
@@ -169,6 +186,7 @@ public class FractionTests
     {
         // when
         bool result = Fraction.Of(11, 3) > 2L;
+
         // then
         result.Should().BeTrue();
     }
@@ -181,8 +199,10 @@ public class FractionTests
     {
         // given
         var fraction = Fraction.Of(23, 18);
+
         // when
         Fraction result = +fraction;
+
         // then
         result.Should().NotBeSameAs(fraction);
         result.Should().Be(Fraction.Of(23, 18));
@@ -193,6 +213,7 @@ public class FractionTests
     {
         // when
         Fraction result = -Fraction.Of(23, 18);
+
         // then
         result.Should().Be(Fraction.Of(-23, 18));
     }
@@ -202,6 +223,7 @@ public class FractionTests
     {
         // when
         Fraction result = ~Fraction.Of(23, 18);
+
         // then
         result.Should().Be(Fraction.Of(18, 23));
     }
@@ -211,6 +233,7 @@ public class FractionTests
     {
         // when
         Action action = () => _ = ~Fraction.Of(0);
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -223,6 +246,7 @@ public class FractionTests
     {
         // when
         Fraction result = Fraction.Of(1, 2) + Fraction.Of(5, 7);
+
         // then
         result.Should().Be(Fraction.Of(17, 14));
     }
@@ -232,6 +256,7 @@ public class FractionTests
     {
         // when
         Fraction result = Fraction.Of(1, 2) - Fraction.Of(3, 10);
+
         // then
         result.Should().Be(Fraction.Of(1, 5));
     }
@@ -241,6 +266,7 @@ public class FractionTests
     {
         // when
         Fraction result = Fraction.Of(3, 7) * Fraction.Of(5, 12);
+
         // then
         result.Should().Be(Fraction.Of(5, 28));
     }
@@ -250,6 +276,7 @@ public class FractionTests
     {
         // when
         Fraction result = Fraction.Of(9, 14) / Fraction.Of(2, 5);
+
         // then
         result.Should().Be(Fraction.Of(45, 28));
     }
@@ -259,6 +286,7 @@ public class FractionTests
     {
         // when
         Action action = () => _ = Fraction.Of(9, 14) / Fraction.Of(0);
+
         // then
         action.Should().Throw<DivideByZeroException>();
     }
@@ -271,6 +299,7 @@ public class FractionTests
     {
         // when
         int result = Fraction.Of(-35, 14).CompareTo(Fraction.Of(5, -2));
+
         // then
         result.Should().Be(0);
     }
@@ -280,6 +309,7 @@ public class FractionTests
     {
         // when
         int result = Fraction.Of(25, 7).CompareTo(Fraction.Of(3, 2));
+
         // then
         result.Should().BeGreaterThan(0);
     }
@@ -289,6 +319,7 @@ public class FractionTests
     {
         // when
         int result = Fraction.Of(-25, 7).CompareTo(-2);
+
         // then
         result.Should().BeLessThan(0);
     }
@@ -298,6 +329,7 @@ public class FractionTests
     {
         // when
         int result = Fraction.Of(25, 7).CompareTo(2L);
+
         // then
         result.Should().BeGreaterThan(0);
     }
@@ -309,6 +341,7 @@ public class FractionTests
     {
         // when
         string result = Fraction.Of(4, -19).ToString();
+
         // then
         result.Should().Be("-4/19");
     }

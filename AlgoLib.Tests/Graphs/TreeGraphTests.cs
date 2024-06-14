@@ -32,12 +32,14 @@ public class TreeGraphTests
         string edgeProperty = "y";
         Vertex<int> vertex = testObject[2];
         Edge<int> edge = testObject[6, 2];
+
         // when
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
 
         string resultVertex = testObject.Properties[vertex];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().Be(vertexProperty);
         resultEdge.Should().Be(edgeProperty);
@@ -48,6 +50,7 @@ public class TreeGraphTests
     {
         // when
         long result = testObject.VerticesCount;
+
         // then
         result.Should().Be(8);
     }
@@ -57,6 +60,7 @@ public class TreeGraphTests
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.Vertices;
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
@@ -68,6 +72,7 @@ public class TreeGraphTests
     {
         // when
         long result = testObject.EdgesCount;
+
         // then
         result.Should().Be(7);
     }
@@ -77,6 +82,7 @@ public class TreeGraphTests
     {
         // when
         IEnumerable<Edge<int>> result = testObject.Edges;
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -95,8 +101,10 @@ public class TreeGraphTests
     {
         // given
         int vertexId = 4;
+
         // when
         Vertex<int> result = testObject[vertexId];
+
         // then
         result.Id.Should().Be(vertexId);
     }
@@ -107,8 +115,10 @@ public class TreeGraphTests
         // given
         Vertex<int> source = testObject[5];
         Vertex<int> destination = testObject[1];
+
         // when
         Edge<int> result = testObject[source, destination];
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -119,6 +129,7 @@ public class TreeGraphTests
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) });
@@ -129,6 +140,7 @@ public class TreeGraphTests
     {
         // when
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -143,6 +155,7 @@ public class TreeGraphTests
     {
         // when
         long result = testObject.GetOutputDegree(testObject[1]);
+
         // then
         result.Should().Be(3);
     }
@@ -152,6 +165,7 @@ public class TreeGraphTests
     {
         // when
         long result = testObject.GetInputDegree(testObject[1]);
+
         // then
         result.Should().Be(3);
     }
@@ -164,8 +178,10 @@ public class TreeGraphTests
         Vertex<int> neighbour = testObject[5];
         string vertexProperty = "qwerty";
         string edgeProperty = "asdfgh";
+
         // when
         Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
+
         // then
         result.Source.Id.Should().Be(newVertexId);
         result.Destination.Should().Be(neighbour);
@@ -183,8 +199,10 @@ public class TreeGraphTests
         string property = "qwerty";
 
         testObject.Properties[vertex] = property;
+
         // when
         Action action = () => testObject.AddVertex(vertex, testObject[2], "abcdefg", "xyz");
+
         // then
         action.Should().Throw<ArgumentException>();
         testObject.VerticesCount.Should().Be(8);

@@ -12,8 +12,10 @@ public class TreeDiameterTests
     {
         // given
         var tree = new TreeGraph<int, object, Weighted>(0);
+
         // when
         double result = tree.CountDiameter();
+
         // then
         result.Should().Be(0);
     }
@@ -33,8 +35,10 @@ public class TreeDiameterTests
         tree.AddVertex(7, tree[4], null, weight);
         tree.AddVertex(8, tree[6], null, weight);
         tree.AddVertex(9, tree[6], null, weight);
+
         // when
         double result = tree.CountDiameter();
+
         // then
         result.Should().Be(6);
     }
@@ -49,8 +53,10 @@ public class TreeDiameterTests
         tree.AddVertex(3, tree[1], null, new Weighted(10));
         tree.AddVertex(4, tree[2], null, new Weighted(5));
         tree.AddVertex(5, tree[3], null, new Weighted(5));
+
         // when
         double result = tree.CountDiameter();
+
         // then
         result.Should().Be(1015);
     }

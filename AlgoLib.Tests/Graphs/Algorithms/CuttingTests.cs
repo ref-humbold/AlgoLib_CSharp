@@ -31,8 +31,10 @@ public class CuttingTests
         graph.AddEdgeBetween(graph[9], graph[10]);
         graph.AddEdgeBetween(graph[9], graph[11]);
         graph.AddEdgeBetween(graph[10], graph[11]);
+
         // when
         IEnumerable<Edge<int>> result = graph.FindEdgeCut();
+
         // then
         result.Should().BeEquivalentTo(
             new[] { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
@@ -51,8 +53,10 @@ public class CuttingTests
         graph.AddEdgeBetween(graph[1], graph[4]);
         graph.AddEdgeBetween(graph[3], graph[5]);
         graph.AddEdgeBetween(graph[4], graph[5]);
+
         // when
         IEnumerable<Edge<int>> result = graph.FindEdgeCut();
+
         // then
         result.Should().BeEmpty();
     }
@@ -79,8 +83,10 @@ public class CuttingTests
         graph.AddEdgeBetween(graph[9], graph[10]);
         graph.AddEdgeBetween(graph[9], graph[11]);
         graph.AddEdgeBetween(graph[10], graph[11]);
+
         // when
         IEnumerable<Vertex<int>> result = graph.FindVertexCut();
+
         // then
         result.Should().BeEquivalentTo(
             new[] { graph[0], graph[1], graph[5], graph[7] });
@@ -100,8 +106,10 @@ public class CuttingTests
         graph.AddEdgeBetween(graph[2], graph[3]);
         graph.AddEdgeBetween(graph[3], graph[5]);
         graph.AddEdgeBetween(graph[4], graph[5]);
+
         // when
         IEnumerable<Vertex<int>> result = graph.FindVertexCut();
+
         // then
         result.Should().BeEmpty();
     }

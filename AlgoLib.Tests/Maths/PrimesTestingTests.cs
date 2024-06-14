@@ -14,6 +14,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 0.TestPrimeFermat();
+
         // then
         result.Should().BeFalse();
     }
@@ -23,6 +24,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 1.TestPrimeFermat();
+
         // then
         result.Should().BeFalse();
     }
@@ -32,6 +34,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 2.TestPrimeFermat();
+
         // then
         result.Should().BeTrue();
     }
@@ -41,6 +44,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 1013.TestPrimeFermat();
+
         // then
         result.Should().BeTrue();
     }
@@ -50,6 +54,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 2131L.TestPrimeFermat();
+
         // then
         result.Should().BeTrue();
     }
@@ -59,6 +64,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 6199L.TestPrimeFermat();
+
         // then
         result.Should().BeTrue();
     }
@@ -107,6 +113,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 0.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }
@@ -116,6 +123,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 1.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }
@@ -125,6 +133,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 2.TestPrimeMiller();
+
         // then
         result.Should().BeTrue();
     }
@@ -134,6 +143,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 1013.TestPrimeMiller();
+
         // then
         result.Should().BeTrue();
     }
@@ -143,6 +153,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 2131L.TestPrimeMiller();
+
         // then
         result.Should().BeTrue();
     }
@@ -152,6 +163,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 6199L.TestPrimeMiller();
+
         // then
         result.Should().BeTrue();
     }
@@ -161,6 +173,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 1001.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }
@@ -170,6 +183,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 41041L.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }
@@ -179,6 +193,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 73627L.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }
@@ -188,6 +203,7 @@ public class PrimesTestingTests
     {
         // when
         bool result = 3481.TestPrimeMiller();
+
         // then
         result.Should().BeFalse();
     }

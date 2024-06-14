@@ -15,6 +15,7 @@ public class KnuthMorrisPrattTests
         // when
         IEnumerable<int> result =
             "abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek".KmpSearch("cdecdcde");
+
         // then
         result.Should().ContainInOrder(2, 14, 19, 30);
     }
@@ -24,6 +25,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = "abcde".KmpSearch("a");
+
         // then
         result.Should().ContainInOrder(0);
     }
@@ -33,6 +35,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = "abcdae".KmpSearch("a");
+
         // then
         result.Should().ContainInOrder(0, 4);
     }
@@ -42,6 +45,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = "aaaabcde".KmpSearch("aaa");
+
         // then
         result.Should().ContainInOrder(0, 1);
     }
@@ -51,6 +55,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = "abcde".KmpSearch("x");
+
         // then
         result.Should().BeEmpty();
     }
@@ -60,6 +65,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = "abcde".KmpSearch(string.Empty);
+
         // then
         result.Should().BeEmpty();
     }
@@ -69,6 +75,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         IEnumerable<int> result = string.Empty.KmpSearch("a");
+
         // then
         result.Should().BeEmpty();
     }
@@ -78,6 +85,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         Action action = () => KnuthMorrisPratt.KmpSearch(null, "a");
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }
@@ -87,6 +95,7 @@ public class KnuthMorrisPrattTests
     {
         // when
         Action action = () => "abcde".KmpSearch(null);
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }

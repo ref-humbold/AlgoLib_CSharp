@@ -24,6 +24,7 @@ public class PairingHeapTests
     {
         // when
         int result = new PairingHeap<int>().Count;
+
         // then
         result.Should().Be(0);
     }
@@ -33,6 +34,7 @@ public class PairingHeapTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(numbers.Length);
     }
@@ -42,6 +44,7 @@ public class PairingHeapTests
     {
         // when
         testObject.Clear();
+
         // then
         testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
@@ -54,6 +57,7 @@ public class PairingHeapTests
     {
         // when
         IEnumerator<int> result = new PairingHeap<int>().GetEnumerator();
+
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -63,8 +67,10 @@ public class PairingHeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         IEnumerator<int> result = new PairingHeap<int>(new[] { element }).GetEnumerator();
+
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -76,6 +82,7 @@ public class PairingHeapTests
     {
         // when
         var result = testObject.ToList();
+
         // then
         result.Should().BeEquivalentTo(numbers);
         result.Should().HaveElementAt(0, minimum);
@@ -91,8 +98,10 @@ public class PairingHeapTests
         int element = numbers[0];
 
         testObject = new PairingHeap<int>();
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(1);
         testObject.Peek().Should().Be(element);
@@ -103,8 +112,10 @@ public class PairingHeapTests
     {
         // given
         int element = minimum - 3;
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(element);
@@ -115,6 +126,7 @@ public class PairingHeapTests
     {
         // when
         testObject.Push(minimum + 3);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.Peek().Should().Be(minimum);
@@ -125,8 +137,10 @@ public class PairingHeapTests
     {
         // given
         int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 };
+
         // when
         testObject.PushRange(elements);
+
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
         testObject.Peek().Should().Be(elements.Min());
@@ -140,6 +154,7 @@ public class PairingHeapTests
     {
         // when
         Action action = () => _ = new PairingHeap<int>().Peek();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -149,8 +164,10 @@ public class PairingHeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         int result = new PairingHeap<int>(new[] { element }).Peek();
+
         // then
         result.Should().Be(element);
     }
@@ -160,6 +177,7 @@ public class PairingHeapTests
     {
         // when
         int result = testObject.Peek();
+
         // then
         result.Should().Be(minimum);
     }
@@ -169,6 +187,7 @@ public class PairingHeapTests
     {
         // when
         bool result = new PairingHeap<int>().TryPeek(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -179,6 +198,7 @@ public class PairingHeapTests
     {
         // when
         bool result = testObject.TryPeek(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -192,6 +212,7 @@ public class PairingHeapTests
     {
         // when
         Action action = () => _ = new PairingHeap<int>().Pop();
+
         // then then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -203,8 +224,10 @@ public class PairingHeapTests
         int element = numbers[0];
 
         testObject = new PairingHeap<int>(new[] { element });
+
         // when
         int result = testObject.Pop();
+
         // then
         result.Should().Be(element);
         testObject.Should().BeEmpty();
@@ -215,6 +238,7 @@ public class PairingHeapTests
     {
         // when
         int result = testObject.Pop();
+
         // then
         result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
@@ -228,6 +252,7 @@ public class PairingHeapTests
 
         while (testObject.Count > 0)
             result.Add(testObject.Pop());
+
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
         result.Should().BeInAscendingOrder(testObject.Comparer);
@@ -238,6 +263,7 @@ public class PairingHeapTests
     {
         // when
         bool result = new PairingHeap<int>().TryPop(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -248,6 +274,7 @@ public class PairingHeapTests
     {
         // when
         bool result = testObject.TryPop(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -262,6 +289,7 @@ public class PairingHeapTests
     {
         // when
         PairingHeap<int> result = new PairingHeap<int>() + testObject;
+
         // then
         result.Count.Should().Be(numbers.Length);
         result.Peek().Should().Be(testObject.Peek());
@@ -272,6 +300,7 @@ public class PairingHeapTests
     {
         // when
         PairingHeap<int> result = testObject + new PairingHeap<int>();
+
         // then
         result.Count.Should().Be(numbers.Length);
         result.Peek().Should().Be(testObject.Peek());
@@ -283,8 +312,10 @@ public class PairingHeapTests
         // given
         var other = new PairingHeap<int>(
             new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 });
+
         // when
         PairingHeap<int> result = testObject + other;
+
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
         result.Peek().Should().Be(other.Peek());
@@ -295,8 +326,10 @@ public class PairingHeapTests
     {
         // given
         var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
+
         // when
         PairingHeap<int> result = testObject + other;
+
         // then
         result.Count.Should().Be(numbers.Length + other.Count);
         result.Peek().Should().Be(testObject.Peek());
@@ -312,9 +345,11 @@ public class PairingHeapTests
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);
         var second = new PairingHeap<int>(secondElements);
+
         // when
         PairingHeap<int> result1 = testObject + first;
         PairingHeap<int> result2 = result1 + second;
+
         // then
         result1.Peek().Should().Be(firstElements.Min());
         result1.ToArray().Should().BeEquivalentTo(firstElements);
@@ -335,9 +370,11 @@ public class PairingHeapTests
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);
         var second = new PairingHeap<int>(secondElements);
+
         // when
         testObject += first;
         testObject += second;
+
         // then
         testObject.Peek().Should().Be(firstElements.Concat(secondElements).Min());
         testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());

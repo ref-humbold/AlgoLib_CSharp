@@ -31,12 +31,14 @@ public class MultipartiteGraphTest
         Edge<int> edge = testObject[0, 3];
         string vertexProperty = "x";
         string edgeProperty = "y";
+
         // when
         testObject.Properties[vertex] = vertexProperty;
         testObject.Properties[edge] = edgeProperty;
 
         string resultVertex = testObject.Properties[vertex];
         string resultEdge = testObject.Properties[edge];
+
         // then
         resultVertex.Should().Be(vertexProperty);
         resultEdge.Should().Be(edgeProperty);
@@ -47,6 +49,7 @@ public class MultipartiteGraphTest
     {
         // when
         int result = testObject.VerticesCount;
+
         // then
         result.Should().Be(10);
     }
@@ -56,6 +59,7 @@ public class MultipartiteGraphTest
     {
         // when
         int result = testObject.EdgesCount;
+
         // then
         result.Should().Be(5);
     }
@@ -65,6 +69,7 @@ public class MultipartiteGraphTest
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.Vertices;
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -80,6 +85,7 @@ public class MultipartiteGraphTest
     {
         // when
         IEnumerable<Edge<int>> result = testObject.Edges;
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -96,8 +102,10 @@ public class MultipartiteGraphTest
     {
         // given
         int vertexId = 5;
+
         // when
         Vertex<int> result = testObject[vertexId];
+
         // then
         result.Id.Should().Be(vertexId);
     }
@@ -108,8 +116,10 @@ public class MultipartiteGraphTest
         // given
         var source = new Vertex<int>(2);
         var destination = new Vertex<int>(9);
+
         // when
         Edge<int> result = testObject[source, destination];
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -120,6 +130,7 @@ public class MultipartiteGraphTest
     {
         // when
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(new Vertex<int>(9));
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
@@ -131,6 +142,7 @@ public class MultipartiteGraphTest
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(new Vertex<int>(9));
+
         // then
         result.Should().BeEquivalentTo(new[] { new Vertex<int>(2), new Vertex<int>(7) });
     }
@@ -140,6 +152,7 @@ public class MultipartiteGraphTest
     {
         // when
         int result = testObject.GetOutputDegree(new Vertex<int>(9));
+
         // then
         result.Should().Be(2);
     }
@@ -149,6 +162,7 @@ public class MultipartiteGraphTest
     {
         // when
         int result = testObject.GetInputDegree(new Vertex<int>(9));
+
         // then
         result.Should().Be(2);
     }
@@ -158,6 +172,7 @@ public class MultipartiteGraphTest
     {
         // when
         IEnumerable<Vertex<int>> result = testObject.GetVerticesFromGroup(2);
+
         // then
         result.Should().BeEquivalentTo(new[] { new Vertex<int>(5), new Vertex<int>(6),
                                                 new Vertex<int>(7), new Vertex<int>(8) });
@@ -169,6 +184,7 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.GetVerticesFromGroup(14);
 
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -179,8 +195,10 @@ public class MultipartiteGraphTest
         // given
         int newVertexId = 13;
         string property = "qwerty";
+
         // when
         Vertex<int> result = testObject.AddVertex(4, newVertexId, property);
+
         // then
         result.Id.Should().Be(newVertexId);
         testObject.VerticesCount.Should().Be(11);
@@ -196,8 +214,10 @@ public class MultipartiteGraphTest
         string property = "qwerty";
 
         testObject.Properties[vertex] = property;
+
         // when
         Action action = () => testObject.AddVertex(3, vertex, "xyz");
+
         // then
         action.Should().Throw<ArgumentException>();
         testObject.VerticesCount.Should().Be(10);
@@ -210,6 +230,7 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.AddVertex(-3, 19);
 
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -221,8 +242,10 @@ public class MultipartiteGraphTest
         var source = new Vertex<int>(2);
         var destination = new Vertex<int>(8);
         string property = "asdfgh";
+
         // when
         Edge<int> result = testObject.AddEdgeBetween(source, destination, property);
+
         // then
         result.Source.Should().Be(source);
         result.Destination.Should().Be(destination);
@@ -238,8 +261,10 @@ public class MultipartiteGraphTest
         var destination = new Vertex<int>(3);
 
         testObject.AddEdgeBetween(source, destination);
+
         // when
         Action action = () => testObject.AddEdgeBetween(source, destination);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -250,6 +275,7 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.AddEdgeBetween(new Vertex<int>(5), new Vertex<int>(8));
 
+
         // then
         action.Should().Throw<GraphPartitionException>();
     }
@@ -259,6 +285,7 @@ public class MultipartiteGraphTest
     {
         // when
         Action action = () => testObject.AddEdgeBetween(new Vertex<int>(15), new Vertex<int>(18));
+
 
         // then
         action.Should().Throw<ArgumentException>();

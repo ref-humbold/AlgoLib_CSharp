@@ -16,8 +16,10 @@ public class Geometry2DTests
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+
         // when
         List<Point2D> result = sequence.SortByX();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
@@ -34,8 +36,10 @@ public class Geometry2DTests
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
         };
+
         // when
         List<Point2D> result = sequence.SortByY();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
@@ -51,8 +55,10 @@ public class Geometry2DTests
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+
         // when
         List<Point2D> result = sequence.SortByAngle();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
@@ -65,6 +71,7 @@ public class Geometry2DTests
     {
         // when
         double result = Point2D.Of(4.0, 5.0).Distance(Point2D.Of(-2.0, -3.0));
+
         // then
         result.Should().Be(10.0);
     }
@@ -74,8 +81,10 @@ public class Geometry2DTests
     {
         // given
         var point = Point2D.Of(13.5, 6.5);
+
         // when
         double result = point.Distance(point);
+
         // then
         result.Should().Be(0.0);
     }
@@ -85,6 +94,7 @@ public class Geometry2DTests
     {
         // when
         Point2D result = Point2D.Of(13.7, 6.5).Translate(Vector2D.Of(-10.4, 3.3));
+
         // then
         result.Should().Be(Point2D.Of(3.3, 9.8));
     }
@@ -94,8 +104,10 @@ public class Geometry2DTests
     {
         // given
         var point = Point2D.Of(13.5, 6.5);
+
         // when
         Point2D result = point.Translate(Vector2D.Of(0.0, 0.0));
+
         // then
         result.Should().Be(point);
     }
@@ -105,6 +117,7 @@ public class Geometry2DTests
     {
         // when
         Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Of(2.0, -3.0));
+
         // then
         result.Should().Be(Point2D.Of(-9.5, -12.5));
     }
@@ -114,6 +127,7 @@ public class Geometry2DTests
     {
         // when
         Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Of(0.0, 0.0));
+
         // then
         result.Should().Be(Point2D.Of(-13.5, -6.5));
     }
@@ -123,8 +137,10 @@ public class Geometry2DTests
     {
         // given
         var point = Point2D.Of(13.5, 6.5);
+
         // when
         Point2D result = point.Reflect(point);
+
         // then
         result.Should().Be(point);
     }

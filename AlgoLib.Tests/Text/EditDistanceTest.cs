@@ -18,8 +18,10 @@ public class EditDistanceTest
         // given
         string source = "qwertyuiop";
         string destination = "wertzuiopsx";
+
         // when
         double result = source.CountLevenshtein(destination);
+
         // then
         result.Should().BeApproximately(4.0, Precision);
     }
@@ -29,8 +31,10 @@ public class EditDistanceTest
     {
         // given
         string text = "qwertyuiop";
+
         // when
         double result = text.CountLevenshtein(text);
+
         // then
         result.Should().Be(0.0);
     }
@@ -41,8 +45,10 @@ public class EditDistanceTest
         // given
         string text = "qwertyuiop";
         double insertionCost = 2.0;
+
         // when
         double result = string.Empty.CountLevenshtein(text, insertionCost, 1.0, 1.0);
+
         // then
         result.Should().BeApproximately(text.Length * insertionCost, Precision);
     }
@@ -53,8 +59,10 @@ public class EditDistanceTest
         // given
         string text = "qwertyuiop";
         double deletionCost = 2.0;
+
         // when
         double result = text.CountLevenshtein(string.Empty, 1.0, deletionCost, 1.0);
+
         // then
         result.Should().BeApproximately(text.Length * deletionCost, Precision);
     }
@@ -64,6 +72,7 @@ public class EditDistanceTest
     {
         // when
         Action action = () => "a".CountLevenshtein("b", 1.0, 1.0, -1.0);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -77,8 +86,10 @@ public class EditDistanceTest
         // given
         string source = "qwertyuiop";
         string destination = "wertzuiopsx";
+
         // when
         double result = source.CountLcs(destination);
+
         // then
         result.Should().BeApproximately(5.0, Precision);
     }
@@ -88,8 +99,10 @@ public class EditDistanceTest
     {
         // given
         string text = "qwertyuiop";
+
         // when
         double result = text.CountLcs(text);
+
         // then
         result.Should().Be(0.0);
     }
@@ -100,8 +113,10 @@ public class EditDistanceTest
         // given
         string text = "qwertyuiop";
         double insertionCost = 2.0;
+
         // when
         double result = string.Empty.CountLcs(text, insertionCost, 1.0);
+
         // then
         result.Should().BeApproximately(text.Length * insertionCost, Precision);
     }
@@ -112,8 +127,10 @@ public class EditDistanceTest
         // given
         string text = "qwertyuiop";
         double deletionCost = 2.0;
+
         // when
         double result = text.CountLcs(string.Empty, 1.0, deletionCost);
+
         // then
         result.Should().BeApproximately(text.Length * deletionCost, Precision);
     }
@@ -123,6 +140,7 @@ public class EditDistanceTest
     {
         // when
         Action action = () => "a".CountLcs("b", 1.0, -1.0);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -137,8 +155,10 @@ public class EditDistanceTest
         string source = "qwertyuiop";
         string destination = "qvertzuimp";
         double substitutionCost = 2.0;
+
         // when
         double result = source.CountHamming(destination, substitutionCost);
+
         // then
         result.Should().BeApproximately(3 * substitutionCost, Precision);
     }
@@ -148,8 +168,10 @@ public class EditDistanceTest
     {
         // given
         string text = "qwertyuiop";
+
         // when
         double result = text.CountHamming(text);
+
         // then
         result.Should().Be(0.0);
     }
@@ -159,8 +181,10 @@ public class EditDistanceTest
     {
         // given
         string text = string.Empty;
+
         // when
         double result = text.CountHamming(text);
+
         // then
         result.Should().Be(0.0);
     }
@@ -170,6 +194,7 @@ public class EditDistanceTest
     {
         // when
         Action action = () => "qwerty".CountHamming("asdf");
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -179,6 +204,7 @@ public class EditDistanceTest
     {
         // when
         Action action = () => "a".CountHamming("b", -1.0);
+
         // then
         action.Should().Throw<ArgumentException>();
     }

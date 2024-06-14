@@ -19,6 +19,7 @@ public class SuffixArrayTests
     {
         // when
         string result = testObject.Text;
+
         // then
         result.Should().Be(Text);
     }
@@ -28,6 +29,7 @@ public class SuffixArrayTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(11);
     }
@@ -40,6 +42,7 @@ public class SuffixArrayTests
         string result1 = testObject[3];
         string result2 = testObject[6];
         string result3 = testObject[^2];
+
         // then
         result0.Should().Be("i");
         result1.Should().Be("ississippi");
@@ -52,6 +55,7 @@ public class SuffixArrayTests
     {
         // when
         Action action = () => _ = testObject[20];
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -64,6 +68,7 @@ public class SuffixArrayTests
         int result1 = testObject.IndexAt(3);
         int result2 = testObject.IndexAt(6);
         int result3 = testObject.IndexAt(^2);
+
         // then
         result0.Should().Be(10);
         result1.Should().Be(1);
@@ -76,6 +81,7 @@ public class SuffixArrayTests
     {
         // when
         Action action = () => _ = testObject.IndexAt(20);
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -88,6 +94,7 @@ public class SuffixArrayTests
         int result1 = testObject.IndexOf(3);
         int result2 = testObject.IndexOf(6);
         int result3 = testObject.IndexOf(^2);
+
         // then
         result0.Should().Be(4);
         result1.Should().Be(8);
@@ -100,6 +107,7 @@ public class SuffixArrayTests
     {
         // when
         Action action = () => _ = testObject.IndexOf(20);
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -109,6 +117,7 @@ public class SuffixArrayTests
     {
         // when
         int result = testObject.CountLcp(4, 4);
+
         // then
         result.Should().Be(7);
     }
@@ -118,6 +127,7 @@ public class SuffixArrayTests
     {
         // when
         int result = testObject.CountLcp(1, ^1);
+
         // then
         result.Should().Be(1);
     }
@@ -127,6 +137,7 @@ public class SuffixArrayTests
     {
         // when
         int result = testObject.CountLcp(^2, 6);
+
         // then
         result.Should().Be(0);
     }
@@ -137,6 +148,7 @@ public class SuffixArrayTests
         // when
         int result0 = testObject.CountLcp(2, 5);
         int result1 = testObject.CountLcp(5, 2);
+
         // then
         result0.Should().Be(3);
         result1.Should().Be(result0);

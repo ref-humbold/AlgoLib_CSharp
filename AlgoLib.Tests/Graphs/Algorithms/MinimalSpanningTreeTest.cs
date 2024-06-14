@@ -32,6 +32,7 @@ public class MinimalSpanningTreeTest
     {
         // when
         IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Kruskal(graph);
+
         // then
         double mstSize = result.Edges
                                .Select(edge => result.Properties[edge].Weight)
@@ -53,6 +54,7 @@ public class MinimalSpanningTreeTest
     {
         // when
         IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Prim(graph, graph[0]);
+
         // then
         double mstSize = result.Edges
                                .Select(edge => result.Properties[edge].Weight)
@@ -72,6 +74,7 @@ public class MinimalSpanningTreeTest
         // when
         IUndirectedGraph<int, object, WeightProp> result1 = MinimalSpanningTree.Prim(graph, graph[1]);
         IUndirectedGraph<int, object, WeightProp> result4 = MinimalSpanningTree.Prim(graph, graph[4]);
+
         // then
         result1.EdgesCount.Should().Be(result4.EdgesCount);
         result1.Edges.Should().BeEquivalentTo(result4.Edges);

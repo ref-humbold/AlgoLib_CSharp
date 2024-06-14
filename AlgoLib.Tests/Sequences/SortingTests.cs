@@ -16,8 +16,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+
         // when
         sequence.HeapSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
     }
@@ -27,8 +29,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>();
+
         // when
         sequence.HeapSort();
+
         // then
         sequence.Should().BeEmpty();
     }
@@ -38,6 +42,7 @@ public class SortingTests
     {
         // when
         Action action = () => Sorting.HeapSort<int>(null);
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }
@@ -50,8 +55,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+
         // when
         sequence.TopDownMergeSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
     }
@@ -64,8 +71,10 @@ public class SortingTests
             new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
             new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
         };
+
         // when
         sequence.TopDownMergeSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
         sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
@@ -77,8 +86,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>();
+
         // when
         sequence.TopDownMergeSort();
+
         // then
         sequence.Should().BeEmpty();
     }
@@ -88,6 +99,7 @@ public class SortingTests
     {
         // when
         Action action = () => Sorting.TopDownMergeSort<int>(null);
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }
@@ -100,8 +112,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+
         // when
         sequence.BottomUpMergeSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
     }
@@ -114,8 +128,10 @@ public class SortingTests
             new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
             new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
         };
+
         // when
         sequence.BottomUpMergeSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
         sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
@@ -127,8 +143,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>();
+
         // when
         sequence.BottomUpMergeSort();
+
         // then
         sequence.Should().BeEmpty();
     }
@@ -138,6 +156,7 @@ public class SortingTests
     {
         // when
         Action action = () => Sorting.BottomUpMergeSort<int>(null);
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }
@@ -150,8 +169,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+
         // when
         sequence.QuickSort();
+
         // then
         sequence.Should().BeInAscendingOrder();
     }
@@ -161,8 +182,10 @@ public class SortingTests
     {
         // given
         var sequence = new List<int>();
+
         // when
         sequence.QuickSort();
+
         // then
         sequence.Should().BeEmpty();
     }
@@ -172,6 +195,7 @@ public class SortingTests
     {
         // when
         Action action = () => Sorting.QuickSort<int>(null);
+
         // then
         action.Should().Throw<ArgumentNullException>();
     }

@@ -32,8 +32,10 @@ public class LowestCommonAncestorTests
     {
         // given
         Vertex<int> vertex = tree[6];
+
         // when
         Vertex<int> result = testObject.FindLca(vertex, vertex);
+
         // then
         result.Should().Be(vertex);
     }
@@ -43,6 +45,7 @@ public class LowestCommonAncestorTests
     {
         // when
         Vertex<int> result = testObject.FindLca(tree[5], tree[7]);
+
         // then
         result.Should().Be(tree[1]);
     }
@@ -53,6 +56,7 @@ public class LowestCommonAncestorTests
         // when
         Vertex<int> result1 = testObject.FindLca(tree[5], tree[7]);
         Vertex<int> result2 = testObject.FindLca(tree[7], tree[5]);
+
         // then
         result1.Should().Be(tree[1]);
         result2.Should().Be(result1);
@@ -63,6 +67,7 @@ public class LowestCommonAncestorTests
     {
         // when
         Vertex<int> result = testObject.FindLca(tree[3], tree[9]);
+
         // then
         result.Should().Be(testObject.Root);
     }
@@ -73,8 +78,10 @@ public class LowestCommonAncestorTests
         // given
         Vertex<int> vertex1 = tree[8];
         Vertex<int> vertex2 = tree[2];
+
         // when
         Vertex<int> result = testObject.FindLca(vertex1, vertex2);
+
         // then
         result.Should().Be(vertex2);
     }
@@ -84,6 +91,7 @@ public class LowestCommonAncestorTests
     {
         // when
         Vertex<int> result = testObject.FindLca(tree[4], testObject.Root);
+
         // then
         result.Should().Be(testObject.Root);
     }

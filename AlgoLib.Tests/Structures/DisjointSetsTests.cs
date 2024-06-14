@@ -27,6 +27,7 @@ public class DisjointSetsTests
         // when
         Action action = () => _ = new DisjointSets<int>(
             new int[][] { new int[] { 1, 2, 3 }, new int[] { 1, 11, 21, 31 } });
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -36,8 +37,10 @@ public class DisjointSetsTests
     {
         // given
         int[][] sets = new int[][] { new int[] { 1, 2, 3 }, new int[] { 10, 100, 10 } };
+
         // when
         testObject = new DisjointSets<int>(sets);
+
         // then
         testObject.Count.Should().Be(sets.Length);
     }
@@ -47,6 +50,7 @@ public class DisjointSetsTests
     {
         // when
         int result = new DisjointSets<int>().Count;
+
         // then
         result.Should().Be(0);
     }
@@ -56,6 +60,7 @@ public class DisjointSetsTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(numbers.Length);
     }
@@ -65,6 +70,7 @@ public class DisjointSetsTests
     {
         // when
         testObject.Clear();
+
         // then
         testObject.Count.Should().Be(0);
     }
@@ -76,6 +82,7 @@ public class DisjointSetsTests
     {
         // when
         bool result = new DisjointSets<int>().Contains(numbers[0]);
+
         // then
         result.Should().BeFalse();
     }
@@ -85,6 +92,7 @@ public class DisjointSetsTests
     {
         // when
         bool result = testObject.Contains(present[0]);
+
         // then
         result.Should().BeTrue();
     }
@@ -94,6 +102,7 @@ public class DisjointSetsTests
     {
         // when
         bool result = testObject.Contains(absent[0]);
+
         // then
         result.Should().BeFalse();
     }
@@ -106,8 +115,10 @@ public class DisjointSetsTests
     {
         // given
         testObject = new DisjointSets<int>();
+
         // when
         DisjointSets<int> result = testObject.Add(numbers);
+
         // then
         result.Should().BeSameAs(testObject);
 
@@ -125,6 +136,7 @@ public class DisjointSetsTests
     {
         // when
         DisjointSets<int> result = testObject.Add(Array.Empty<int>());
+
         // then
         result.Should().BeSameAs(testObject);
         testObject.Count.Should().Be(numbers.Length);
@@ -135,6 +147,7 @@ public class DisjointSetsTests
     {
         // when
         DisjointSets<int> result = testObject.Add(absent);
+
         // then
         result.Should().BeSameAs(testObject);
 
@@ -152,6 +165,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => testObject.Add(present);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -161,6 +175,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => testObject.Add(absent.Concat(present));
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -170,6 +185,7 @@ public class DisjointSetsTests
     {
         // when
         DisjointSets<int> result = testObject.Add(Array.Empty<int>(), present[0]);
+
         // then
         result.Should().BeSameAs(testObject);
         testObject.Count.Should().Be(numbers.Length);
@@ -180,8 +196,10 @@ public class DisjointSetsTests
     {
         // given
         int represent = present[0];
+
         // when
         DisjointSets<int> result = testObject.Add(absent, represent);
+
         // then
         result.Should().BeSameAs(testObject);
 
@@ -199,6 +217,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => testObject.Add(absent, absent[0]);
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -208,6 +227,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => testObject.Add(present, absent[0]);
+
         // then
         action.Should().Throw<ArgumentException>();
     }
@@ -220,6 +240,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => _ = new DisjointSets<int>()[numbers[0]];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -229,8 +250,10 @@ public class DisjointSetsTests
     {
         // given
         int element = present[0];
+
         // when
         int result = testObject[element];
+
         // then
         result.Should().Be(element);
     }
@@ -240,6 +263,7 @@ public class DisjointSetsTests
     {
         // when
         Action action = () => _ = testObject[absent[0]];
+
         // then
         action.Should().Throw<KeyNotFoundException>();
     }
@@ -249,8 +273,10 @@ public class DisjointSetsTests
     {
         // given
         int element = present[0];
+
         // when
         bool result = testObject.TryFindSet(element, out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(element);
@@ -261,6 +287,7 @@ public class DisjointSetsTests
     {
         // when
         bool result = testObject.TryFindSet(absent[0], out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -275,8 +302,10 @@ public class DisjointSetsTests
         // given
         int element1 = present[0];
         int element2 = present[1];
+
         // when
         DisjointSets<int> result = testObject.UnionSet(element1, element2);
+
         // then
         result.Should().BeSameAs(testObject);
         testObject.IsSameSet(element1, element2).Should().BeTrue();
@@ -289,8 +318,10 @@ public class DisjointSetsTests
     {
         // given
         int element = present[0];
+
         // when
         DisjointSets<int> result = testObject.UnionSet(element, element);
+
         // then
         result.Should().BeSameAs(testObject);
         testObject.Count.Should().Be(numbers.Length);
@@ -304,8 +335,10 @@ public class DisjointSetsTests
         int element2 = numbers[2];
 
         testObject = new DisjointSets<int>(new[] { absent, numbers });
+
         // when
         DisjointSets<int> result = testObject.UnionSet(element1, element2);
+
         // then
         result.Should().BeSameAs(testObject);
         testObject.IsSameSet(element1, element2).Should().BeTrue();
@@ -319,9 +352,11 @@ public class DisjointSetsTests
         int first = present[0];
         int last = present[^1];
 
+
         // when
         for(int i = 1; i < present.Length; ++i)
             testObject.UnionSet(present[i - 1], present[i]);
+
 
         // then
         testObject.IsSameSet(first, last).Should().BeTrue();
@@ -337,6 +372,7 @@ public class DisjointSetsTests
     {
         // when
         bool result = testObject.IsSameSet(present[0], present[1]);
+
         // then
         result.Should().BeFalse();
     }
@@ -346,8 +382,10 @@ public class DisjointSetsTests
     {
         // given
         int element = present[0];
+
         // when
         bool result = testObject.IsSameSet(element, element);
+
         // then
         result.Should().BeTrue();
     }
@@ -360,8 +398,10 @@ public class DisjointSetsTests
         int element2 = present[1];
 
         testObject.UnionSet(element1, element2);
+
         // when
         bool result = testObject.IsSameSet(element2, element1);
+
         // then
         result.Should().BeTrue();
     }

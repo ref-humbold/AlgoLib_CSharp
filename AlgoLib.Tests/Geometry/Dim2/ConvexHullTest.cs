@@ -13,6 +13,7 @@ public class ConvexHullTest
     {
         // when
         IEnumerable<Point2D> result = ConvexHull.FindConvexHull(new[] { Point2D.Of(3.0, 2.0) });
+
         // then
         result.Should().BeEmpty();
     }
@@ -23,6 +24,7 @@ public class ConvexHullTest
         // when
         IEnumerable<Point2D> result =
             ConvexHull.FindConvexHull(new[] { Point2D.Of(2.0, 3.0), Point2D.Of(3.0, 2.0) });
+
         // then
         result.Should().BeEmpty();
     }
@@ -33,8 +35,10 @@ public class ConvexHullTest
         // given
         Point2D[] points =
             new[] { Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0) };
+
         // when
         IEnumerable<Point2D> result = ConvexHull.FindConvexHull(points);
+
         // then
         result.Should().BeEquivalentTo(points);
     }
@@ -50,6 +54,7 @@ public class ConvexHullTest
                         Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
                         Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7),
                         Point2D.Of(6, -4) });
+
         // then
         result.Should().BeEquivalentTo(
                 new[] { Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
@@ -65,6 +70,7 @@ public class ConvexHullTest
                 new[] { Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
                         Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
                         Point2D.Of(7, -3), Point2D.Of(-3, -2) });
+
         // then
         result.Should().BeEquivalentTo(
             new[] { Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5) });

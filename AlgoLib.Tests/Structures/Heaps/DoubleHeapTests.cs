@@ -29,6 +29,7 @@ public class DoubleHeapTests
     {
         // when
         int result = new DoubleHeap<int>().Count;
+
         // then
         result.Should().Be(0);
     }
@@ -38,6 +39,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.Count;
+
         // then
         result.Should().Be(numbers.Length);
     }
@@ -47,6 +49,7 @@ public class DoubleHeapTests
     {
         // when
         testObject.Clear();
+
         // then
         testObject.Should().BeEmpty();
         testObject.Count.Should().Be(0);
@@ -59,6 +62,7 @@ public class DoubleHeapTests
     {
         // when
         IEnumerator<int> result = new DoubleHeap<int>().GetEnumerator();
+
         // then
         result.MoveNext().Should().BeFalse();
     }
@@ -68,8 +72,10 @@ public class DoubleHeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         IEnumerator<int> result = new DoubleHeap<int>(new[] { element }).GetEnumerator();
+
         // then
         result.MoveNext().Should().BeTrue();
         result.Current.Should().Be(element);
@@ -81,6 +87,7 @@ public class DoubleHeapTests
     {
         // when
         var result = testObject.ToList();
+
         // then
         result.Should().BeEquivalentTo(numbers);
         result.Should().HaveElementAt(0, minimum)
@@ -97,8 +104,10 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         testObject = new DoubleHeap<int>();
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(1);
         testObject.PeekMin().Should().Be(element);
@@ -110,6 +119,7 @@ public class DoubleHeapTests
     {
         // when
         testObject.Push((minimum + maximum) / 2);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.PeekMin().Should().Be(minimum);
@@ -121,8 +131,10 @@ public class DoubleHeapTests
     {
         // given
         int element = minimum - 3;
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.PeekMin().Should().Be(element);
@@ -134,8 +146,10 @@ public class DoubleHeapTests
     {
         // given
         int element = maximum + 3;
+
         // when
         testObject.Push(element);
+
         // then
         testObject.Should().HaveCount(numbers.Length + 1);
         testObject.PeekMin().Should().Be(minimum);
@@ -147,8 +161,10 @@ public class DoubleHeapTests
     {
         // given
         int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3 };
+
         // when
         testObject.PushRange(elements);
+
         // then
         testObject.Should().HaveCount(numbers.Length + elements.Length);
         testObject.PeekMin().Should().Be(elements.Min());
@@ -163,6 +179,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.Peek();
+
         // then
         result.Should().Be(minimum);
     }
@@ -172,6 +189,7 @@ public class DoubleHeapTests
     {
         // when
         Action action = () => new DoubleHeap<int>().PeekMin();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -181,8 +199,10 @@ public class DoubleHeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         int result = new DoubleHeap<int>(new[] { element }).PeekMin();
+
         // then
         result.Should().Be(element);
     }
@@ -192,6 +212,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.PeekMin();
+
         // then
         result.Should().Be(minimum);
     }
@@ -201,6 +222,7 @@ public class DoubleHeapTests
     {
         // when
         Action action = () => new DoubleHeap<int>().PeekMax();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -210,8 +232,10 @@ public class DoubleHeapTests
     {
         // given
         int element = numbers[0];
+
         // when
         int result = new DoubleHeap<int>(new[] { element }).PeekMax();
+
         // then
         result.Should().Be(element);
     }
@@ -221,6 +245,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.PeekMax();
+
         // then
         result.Should().Be(maximum);
     }
@@ -233,6 +258,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPeek(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -243,6 +269,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = new DoubleHeap<int>().TryPeekMin(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -253,6 +280,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPeekMin(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -263,6 +291,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = new DoubleHeap<int>().TryPeekMax(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -273,6 +302,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPeekMax(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(maximum);
@@ -286,6 +316,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.Pop();
+
         // then
         result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
@@ -296,6 +327,7 @@ public class DoubleHeapTests
     {
         // when
         Action action = () => new DoubleHeap<int>().PopMin();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -307,8 +339,10 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         testObject = new DoubleHeap<int>(new[] { element });
+
         // when
         int result = testObject.PopMin();
+
         // then
         result.Should().Be(element);
         testObject.Should().BeEmpty();
@@ -319,6 +353,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.PopMin();
+
         // then
         result.Should().Be(minimum);
         testObject.Should().HaveCount(numbers.Length - 1);
@@ -332,6 +367,7 @@ public class DoubleHeapTests
 
         while (testObject.Count > 0)
             result.Add(testObject.PopMin());
+
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
         result.Should().BeInAscendingOrder(testObject.Comparer);
@@ -342,6 +378,7 @@ public class DoubleHeapTests
     {
         // when
         Action action = () => new DoubleHeap<int>().PopMax();
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -353,8 +390,10 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         testObject = new DoubleHeap<int>(new[] { element });
+
         // when
         int result = testObject.PopMax();
+
         // then
         result.Should().Be(element);
         testObject.Should().BeEmpty();
@@ -365,6 +404,7 @@ public class DoubleHeapTests
     {
         // when
         int result = testObject.PopMax();
+
         // then
         result.Should().Be(maximum);
         testObject.Should().HaveCount(numbers.Length - 1);
@@ -378,6 +418,7 @@ public class DoubleHeapTests
 
         while (testObject.Count > 0)
             result.Add(testObject.PopMax());
+
         // then
         result.Should().BeEquivalentTo(numbers.ToList());
         result.Should().BeInDescendingOrder(testObject.Comparer);
@@ -391,6 +432,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPop(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -402,6 +444,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = new DoubleHeap<int>().TryPopMin(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -412,6 +455,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPopMin(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(minimum);
@@ -423,6 +467,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = new DoubleHeap<int>().TryPopMax(out int resultValue);
+
         // then
         result.Should().BeFalse();
         resultValue.Should().Be(default);
@@ -433,6 +478,7 @@ public class DoubleHeapTests
     {
         // when
         bool result = testObject.TryPopMax(out int resultValue);
+
         // then
         result.Should().BeTrue();
         resultValue.Should().Be(maximum);

@@ -88,8 +88,10 @@ public class ShortestPathsTests
         // given
         double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
+
         // when
         Dictionary<Vertex<int>, double> result = directedGraph.BellmanFord(directedGraph[1]);
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -102,8 +104,10 @@ public class ShortestPathsTests
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
         directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
+
         // when
         Dictionary<Vertex<int>, double> result = directedGraph.BellmanFord(directedGraph[1]);
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -114,9 +118,11 @@ public class ShortestPathsTests
         // given
         double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
         Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
+
         // when
         Dictionary<Vertex<int>, double> result =
             undirectedGraph.AsDirected().BellmanFord(undirectedGraph[1]);
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -126,8 +132,10 @@ public class ShortestPathsTests
     {
         // given
         directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-20.0));
+
         // when
         Action action = () => directedGraph.BellmanFord(directedGraph[1]);
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -141,8 +149,10 @@ public class ShortestPathsTests
         // given
         double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
+
         // when
         Dictionary<Vertex<int>, double> result = directedGraph.Dijkstra(directedGraph[1]);
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -153,8 +163,10 @@ public class ShortestPathsTests
         // given
         double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
         Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
+
         // when
         Dictionary<Vertex<int>, double> result = undirectedGraph.Dijkstra(undirectedGraph[1]);
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -164,8 +176,10 @@ public class ShortestPathsTests
     {
         // given
         directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
+
         // when
         Action action = () => directedGraph.Dijkstra(directedGraph[1]);
+
         // then
         action.Should().Throw<InvalidOperationException>();
     }
@@ -191,8 +205,10 @@ public class ShortestPathsTests
         };
         Dictionary<(Vertex<int>, Vertex<int>), double> expected =
             fromMatrix(undirectedGraph, distances);
+
         // when
         Dictionary<(Vertex<int>, Vertex<int>), double> result = directedGraph.FloydWarshall();
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -218,8 +234,10 @@ public class ShortestPathsTests
 
         directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3],
                                      new Weighted(-5.0));
+
         // when
         Dictionary<(Vertex<int>, Vertex<int>), double> result = directedGraph.FloydWarshall();
+
         // then
         result.Should().BeEquivalentTo(expected);
     }
@@ -242,9 +260,11 @@ public class ShortestPathsTests
         };
         Dictionary<(Vertex<int>, Vertex<int>), double> expected =
                 fromMatrix(undirectedGraph, distances);
+
         // when
         Dictionary<(Vertex<int>, Vertex<int>), double> result =
                 undirectedGraph.AsDirected().FloydWarshall();
+
         // then
         result.Should().BeEquivalentTo(expected);
     }

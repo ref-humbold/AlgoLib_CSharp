@@ -29,8 +29,10 @@ public class StronglyConnectedComponentsTests
         graph.AddEdgeBetween(graph[8], graph[3]);
         graph.AddEdgeBetween(graph[8], graph[7]);
         graph.AddEdgeBetween(graph[9], graph[8]);
+
         // when
         List<HashSet<Vertex<int>>> result = graph.FindScc();
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
@@ -52,8 +54,10 @@ public class StronglyConnectedComponentsTests
         graph.AddEdgeBetween(graph[4], graph[5]);
         graph.AddEdgeBetween(graph[5], graph[6]);
         graph.AddEdgeBetween(graph[6], graph[0]);
+
         // when
         List<HashSet<Vertex<int>>> result = graph.FindScc();
+
         // then
         result.Should().BeEquivalentTo(new[] { new HashSet<Vertex<int>>(graph.Vertices) });
     }
@@ -63,8 +67,10 @@ public class StronglyConnectedComponentsTests
     {
         // given
         var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 4));
+
         // when
         List<HashSet<Vertex<int>>> result = graph.FindScc();
+
         // then
         result.Should().BeEquivalentTo(
             new[] { new HashSet<Vertex<int>> { graph[0] },

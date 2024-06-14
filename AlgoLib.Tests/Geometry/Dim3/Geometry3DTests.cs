@@ -16,8 +16,10 @@ public class Geometry3DTests
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0) };
+
         // when
         List<Point3D> result = sequence.SortByX();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
@@ -34,8 +36,10 @@ public class Geometry3DTests
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0) };
+
         // when
         List<Point3D> result = sequence.SortByY();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
@@ -52,8 +56,10 @@ public class Geometry3DTests
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0) };
+
         // when
         List<Point3D> result = sequence.SortByZ();
+
         // then
         result.Should().NotBeSameAs(sequence);
         result.Should().Equal(Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
@@ -67,6 +73,7 @@ public class Geometry3DTests
     {
         // when
         double result = Point3D.Of(4.0, 8.0, 5.0).Distance(Point3D.Of(-2.0, -1.0, 3.0));
+
         // then
         result.Should().Be(11.0);
     }
@@ -76,8 +83,10 @@ public class Geometry3DTests
     {
         // given
         var point = Point3D.Of(13.5, 6.5, -4.2);
+
         // when
         double result = point.Distance(point);
+
         // then
         result.Should().Be(0.0);
     }
@@ -87,6 +96,7 @@ public class Geometry3DTests
     {
         // when
         Point3D result = Point3D.Of(13.7, 6.5, -4.2).Translate(Vector3D.Of(-10.4, 3.3, 1.1));
+
         // then
         result.Should().Be(Point3D.Of(3.3, 9.8, -3.1));
     }
@@ -96,8 +106,10 @@ public class Geometry3DTests
     {
         // given
         var point = Point3D.Of(13.5, 6.5, -4.2);
+
         // when
         Point3D result = point.Translate(Vector3D.Of(0.0, 0.0, 0.0));
+
         // then
         result.Should().Be(point);
     }
@@ -107,6 +119,7 @@ public class Geometry3DTests
     {
         // when
         Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Of(2.0, -1.0, -3.0));
+
         // then
         result.Should().Be(Point3D.Of(-9.5, -8.5, -1.8));
     }
@@ -116,6 +129,7 @@ public class Geometry3DTests
     {
         // when
         Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Of(0.0, 0.0, 0.0));
+
         // then
         result.Should().Be(Point3D.Of(-13.5, -6.5, 4.2));
     }
@@ -125,8 +139,10 @@ public class Geometry3DTests
     {
         // given
         var point = Point3D.Of(13.5, 6.5, -4.2);
+
         // when
         Point3D result = point.Reflect(point);
+
         // then
         result.Should().Be(point);
     }

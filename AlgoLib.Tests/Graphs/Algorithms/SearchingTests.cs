@@ -48,6 +48,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.Bfs(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+
         // then
         result.Should().BeSubsetOf(undirectedGraph.Vertices);
         result.Should().NotContain(undirectedGraph[2]);
@@ -60,9 +61,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.Bfs(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(undirectedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -75,6 +78,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
                 undirectedGraph.Bfs(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
+
         // then
         result.Should().BeEmpty();
     }
@@ -85,6 +89,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             directedGraph.Bfs(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+
         // then
         result.Should().BeEquivalentTo(
             new[] { directedGraph[0], directedGraph[1], directedGraph[3],
@@ -96,9 +101,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
             directedGraph.Bfs(strategy, new[] { directedGraph[8], directedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(directedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -115,6 +122,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+
         // then
         result.Should().BeSubsetOf(undirectedGraph.Vertices);
         result.Should().NotContain(undirectedGraph[2]);
@@ -127,9 +135,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.DfsIterative(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(undirectedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -142,6 +152,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
                 undirectedGraph.DfsIterative(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
+
         // then
         result.Should().BeEmpty();
     }
@@ -152,6 +163,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             directedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+
         // then
         result.Should().BeEquivalentTo(
             new[] { directedGraph[0], directedGraph[1], directedGraph[3],
@@ -163,9 +175,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
             directedGraph.DfsIterative(strategy, new[] { directedGraph[8], directedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(directedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -182,6 +196,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+
         // then
         result.Should().BeSubsetOf(undirectedGraph.Vertices);
         result.Should().NotContain(undirectedGraph[2]);
@@ -194,9 +209,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
                 undirectedGraph.DfsRecursive(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(undirectedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);
@@ -209,6 +226,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
                 undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
+
         // then
         result.Should().BeEmpty();
     }
@@ -219,6 +237,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
                 directedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+
         // then
         result.Should().BeEquivalentTo(
             new[] {
@@ -232,9 +251,11 @@ public class SearchingTests
     {
         // given
         var strategy = new TestingStrategy<int>();
+
         // when
         IEnumerable<Vertex<int>> result =
             directedGraph.DfsRecursive(strategy, new[] { directedGraph[8], directedGraph[6] });
+
         // then
         result.Should().BeEquivalentTo(directedGraph.Vertices);
         strategy.Entries.Should().BeEquivalentTo(undirectedGraph.Vertices);

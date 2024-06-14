@@ -18,6 +18,7 @@ public class BaseWordsDictionaryTests
     {
         // when
         (int, int) result = testObject[4..4];
+
         // then
         result.Should().Be((0, 0));
     }
@@ -27,6 +28,7 @@ public class BaseWordsDictionaryTests
     {
         // when
         (int, int) result = testObject[6..2];
+
         // then
         result.Should().Be((0, 0));
     }
@@ -77,6 +79,7 @@ public class BaseWordsDictionaryTests
     {
         // when
         Action action = () => _ = testObject[15..17];
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -86,6 +89,7 @@ public class BaseWordsDictionaryTests
     {
         // when
         Action action = () => _ = testObject[5..15];
+
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
