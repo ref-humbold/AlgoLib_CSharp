@@ -9,203 +9,97 @@ public class PrimesTestingTests
 {
     #region TestPrimeFermat
 
+    // 1001 = 7 * 11 * 13 ; 3481 = 59 ^ 2
     [Test]
-    public void TestPrimeFermat_WhenZero_ThenFalse()
+    public void TestPrimeFermat_WhenIntNotPrime_ThenFalse(
+        [Values(0, 1, 77, 1001, 3481)] int number)
     {
         // when
-        bool result = 0.TestPrimeFermat();
+        bool result = number.TestPrimeFermat();
+
+        // then
+        result.Should().BeFalse();
+    }
+
+    // 41041 = 7 * 11 * 13 * 41 ; 73627 = 17 * 61 * 71
+    [Test]
+    public void TestPrimeFermat_WhenLongNotPrime_ThenFalse(
+        [Values(41041L, 73627L)] long number)
+    {
+        // when
+        bool result = number.TestPrimeFermat();
 
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeFermat_WhenOne_ThenFalse()
+    public void TestPrimeFermat_WhenIntIsPrime_ThenTrue(
+        [Values(2, 107, 1013)] int number)
     {
         // when
-        bool result = 1.TestPrimeFermat();
-
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenTwo_ThenTrue()
-    {
-        // when
-        bool result = 2.TestPrimeFermat();
+        bool result = number.TestPrimeFermat();
 
         // then
         result.Should().BeTrue();
     }
 
     [Test]
-    public void TestPrimeFermat_WhenPrime_ThenTrue()
+    public void TestPrimeFermat_WhenLongIsPrime_ThenTrue(
+        [Values(2131L, 6199L)] long number)
     {
         // when
-        bool result = 1013.TestPrimeFermat();
+        bool result = number.TestPrimeFermat();
 
         // then
         result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenPrimeLong1_ThenTrue()
-    {
-        // when
-        bool result = 2131L.TestPrimeFermat();
-
-        // then
-        result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenPrimeLong2_ThenTrue()
-    {
-        // when
-        bool result = 6199L.TestPrimeFermat();
-
-        // then
-        result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenComposite_ThenFalse()
-    {
-        // when
-        bool result = 1001.TestPrimeFermat(); // 1001 = 7 * 11 * 13
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenCompositeLong1_ThenFalse()
-    {
-        // when
-        bool result = 41041L.TestPrimeFermat(); // 41041 = 7 * 11 * 13 * 41
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenCompositeLong2_ThenFalse()
-    {
-        // when
-        bool result = 73627L.TestPrimeFermat(); // 73627 = 17 * 61 * 71
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeFermat_WhenCompositeSquareOfPrime_ThenFalse()
-    {
-        // when
-        bool result = 3481.TestPrimeFermat(); // 3481 = 59 ^ 2
-        // then
-        result.Should().BeFalse();
     }
 
     #endregion
     #region TestPrimeMiller
 
     [Test]
-    public void TestPrimeMiller_WhenZero_ThenFalse()
+    public void TestPrimeMiller_WhenIntNotPrime_ThenFalse(
+        [Values(0, 1, 77, 1001, 3481)] int number)
     {
         // when
-        bool result = 0.TestPrimeMiller();
+        bool result = number.TestPrimeMiller();
 
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeMiller_WhenOne_ThenFalse()
+    public void TestPrimeMiller_WhenLongNotPrime_ThenFalse(
+        [Values(41041L, 73627L)] long number)
     {
         // when
-        bool result = 1.TestPrimeMiller();
+        bool result = number.TestPrimeMiller();
 
         // then
         result.Should().BeFalse();
     }
 
     [Test]
-    public void TestPrimeMiller_WhenTwo_ThenTrue()
+    public void TestPrimeMiller_WhenIntIsPrime_ThenTrue(
+        [Values(2, 107, 1013)] int number)
     {
         // when
-        bool result = 2.TestPrimeMiller();
+        bool result = number.TestPrimeMiller();
 
         // then
         result.Should().BeTrue();
     }
 
     [Test]
-    public void TestPrimeMiller_WhenPrime_ThenTrue()
+    public void TestPrimeMiller_WhenLongIsPrime_ThenTrue(
+        [Values(2131L, 6199L)] long number)
     {
         // when
-        bool result = 1013.TestPrimeMiller();
+        bool result = number.TestPrimeMiller();
 
         // then
         result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenPrimeLong1_ThenTrue()
-    {
-        // when
-        bool result = 2131L.TestPrimeMiller();
-
-        // then
-        result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenPrimeLong2_ThenTrue()
-    {
-        // when
-        bool result = 6199L.TestPrimeMiller();
-
-        // then
-        result.Should().BeTrue();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenComposite_ThenFalse()
-    {
-        // when
-        bool result = 1001.TestPrimeMiller();
-
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenCompositeLong1_ThenFalse()
-    {
-        // when
-        bool result = 41041L.TestPrimeMiller();
-
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenCompositeLong2_ThenFalse()
-    {
-        // when
-        bool result = 73627L.TestPrimeMiller();
-
-        // then
-        result.Should().BeFalse();
-    }
-
-    [Test]
-    public void TestPrimeMiller_WhenCompositeSquareOfPrime_ThenFalse()
-    {
-        // when
-        bool result = 3481.TestPrimeMiller();
-
-        // then
-        result.Should().BeFalse();
     }
 
     #endregion

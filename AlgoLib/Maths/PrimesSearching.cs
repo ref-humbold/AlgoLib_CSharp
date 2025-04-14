@@ -46,7 +46,7 @@ public static class PrimesSearching
             {
                 int primeValue = 2 * i + 3;
 
-                for(int j = primeValue * primeValue; j < baseMaximum; j += 2 * primeValue)
+                for(int j = primeValue * primeValue; j <= baseMaximum; j += 2 * primeValue)
                     isPrime[(j - 3) / 2] = false;
             }
 

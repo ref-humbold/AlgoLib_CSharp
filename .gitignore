@@ -5,3 +5,7 @@ doc/
 .vs
 .vscode
 *.code-workspace
+
+.idea
+*.iml
+out/
