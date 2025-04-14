@@ -352,11 +352,9 @@ public class DisjointSetsTests
         int first = present[0];
         int last = present[^1];
 
-
         // when
         for(int i = 1; i < present.Length; ++i)
             testObject.UnionSet(present[i - 1], present[i]);
-
 
         // then
         testObject.IsSameSet(first, last).Should().BeTrue();

@@ -184,7 +184,6 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.GetVerticesFromGroup(14);
 
-
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -230,7 +229,6 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.AddVertex(-3, 19);
 
-
         // then
         action.Should().Throw<IndexOutOfRangeException>();
     }
@@ -275,7 +273,6 @@ public class MultipartiteGraphTest
         // when
         Action action = () => testObject.AddEdgeBetween(new Vertex<int>(5), new Vertex<int>(8));
 
-
         // then
         action.Should().Throw<GraphPartitionException>();
     }
@@ -285,7 +282,6 @@ public class MultipartiteGraphTest
     {
         // when
         Action action = () => testObject.AddEdgeBetween(new Vertex<int>(15), new Vertex<int>(18));
-
 
         // then
         action.Should().Throw<ArgumentException>();
