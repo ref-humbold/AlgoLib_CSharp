@@ -53,8 +53,8 @@ pipeline {
 
     stage("Unit tests") {
       environment {
-        NUNIT_RESULTS_DIR = "nunitResults"
-        NUNIT_RESULTS_PATH = "${env.WORKSPACE}/${env.NUNIT_RESULTS_DIR}"
+        TEST_RESULTS_DIR = "testResults"
+        NUNIT_RESULTS_DIR = "${env.TEST_RESULTS_DIR}/NUnit"
       }
 
       steps {
@@ -64,7 +64,9 @@ pipeline {
           configuration: "${env.CONFIGURATION}",
           noBuild: true,
           nologo: true,
-          runSettings: ["NUnit.TestOutputXml": "${env.NUNIT_RESULTS_PATH}"]
+          resultsDirectory: "${env.TEST_RESULTS_DIR}",
+          collect: "XPlat Code Coverage",
+          runSettings: ["NUnit.TestOutputXml": "${env.WORKSPACE}/${env.NUNIT_RESULTS_DIR}"]
         )
       }
 
