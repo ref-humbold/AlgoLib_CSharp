@@ -1,8 +1,8 @@
 name: GitHub Actions
 
 on:
- - push
- - pull_request
+  - push
+  - pull_request
 
 jobs:
   build-and-test:
@@ -22,4 +22,4 @@ jobs:
         run: dotnet build -c Release --no-restore --nologo
 
       - name: Test
-        run: dotnet test -c Release --no-build --nologo
+        run: dotnet test -c Release --no-build --nologo --results-directory testResults/  --collect "XPlat Code Coverage"
