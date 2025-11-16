@@ -33,8 +33,8 @@ public class UndirectedGraphTests
         string resultEdge = testObject.Properties[edge];
 
         // then
-        resultVertex.Should().Be(vertexProperty);
-        resultEdge.Should().Be(edgeProperty);
+        Assert.That(resultVertex, Is.EqualTo(vertexProperty));
+        Assert.That(resultEdge, Is.EqualTo(edgeProperty));
     }
 
     [Test]
@@ -48,8 +48,8 @@ public class UndirectedGraphTests
         string resultEdge = testObject.Properties[edge];
 
         // then
-        resultVertex.Should().BeNull();
-        resultEdge.Should().BeNull();
+        Assert.That(resultVertex, Is.Null);
+        Assert.That(resultEdge, Is.Null);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class UndirectedGraphTests
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class UndirectedGraphTests
         long result = testObject.VerticesCount;
 
         // then
-        result.Should().Be(10);
+        Assert.That(result, Is.EqualTo(10));
     }
 
     [Test]
@@ -97,7 +97,7 @@ public class UndirectedGraphTests
         long result = testObject.EdgesCount;
 
         // then
-        result.Should().Be(6);
+        Assert.That(result, Is.EqualTo(6));
     }
 
     [Test]
@@ -134,7 +134,7 @@ public class UndirectedGraphTests
         Vertex<int> result = testObject[vertexId];
 
         // then
-        result.Id.Should().Be(vertexId);
+        Assert.That(result.Id, Is.EqualTo(vertexId));
     }
 
     [Test]
@@ -144,7 +144,7 @@ public class UndirectedGraphTests
         Action action = () => _ = testObject[12];
 
         // then
-        action.Should().Throw<KeyNotFoundException>();
+        Assert.That(action, Throws.TypeOf<KeyNotFoundException>());
     }
 
     [Test]
@@ -160,8 +160,8 @@ public class UndirectedGraphTests
         Edge<int> result = testObject[source, destination];
 
         // then
-        result.Source.Should().Be(source);
-        result.Destination.Should().Be(destination);
+        Assert.That(result.Source, Is.EqualTo(source));
+        Assert.That(result.Destination, Is.EqualTo(destination));
     }
 
     [Test]
@@ -177,8 +177,8 @@ public class UndirectedGraphTests
         Edge<int> result = testObject[destination, source];
 
         // then
-        result.Source.Should().Be(source);
-        result.Destination.Should().Be(destination);
+        Assert.That(result.Source, Is.EqualTo(source));
+        Assert.That(result.Destination, Is.EqualTo(destination));
     }
 
     [Test]
@@ -188,7 +188,7 @@ public class UndirectedGraphTests
         Action action = () => _ = testObject[1, 2];
 
         // then
-        action.Should().Throw<KeyNotFoundException>();
+        Assert.That(action, Throws.TypeOf<KeyNotFoundException>());
     }
 
     [Test]
@@ -202,10 +202,10 @@ public class UndirectedGraphTests
         Vertex<int> result = testObject.AddVertex(newVertexId, property);
 
         // then
-        result.Id.Should().Be(newVertexId);
-        testObject.VerticesCount.Should().Be(11);
-        testObject.GetNeighbours(result).Should().BeEmpty();
-        testObject.Properties[result].Should().Be(property);
+        Assert.That(result.Id, Is.EqualTo(newVertexId));
+        Assert.That(testObject.VerticesCount, Is.EqualTo(11));
+        Assert.That(testObject.GetNeighbours(result), Is.Empty);
+        Assert.That(testObject.Properties[result], Is.EqualTo(property));
     }
 
     [Test]
@@ -221,9 +221,9 @@ public class UndirectedGraphTests
         Action action = () => testObject.AddVertex(vertex, "abcdefg");
 
         // then
-        action.Should().Throw<ArgumentException>();
-        testObject.VerticesCount.Should().Be(10);
-        testObject.Properties[vertex].Should().Be(property);
+        Assert.That(action, Throws.ArgumentException);
+        Assert.That(testObject.VerticesCount, Is.EqualTo(10));
+        Assert.That(testObject.Properties[vertex], Is.EqualTo(property));
     }
 
     [Test]
@@ -237,9 +237,9 @@ public class UndirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[1]);
 
         // then
-        result.Source.Should().Be(new Vertex<int>(1));
-        result.Destination.Should().Be(new Vertex<int>(5));
-        testObject.Properties[result].Should().Be(property);
+        Assert.That(result.Source, Is.EqualTo(new Vertex<int>(1)));
+        Assert.That(result.Destination, Is.EqualTo(new Vertex<int>(5)));
+        Assert.That(testObject.Properties[result], Is.EqualTo(property));
         testObject.GetNeighbours(testObject[1]).Should().BeEquivalentTo(
             new[] { new Vertex<int>(1), new Vertex<int>(5) });
         testObject.GetNeighbours(testObject[5]).Should().BeEquivalentTo(
@@ -258,7 +258,7 @@ public class UndirectedGraphTests
         Action action = () => testObject.AddEdgeBetween(source, destination);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -273,7 +273,7 @@ public class UndirectedGraphTests
         Action action = () => testObject.AddEdgeBetween(destination, source);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -344,7 +344,7 @@ public class UndirectedGraphTests
         long result = testObject.GetOutputDegree(testObject[1]);
 
         // then
-        result.Should().Be(7);
+        Assert.That(result, Is.EqualTo(7));
     }
 
     [Test]
@@ -363,7 +363,7 @@ public class UndirectedGraphTests
         long result = testObject.GetInputDegree(testObject[1]);
 
         // then
-        result.Should().Be(7);
+        Assert.That(result, Is.EqualTo(7));
     }
 
     [Test]
@@ -401,10 +401,10 @@ public class UndirectedGraphTests
                 new Edge<int>(new Vertex<int>(8), new Vertex<int>(0)),
                 new Edge<int>(new Vertex<int>(9), new Vertex<int>(3))
             });
-        result.Properties[vertex].Should().Be(vertexProperty);
-        result.Properties[result[9]].Should().BeNull();
-        result.Properties[result[1, 5]].Should().Be(edgeProperty);
-        result.Properties[result[5, 1]].Should().Be(edgeProperty);
-        result.Properties[result[8, 0]].Should().BeNull();
+        Assert.That(result.Properties[vertex], Is.EqualTo(vertexProperty));
+        Assert.That(result.Properties[result[9]], Is.Null);
+        Assert.That(result.Properties[result[1, 5]], Is.EqualTo(edgeProperty));
+        Assert.That(result.Properties[result[5, 1]], Is.EqualTo(edgeProperty));
+        Assert.That(result.Properties[result[8, 0]], Is.Null);
     }
 }

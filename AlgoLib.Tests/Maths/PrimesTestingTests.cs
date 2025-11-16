@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
@@ -18,7 +17,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeFermat();
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     // 41041 = 7 * 11 * 13 * 41 ; 73627 = 17 * 61 * 71
@@ -30,7 +29,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeFermat();
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -41,7 +40,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeFermat();
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -52,7 +51,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeFermat();
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     #endregion
@@ -66,7 +65,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeMiller();
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -77,7 +76,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeMiller();
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -88,7 +87,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeMiller();
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -99,7 +98,7 @@ public class PrimesTestingTests
         bool result = number.TestPrimeMiller();
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     #endregion

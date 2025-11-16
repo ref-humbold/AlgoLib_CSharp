@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
+using System.Linq;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
@@ -15,11 +15,11 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
+        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        result.Should().BeEquivalentTo(sequence);
-        result.Should().BeInAscendingOrder();
+        Assert.That(result, Is.EquivalentTo(sequence));
+        Assert.That(result, Is.Ordered.Ascending);
     }
 
     [Test]
@@ -29,10 +29,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
+        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        result.Should().Equal(2);
+        Assert.That(result, Is.EqualTo(new List<int> { 2 }));
     }
 
     [Test]
@@ -42,10 +42,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 2, 1, 4, 3, 6, 5, 8, 7, 10 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
+        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        result.Should().Equal(1, 3, 5, 7, 10);
+        Assert.That(result, Is.EqualTo(new List<int> { 1, 3, 5, 7, 10 }));
     }
 
     [Test]
@@ -55,10 +55,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 0, 2, 4, 6, 8, 3, 5, 7, 8 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
+        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        result.Should().Equal(0, 2, 3, 5, 7, 8);
+        Assert.That(result, Is.EqualTo(new List<int> { 0, 2, 3, 5, 7, 8 }));
     }
 
     [Test]
@@ -68,10 +68,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));
+        List<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1)).ToList();
 
         // then
-        result.Should().Equal(15);
+        Assert.That(result, Is.EqualTo(new List<int> { 15 }));
     }
 
     [Test]
@@ -81,10 +81,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
 
         // when
-        IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));
+        List<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1)).ToList();
 
         // then
-        result.Should().BeEquivalentTo(sequence);
-        result.Should().BeInDescendingOrder();
+        Assert.That(result, Is.EquivalentTo(sequence));
+        Assert.That(result, Is.Ordered.Descending);
     }
 }

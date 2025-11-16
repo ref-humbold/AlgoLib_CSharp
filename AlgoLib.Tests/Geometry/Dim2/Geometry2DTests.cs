@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
@@ -12,26 +11,34 @@ public class Geometry2DTests
     public void SortByX_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D> {
+        var sequence = new List<Point2D>
+        {
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
+        };
 
         // when
         List<Point2D> result = sequence.SortByX();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
-                              Point2D.Of(-2.0, 3.0), Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0),
-                              Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point2D>
+                {
+                    Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
+                    Point2D.Of(-2.0, 3.0), Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0),
+                    Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0)
+                }));
     }
 
     [Test]
     public void SortByY_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D> {
+        var sequence = new List<Point2D>
+        {
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
@@ -41,29 +48,41 @@ public class Geometry2DTests
         List<Point2D> result = sequence.SortByY();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                              Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
-                              Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point2D>
+                {
+                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+                    Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
+                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0)
+                }));
     }
 
     [Test]
     public void SortByAngle_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D> {
+        var sequence = new List<Point2D>
+        {
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0) };
+            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
+        };
 
         // when
         List<Point2D> result = sequence.SortByAngle();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-                              Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-                              Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point2D>
+                {
+                    Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+                    Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
+                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
+                }));
     }
 
     [Test]
@@ -73,20 +92,20 @@ public class Geometry2DTests
         double result = Point2D.Of(4.0, 5.0).Distance(Point2D.Of(-2.0, -3.0));
 
         // then
-        result.Should().Be(10.0);
+        Assert.That(result, Is.EqualTo(10.0));
     }
 
     [Test]
     public void Distance_WhenSamePoint_ThenZero()
     {
         // given
-        var point = Point2D.Of(13.5, 6.5);
+        Point2D point = Point2D.Of(13.5, 6.5);
 
         // when
         double result = point.Distance(point);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -96,20 +115,20 @@ public class Geometry2DTests
         Point2D result = Point2D.Of(13.7, 6.5).Translate(Vector2D.Of(-10.4, 3.3));
 
         // then
-        result.Should().Be(Point2D.Of(3.3, 9.8));
+        Assert.That(result, Is.EqualTo(Point2D.Of(3.3, 9.8)));
     }
 
     [Test]
     public void Translate_WhenZeroVector_ThenSamePoint()
     {
         // given
-        var point = Point2D.Of(13.5, 6.5);
+        Point2D point = Point2D.Of(13.5, 6.5);
 
         // when
         Point2D result = point.Translate(Vector2D.Of(0.0, 0.0));
 
         // then
-        result.Should().Be(point);
+        Assert.That(result, Is.EqualTo(point));
     }
 
     [Test]
@@ -119,7 +138,7 @@ public class Geometry2DTests
         Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Of(2.0, -3.0));
 
         // then
-        result.Should().Be(Point2D.Of(-9.5, -12.5));
+        Assert.That(result, Is.EqualTo(Point2D.Of(-9.5, -12.5)));
     }
 
     [Test]
@@ -129,19 +148,19 @@ public class Geometry2DTests
         Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Of(0.0, 0.0));
 
         // then
-        result.Should().Be(Point2D.Of(-13.5, -6.5));
+        Assert.That(result, Is.EqualTo(Point2D.Of(-13.5, -6.5)));
     }
 
     [Test]
     public void Reflect_WhenSamePoint_ThenSamePoint()
     {
         // given
-        var point = Point2D.Of(13.5, 6.5);
+        Point2D point = Point2D.Of(13.5, 6.5);
 
         // when
         Point2D result = point.Reflect(point);
 
         // then
-        result.Should().Be(point);
+        Assert.That(result, Is.EqualTo(point));
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
@@ -8,7 +7,7 @@ namespace AlgoLib.Text;
 [TestFixture]
 public class SuffixArrayTests
 {
-    private static readonly string Text = "mississippi";
+    private const string Text = "mississippi";
     private SuffixArray testObject;
 
     [SetUp]
@@ -21,7 +20,7 @@ public class SuffixArrayTests
         string result = testObject.Text;
 
         // then
-        result.Should().Be(Text);
+        Assert.That(result, Is.EqualTo(Text));
     }
 
     [Test]
@@ -31,7 +30,7 @@ public class SuffixArrayTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(11);
+        Assert.That(result, Is.EqualTo(11));
     }
 
     [Test]
@@ -44,10 +43,10 @@ public class SuffixArrayTests
         string result3 = testObject[^2];
 
         // then
-        result0.Should().Be("i");
-        result1.Should().Be("ississippi");
-        result2.Should().Be("ppi");
-        result3.Should().Be("ssippi");
+        Assert.That(result0, Is.EqualTo("i"));
+        Assert.That(result1, Is.EqualTo("ississippi"));
+        Assert.That(result2, Is.EqualTo("ppi"));
+        Assert.That(result3, Is.EqualTo("ssippi"));
     }
 
     [Test]
@@ -57,7 +56,7 @@ public class SuffixArrayTests
         Action action = () => _ = testObject[20];
 
         // then
-        action.Should().Throw<IndexOutOfRangeException>();
+        Assert.That(action, Throws.TypeOf<IndexOutOfRangeException>());
     }
 
     [Test]
@@ -70,10 +69,10 @@ public class SuffixArrayTests
         int result3 = testObject.IndexAt(^2);
 
         // then
-        result0.Should().Be(10);
-        result1.Should().Be(1);
-        result2.Should().Be(8);
-        result3.Should().Be(5);
+        Assert.That(result0, Is.EqualTo(10));
+        Assert.That(result1, Is.EqualTo(1));
+        Assert.That(result2, Is.EqualTo(8));
+        Assert.That(result3, Is.EqualTo(5));
     }
 
     [Test]
@@ -83,7 +82,7 @@ public class SuffixArrayTests
         Action action = () => _ = testObject.IndexAt(20);
 
         // then
-        action.Should().Throw<IndexOutOfRangeException>();
+        Assert.That(action, Throws.TypeOf<IndexOutOfRangeException>());
     }
 
     [Test]
@@ -96,10 +95,10 @@ public class SuffixArrayTests
         int result3 = testObject.IndexOf(^2);
 
         // then
-        result0.Should().Be(4);
-        result1.Should().Be(8);
-        result2.Should().Be(7);
-        result3.Should().Be(5);
+        Assert.That(result0, Is.EqualTo(4));
+        Assert.That(result1, Is.EqualTo(8));
+        Assert.That(result2, Is.EqualTo(7));
+        Assert.That(result3, Is.EqualTo(5));
     }
 
     [Test]
@@ -109,7 +108,7 @@ public class SuffixArrayTests
         Action action = () => _ = testObject.IndexOf(20);
 
         // then
-        action.Should().Throw<IndexOutOfRangeException>();
+        Assert.That(action, Throws.TypeOf<IndexOutOfRangeException>());
     }
 
     [Test]
@@ -119,7 +118,7 @@ public class SuffixArrayTests
         int result = testObject.CountLcp(4, 4);
 
         // then
-        result.Should().Be(7);
+        Assert.That(result, Is.EqualTo(7));
     }
 
     [Test]
@@ -129,7 +128,7 @@ public class SuffixArrayTests
         int result = testObject.CountLcp(1, ^1);
 
         // then
-        result.Should().Be(1);
+        Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
@@ -139,7 +138,7 @@ public class SuffixArrayTests
         int result = testObject.CountLcp(^2, 6);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -150,7 +149,7 @@ public class SuffixArrayTests
         int result1 = testObject.CountLcp(5, 2);
 
         // then
-        result0.Should().Be(3);
-        result1.Should().Be(result0);
+        Assert.That(result0, Is.EqualTo(3));
+        Assert.That(result1, Is.EqualTo(result0));
     }
 }

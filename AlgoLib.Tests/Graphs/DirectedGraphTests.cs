@@ -33,8 +33,8 @@ public class DirectedGraphTests
         string resultEdge = testObject.Properties[edge];
 
         // then
-        resultVertex.Should().Be(vertexProperty);
-        resultEdge.Should().Be(edgeProperty);
+        Assert.That(resultVertex, Is.EqualTo(vertexProperty));
+        Assert.That(resultEdge, Is.EqualTo(edgeProperty));
     }
 
     [Test]
@@ -48,8 +48,8 @@ public class DirectedGraphTests
         string resultEdge = testObject.Properties[edge];
 
         // then
-        resultVertex.Should().Be(default);
-        resultEdge.Should().Be(default);
+        Assert.That(resultVertex, Is.Default);
+        Assert.That(resultEdge, Is.Default);
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class DirectedGraphTests
         Action action = () => _ = testObject.Properties[new Edge<int>(testObject[2], testObject[8])];
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class DirectedGraphTests
         int result = testObject.VerticesCount;
 
         // then
-        result.Should().Be(10);
+        Assert.That(result, Is.EqualTo(10));
     }
 
     [Test]
@@ -102,7 +102,7 @@ public class DirectedGraphTests
         long result = testObject.EdgesCount;
 
         // then
-        result.Should().Be(7);
+        Assert.That(result, Is.EqualTo(7));
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class DirectedGraphTests
         Vertex<int> result = testObject[vertexId];
 
         // then
-        result.Id.Should().Be(vertexId);
+        Assert.That(result.Id, Is.EqualTo(vertexId));
     }
 
     [Test]
@@ -151,7 +151,7 @@ public class DirectedGraphTests
         Action action = () => _ = testObject[12];
 
         // then
-        action.Should().Throw<KeyNotFoundException>();
+        Assert.That(action, Throws.TypeOf<KeyNotFoundException>());
     }
 
     [Test]
@@ -167,8 +167,8 @@ public class DirectedGraphTests
         Edge<int> result = testObject[source, destination];
 
         // then
-        result.Source.Should().Be(source);
-        result.Destination.Should().Be(destination);
+        Assert.That(result.Source, Is.EqualTo(source));
+        Assert.That(result.Destination, Is.EqualTo(destination));
     }
 
     [Test]
@@ -184,7 +184,7 @@ public class DirectedGraphTests
         Action action = () => _ = testObject[destination, source];
 
         // then
-        action.Should().Throw<KeyNotFoundException>();
+        Assert.That(action, Throws.TypeOf<KeyNotFoundException>());
     }
 
     [Test]
@@ -194,7 +194,7 @@ public class DirectedGraphTests
         Action action = () => _ = testObject[1, 2];
 
         // then
-        action.Should().Throw<KeyNotFoundException>();
+        Assert.That(action, Throws.TypeOf<KeyNotFoundException>());
     }
 
     [Test]
@@ -208,10 +208,10 @@ public class DirectedGraphTests
         Vertex<int> result = testObject.AddVertex(newVertexId, property);
 
         // then
-        result.Id.Should().Be(newVertexId);
-        testObject.VerticesCount.Should().Be(11);
-        testObject.GetNeighbours(result).Should().BeEmpty();
-        testObject.Properties[result].Should().Be(property);
+        Assert.That(result.Id, Is.EqualTo(newVertexId));
+        Assert.That(testObject.VerticesCount, Is.EqualTo(11));
+        Assert.That(testObject.GetNeighbours(result), Is.Empty);
+        Assert.That(testObject.Properties[result], Is.EqualTo(property));
     }
 
     [Test]
@@ -227,9 +227,9 @@ public class DirectedGraphTests
         Action action = () => testObject.AddVertex(vertex.Id, "abcdefg");
 
         // then
-        action.Should().Throw<ArgumentException>();
-        testObject.VerticesCount.Should().Be(10);
-        testObject.Properties[vertex].Should().Be(property);
+        Assert.That(action, Throws.ArgumentException);
+        Assert.That(testObject.VerticesCount, Is.EqualTo(10));
+        Assert.That(testObject.Properties[vertex], Is.EqualTo(property));
     }
 
     [Test]
@@ -243,12 +243,12 @@ public class DirectedGraphTests
         testObject.AddEdgeBetween(testObject[1], testObject[1]);
 
         // then
-        result.Source.Should().Be(new Vertex<int>(1));
-        result.Destination.Should().Be(new Vertex<int>(5));
-        testObject.Properties[result].Should().Be(property);
+        Assert.That(result.Source, Is.EqualTo(new Vertex<int>(1)));
+        Assert.That(result.Destination, Is.EqualTo(new Vertex<int>(5)));
+        Assert.That(testObject.Properties[result], Is.EqualTo(property));
         testObject.GetNeighbours(testObject[1]).Should().BeEquivalentTo(
             new[] { new Vertex<int>(1), new Vertex<int>(5) });
-        testObject.GetNeighbours(testObject[5]).Should().BeEmpty();
+        Assert.That(testObject.GetNeighbours(testObject[5]), Is.Empty);
     }
 
     [Test]
@@ -263,7 +263,7 @@ public class DirectedGraphTests
         Action action = () => testObject.AddEdgeBetween(source, destination);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -329,7 +329,7 @@ public class DirectedGraphTests
         long result = testObject.GetOutputDegree(testObject[1]);
 
         // then
-        result.Should().Be(5);
+        Assert.That(result, Is.EqualTo(5));
     }
 
     [Test]
@@ -348,7 +348,7 @@ public class DirectedGraphTests
         long result = testObject.GetInputDegree(testObject[1]);
 
         // then
-        result.Should().Be(5);
+        Assert.That(result, Is.EqualTo(5));
     }
 
     [Test]
@@ -388,9 +388,9 @@ public class DirectedGraphTests
                 new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                 new Edge<int>(new Vertex<int>(9), new Vertex<int>(4))
             });
-        testObject.Properties[vertex].Should().Be(vertexProperty);
+        Assert.That(testObject.Properties[vertex], Is.EqualTo(vertexProperty));
         testObject.Properties[testObject[9]].Should().BeNull();
-        testObject.Properties[testObject[2, 1]].Should().Be(edgeProperty);
+        Assert.That(testObject.Properties[testObject[2, 1]], Is.EqualTo(edgeProperty));
         testObject.Properties[testObject[5, 3]].Should().BeNull();
     }
 
@@ -432,9 +432,9 @@ public class DirectedGraphTests
                 new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                 new Edge<int>(new Vertex<int>(9), new Vertex<int>(4))
             });
-        result.Properties[vertex].Should().Be(vertexProperty);
-        result.Properties[result[9]].Should().BeNull();
-        result.Properties[result[2, 1]].Should().Be(edgeProperty);
-        result.Properties[result[5, 3]].Should().BeNull();
+        Assert.That(result.Properties[vertex], Is.EqualTo(vertexProperty));
+        Assert.That(result.Properties[result[9]], Is.Null);
+        Assert.That(result.Properties[result[2, 1]], Is.EqualTo(edgeProperty));
+        Assert.That(result.Properties[result[5, 3]], Is.Null);
     }
 }

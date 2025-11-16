@@ -39,8 +39,8 @@ public class EquationSystemTests
 
         // then
         result.Should().Equal(new[] { 1.0, 3.0, -2.0 });
-        testObject.HasSolution(result).Should().BeTrue();
-        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
+        Assert.That(testObject.HasSolution(result), Is.True);
+Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
     }
 
     [Test]
@@ -56,9 +56,9 @@ public class EquationSystemTests
         Action action = () => testObject.Solve();
 
         // then
-        action.Should().Throw<NoSolutionException>();
-        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeFalse();
-        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeFalse();
+        Assert.That(action, Throws.TypeOf<NoSolutionException>());
+Assert.That(        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.False);
+Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
     }
 
     [Test]
@@ -74,9 +74,9 @@ public class EquationSystemTests
         Action action = () => testObject.Solve();
 
         // then
-        action.Should().Throw<InfiniteSolutionsException>();
-        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }).Should().BeTrue();
-        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }).Should().BeTrue();
+        Assert.That(action, Throws.TypeOf<InfiniteSolutionsException>());
+Assert.That(        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.True);
+Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.True);
     }
 
     [Test]
@@ -92,7 +92,7 @@ public class EquationSystemTests
         testObject.Swap(0, 2);
 
         // then
-        testObject[0].ToString().Should().Be("-1 x_0 + 6 x_1 + 4 x_2 = 9");
-        testObject[2].ToString().Should().Be("2 x_0 + 3 x_1 + -2 x_2 = 15");
+        Assert.That(testObject[0].ToString(), Is.EqualTo("-1 x_0 + 6 x_1 + 4 x_2 = 9"));
+        Assert.That(testObject[2].ToString(), Is.EqualTo("2 x_0 + 3 x_1 + -2 x_2 = 15"));
     }
 }

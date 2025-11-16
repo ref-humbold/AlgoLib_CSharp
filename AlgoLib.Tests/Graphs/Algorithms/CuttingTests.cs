@@ -58,7 +58,7 @@ public class CuttingTests
         IEnumerable<Edge<int>> result = graph.FindEdgeCut();
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -111,6 +111,6 @@ public class CuttingTests
         IEnumerable<Vertex<int>> result = graph.FindVertexCut();
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 }

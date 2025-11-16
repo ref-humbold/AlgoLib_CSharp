@@ -80,7 +80,7 @@ public class SearchingTests
                 undirectedGraph.Bfs(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -154,7 +154,7 @@ public class SearchingTests
                 undirectedGraph.DfsIterative(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -228,7 +228,7 @@ public class SearchingTests
                 undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), Array.Empty<Vertex<int>>());
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]

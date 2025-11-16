@@ -137,7 +137,7 @@ public class ShortestPathsTests
         Action action = () => directedGraph.BellmanFord(directedGraph[1]);
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     #endregion
@@ -181,7 +181,7 @@ public class ShortestPathsTests
         Action action = () => directedGraph.Dijkstra(directedGraph[1]);
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     #endregion

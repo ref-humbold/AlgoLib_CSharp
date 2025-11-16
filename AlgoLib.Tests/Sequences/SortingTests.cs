@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
@@ -15,13 +14,13 @@ public class SortingTests
     public void HeapSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
 
         // when
         sequence.HeapSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
+        Assert.That(sequence, Is.Ordered.Ascending);
     }
 
     [Test]
@@ -34,7 +33,7 @@ public class SortingTests
         sequence.HeapSort();
 
         // then
-        sequence.Should().BeEmpty();
+        Assert.That(sequence, Is.Empty);
     }
 
     [Test]
@@ -44,7 +43,7 @@ public class SortingTests
         Action action = () => Sorting.HeapSort<int>(null);
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 
     #endregion
@@ -54,31 +53,35 @@ public class SortingTests
     public void TopDownMergeSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
 
         // when
         sequence.TopDownMergeSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
+        Assert.That(sequence, Is.Ordered.Ascending);
     }
 
     [Test]
     public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
     {
         // given
-        var sequence = new List<IntPair>() {
-            new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
-            new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+        var sequence = new List<IntPair>
+        {
+            new(3, 17), new(-6, 0), new(9, 12), new(3, 4), new(9, -14), new(-1, 7), new(0, 2)
         };
 
         // when
         sequence.TopDownMergeSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
-        sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
-        sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
+        Assert.That(sequence, Is.Ordered.Ascending);
+        Assert.That(
+            sequence.IndexOf(new IntPair(3, 17)),
+            Is.LessThan(sequence.IndexOf(new IntPair(3, 4))));
+        Assert.That(
+            sequence.IndexOf(new IntPair(9, 12)),
+            Is.LessThan(sequence.IndexOf(new IntPair(9, -14))));
     }
 
     [Test]
@@ -91,7 +94,7 @@ public class SortingTests
         sequence.TopDownMergeSort();
 
         // then
-        sequence.Should().BeEmpty();
+        Assert.That(sequence, Is.Empty);
     }
 
     [Test]
@@ -101,7 +104,7 @@ public class SortingTests
         Action action = () => Sorting.TopDownMergeSort<int>(null);
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 
     #endregion
@@ -111,31 +114,36 @@ public class SortingTests
     public void BottomUpMergeSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
 
         // when
         sequence.BottomUpMergeSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
+        Assert.That(sequence, Is.Ordered.Ascending);
     }
 
     [Test]
     public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
     {
         // given
-        var sequence = new List<IntPair>() {
-            new IntPair(3, 17), new IntPair(-6, 0), new IntPair(9, 12), new IntPair(3, 4),
-            new IntPair(9, -14), new IntPair(-1, 7), new IntPair(0, 2)
+        var sequence = new List<IntPair>
+        {
+            new(3, 17), new(-6, 0), new(9, 12), new(3, 4),
+            new(9, -14), new(-1, 7), new(0, 2)
         };
 
         // when
         sequence.BottomUpMergeSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
-        sequence.IndexOf(new IntPair(3, 17)).Should().BeLessThan(sequence.IndexOf(new IntPair(3, 4)));
-        sequence.IndexOf(new IntPair(9, 12)).Should().BeLessThan(sequence.IndexOf(new IntPair(9, -14)));
+        Assert.That(sequence, Is.Ordered.Ascending);
+        Assert.That(
+            sequence.IndexOf(new IntPair(3, 17)),
+            Is.LessThan(sequence.IndexOf(new IntPair(3, 4))));
+        Assert.That(
+            sequence.IndexOf(new IntPair(9, 12)),
+            Is.LessThan(sequence.IndexOf(new IntPair(9, -14))));
     }
 
     [Test]
@@ -148,7 +156,7 @@ public class SortingTests
         sequence.BottomUpMergeSort();
 
         // then
-        sequence.Should().BeEmpty();
+        Assert.That(sequence, Is.Empty);
     }
 
     [Test]
@@ -158,7 +166,7 @@ public class SortingTests
         Action action = () => Sorting.BottomUpMergeSort<int>(null);
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 
     #endregion
@@ -168,13 +176,13 @@ public class SortingTests
     public void QuickSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int>() { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
 
         // when
         sequence.QuickSort();
 
         // then
-        sequence.Should().BeInAscendingOrder();
+        Assert.That(sequence, Is.Ordered.Ascending);
     }
 
     [Test]
@@ -187,7 +195,7 @@ public class SortingTests
         sequence.QuickSort();
 
         // then
-        sequence.Should().BeEmpty();
+        Assert.That(sequence, Is.Empty);
     }
 
     [Test]
@@ -197,37 +205,21 @@ public class SortingTests
         Action action = () => Sorting.QuickSort<int>(null);
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 
     #endregion
 
-    private struct IntPair : IComparable, IComparable<IntPair>, IEquatable<IntPair>
+    private readonly record struct IntPair(int First, int Second)
+        : IComparable, IComparable<IntPair>
     {
-        public int First
-        {
-            get; set;
-        }
-
-        public int Second
-        {
-            get; set;
-        }
-
-        public IntPair(int first, int second)
-        {
-            First = first;
-            Second = second;
-        }
-
         public int CompareTo(object obj) =>
             obj is IntPair pair
                 ? CompareTo(pair)
-                : throw new ArgumentException("Compared object is not of type IntPair", nameof(obj));
+                : throw new ArgumentException(
+                    "Compared object is not of type IntPair", nameof(obj));
 
         public int CompareTo(IntPair other) => First.CompareTo(other.First);
-
-        public override bool Equals(object obj) => obj is IntPair pair && Equals(pair);
 
         public bool Equals(IntPair other) => First == other.First && Second == other.Second;
 

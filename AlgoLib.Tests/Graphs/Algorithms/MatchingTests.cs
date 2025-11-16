@@ -44,7 +44,7 @@ public class MatchingTests
         Dictionary<Vertex<int>, Vertex<int>> result = graph.Match();
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class MatchingTests
         Dictionary<Vertex<int>, Vertex<int>> result = graph.Match();
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -72,6 +72,6 @@ public class MatchingTests
         Action action = () => graph.Match();
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 }

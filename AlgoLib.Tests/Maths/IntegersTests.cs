@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -17,7 +16,7 @@ public class IntegersTests
         int result = Integers.Gcd(161, 46);
 
         // then
-        result.Should().Be(23);
+        Assert.That(result, Is.EqualTo(23));
     }
 
     [Test]
@@ -27,7 +26,7 @@ public class IntegersTests
         long result = Integers.Gcd(127L, 41L);
 
         // then
-        result.Should().Be(1L);
+        Assert.That(result, Is.EqualTo(1L));
     }
 
     [Test]
@@ -37,7 +36,7 @@ public class IntegersTests
         int result = Integers.Gcd(119, 57);
 
         // then
-        result.Should().Be(1);
+        Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
@@ -50,7 +49,7 @@ public class IntegersTests
         int result = Integers.Gcd(number, number * 6);
 
         // then
-        result.Should().Be(number);
+        Assert.That(result, Is.EqualTo(number));
     }
 
     [Test]
@@ -63,7 +62,7 @@ public class IntegersTests
         int result = Integers.Gcd(number, 0);
 
         // then
-        result.Should().Be(number);
+        Assert.That(result, Is.EqualTo(number));
     }
 
     #endregion
@@ -76,7 +75,7 @@ public class IntegersTests
         int result = Integers.Lcm(161, 46);
 
         // then
-        result.Should().Be(322);
+        Assert.That(result, Is.EqualTo(322));
     }
 
     [Test]
@@ -86,7 +85,7 @@ public class IntegersTests
         long result = Integers.Lcm(127L, 41L);
 
         // then
-        result.Should().Be(5207L);
+        Assert.That(result, Is.EqualTo(5207L));
     }
 
     [Test]
@@ -96,7 +95,7 @@ public class IntegersTests
         int result = Integers.Lcm(119, 57);
 
         // then
-        result.Should().Be(6783);
+        Assert.That(result, Is.EqualTo(6783));
     }
 
     [Test]
@@ -109,7 +108,7 @@ public class IntegersTests
         int result = Integers.Lcm(number, number * 6);
 
         // then
-        result.Should().Be(number * 6);
+        Assert.That(result, Is.EqualTo(number * 6));
     }
 
     [Test]
@@ -119,7 +118,7 @@ public class IntegersTests
         int result = Integers.Lcm(96, 0);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     #endregion
@@ -132,7 +131,7 @@ public class IntegersTests
         int result = Integers.Multiply(0, 14);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -142,7 +141,7 @@ public class IntegersTests
         int result = Integers.Multiply(14, 0);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -152,7 +151,7 @@ public class IntegersTests
         int result = Integers.Multiply(0, 0);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -162,7 +161,7 @@ public class IntegersTests
         long result = Integers.Multiply(3, 10);
 
         // then
-        result.Should().Be(30);
+        Assert.That(result, Is.EqualTo(30));
     }
 
     [Test]
@@ -172,7 +171,7 @@ public class IntegersTests
         int result = Integers.Multiply(-3, 10);
 
         // then
-        result.Should().Be(-30);
+        Assert.That(result, Is.EqualTo(-30));
     }
 
     [Test]
@@ -182,7 +181,7 @@ public class IntegersTests
         int result = Integers.Multiply(3, -10);
 
         // then
-        result.Should().Be(-30);
+        Assert.That(result, Is.EqualTo(-30));
     }
 
     [Test]
@@ -192,7 +191,7 @@ public class IntegersTests
         long result = Integers.Multiply(-3L, -10L);
 
         // then
-        result.Should().Be(30L);
+        Assert.That(result, Is.EqualTo(30L));
     }
 
     [Test]
@@ -202,7 +201,7 @@ public class IntegersTests
         int result = Integers.Multiply(547, 312, 10000);
 
         // then
-        result.Should().Be(664);
+        Assert.That(result, Is.EqualTo(664));
     }
 
     [Test]
@@ -212,7 +211,7 @@ public class IntegersTests
         int result = Integers.Multiply(-547, 312, 10000);
 
         // then
-        result.Should().Be(9336);
+        Assert.That(result, Is.EqualTo(9336));
     }
 
     [Test]
@@ -222,7 +221,7 @@ public class IntegersTests
         int result = Integers.Multiply(547, -312, 10000);
 
         // then
-        result.Should().Be(9336);
+        Assert.That(result, Is.EqualTo(9336));
     }
 
     [Test]
@@ -232,7 +231,7 @@ public class IntegersTests
         long result = Integers.Multiply(-547L, -312L, 10000L);
 
         // then
-        result.Should().Be(664L);
+        Assert.That(result, Is.EqualTo(664L));
     }
 
     [Test]
@@ -242,7 +241,7 @@ public class IntegersTests
         Action action = () => _ = Integers.Multiply(547, 312, -10000);
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<ArithmeticException>());
     }
 
     #endregion
@@ -255,7 +254,7 @@ public class IntegersTests
         int result = Integers.Power(0, 14);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -265,7 +264,7 @@ public class IntegersTests
         int result = Integers.Power(14, 0);
 
         // then
-        result.Should().Be(1);
+        Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
@@ -275,7 +274,7 @@ public class IntegersTests
         Action action = () => _ = Integers.Power(0, 0);
 
         // then
-        action.Should().Throw<NotFiniteNumberException>();
+        Assert.That(action, Throws.TypeOf<NotFiniteNumberException>());
     }
 
     [Test]
@@ -285,7 +284,7 @@ public class IntegersTests
         int result = Integers.Power(3, 10);
 
         // then
-        result.Should().Be(59049);
+        Assert.That(result, Is.EqualTo(59049));
     }
 
     [Test]
@@ -295,7 +294,7 @@ public class IntegersTests
         int result = Integers.Power(-3, 10);
 
         // then
-        result.Should().Be(59049);
+        Assert.That(result, Is.EqualTo(59049));
     }
 
     [Test]
@@ -305,7 +304,7 @@ public class IntegersTests
         long result = Integers.Power(-3L, 9L);
 
         // then
-        result.Should().Be(-19683L);
+        Assert.That(result, Is.EqualTo(-19683L));
     }
 
     [Test]
@@ -315,7 +314,7 @@ public class IntegersTests
         Action action = () => _ = Integers.Power(3, -10);
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<ArithmeticException>());
     }
 
     [Test]
@@ -325,7 +324,7 @@ public class IntegersTests
         int result = Integers.Power(5, 11, 10000);
 
         // then
-        result.Should().Be(8125);
+        Assert.That(result, Is.EqualTo(8125));
     }
 
     [Test]
@@ -335,7 +334,7 @@ public class IntegersTests
         int result = Integers.Power(-5, 11, 10000);
 
         // then
-        result.Should().Be(1875);
+        Assert.That(result, Is.EqualTo(1875));
     }
 
     [Test]
@@ -345,7 +344,7 @@ public class IntegersTests
         long result = Integers.Power(-5L, 12L, 10000L);
 
         // then
-        result.Should().Be(625L);
+        Assert.That(result, Is.EqualTo(625L));
     }
 
     [Test]
@@ -355,7 +354,7 @@ public class IntegersTests
         Action action = () => _ = Integers.Power(5, 11, -10000);
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<ArithmeticException>());
     }
 
     #endregion

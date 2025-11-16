@@ -60,7 +60,7 @@ public class TopologicalSortingTests
         Action action = () => TopologicalSorting.InputsTopologicalSort(graph);
 
         // then
-        action.Should().Throw<DirectedCyclicGraphException>();
+        Assert.That(action, Throws.TypeOf<DirectedCyclicGraphException>());
     }
 
     [Test]
@@ -135,7 +135,7 @@ public class TopologicalSortingTests
         Action action = () => TopologicalSorting.DfsTopologicalSort(graph);
 
         // then
-        action.Should().Throw<DirectedCyclicGraphException>();
+        Assert.That(action, Throws.TypeOf<DirectedCyclicGraphException>());
     }
 
     [Test]

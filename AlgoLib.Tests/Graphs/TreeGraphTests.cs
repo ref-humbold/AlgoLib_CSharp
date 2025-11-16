@@ -41,8 +41,8 @@ public class TreeGraphTests
         string resultEdge = testObject.Properties[edge];
 
         // then
-        resultVertex.Should().Be(vertexProperty);
-        resultEdge.Should().Be(edgeProperty);
+        Assert.That(resultVertex, Is.EqualTo(vertexProperty));
+        Assert.That(resultEdge, Is.EqualTo(edgeProperty));
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class TreeGraphTests
         long result = testObject.VerticesCount;
 
         // then
-        result.Should().Be(8);
+        Assert.That(result, Is.EqualTo(8));
     }
 
     [Test]
@@ -74,7 +74,7 @@ public class TreeGraphTests
         long result = testObject.EdgesCount;
 
         // then
-        result.Should().Be(7);
+        Assert.That(result, Is.EqualTo(7));
     }
 
     [Test]
@@ -106,7 +106,7 @@ public class TreeGraphTests
         Vertex<int> result = testObject[vertexId];
 
         // then
-        result.Id.Should().Be(vertexId);
+        Assert.That(result.Id, Is.EqualTo(vertexId));
     }
 
     [Test]
@@ -120,8 +120,8 @@ public class TreeGraphTests
         Edge<int> result = testObject[source, destination];
 
         // then
-        result.Source.Should().Be(source);
-        result.Destination.Should().Be(destination);
+        Assert.That(result.Source, Is.EqualTo(source));
+        Assert.That(result.Destination, Is.EqualTo(destination));
     }
 
     [Test]
@@ -157,7 +157,7 @@ public class TreeGraphTests
         long result = testObject.GetOutputDegree(testObject[1]);
 
         // then
-        result.Should().Be(3);
+        Assert.That(result, Is.EqualTo(3));
     }
 
     [Test]
@@ -167,7 +167,7 @@ public class TreeGraphTests
         long result = testObject.GetInputDegree(testObject[1]);
 
         // then
-        result.Should().Be(3);
+        Assert.That(result, Is.EqualTo(3));
     }
 
     [Test]
@@ -183,12 +183,12 @@ public class TreeGraphTests
         Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
 
         // then
-        result.Source.Id.Should().Be(newVertexId);
-        result.Destination.Should().Be(neighbour);
-        testObject.VerticesCount.Should().Be(9);
+        Assert.That(result.Source.Id, Is.EqualTo(newVertexId));
+        Assert.That(result.Destination, Is.EqualTo(neighbour));
+        Assert.That(testObject.VerticesCount, Is.EqualTo(9));
         testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
-        testObject.Properties[testObject[newVertexId]].Should().Be(vertexProperty);
-        testObject.Properties[result].Should().Be(edgeProperty);
+        Assert.That(testObject.Properties[testObject[newVertexId]], Is.EqualTo(vertexProperty));
+        Assert.That(testObject.Properties[result], Is.EqualTo(edgeProperty));
     }
 
     [Test]
@@ -204,8 +204,8 @@ public class TreeGraphTests
         Action action = () => testObject.AddVertex(vertex, testObject[2], "abcdefg", "xyz");
 
         // then
-        action.Should().Throw<ArgumentException>();
-        testObject.VerticesCount.Should().Be(8);
-        testObject.Properties[vertex].Should().Be(property);
+        Assert.That(action, Throws.ArgumentException);
+        Assert.That(testObject.VerticesCount, Is.EqualTo(8));
+        Assert.That(testObject.Properties[vertex], Is.EqualTo(property));
     }
 }

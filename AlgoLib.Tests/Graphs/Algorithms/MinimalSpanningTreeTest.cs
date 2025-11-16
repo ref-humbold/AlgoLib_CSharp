@@ -38,9 +38,9 @@ public class MinimalSpanningTreeTest
                                .Select(edge => result.Properties[edge].Weight)
                                .Sum();
 
-        result.VerticesCount.Should().Be(graph.VerticesCount);
+        Assert.That(result.VerticesCount, Is.EqualTo(graph.VerticesCount));
         result.Vertices.Should().BeEquivalentTo(graph.Vertices);
-        result.EdgesCount.Should().Be(4);
+        Assert.That(result.EdgesCount, Is.EqualTo(4));
         result.Edges.Should().BeEquivalentTo(
             new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
         mstSize.Should().BeApproximately(12.0, Precision);
@@ -60,9 +60,9 @@ public class MinimalSpanningTreeTest
                                .Select(edge => result.Properties[edge].Weight)
                                .Sum();
 
-        result.VerticesCount.Should().Be(graph.VerticesCount);
+        Assert.That(result.VerticesCount, Is.EqualTo(graph.VerticesCount));
         result.Vertices.Should().BeEquivalentTo(graph.Vertices);
-        result.EdgesCount.Should().Be(4);
+        Assert.That(result.EdgesCount, Is.EqualTo(4));
         result.Edges.Should().BeEquivalentTo(
             new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
         mstSize.Should().BeApproximately(12.0, Precision);
@@ -76,7 +76,7 @@ public class MinimalSpanningTreeTest
         IUndirectedGraph<int, object, WeightProp> result4 = MinimalSpanningTree.Prim(graph, graph[4]);
 
         // then
-        result1.EdgesCount.Should().Be(result4.EdgesCount);
+        Assert.That(result1.EdgesCount, Is.EqualTo(result4.EdgesCount));
         result1.Edges.Should().BeEquivalentTo(result4.Edges);
     }
 

@@ -16,7 +16,10 @@ public class AvlTreeTests
 
     private AvlTree<int> testObject;
 
-    public AvlTreeTests() => present = numbers.Where((_, i) => i % 3 == 2).ToArray();
+    public AvlTreeTests()
+    {
+        present = numbers.Where((_, i) => i % 3 == 2).ToArray();
+    }
 
     [SetUp]
     public void SetUp() => testObject = new AvlTree<int>(numbers);
@@ -28,7 +31,7 @@ public class AvlTreeTests
         int result = new AvlTree<int>().Count;
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -38,7 +41,7 @@ public class AvlTreeTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(numbers.Length);
+        Assert.That(result, Is.EqualTo(numbers.Length));
     }
 
     [Test]
@@ -48,7 +51,7 @@ public class AvlTreeTests
         string result = testObject.ToString();
 
         // then
-        result.Should().Be("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}");
+        Assert.That(result, Is.EqualTo("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}"));
     }
 
     [Test]
@@ -58,7 +61,7 @@ public class AvlTreeTests
         testObject.Clear();
 
         // then
-        testObject.Should().BeEmpty();
+        Assert.That(testObject, Is.Empty);
     }
 
     #region GetEnumerator
@@ -70,7 +73,7 @@ public class AvlTreeTests
         IEnumerator<int> result = new AvlTree<int>().GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -83,9 +86,9 @@ public class AvlTreeTests
         IEnumerator<int> result = new AvlTree<int>(new[] { element }).GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeTrue();
-        result.Current.Should().Be(element);
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.True);
+        Assert.That(result.Current, Is.EqualTo(element));
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -95,8 +98,8 @@ public class AvlTreeTests
         var result = testObject.ToList();
 
         // then
-        result.Should().BeInAscendingOrder();
-        result.Should().BeEquivalentTo(numbers);
+        Assert.That(result, Is.Ordered.Ascending);
+        Assert.That(result, Is.EquivalentTo(numbers));
     }
 
     #endregion
@@ -130,7 +133,7 @@ public class AvlTreeTests
         Action action = () => testObject.CopyTo(array, 0);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     #endregion
@@ -143,7 +146,7 @@ public class AvlTreeTests
         bool result = new AvlTree<int>().Contains(numbers[0]);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -155,7 +158,7 @@ public class AvlTreeTests
             bool result = testObject.Contains(i);
 
             // then
-            result.Should().BeTrue();
+            Assert.That(result, Is.True);
         }
     }
 
@@ -168,7 +171,7 @@ public class AvlTreeTests
             bool result = testObject.Contains(i);
 
             // then
-            result.Should().BeFalse();
+            Assert.That(result, Is.False);
         }
     }
 
@@ -187,7 +190,7 @@ public class AvlTreeTests
         bool result = testObject.Add(element);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
         testObject.Should().Contain(element);
         testObject.Should().HaveCount(1);
     }
@@ -201,7 +204,7 @@ public class AvlTreeTests
             bool result = testObject.Add(i);
 
             // then
-            result.Should().BeTrue();
+            Assert.That(result, Is.True);
             testObject.Should().Contain(i);
         }
 
@@ -217,7 +220,7 @@ public class AvlTreeTests
             bool result = testObject.Add(i);
 
             // then
-            result.Should().BeFalse();
+            Assert.That(result, Is.False);
             testObject.Should().Contain(i);
         }
 
@@ -234,7 +237,7 @@ public class AvlTreeTests
         bool result = new AvlTree<int>().Remove(numbers[0]);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -246,7 +249,7 @@ public class AvlTreeTests
             bool result = testObject.Remove(i);
 
             // then
-            result.Should().BeTrue();
+            Assert.That(result, Is.True);
             testObject.Should().NotContain(i);
         }
 
@@ -262,7 +265,7 @@ public class AvlTreeTests
             bool result = testObject.Remove(i);
 
             // then
-            result.Should().BeFalse();
+            Assert.That(result, Is.False);
             testObject.Should().NotContain(i);
         }
 
@@ -282,7 +285,7 @@ public class AvlTreeTests
         bool result = testObject.Remove(root);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
         testObject.Should().NotContain(root);
         testObject.Should().Contain(element);
         testObject.Should().HaveCount(1);
@@ -301,7 +304,7 @@ public class AvlTreeTests
         bool result = testObject.Remove(root);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
         testObject.Should().NotContain(root);
         testObject.Should().Contain(element);
         testObject.Should().HaveCount(1);
@@ -319,9 +322,9 @@ public class AvlTreeTests
         bool result = testObject.Remove(root);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
         testObject.Should().NotContain(root);
-        testObject.Should().BeEmpty();
+        Assert.That(testObject, Is.Empty);
     }
 
     #endregion
@@ -374,7 +377,7 @@ public class AvlTreeTests
         testObject.IntersectWith(absent);
 
         // then
-        testObject.Should().BeEmpty();
+        Assert.That(testObject, Is.Empty);
     }
 
     [Test]
@@ -384,7 +387,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSubsetOf(present);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -394,7 +397,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSubsetOf(numbers);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -404,7 +407,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSubsetOf(numbers.Union(absent));
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -414,7 +417,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSupersetOf(present);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -424,7 +427,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSupersetOf(numbers);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -434,7 +437,7 @@ public class AvlTreeTests
         bool result = testObject.IsProperSupersetOf(numbers.Union(absent));
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -444,7 +447,7 @@ public class AvlTreeTests
         bool result = testObject.IsSubsetOf(present);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -454,7 +457,7 @@ public class AvlTreeTests
         bool result = testObject.IsSubsetOf(numbers);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -464,7 +467,7 @@ public class AvlTreeTests
         bool result = testObject.IsSubsetOf(numbers.Union(absent));
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -474,7 +477,7 @@ public class AvlTreeTests
         bool result = testObject.IsSupersetOf(present);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -484,7 +487,7 @@ public class AvlTreeTests
         bool result = testObject.IsSupersetOf(numbers);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -494,7 +497,7 @@ public class AvlTreeTests
         bool result = testObject.IsSupersetOf(numbers.Union(absent));
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -504,7 +507,7 @@ public class AvlTreeTests
         bool result = testObject.Overlaps(present);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -514,7 +517,7 @@ public class AvlTreeTests
         bool result = testObject.Overlaps(absent);
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -524,7 +527,7 @@ public class AvlTreeTests
         bool result = testObject.Overlaps(absent.Union(present));
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -534,7 +537,7 @@ public class AvlTreeTests
         bool result = testObject.SetEquals(numbers);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -544,7 +547,7 @@ public class AvlTreeTests
         bool result = testObject.SetEquals(numbers.Take(5));
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -554,7 +557,7 @@ public class AvlTreeTests
         bool result = testObject.SetEquals(numbers.Union(absent));
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
