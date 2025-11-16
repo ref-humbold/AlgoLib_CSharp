@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -18,11 +17,13 @@ public class EquationSystemTests
             new Equation(new[] { -1.0, 6.0, 4.0 }, 9));
 
         // when
-        string result = testObject.ToString();
+        var result = testObject.ToString();
 
         // then
-        result.Should().Be(
-            "{ 2 x_0 + 3 x_1 + -2 x_2 = 15 ; 7 x_0 + -1 x_1 = 4 ; -1 x_0 + 6 x_1 + 4 x_2 = 9 }");
+        Assert.That(
+            result,
+            Is.EqualTo(
+                "{ 2 x_0 + 3 x_1 + -2 x_2 = 15 ; 7 x_0 + -1 x_1 = 4 ; -1 x_0 + 6 x_1 + 4 x_2 = 9 }"));
     }
 
     [Test]
@@ -38,9 +39,9 @@ public class EquationSystemTests
         double[] result = testObject.Solve();
 
         // then
-        result.Should().Equal(new[] { 1.0, 3.0, -2.0 });
+        Assert.That(result, Is.EqualTo(new[] { 1.0, 3.0, -2.0 }));
         Assert.That(testObject.HasSolution(result), Is.True);
-Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
+        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
     }
 
     [Test]
@@ -57,8 +58,8 @@ Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.Fal
 
         // then
         Assert.That(action, Throws.TypeOf<NoSolutionException>());
-Assert.That(        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.False);
-Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
+        Assert.That(testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.False);
+        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
     }
 
     [Test]
@@ -75,8 +76,8 @@ Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.Fal
 
         // then
         Assert.That(action, Throws.TypeOf<InfiniteSolutionsException>());
-Assert.That(        testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.True);
-Assert.That(        testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.True);
+        Assert.That(testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.True);
+        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.True);
     }
 
     [Test]

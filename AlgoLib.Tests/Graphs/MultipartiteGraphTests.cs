@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs;
@@ -29,8 +28,8 @@ public class MultipartiteGraphTest
         // given
         var vertex = new Vertex<int>(2);
         Edge<int> edge = testObject[0, 3];
-        string vertexProperty = "x";
-        string edgeProperty = "y";
+        var vertexProperty = "x";
+        var edgeProperty = "y";
 
         // when
         testObject.Properties[vertex] = vertexProperty;
@@ -71,13 +70,15 @@ public class MultipartiteGraphTest
         IEnumerable<Vertex<int>> result = testObject.Vertices;
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] {
-                new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
-                new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
-                new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
-                new Vertex<int>(9)
-            });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2),
+                    new Vertex<int>(3), new Vertex<int>(4), new Vertex<int>(5),
+                    new Vertex<int>(6), new Vertex<int>(7), new Vertex<int>(8),
+                    new Vertex<int>(9)
+                }));
     }
 
     [Test]
@@ -87,21 +88,23 @@ public class MultipartiteGraphTest
         IEnumerable<Edge<int>> result = testObject.Edges;
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] {
-                new Edge<int>(new Vertex<int>(0), new Vertex<int>(3)),
-                new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
-                new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
-                new Edge<int>(new Vertex<int>(4), new Vertex<int>(6)),
-                new Edge<int>(new Vertex<int>(7), new Vertex<int>(9))
-            });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Edge<int>(new Vertex<int>(0), new Vertex<int>(3)),
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(5)),
+                    new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(6)),
+                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(9))
+                }));
     }
 
     [Test]
     public void Indexer_WhenVertexExists_ThenVertex()
     {
         // given
-        int vertexId = 5;
+        var vertexId = 5;
 
         // when
         Vertex<int> result = testObject[vertexId];
@@ -132,9 +135,13 @@ public class MultipartiteGraphTest
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(new Vertex<int>(9));
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
-                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(9)) });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Edge<int>(new Vertex<int>(2), new Vertex<int>(9)),
+                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(9))
+                }));
     }
 
     [Test]
@@ -144,7 +151,7 @@ public class MultipartiteGraphTest
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(new Vertex<int>(9));
 
         // then
-        result.Should().BeEquivalentTo(new[] { new Vertex<int>(2), new Vertex<int>(7) });
+        Assert.That(result, Is.EquivalentTo(new[] { new Vertex<int>(2), new Vertex<int>(7) }));
     }
 
     [Test]
@@ -174,8 +181,13 @@ public class MultipartiteGraphTest
         IEnumerable<Vertex<int>> result = testObject.GetVerticesFromGroup(2);
 
         // then
-        result.Should().BeEquivalentTo(new[] { new Vertex<int>(5), new Vertex<int>(6),
-                                                new Vertex<int>(7), new Vertex<int>(8) });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Vertex<int>(5), new Vertex<int>(6),
+                    new Vertex<int>(7), new Vertex<int>(8)
+                }));
     }
 
     [Test]
@@ -192,8 +204,8 @@ public class MultipartiteGraphTest
     public void AddVertex_WhenNewVertex_ThenCreatedVertex()
     {
         // given
-        int newVertexId = 13;
-        string property = "qwerty";
+        var newVertexId = 13;
+        var property = "qwerty";
 
         // when
         Vertex<int> result = testObject.AddVertex(4, newVertexId, property);
@@ -210,7 +222,7 @@ public class MultipartiteGraphTest
     {
         // given
         var vertex = new Vertex<int>(6);
-        string property = "qwerty";
+        var property = "qwerty";
 
         testObject.Properties[vertex] = property;
 
@@ -239,7 +251,7 @@ public class MultipartiteGraphTest
         // given
         var source = new Vertex<int>(2);
         var destination = new Vertex<int>(8);
-        string property = "asdfgh";
+        var property = "asdfgh";
 
         // when
         Edge<int> result = testObject.AddEdgeBetween(source, destination, property);
@@ -248,7 +260,7 @@ public class MultipartiteGraphTest
         Assert.That(result.Source, Is.EqualTo(source));
         Assert.That(result.Destination, Is.EqualTo(destination));
         Assert.That(testObject.Properties[result], Is.EqualTo(property));
-        testObject.GetNeighbours(destination).Should().BeEquivalentTo(new[] { source });
+        Assert.That(testObject.GetNeighbours(destination), Is.EquivalentTo(new[] { source }));
     }
 
     [Test]

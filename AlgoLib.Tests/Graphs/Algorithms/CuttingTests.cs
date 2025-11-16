@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
@@ -36,8 +35,9 @@ public class CuttingTests
         IEnumerable<Edge<int>> result = graph.FindEdgeCut();
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { graph[graph[0], graph[7]], graph[graph[5], graph[6]] });
+        Assert.That(
+            result,
+            Is.EquivalentTo(new[] { graph[graph[0], graph[7]], graph[graph[5], graph[6]] }));
     }
 
     [Test]
@@ -88,8 +88,7 @@ public class CuttingTests
         IEnumerable<Vertex<int>> result = graph.FindVertexCut();
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { graph[0], graph[1], graph[5], graph[7] });
+        Assert.That(result, Is.EquivalentTo(new[] { graph[0], graph[1], graph[5], graph[7] }));
     }
 
     [Test]

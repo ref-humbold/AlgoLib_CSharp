@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs;
@@ -62,9 +61,13 @@ public class TreeGraphTests
         IEnumerable<Vertex<int>> result = testObject.Vertices;
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
-                    new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7) });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
+                    new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7)
+                }));
     }
 
     [Test]
@@ -84,16 +87,18 @@ public class TreeGraphTests
         IEnumerable<Edge<int>> result = testObject.Edges;
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] {
-                new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
-                new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
-                new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
-                new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
-                new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
-                new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
-                new Edge<int>(new Vertex<int>(7), new Vertex<int>(2))
-            });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
+                    new Edge<int>(new Vertex<int>(7), new Vertex<int>(2))
+                }));
     }
 
     [Test]
@@ -131,8 +136,9 @@ public class TreeGraphTests
         IEnumerable<Vertex<int>> result = testObject.GetNeighbours(testObject[1]);
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) });
+        Assert.That(
+            result,
+            Is.EquivalentTo(new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) }));
     }
 
     [Test]
@@ -142,12 +148,14 @@ public class TreeGraphTests
         IEnumerable<Edge<int>> result = testObject.GetAdjacentEdges(testObject[1]);
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] {
-                new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
-                new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
-                new Edge<int>(new Vertex<int>(5), new Vertex<int>(1))
-            });
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
+                    new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
+                    new Edge<int>(new Vertex<int>(5), new Vertex<int>(1))
+                }));
     }
 
     [Test]
@@ -180,13 +188,15 @@ public class TreeGraphTests
         string edgeProperty = "asdfgh";
 
         // when
-        Edge<int> result = testObject.AddVertex(newVertexId, neighbour, vertexProperty, edgeProperty);
+        Edge<int> result = testObject.AddVertex(
+            newVertexId, neighbour, vertexProperty, edgeProperty);
 
         // then
         Assert.That(result.Source.Id, Is.EqualTo(newVertexId));
         Assert.That(result.Destination, Is.EqualTo(neighbour));
         Assert.That(testObject.VerticesCount, Is.EqualTo(9));
-        testObject.GetNeighbours(testObject[newVertexId]).Should().Equal(neighbour);
+        Assert.That(
+            testObject.GetNeighbours(testObject[newVertexId]), Is.EqualTo(new[] { neighbour }));
         Assert.That(testObject.Properties[testObject[newVertexId]], Is.EqualTo(vertexProperty));
         Assert.That(testObject.Properties[result], Is.EqualTo(edgeProperty));
     }

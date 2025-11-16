@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures;
@@ -48,7 +47,7 @@ public class AvlTreeTests
     public void ToString_WhenNotEmpty_ThenTextRepresentation()
     {
         // when
-        string result = testObject.ToString();
+        var result = testObject.ToString();
 
         // then
         Assert.That(result, Is.EqualTo("{|2, 6, 10, 14, 18, 24, 26, 30, 37, 45, 51, 68, 71, 97|}"));
@@ -95,7 +94,7 @@ public class AvlTreeTests
     public void GetEnumerator_WhenMultipleElements_ThenSortedElements()
     {
         // given
-        var result = testObject.ToList();
+        List<int> result = testObject.ToList();
 
         // then
         Assert.That(result, Is.Ordered.Ascending);
@@ -109,22 +108,22 @@ public class AvlTreeTests
     public void CopyTo_WhenNotEmpty_ThenAllElementsCopied()
     {
         // given
-        int offset = 5;
-        int arrayItem = 0;
+        var offset = 5;
+        var arrayItem = 0;
         int[] array = Enumerable.Repeat(arrayItem, numbers.Length + 2 * offset).ToArray();
 
         // when
         testObject.CopyTo(array, offset);
 
         // then
-        array.Take(offset).Should().OnlyContain(e => e == arrayItem);
-        array.Skip(offset).Take(numbers.Length).Should().BeInAscendingOrder();
-        array.Skip(offset).Take(numbers.Length).Should().BeEquivalentTo(numbers);
-        array.Skip(offset + numbers.Length).Should().OnlyContain(e => e == arrayItem);
+        Assert.That(array.Take(offset), Has.All.EqualTo(arrayItem));
+        Assert.That(array.Skip(offset).Take(numbers.Length), Is.Ordered.Ascending);
+        Assert.That(array.Skip(offset).Take(numbers.Length), Is.EquivalentTo(numbers));
+        Assert.That(array.Skip(offset + numbers.Length), Has.All.EqualTo(arrayItem));
     }
 
     [Test]
-    public void CopyTo_WhenNotEnoughtSpace_ThenArgumentException()
+    public void CopyTo_WhenNotEnoughSpace_ThenArgumentException()
     {
         // given
         int[] array = Enumerable.Repeat(0, numbers.Length / 2).ToArray();
@@ -191,8 +190,8 @@ public class AvlTreeTests
 
         // then
         Assert.That(result, Is.True);
-        testObject.Should().Contain(element);
-        testObject.Should().HaveCount(1);
+        Assert.That(testObject, Does.Contain(element));
+        Assert.That(testObject, Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -205,10 +204,10 @@ public class AvlTreeTests
 
             // then
             Assert.That(result, Is.True);
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
         }
 
-        testObject.Should().HaveCount(numbers.Length + absent.Length);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + absent.Length));
     }
 
     [Test]
@@ -221,10 +220,10 @@ public class AvlTreeTests
 
             // then
             Assert.That(result, Is.False);
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
         }
 
-        testObject.Should().HaveSameCount(numbers);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length));
     }
 
     #endregion
@@ -250,10 +249,10 @@ public class AvlTreeTests
 
             // then
             Assert.That(result, Is.True);
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
         }
 
-        testObject.Should().HaveCount(numbers.Length - present.Length);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - present.Length));
     }
 
     [Test]
@@ -266,10 +265,10 @@ public class AvlTreeTests
 
             // then
             Assert.That(result, Is.False);
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
         }
 
-        testObject.Should().HaveSameCount(numbers);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length));
     }
 
     [Test]
@@ -286,9 +285,9 @@ public class AvlTreeTests
 
         // then
         Assert.That(result, Is.True);
-        testObject.Should().NotContain(root);
-        testObject.Should().Contain(element);
-        testObject.Should().HaveCount(1);
+        Assert.That(testObject, Does.Not.Contain(root));
+        Assert.That(testObject, Does.Contain(element));
+        Assert.That(testObject, Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -305,9 +304,9 @@ public class AvlTreeTests
 
         // then
         Assert.That(result, Is.True);
-        testObject.Should().NotContain(root);
-        testObject.Should().Contain(element);
-        testObject.Should().HaveCount(1);
+        Assert.That(testObject, Does.Not.Contain(root));
+        Assert.That(testObject, Does.Contain(element));
+        Assert.That(testObject, Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -323,7 +322,7 @@ public class AvlTreeTests
 
         // then
         Assert.That(result, Is.True);
-        testObject.Should().NotContain(root);
+        Assert.That(testObject, Does.Not.Contain(root));
         Assert.That(testObject, Is.Empty);
     }
 
@@ -337,10 +336,10 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers.Except(present))
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in present)
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
     }
 
     [Test]
@@ -351,10 +350,10 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in absent)
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
     }
 
     [Test]
@@ -364,10 +363,10 @@ public class AvlTreeTests
         testObject.IntersectWith(present);
 
         // then
-        testObject.Should().HaveSameCount(present);
+        Assert.That(testObject, Has.Count.EqualTo(present.Length));
 
         foreach(int i in present)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
     }
 
     [Test]
@@ -568,10 +567,10 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers.Except(present))
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in present)
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
     }
 
     [Test]
@@ -582,13 +581,13 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers.Except(present))
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in present)
-            testObject.Should().NotContain(i);
+            Assert.That(testObject, Does.Not.Contain(i));
 
         foreach(int i in absent)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
     }
 
     [Test]
@@ -599,10 +598,10 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in absent)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
     }
 
     [Test]
@@ -613,7 +612,7 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
     }
 
     [Test]
@@ -624,9 +623,9 @@ public class AvlTreeTests
 
         // then
         foreach(int i in numbers)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
 
         foreach(int i in absent)
-            testObject.Should().Contain(i);
+            Assert.That(testObject, Does.Contain(i));
     }
 }

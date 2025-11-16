@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
@@ -34,11 +33,15 @@ public class StronglyConnectedComponentsTests
         List<HashSet<Vertex<int>>> result = graph.FindScc();
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
                     new HashSet<Vertex<int>> { graph[2] },
                     new HashSet<Vertex<int>> { graph[5] },
-                    new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] } });
+                    new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] }
+                }).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 
     [Test]
@@ -59,7 +62,10 @@ public class StronglyConnectedComponentsTests
         List<HashSet<Vertex<int>>> result = graph.FindScc();
 
         // then
-        result.Should().BeEquivalentTo(new[] { new HashSet<Vertex<int>>(graph.Vertices) });
+        Assert.That(
+            result,
+            Is.EquivalentTo(new[] { new HashSet<Vertex<int>>(graph.Vertices) })
+              .Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 
     [Test]
@@ -72,10 +78,14 @@ public class StronglyConnectedComponentsTests
         List<HashSet<Vertex<int>>> result = graph.FindScc();
 
         // then
-        result.Should().BeEquivalentTo(
-            new[] { new HashSet<Vertex<int>> { graph[0] },
+        Assert.That(
+            result, Is.EquivalentTo(
+                new[]
+                {
+                    new HashSet<Vertex<int>> { graph[0] },
                     new HashSet<Vertex<int>> { graph[1] },
                     new HashSet<Vertex<int>> { graph[2] },
-                    new HashSet<Vertex<int>> { graph[3] } });
+                    new HashSet<Vertex<int>> { graph[3] }
+                }).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 }

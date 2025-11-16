@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -21,7 +20,7 @@ public class EquationTests
 
         // then
         Assert.That(result, Is.Not.SameAs(testObject));
-        result.Coefficients.Should().Equal(new[] { 2.0, 3.0, 0.0, -2.5 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 2.0, 3.0, 0.0, -2.5 }));
         Assert.That(result.FreeTerm, Is.EqualTo(15));
     }
 
@@ -32,7 +31,7 @@ public class EquationTests
         Equation result = -testObject;
 
         // then
-        result.Coefficients.Should().Equal(new[] { -2.0, -3.0, 0.0, 2.5 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { -2.0, -3.0, 0.0, 2.5 }));
         Assert.That(result.FreeTerm, Is.EqualTo(-15));
     }
 
@@ -43,7 +42,7 @@ public class EquationTests
         Equation result = testObject + new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
 
         // then
-        result.Coefficients.Should().Equal(new[] { 3.0, 2.0, 4.0, 7.5 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 3.0, 2.0, 4.0, 7.5 }));
         Assert.That(result.FreeTerm, Is.EqualTo(20));
     }
 
@@ -54,7 +53,7 @@ public class EquationTests
         Equation result = testObject - new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
 
         // then
-        result.Coefficients.Should().Equal(new[] { 1.0, 4.0, -4.0, -12.5 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 1.0, 4.0, -4.0, -12.5 }));
         Assert.That(result.FreeTerm, Is.EqualTo(10));
     }
 
@@ -65,7 +64,7 @@ public class EquationTests
         Equation result = testObject * 2;
 
         // then
-        result.Coefficients.Should().Equal(new[] { 4.0, 6.0, 0.0, -5.0 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 4.0, 6.0, 0.0, -5.0 }));
         Assert.That(result.FreeTerm, Is.EqualTo(30));
     }
 
@@ -87,7 +86,7 @@ public class EquationTests
 
         // then
         Assert.That(result, Is.Not.SameAs(testObject));
-        result.Coefficients.Should().Equal(new[] { -1.0, -1.5, 0.0, 1.25 });
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { -1.0, -1.5, 0.0, 1.25 }));
         Assert.That(result.FreeTerm, Is.EqualTo(-7.5));
     }
 

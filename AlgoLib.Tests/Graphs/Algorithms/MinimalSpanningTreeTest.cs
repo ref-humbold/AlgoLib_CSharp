@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
@@ -8,13 +7,14 @@ namespace AlgoLib.Graphs.Algorithms;
 [TestFixture]
 public class MinimalSpanningTreeTest
 {
-    private static readonly double Precision = 1e-6;
+    private const double Precision = 1e-6;
     private UndirectedSimpleGraph<int, object, WeightProp> graph;
 
     [SetUp]
     public void SetUp()
     {
-        graph = new UndirectedSimpleGraph<int, object, WeightProp>(Enumerable.Range(0, 5).ToArray());
+        graph = new UndirectedSimpleGraph<int, object, WeightProp>(
+            Enumerable.Range(0, 5).ToArray());
 
         graph.AddEdgeBetween(graph[0], graph[1], new WeightProp { Weight = -1.0 });
         graph.AddEdgeBetween(graph[0], graph[2], new WeightProp { Weight = 4.0 });
@@ -39,11 +39,12 @@ public class MinimalSpanningTreeTest
                                .Sum();
 
         Assert.That(result.VerticesCount, Is.EqualTo(graph.VerticesCount));
-        result.Vertices.Should().BeEquivalentTo(graph.Vertices);
+        Assert.That(result.Vertices, Is.EquivalentTo(graph.Vertices));
         Assert.That(result.EdgesCount, Is.EqualTo(4));
-        result.Edges.Should().BeEquivalentTo(
-            new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
-        mstSize.Should().BeApproximately(12.0, Precision);
+        Assert.That(
+            result.Edges,
+            Is.EquivalentTo(new[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] }));
+        Assert.That(mstSize, Is.EqualTo(12.0).Within(Precision));
     }
 
     #endregion
@@ -53,7 +54,8 @@ public class MinimalSpanningTreeTest
     public void Prim_ThenMinimalSpanningTree()
     {
         // when
-        IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Prim(graph, graph[0]);
+        IUndirectedGraph<int, object, WeightProp>
+            result = MinimalSpanningTree.Prim(graph, graph[0]);
 
         // then
         double mstSize = result.Edges
@@ -61,33 +63,32 @@ public class MinimalSpanningTreeTest
                                .Sum();
 
         Assert.That(result.VerticesCount, Is.EqualTo(graph.VerticesCount));
-        result.Vertices.Should().BeEquivalentTo(graph.Vertices);
+        Assert.That(result.Vertices, Is.EquivalentTo(graph.Vertices));
         Assert.That(result.EdgesCount, Is.EqualTo(4));
-        result.Edges.Should().BeEquivalentTo(
-            new Edge<int>[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] });
-        mstSize.Should().BeApproximately(12.0, Precision);
+        Assert.That(
+            result.Edges,
+            Is.EquivalentTo(new[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] }));
+        Assert.That(mstSize, Is.EqualTo(12.0).Within(Precision));
     }
 
     [Test]
     public void Prim_WhenDifferentSources_ThenSameMinimalSpanningTree()
     {
         // when
-        IUndirectedGraph<int, object, WeightProp> result1 = MinimalSpanningTree.Prim(graph, graph[1]);
-        IUndirectedGraph<int, object, WeightProp> result4 = MinimalSpanningTree.Prim(graph, graph[4]);
+        IUndirectedGraph<int, object, WeightProp> result1 =
+            MinimalSpanningTree.Prim(graph, graph[1]);
+        IUndirectedGraph<int, object, WeightProp> result4 =
+            MinimalSpanningTree.Prim(graph, graph[4]);
 
         // then
         Assert.That(result1.EdgesCount, Is.EqualTo(result4.EdgesCount));
-        result1.Edges.Should().BeEquivalentTo(result4.Edges);
+        Assert.That(result1.Edges, Is.EquivalentTo(result4.Edges));
     }
 
     #endregion
 
     private class WeightProp : IWeighted
     {
-        public double Weight
-        {
-            get;
-            set;
-        }
+        public double Weight { get; set; }
     }
 }

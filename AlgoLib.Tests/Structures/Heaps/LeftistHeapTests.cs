@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures.Heaps;
@@ -84,8 +83,8 @@ public class LeftistHeapTests
         var result = testObject.ToList();
 
         // then
-        result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, minimum);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Has.ItemAt(0).EqualTo(minimum));
     }
 
     #endregion
@@ -103,7 +102,7 @@ public class LeftistHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(1);
+        Assert.That(testObject, Has.Count.EqualTo(1));
         Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
@@ -117,7 +116,7 @@ public class LeftistHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
         Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
@@ -128,7 +127,7 @@ public class LeftistHeapTests
         testObject.Push(minimum + 3);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
         Assert.That(testObject.Peek(), Is.EqualTo(minimum));
     }
 
@@ -142,7 +141,7 @@ public class LeftistHeapTests
         testObject.PushRange(elements);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + elements.Length));
         Assert.That(testObject.Peek(), Is.EqualTo(elements.Min()));
     }
 
@@ -156,7 +155,7 @@ public class LeftistHeapTests
         Action action = () => _ = new LeftistHeap<int>().Peek();
 
         // then
-        Assert.That(action, Throws.TypeOf<InvalidOperationException>());
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -214,7 +213,7 @@ public class LeftistHeapTests
         Action action = () => _ = new LeftistHeap<int>().Pop();
 
         // then then
-        Assert.That(action, Throws.TypeOf<InvalidOperationException>());
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -241,7 +240,7 @@ public class LeftistHeapTests
 
         // then
         Assert.That(result, Is.EqualTo(minimum));
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -254,8 +253,8 @@ public class LeftistHeapTests
             result.Add(testObject.Pop());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Ascending.Using(testObject.Comparer));
     }
 
     [Test]
@@ -278,7 +277,7 @@ public class LeftistHeapTests
         // then
         Assert.That(result, Is.True);
         Assert.That(resultValue, Is.EqualTo(minimum));
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     #endregion
@@ -339,8 +338,8 @@ public class LeftistHeapTests
     public void OperatorPlus_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        int[] firstElements = new[] { 10, 20 };
-        int[] secondElements = new[] { 4, 8 };
+        var firstElements = new[] { 10, 20 };
+        var secondElements = new[] { 4, 8 };
 
         testObject = new LeftistHeap<int>();
         var first = new LeftistHeap<int>(firstElements);
@@ -352,20 +351,20 @@ public class LeftistHeapTests
 
         // then
         Assert.That(result1.Peek(), Is.EqualTo(firstElements.Min()));
-        result1.ToArray().Should().BeEquivalentTo(firstElements);
+        Assert.That(result1.ToArray(), Is.EquivalentTo(firstElements));
         Assert.That(result2.Peek(), Is.EqualTo(secondElements.Min()));
-        result2.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
+        Assert.That(result2.ToArray(), Is.EquivalentTo(firstElements.Concat(secondElements).ToArray()));
         Assert.That(testObject, Is.Empty);
-        first.ToArray().Should().BeEquivalentTo(firstElements);
-        second.ToArray().Should().BeEquivalentTo(secondElements);
+        Assert.That(first.ToArray(), Is.EquivalentTo(firstElements));
+        Assert.That(second.ToArray(), Is.EquivalentTo(secondElements));
     }
 
     [Test]
     public void OperatorPlusEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        int[] firstElements = new[] { 10, 20 };
-        int[] secondElements = new[] { 4, 8 };
+        var firstElements = new[] { 10, 20 };
+        var secondElements = new[] { 4, 8 };
 
         testObject = new LeftistHeap<int>();
         var first = new LeftistHeap<int>(firstElements);
@@ -377,9 +376,9 @@ public class LeftistHeapTests
 
         // then
         Assert.That(testObject.Peek(), Is.EqualTo(firstElements.Concat(secondElements).Min()));
-        testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
-        first.ToArray().Should().BeEquivalentTo(firstElements);
-        second.ToArray().Should().BeEquivalentTo(secondElements);
+        Assert.That(testObject.ToArray(), Is.EquivalentTo(firstElements.Concat(secondElements).ToArray()));
+        Assert.That(first.ToArray(), Is.EquivalentTo(firstElements));
+        Assert.That(second.ToArray(), Is.EquivalentTo(secondElements));
     }
 
     #endregion

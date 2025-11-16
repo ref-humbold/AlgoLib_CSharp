@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures.Heaps;
@@ -84,8 +83,8 @@ public class HeapTests
         var result = testObject.ToList();
 
         // then
-        result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, minimum);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Has.ItemAt(0).EqualTo(minimum));
     }
 
     #endregion
@@ -103,7 +102,7 @@ public class HeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(1);
+        Assert.That(testObject, Has.Count.EqualTo(1));
         Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
@@ -117,7 +116,7 @@ public class HeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
         Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
@@ -128,7 +127,7 @@ public class HeapTests
         testObject.Push(minimum + 3);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
         Assert.That(testObject.Peek(), Is.EqualTo(minimum));
     }
 
@@ -142,7 +141,7 @@ public class HeapTests
         testObject.PushRange(elements);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + elements.Length));
         Assert.That(testObject.Peek(), Is.EqualTo(elements.Min()));
     }
 
@@ -156,7 +155,7 @@ public class HeapTests
         Action action = () => _ = new Heap<int>().Peek();
 
         // then
-        Assert.That(action, Throws.TypeOf<InvalidOperationException>());
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -214,7 +213,7 @@ public class HeapTests
         Action action = () => _ = new Heap<int>().Pop();
 
         // then then
-        Assert.That(action, Throws.TypeOf<InvalidOperationException>());
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -241,7 +240,7 @@ public class HeapTests
 
         // then
         Assert.That(result, Is.EqualTo(minimum));
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -254,8 +253,8 @@ public class HeapTests
             result.Add(testObject.Pop());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Ascending.Using(testObject.Comparer));
     }
 
     [Test]
@@ -278,7 +277,7 @@ public class HeapTests
         // then
         Assert.That(result, Is.True);
         Assert.That(resultValue, Is.EqualTo(minimum));
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     #endregion

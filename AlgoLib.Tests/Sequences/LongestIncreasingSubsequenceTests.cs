@@ -32,7 +32,7 @@ public class FindLisSubsequenceTests
         List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        Assert.That(result, Is.EqualTo(new List<int> { 2 }));
+        Assert.That(result, Is.EqualTo(new[] { 2 }));
     }
 
     [Test]
@@ -42,10 +42,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 2, 1, 4, 3, 6, 5, 8, 7, 10 };
 
         // when
-        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
+        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
 
         // then
-        Assert.That(result, Is.EqualTo(new List<int> { 1, 3, 5, 7, 10 }));
+        Assert.That(result, Is.EqualTo(new[] { 1, 3, 5, 7, 10 }));
     }
 
     [Test]
@@ -55,10 +55,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 0, 2, 4, 6, 8, 3, 5, 7, 8 };
 
         // when
-        List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
+        IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
 
         // then
-        Assert.That(result, Is.EqualTo(new List<int> { 0, 2, 3, 5, 7, 8 }));
+        Assert.That(result, Is.EqualTo(new[] { 0, 2, 3, 5, 7, 8 }));
     }
 
     [Test]
@@ -68,10 +68,10 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
 
         // when
-        List<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1)).ToList();
+        IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));
 
         // then
-        Assert.That(result, Is.EqualTo(new List<int> { 15 }));
+        Assert.That(result, Is.EqualTo(new[] { 15 }));
     }
 
     [Test]
@@ -81,10 +81,12 @@ public class FindLisSubsequenceTests
         var sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
 
         // when
-        List<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1)).ToList();
+        IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));
 
         // then
-        Assert.That(result, Is.EquivalentTo(sequence));
-        Assert.That(result, Is.Ordered.Descending);
+        int[] resultArray = result.ToArray();
+
+        Assert.That(resultArray, Is.EquivalentTo(sequence));
+        Assert.That(resultArray, Is.Ordered.Descending);
     }
 }
