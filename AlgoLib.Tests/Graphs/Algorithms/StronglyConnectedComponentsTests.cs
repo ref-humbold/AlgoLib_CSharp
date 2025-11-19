@@ -35,13 +35,12 @@ public class StronglyConnectedComponentsTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new HashSet<Vertex<int>> { graph[0], graph[1], graph[3], graph[4] },
                     new HashSet<Vertex<int>> { graph[2] },
                     new HashSet<Vertex<int>> { graph[5] },
                     new HashSet<Vertex<int>> { graph[6], graph[7], graph[8], graph[9] }
-                }).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
+                ]).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 
     [Test]
@@ -64,7 +63,7 @@ public class StronglyConnectedComponentsTests
         // then
         Assert.That(
             result,
-            Is.EquivalentTo(new[] { new HashSet<Vertex<int>>(graph.Vertices) })
+            Is.EquivalentTo([new HashSet<Vertex<int>>(graph.Vertices)])
               .Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 
@@ -80,12 +79,11 @@ public class StronglyConnectedComponentsTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new HashSet<Vertex<int>> { graph[0] },
                     new HashSet<Vertex<int>> { graph[1] },
                     new HashSet<Vertex<int>> { graph[2] },
                     new HashSet<Vertex<int>> { graph[3] }
-                }).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
+                ]).Using<HashSet<Vertex<int>>>((set1, set2) => set1.SetEquals(set2)));
     }
 }

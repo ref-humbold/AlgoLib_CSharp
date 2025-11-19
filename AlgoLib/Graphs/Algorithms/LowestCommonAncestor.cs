@@ -56,10 +56,10 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
 
     private void initialize()
     {
-        Searching.DfsRecursive(Graph, strategy, new List<Vertex<TVertexId>> { Root });
+        Searching.DfsRecursive(Graph, strategy, [Root]);
 
         foreach(Vertex<TVertexId> vertex in Graph.Vertices)
-            paths[vertex] = new List<Vertex<TVertexId>> { strategy.Parents[vertex] };
+            paths[vertex] = [strategy.Parents[vertex]];
 
         for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
             foreach(Vertex<TVertexId> vertex in Graph.Vertices)

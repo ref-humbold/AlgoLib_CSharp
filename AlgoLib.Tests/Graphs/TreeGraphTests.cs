@@ -63,11 +63,10 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
                     new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7)
-                }));
+                ]));
     }
 
     [Test]
@@ -89,8 +88,7 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
@@ -98,7 +96,7 @@ public class TreeGraphTests
                     new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
                     new Edge<int>(new Vertex<int>(7), new Vertex<int>(2))
-                }));
+                ]));
     }
 
     [Test]
@@ -138,7 +136,7 @@ public class TreeGraphTests
         // then
         Assert.That(
             result,
-            Is.EquivalentTo(new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) }));
+            Is.EquivalentTo([new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5)]));
     }
 
     [Test]
@@ -150,12 +148,11 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(5), new Vertex<int>(1))
-                }));
+                ]));
     }
 
     [Test]
@@ -196,7 +193,7 @@ public class TreeGraphTests
         Assert.That(result.Destination, Is.EqualTo(neighbour));
         Assert.That(testObject.VerticesCount, Is.EqualTo(9));
         Assert.That(
-            testObject.GetNeighbours(testObject[newVertexId]), Is.EqualTo(new[] { neighbour }));
+            testObject.GetNeighbours(testObject[newVertexId]), Is.EqualTo([neighbour]));
         Assert.That(testObject.Properties[testObject[newVertexId]], Is.EqualTo(vertexProperty));
         Assert.That(testObject.Properties[result], Is.EqualTo(edgeProperty));
     }

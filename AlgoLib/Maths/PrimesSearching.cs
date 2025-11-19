@@ -23,7 +23,7 @@ public static class PrimesSearching
 
         int segmentSize = (int)Math.Sqrt(maximum);
         int[] basePrimes = getBasePrimes(segmentSize).ToArray();
-        var primes = new List<int>();
+        List<int> primes = [];
 
         if(minimum < segmentSize)
             primes.AddRange(Enumerable.Range(2, 1)

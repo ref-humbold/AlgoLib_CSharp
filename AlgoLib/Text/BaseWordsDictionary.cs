@@ -61,14 +61,14 @@ public class BaseWordsDictionary
     // Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
     private void create()
     {
-        int codeValue = extend(1, 0, (i, length) => new[] { Text[i], 1 + Text[i], i, i + length });
+        int codeValue = extend(1, 0, (i, length) => [Text[i], 1 + Text[i], i, i + length]);
 
         for(int currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
         {
             codeValue = extend(currentLength, codeValue,
-                               (i, length) => new[] { factors[(i, i + length / 2)],
+                               (i, length) => [ factors[(i, i + length / 2)],
                                                       factors[(i + length / 2, i + length)],
-                                                      i, i + length });
+                                                      i, i + length ]);
         }
     }
 

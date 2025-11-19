@@ -12,19 +12,19 @@ public static class MaximumSubarray
     /// <returns>The maximum subarray.</returns>
     public static List<double> FindMaximumSubarray(this IEnumerable<double> sequence)
     {
-        (double Sum, List<double> Subarray) actual = (0.0, new List<double>());
-        (double Sum, List<double> Subarray) maximal = (0.0, new List<double>());
+        (double Sum, List<double> Subarray) actual = (0.0, []);
+        (double Sum, List<double> Subarray) maximal = (0.0, []);
 
         foreach(double elem in sequence)
         {
             if(actual.Sum < 0.0)
-                actual = (0.0, new List<double>());
+                actual = (0.0, []);
 
             actual = (actual.Sum + elem, actual.Subarray);
             actual.Subarray.Add(elem);
 
             if(actual.Sum > maximal.Sum)
-                maximal = (actual.Sum, new List<double>(actual.Subarray));
+                maximal = (actual.Sum, [.. actual.Subarray]);
         }
 
         return maximal.Subarray;

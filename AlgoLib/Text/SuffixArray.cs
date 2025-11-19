@@ -107,7 +107,7 @@ public class SuffixArray
 
     private static List<int> merge(List<int> t0, List<int> sa0, List<int> t12, List<int> sa12)
     {
-        var sa = new List<int>();
+        List<int> sa = [];
         int length2 = (t0.Count + 2) / 3, length1 = (t0.Count + 1) / 3;
         int index0 = 0, index12 = length2 - length1;
 
@@ -203,11 +203,11 @@ public class SuffixArray
     private List<int> createArray(List<int> txt)
     {
         if(txt.Count < 2)
-            return new List<int> { 0 };
+            return [0];
 
         int length2 = (txt.Count + 2) / 3, length1 = (txt.Count + 1) / 3, length0 = txt.Count / 3;
         int length02 = length0 + length2;
-        var indices12 = new List<int>();
+        List<int> indices12 = [];
 
         for(int i = 0; i < txt.Count + length2 - length1; ++i)
             if(i % 3 != 0)
@@ -238,7 +238,7 @@ public class SuffixArray
                 text12[i / 3 + length2] = code;
         }
 
-        var sa0 = new List<int>();
+        List<int> sa0 = [];
         List<int> sa12;
 
         if(code < length02)

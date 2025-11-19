@@ -45,7 +45,7 @@ public static class ClosestPoints
         List<Point2D> pointsY, double middleX, double width)
     {
         (Point2D, Point2D)? closestPoints = null;
-        var beltPoints = new List<int>();
+        List<int> beltPoints = [];
         double minDistance = width;
 
         for(int i = 0; i < pointsY.Count; ++i)
@@ -92,8 +92,8 @@ public static class ClosestPoints
                                pointsX[indexBegin + 2]);
 
         int indexMiddle = (indexBegin + indexEnd) / 2;
-        var closetsYL = new List<Point2D>();
-        var closetsYR = new List<Point2D>();
+        List<Point2D> closetsYL = [];
+        List<Point2D> closetsYR = [];
 
         foreach(Point2D pt in pointsY)
             if(pt.X < pointsX[indexMiddle].X

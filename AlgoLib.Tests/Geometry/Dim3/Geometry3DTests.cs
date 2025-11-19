@@ -11,12 +11,11 @@ public class Geometry3DTests
     public void SortByX_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D>
-        {
+        List<Point3D> sequence = [
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
-        };
+        ];
 
         // when
         List<Point3D> result = sequence.SortByX();
@@ -24,26 +23,23 @@ public class Geometry3DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point3D>
-                {
+            result, Is.EqualTo([
                     Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
                     Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
                     Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
                     Point3D.Of(3.0, 2.0, 5.0)
-                }));
+                ]));
     }
 
     [Test]
     public void SortByY_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D>
-        {
+        List<Point3D> sequence = [
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
-        };
+        ];
 
         // when
         List<Point3D> result = sequence.SortByY();
@@ -51,26 +47,23 @@ public class Geometry3DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point3D>
-                {
+            result, Is.EqualTo([
                     Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
                     Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
                     Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
                     Point3D.Of(2.0, 3.0, -5.0)
-                }));
+                ]));
     }
 
     [Test]
     public void SortByZ_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D>
-        {
+        List<Point3D> sequence = [
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
-        };
+        ];
 
         // when
         List<Point3D> result = sequence.SortByZ();
@@ -78,14 +71,12 @@ public class Geometry3DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point3D>
-                {
+            result, Is.EqualTo([
                     Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
                     Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
                     Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
                     Point3D.Of(-3.0, 2.0, 5.0)
-                }));
+                ]));
     }
 
     [Test]

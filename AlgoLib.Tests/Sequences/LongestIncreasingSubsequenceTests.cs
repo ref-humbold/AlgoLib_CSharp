@@ -12,7 +12,7 @@ public class FindLisSubsequenceTests
     public void FindLis_WhenIncreasing_ThenAllElements()
     {
         // given
-        var sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
+        List<int> sequence = [1, 3, 5, 7, 9, 11, 13, 15];
 
         // when
         List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
@@ -26,59 +26,59 @@ public class FindLisSubsequenceTests
     public void FindLis_WhenDecreasing_ThenLastElementOnly()
     {
         // given
-        var sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
+        List<int> sequence = [12, 10, 8, 6, 4, 2];
 
         // when
         List<int> result = sequence.FindLis(Comparer<int>.Default).ToList();
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 2 }));
+        Assert.That(result, Is.EqualTo([2]));
     }
 
     [Test]
     public void FindLis_WhenMultipleSubsequences_ThenLeastLexicographically()
     {
         // given
-        var sequence = new List<int> { 2, 1, 4, 3, 6, 5, 8, 7, 10 };
+        List<int> sequence = [2, 1, 4, 3, 6, 5, 8, 7, 10];
 
         // when
         IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 1, 3, 5, 7, 10 }));
+        Assert.That(result, Is.EqualTo([1, 3, 5, 7, 10]));
     }
 
     [Test]
     public void FindLis_WhenSearchInMiddle_ThenLeastLexicographically()
     {
         // given
-        var sequence = new List<int> { 0, 2, 4, 6, 8, 3, 5, 7, 8 };
+        List<int> sequence = [0, 2, 4, 6, 8, 3, 5, 7, 8];
 
         // when
         IEnumerable<int> result = sequence.FindLis(Comparer<int>.Default);
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 0, 2, 3, 5, 7, 8 }));
+        Assert.That(result, Is.EqualTo([0, 2, 3, 5, 7, 8]));
     }
 
     [Test]
     public void FindLis_WhenIncreasingAndReversedComparator_ThenLastElementOnly()
     {
         // given
-        var sequence = new List<int> { 1, 3, 5, 7, 9, 11, 13, 15 };
+        List<int> sequence = [1, 3, 5, 7, 9, 11, 13, 15];
 
         // when
         IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 15 }));
+        Assert.That(result, Is.EqualTo([15]));
     }
 
     [Test]
     public void FindLis_WhenDecreasingAndReversedComparator_ThenAllElements()
     {
         // given
-        var sequence = new List<int> { 12, 10, 8, 6, 4, 2 };
+        List<int> sequence = [12, 10, 8, 6, 4, 2];
 
         // when
         IEnumerable<int> result = sequence.FindLis((i1, i2) => i2.CompareTo(i1));

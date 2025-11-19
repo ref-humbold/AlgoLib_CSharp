@@ -256,7 +256,7 @@ public class DirectedGraphTests
         Assert.That(testObject.Properties[result], Is.EqualTo(property));
         Assert.That(
             testObject.GetNeighbours(testObject[1]),
-            Is.EquivalentTo(new[] { new Vertex<int>(1), new Vertex<int>(5) }));
+            Is.EquivalentTo([new Vertex<int>(1), new Vertex<int>(5)]));
         Assert.That(testObject.GetNeighbours(testObject[5]), Is.Empty);
     }
 
@@ -294,11 +294,10 @@ public class DirectedGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Vertex<int>(1), new Vertex<int>(3), new Vertex<int>(4),
                     new Vertex<int>(7), new Vertex<int>(9)
-                }));
+                ]));
     }
 
     [Test]
@@ -319,14 +318,13 @@ public class DirectedGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(3)),
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(4)),
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(7)),
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(9))
-                }));
+                ]));
     }
 
     [Test]
@@ -393,8 +391,7 @@ public class DirectedGraphTests
         // then
         Assert.That(
             testObject.Edges, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(9)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(6)),
@@ -405,7 +402,7 @@ public class DirectedGraphTests
                     new Edge<int>(new Vertex<int>(7), new Vertex<int>(5)),
                     new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                     new Edge<int>(new Vertex<int>(9), new Vertex<int>(4))
-                }));
+                ]));
         Assert.That(testObject.Properties[vertex], Is.EqualTo(vertexProperty));
         Assert.That(testObject.Properties[testObject[9]], Is.Null);
         Assert.That(testObject.Properties[testObject[2, 1]], Is.EqualTo(edgeProperty));
@@ -439,8 +436,7 @@ public class DirectedGraphTests
         Assert.That(result.Vertices, Is.EquivalentTo(testObject.Vertices));
         Assert.That(
             result.Edges, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(9)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(6)),
@@ -451,7 +447,7 @@ public class DirectedGraphTests
                     new Edge<int>(new Vertex<int>(7), new Vertex<int>(5)),
                     new Edge<int>(new Vertex<int>(8), new Vertex<int>(7)),
                     new Edge<int>(new Vertex<int>(9), new Vertex<int>(4))
-                }));
+                ]));
         Assert.That(result.Properties[vertex], Is.EqualTo(vertexProperty));
         Assert.That(result.Properties[result[9]], Is.Null);
         Assert.That(result.Properties[result[2, 1]], Is.EqualTo(edgeProperty));

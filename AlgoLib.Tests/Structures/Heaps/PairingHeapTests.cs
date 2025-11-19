@@ -9,7 +9,7 @@ namespace AlgoLib.Structures.Heaps;
 [TestFixture]
 public class PairingHeapTests
 {
-    private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int[] numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26];
     private readonly int minimum;
     private PairingHeap<int> testObject;
 
@@ -68,7 +68,7 @@ public class PairingHeapTests
         int element = numbers[0];
 
         // when
-        IEnumerator<int> result = new PairingHeap<int>(new[] { element }).GetEnumerator();
+        IEnumerator<int> result = new PairingHeap<int>([element]).GetEnumerator();
 
         // then
         Assert.That(result.MoveNext(), Is.True);
@@ -135,7 +135,7 @@ public class PairingHeapTests
     public void PushRange_WhenNewElements_ThenAllAdded()
     {
         // given
-        int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 };
+        int[] elements = [minimum - 3, minimum + 5, minimum + 13, minimum + 20];
 
         // when
         testObject.PushRange(elements);
@@ -165,7 +165,7 @@ public class PairingHeapTests
         int element = numbers[0];
 
         // when
-        int result = new PairingHeap<int>(new[] { element }).Peek();
+        int result = new PairingHeap<int>([element]).Peek();
 
         // then
         Assert.That(result, Is.EqualTo(element));
@@ -222,7 +222,7 @@ public class PairingHeapTests
         // given
         int element = numbers[0];
 
-        testObject = new PairingHeap<int>(new[] { element });
+        testObject = new PairingHeap<int>([element]);
 
         // when
         int result = testObject.Pop();
@@ -247,9 +247,9 @@ public class PairingHeapTests
     public void Pop_WhenMultipleCalls_ThenSortedAscendingToComparer()
     {
         // when
-        var result = new List<int>();
+        List<int> result = [];
 
-        while (testObject.Count > 0)
+        while(testObject.Count > 0)
             result.Add(testObject.Pop());
 
         // then
@@ -310,7 +310,7 @@ public class PairingHeapTests
     {
         // given
         var other = new PairingHeap<int>(
-            new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20 });
+            [minimum - 3, minimum + 5, minimum + 13, minimum + 20]);
 
         // when
         PairingHeap<int> result = testObject + other;
@@ -324,7 +324,7 @@ public class PairingHeapTests
     public void OperatorPlus_WhenOtherHasGreaterMinimum_ThenMinimumRemains()
     {
         // given
-        var other = new PairingHeap<int>(new[] { minimum + 5, minimum + 13, minimum + 20 });
+        var other = new PairingHeap<int>([minimum + 5, minimum + 13, minimum + 20]);
 
         // when
         PairingHeap<int> result = testObject + other;
@@ -338,8 +338,8 @@ public class PairingHeapTests
     public void OperatorPlus_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        var firstElements = new[] { 10, 20 };
-        var secondElements = new[] { 4, 8 };
+        int[] firstElements = [10, 20];
+        int[] secondElements = [4, 8];
 
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);
@@ -363,8 +363,8 @@ public class PairingHeapTests
     public void OperatorPlusEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        var firstElements = new[] { 10, 20 };
-        var secondElements = new[] { 4, 8 };
+        int[] firstElements = [10, 20];
+        int[] secondElements = [4, 8];
 
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);

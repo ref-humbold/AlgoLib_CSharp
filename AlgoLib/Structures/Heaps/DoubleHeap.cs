@@ -35,7 +35,7 @@ public class DoubleHeap<T> : IHeap<T>
     public DoubleHeap(IComparer<T> comparer) => Comparer = comparer;
 
     /// <summary>Removes all elements from this heap.</summary>
-    public void Clear() => heap = new List<T>();
+    public void Clear() => heap = [];
 
     public IEnumerator<T> GetEnumerator() => new HeapEnumerator(heap);
 
@@ -329,7 +329,7 @@ public class DoubleHeap<T> : IHeap<T>
         private static List<T> createOrderedMinimalList(List<T> heap)
         {
             var indices = new Queue<int>();
-            var minimalList = new List<T>();
+            List<T> minimalList = [];
 
             if(heap.Count > IndexMin)
                 indices.Enqueue(IndexMin);
@@ -353,7 +353,7 @@ public class DoubleHeap<T> : IHeap<T>
         private static List<T> createOrderedMaximalList(List<T> heap)
         {
             var indices = new Queue<int>();
-            var maximalList = new List<T>();
+            List<T> maximalList = [];
 
             if(heap.Count > IndexMax)
                 indices.Enqueue(IndexMax);

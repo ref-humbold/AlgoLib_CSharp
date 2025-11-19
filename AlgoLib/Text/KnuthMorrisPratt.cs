@@ -17,9 +17,9 @@ public static class KnuthMorrisPratt
         ArgumentNullException.ThrowIfNull(pattern);
 
         if(pattern.Length == 0)
-            return Enumerable.Empty<int>();
+            return [];
 
-        var places = new List<int>();
+        List<int> places = [];
         List<int> pi = prefixes(pattern);
         int position = 0;
 
@@ -44,7 +44,7 @@ public static class KnuthMorrisPratt
     // Computes Knuth's PI prefix function values for specified pattern.
     private static List<int> prefixes(string pattern)
     {
-        var pi = new List<int>() { 0 };
+        List<int> pi = [0];
         int position = 0;
 
         foreach(char letter in pattern.Skip(1))

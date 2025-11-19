@@ -10,7 +10,7 @@ public class EquationTests
     private Equation testObject;
 
     [SetUp]
-    public void SetUp() => testObject = new Equation(new[] { 2.0, 3.0, 0.0, -2.5 }, 15);
+    public void SetUp() => testObject = new Equation([2.0, 3.0, 0.0, -2.5], 15);
 
     [Test]
     public void OperatorUnaryPlus_ThenCopied()
@@ -20,7 +20,7 @@ public class EquationTests
 
         // then
         Assert.That(result, Is.Not.SameAs(testObject));
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { 2.0, 3.0, 0.0, -2.5 }));
+        Assert.That(result.Coefficients, Is.EqualTo([2.0, 3.0, 0.0, -2.5]));
         Assert.That(result.FreeTerm, Is.EqualTo(15));
     }
 
@@ -31,7 +31,7 @@ public class EquationTests
         Equation result = -testObject;
 
         // then
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { -2.0, -3.0, 0.0, 2.5 }));
+        Assert.That(result.Coefficients, Is.EqualTo([-2.0, -3.0, 0.0, 2.5]));
         Assert.That(result.FreeTerm, Is.EqualTo(-15));
     }
 
@@ -39,10 +39,10 @@ public class EquationTests
     public void OperatorPlus_ThenAddingEquations()
     {
         // when
-        Equation result = testObject + new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
+        Equation result = testObject + new Equation([1.0, -1.0, 4.0, 10.0], 5.0);
 
         // then
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { 3.0, 2.0, 4.0, 7.5 }));
+        Assert.That(result.Coefficients, Is.EqualTo([3.0, 2.0, 4.0, 7.5]));
         Assert.That(result.FreeTerm, Is.EqualTo(20));
     }
 
@@ -50,10 +50,10 @@ public class EquationTests
     public void OperatorMinus_ThenSubtractingEquations()
     {
         // when
-        Equation result = testObject - new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
+        Equation result = testObject - new Equation([1.0, -1.0, 4.0, 10.0], 5.0);
 
         // then
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { 1.0, 4.0, -4.0, -12.5 }));
+        Assert.That(result.Coefficients, Is.EqualTo([1.0, 4.0, -4.0, -12.5]));
         Assert.That(result.FreeTerm, Is.EqualTo(10));
     }
 
@@ -64,7 +64,7 @@ public class EquationTests
         Equation result = testObject * 2;
 
         // then
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { 4.0, 6.0, 0.0, -5.0 }));
+        Assert.That(result.Coefficients, Is.EqualTo([4.0, 6.0, 0.0, -5.0]));
         Assert.That(result.FreeTerm, Is.EqualTo(30));
     }
 
@@ -86,7 +86,7 @@ public class EquationTests
 
         // then
         Assert.That(result, Is.Not.SameAs(testObject));
-        Assert.That(result.Coefficients, Is.EqualTo(new[] { -1.0, -1.5, 0.0, 1.25 }));
+        Assert.That(result.Coefficients, Is.EqualTo([-1.0, -1.5, 0.0, 1.25]));
         Assert.That(result.FreeTerm, Is.EqualTo(-7.5));
     }
 
@@ -114,7 +114,7 @@ public class EquationTests
     public void HasSolution_WhenSolution_ThenTrue()
     {
         // when
-        bool result = testObject.HasSolution(new double[] { 10, 10, -29, 14 });
+        bool result = testObject.HasSolution([10, 10, -29, 14]);
 
         // then
         Assert.That(result, Is.True);
@@ -124,7 +124,7 @@ public class EquationTests
     public void HasSolution_WhenNotSolution_ThenFalse()
     {
         // when
-        bool result = testObject.HasSolution(new double[] { 10, 6, -17, 14 });
+        bool result = testObject.HasSolution([10, 6, -17, 14]);
 
         // then
         Assert.That(result, Is.False);

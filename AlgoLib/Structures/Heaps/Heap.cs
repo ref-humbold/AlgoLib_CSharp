@@ -28,7 +28,7 @@ public class Heap<T> : IHeap<T>
 
     public Heap(IComparer<T> comparer) => Comparer = comparer;
 
-    public void Clear() => heap = new List<T>();
+    public void Clear() => heap = [];
 
     public IEnumerator<T> GetEnumerator() => heap.GetEnumerator();
 

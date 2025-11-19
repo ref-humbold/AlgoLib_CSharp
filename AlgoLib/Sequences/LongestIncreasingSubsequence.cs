@@ -23,7 +23,7 @@ public static class LongestIncreasingSubsequence
     public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
     {
         var previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
-        var subsequence = new List<int> { 0 };
+        List<int> subsequence = [0];
 
         for(int i = 1; i < sequence.Count; ++i)
         {
@@ -44,7 +44,7 @@ public static class LongestIncreasingSubsequence
             }
         }
 
-        var longestSubsequence = new List<T>();
+        List<T> longestSubsequence = [];
         int? subsequenceIndex = subsequence[^1];
 
         while(subsequenceIndex.HasValue)

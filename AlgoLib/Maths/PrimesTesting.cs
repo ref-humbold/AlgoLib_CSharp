@@ -87,7 +87,7 @@ public static class PrimesTesting
 
             if(Integers.Power(witness, multiplicand, number) != 1)
             {
-                var exponents = new List<int>();
+                List<int> exponents = [];
 
                 for(int d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);
@@ -124,7 +124,7 @@ public static class PrimesTesting
 
             if(Integers.Power(witness, multiplicand, number) != 1)
             {
-                var exponents = new List<long>();
+                List<long> exponents = [];
 
                 for(long d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);

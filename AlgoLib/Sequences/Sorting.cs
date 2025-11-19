@@ -124,7 +124,7 @@ public static class Sorting
     private static void merge<T>(List<T> sequence, int indexBegin, int indexMiddle, int indexEnd)
         where T : IComparable<T>
     {
-        var ordered = new List<T>();
+        List<T> ordered = [];
         int iter1 = indexBegin;
         int iter2 = indexMiddle;
 

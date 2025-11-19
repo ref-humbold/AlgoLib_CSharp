@@ -5,7 +5,7 @@ namespace AlgoLib.Geometry.Dim2;
 /// <summary>Structure of point in 2D.</summary>
 public readonly record struct Point2D(double X, double Y) : IGeometryObject
 {
-    public double[] Coordinates => new[] { X, Y };
+    public double[] Coordinates => [X, Y];
 
     public double Radius => Math.Sqrt(X * X + Y * Y);
 

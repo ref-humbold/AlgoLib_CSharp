@@ -16,7 +16,7 @@ public class Vector2DTests
         double[] result = Vector2D.Of(5.0, -19.0).Coordinates;
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 5.0, -19.0 }));
+        Assert.That(result, Is.EqualTo([5.0, -19.0]));
     }
 
     [Test]

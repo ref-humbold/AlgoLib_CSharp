@@ -27,7 +27,7 @@ public static class ConvexHull
     // Computes half of convex hull for given points.
     private static List<Point2D> createHalfHull(IEnumerable<Point2D> points)
     {
-        var hull = new List<Point2D>();
+        List<Point2D> hull = [];
 
         foreach(Point2D pt in points)
         {

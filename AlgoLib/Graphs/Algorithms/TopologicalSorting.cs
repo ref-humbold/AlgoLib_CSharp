@@ -53,7 +53,7 @@ public static class TopologicalSorting
         if(graph.EdgesCount == 0)
             return graph.Vertices;
 
-        var order = new List<Vertex<TVertexId>>();
+        List<Vertex<TVertexId>> order = [];
         var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
         var vertexHeap = new Heap<Vertex<TVertexId>>(
                 (vertex1, vertex2) => comparison(vertex1.Id, vertex2.Id));

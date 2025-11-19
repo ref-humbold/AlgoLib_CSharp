@@ -56,7 +56,7 @@ public static class Cutting
         {
             dfsDepths[vertex] = depth;
             lowValues[vertex] = depth;
-            dfsChildren.TryAdd(vertex, new List<Vertex<TVertexId>>());
+            dfsChildren.TryAdd(vertex, []);
             ++depth;
         }
 
