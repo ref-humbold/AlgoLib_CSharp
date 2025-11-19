@@ -210,21 +210,12 @@ public class SortingTests
 
     #endregion
 
-    private readonly record struct IntPair(int First, int Second)
-        : IComparable, IComparable<IntPair>
+    private readonly record struct IntPair(int First, int Second) : IComparable<IntPair>
     {
-        public int CompareTo(object obj) =>
-            obj is IntPair pair
-                ? CompareTo(pair)
-                : throw new ArgumentException(
-                    "Compared object is not of type IntPair", nameof(obj));
-
         public int CompareTo(IntPair other) => First.CompareTo(other.First);
 
         public bool Equals(IntPair other) => First == other.First && Second == other.Second;
 
         public override int GetHashCode() => (First, Second).GetHashCode();
-
-        public override string ToString() => $"IntPair({First}, {Second})";
     }
 }

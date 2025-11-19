@@ -75,11 +75,8 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        if(array is null)
-            throw new ArgumentNullException(nameof(array));
-
-        if(arrayIndex < 0)
-            throw new ArgumentOutOfRangeException(nameof(arrayIndex));
+        ArgumentNullException.ThrowIfNull(array);
+        ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
         if(array.Length - arrayIndex < Count)
             throw new ArgumentException(

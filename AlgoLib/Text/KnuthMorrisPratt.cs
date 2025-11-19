@@ -13,11 +13,8 @@ public static class KnuthMorrisPratt
     /// <returns>The indices with pattern occurrences.</returns>
     public static IEnumerable<int> KmpSearch(this string text, string pattern)
     {
-        if(text == null)
-            throw new ArgumentNullException(nameof(text));
-
-        if(pattern == null)
-            throw new ArgumentNullException(nameof(pattern));
+        ArgumentNullException.ThrowIfNull(text);
+        ArgumentNullException.ThrowIfNull(pattern);
 
         if(pattern.Length == 0)
             return Enumerable.Empty<int>();

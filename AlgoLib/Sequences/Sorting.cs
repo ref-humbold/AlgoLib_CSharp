@@ -15,8 +15,7 @@ public static class Sorting
     public static void HeapSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(sequence);
 
         int heapCount = sequence.Count;
 
@@ -45,9 +44,7 @@ public static class Sorting
     public static void TopDownMergeSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
-
+        ArgumentNullException.ThrowIfNull(sequence);
         doMergeSort(sequence, ..);
     }
 
@@ -60,8 +57,7 @@ public static class Sorting
     public static void BottomUpMergeSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(sequence);
 
         if(sequence.Count <= 1)
             return;
@@ -78,9 +74,7 @@ public static class Sorting
     public static void QuickSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
-
+        ArgumentNullException.ThrowIfNull(sequence);
         doQuickSort(sequence, ..);
     }
 
