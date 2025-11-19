@@ -83,7 +83,7 @@ public class Vector2DTests
     public void OperatorUnaryPlus_ThenCopied()
     {
         // given
-        var vector = Vector2D.Of(5.4, 9.0);
+        Vector2D vector = Vector2D.Of(5.4, 9.0);
 
         // when
         Vector2D result = +vector;

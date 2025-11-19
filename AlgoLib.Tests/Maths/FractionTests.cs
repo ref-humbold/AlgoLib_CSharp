@@ -13,7 +13,7 @@ public class FractionTests
     public void Of_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
     {
         // when
-        var result = Fraction.Of(32, 104);
+        Fraction result = Fraction.Of(32, 104);
 
         // then
         Assert.That(result, Is.EqualTo(Fraction.Of(4, 13)));
@@ -23,7 +23,7 @@ public class FractionTests
     public void Of_WhenOnlyNumerator_ThenDenominatorEqualsOne()
     {
         // when
-        var result = Fraction.Of(29);
+        Fraction result = Fraction.Of(29);
 
         // then
         Assert.That(result, Is.EqualTo(Fraction.Of(29, 1)));
@@ -43,7 +43,7 @@ public class FractionTests
     public void Of_WhenNumeratorIsNegative_ThenNegativeFraction()
     {
         // when
-        var result = Fraction.Of(-4, 11);
+        Fraction result = Fraction.Of(-4, 11);
 
         // then
         Assert.That(result, Is.LessThan(0));
@@ -53,7 +53,7 @@ public class FractionTests
     public void Of_WhenDenominatorIsNegative_ThenNegativeFraction()
     {
         // when
-        var result = Fraction.Of(4, -11);
+        Fraction result = Fraction.Of(4, -11);
 
         // then
         Assert.That(result, Is.LessThan(0));
@@ -63,7 +63,7 @@ public class FractionTests
     public void Of_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
     {
         // when
-        var result = Fraction.Of(-4, -11);
+        Fraction result = Fraction.Of(-4, -11);
 
         // then
         Assert.That(result, Is.GreaterThan(0));
@@ -76,7 +76,7 @@ public class FractionTests
     public void OperatorDouble_WhenToDouble_ThenDobuleValue()
     {
         // when
-        double result = (double)Fraction.Of(-129, 20);
+        var result = (double)Fraction.Of(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6.45));
@@ -86,7 +86,7 @@ public class FractionTests
     public void OperatorDecimal_WhenToDouble_ThenDecimalValue()
     {
         // when
-        decimal result = (decimal)Fraction.Of(-129, 20);
+        var result = (decimal)Fraction.Of(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6.45m));
@@ -96,7 +96,7 @@ public class FractionTests
     public void OperatorInt_WhenToInt_ThenIntegerValueRoundedTowardsZero()
     {
         // when
-        int result = (int)Fraction.Of(-129, 20);
+        var result = (int)Fraction.Of(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6));
@@ -129,7 +129,7 @@ public class FractionTests
     public void OperatorEqual_WhenEqualToInt_ThenTrue()
     {
         // given
-        int integer = 25;
+        var integer = 25;
 
         // when
         bool result1 = Fraction.Of(125, 5) == integer;
@@ -197,7 +197,7 @@ public class FractionTests
     public void OperatorUnaryPlus_ThenCopied()
     {
         // given
-        var fraction = Fraction.Of(23, 18);
+        Fraction fraction = Fraction.Of(23, 18);
 
         // when
         Fraction result = +fraction;
@@ -339,7 +339,7 @@ public class FractionTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        string result = Fraction.Of(4, -19).ToString();
+        var result = Fraction.Of(4, -19).ToString();
 
         // then
         Assert.That(result, Is.EqualTo("-4/19"));

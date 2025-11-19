@@ -86,7 +86,7 @@ public class DisjointSets<T>
     /// <exception cref="KeyNotFoundException">If the represent is not present.</exception>
     public DisjointSets<T> Add(IEnumerable<T> items, T represent)
     {
-        var itemsArray = items.ToArray();
+        T[] itemsArray = items.ToArray();
 
         foreach(T item in itemsArray)
             if(Contains(item))

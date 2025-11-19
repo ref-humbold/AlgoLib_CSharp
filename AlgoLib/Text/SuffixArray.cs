@@ -96,7 +96,7 @@ public class SuffixArray
 
     private static bool lessOrEqual(params int[] elements)
     {
-        for(int i = 0; i < elements.Length; i += 2)
+        for(var i = 0; i < elements.Length; i += 2)
             if(elements[i] < elements[i + 1])
                 return true;
             else if(elements[i] > elements[i + 1])
@@ -161,7 +161,7 @@ public class SuffixArray
     private static void sortIndices(List<int> indices, List<int> values, int shift)
     {
         var buckets = new SortedDictionary<int, Queue<int>>();
-        int j = 0;
+        var j = 0;
 
         foreach(int i in indices)
         {
@@ -179,36 +179,7 @@ public class SuffixArray
             }
     }
 
-    private void initInverseArray()
-    {
-        inverseArray.AddRange(Enumerable.Range(0, Count));
-
-        for(int i = 0; i < Count; ++i)
-            inverseArray[suffixArray[i]] = i;
-    }
-
-    private void initLcpArray()
-    {
-        lcpArray.AddRange(Enumerable.Range(0, Count));
-
-        for(int i = 0, len = 0; i < Count; ++i)
-        {
-            if(inverseArray[i] >= 1)
-            {
-                int j = suffixArray[inverseArray[i] - 1];
-
-                while(i + len < Count && j + len < Count && Text[i + len] == Text[j + len])
-                    ++len;
-
-                lcpArray[inverseArray[i]] = len;
-            }
-
-            if(len > 0)
-                --len;
-        }
-    }
-
-    private List<int> createArray(List<int> txt)
+    private static List<int> createArray(List<int> txt)
     {
         if(txt.Count < 2)
             return [0];
@@ -217,7 +188,7 @@ public class SuffixArray
         int length02 = length0 + length2;
         List<int> indices12 = [];
 
-        for(int i = 0; i < txt.Count + length2 - length1; ++i)
+        for(var i = 0; i < txt.Count + length2 - length1; ++i)
             if(i % 3 != 0)
                 indices12.Add(i);
 
@@ -225,9 +196,9 @@ public class SuffixArray
         sortIndices(indices12, txt, 1);
         sortIndices(indices12, txt, 0);
 
-        int code = 0;
-        (int, int, int) last = (int.MaxValue, int.MaxValue, int.MaxValue);
-        var text12 = Enumerable.Repeat(0, length02).ToList();
+        var code = 0;
+        var last = (int.MaxValue, int.MaxValue, int.MaxValue);
+        List<int> text12 = Enumerable.Repeat(0, length02).ToList();
 
         foreach(int i in indices12)
         {
@@ -253,14 +224,14 @@ public class SuffixArray
         {
             sa12 = createArray(text12);
 
-            for(int i = 0; i < sa12.Count; ++i)
+            for(var i = 0; i < sa12.Count; ++i)
                 text12[sa12[i]] = i + 1;
         }
         else
         {
             sa12 = Enumerable.Repeat(0, length02).ToList();
 
-            for(int i = 0; i < text12.Count; ++i)
+            for(var i = 0; i < text12.Count; ++i)
                 sa12[text12[i] - 1] = i;
         }
 
@@ -270,5 +241,34 @@ public class SuffixArray
 
         sortIndices(sa0, txt, 0);
         return merge(txt, sa0, text12, sa12);
+    }
+
+    private void initInverseArray()
+    {
+        inverseArray.AddRange(Enumerable.Range(0, Count));
+
+        for(var i = 0; i < Count; ++i)
+            inverseArray[suffixArray[i]] = i;
+    }
+
+    private void initLcpArray()
+    {
+        lcpArray.AddRange(Enumerable.Range(0, Count));
+
+        for(int i = 0, len = 0; i < Count; ++i)
+        {
+            if(inverseArray[i] >= 1)
+            {
+                int j = suffixArray[inverseArray[i] - 1];
+
+                while(i + len < Count && j + len < Count && Text[i + len] == Text[j + len])
+                    ++len;
+
+                lcpArray[inverseArray[i]] = len;
+            }
+
+            if(len > 0)
+                --len;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
@@ -31,7 +32,7 @@ public class LongestCommonSubsequenceTests
     public void CountLcsLength_WhenSameCharacterText_ThenShorterLength()
     {
         // given
-        string text = "xxxx";
+        var text = "xxxx";
 
         // when
         int result = LongestCommonSubsequence.CountLcsLength(text + text, text);
@@ -44,7 +45,7 @@ public class LongestCommonSubsequenceTests
     public void CountLcsLength_WhenSameText_ThenTextLength()
     {
         // given
-        string text = "qwertyuiop";
+        var text = "qwertyuiop";
 
         // when
         int result = LongestCommonSubsequence.CountLcsLength(text, text);
@@ -87,7 +88,7 @@ public class LongestCommonSubsequenceTests
     public void CountLcsLength_WhenSameElementSequence_ThenShorterLength()
     {
         // given
-        var sequence = Enumerable.Repeat(11, 25).ToList();
+        List<int> sequence = Enumerable.Repeat(11, 25).ToList();
 
         // when
         int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence.Concat(sequence).ToList());
@@ -100,7 +101,7 @@ public class LongestCommonSubsequenceTests
     public void CountLcsLength_WhenSameSequence_ThenSequenceLength()
     {
         // given
-        var sequence = "qwertyuiop".Select(c => (int)c).ToList();
+        List<int> sequence = "qwertyuiop".Select(c => (int)c).ToList();
 
         // when
         int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence);

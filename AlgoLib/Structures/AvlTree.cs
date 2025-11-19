@@ -102,7 +102,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public void IntersectWith(IEnumerable<T> other)
     {
-        var otherSet = other.ToHashSet();
+        HashSet<T> otherSet = other.ToHashSet();
 
         ExceptWith(this.Where(e => !otherSet.Contains(e)).ToList());
     }

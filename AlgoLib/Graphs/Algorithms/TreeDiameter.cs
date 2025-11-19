@@ -31,9 +31,9 @@ public static class TreeDiameter
         Vertex<TVertexId> parent)
         where TEdgeProperty : IWeighted
     {
-        double pathFrom = 0.0;
-        double pathSubtree = 0.0;
-        double pathThrough = 0.0;
+        var pathFrom = 0.0;
+        var pathSubtree = 0.0;
+        var pathThrough = 0.0;
 
         foreach(Edge<TVertexId> edge in tree.GetAdjacentEdges(vertex))
         {

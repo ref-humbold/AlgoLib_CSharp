@@ -21,9 +21,9 @@ public static class KnuthMorrisPratt
 
         List<int> places = [];
         List<int> pi = prefixes(pattern);
-        int position = 0;
+        var position = 0;
 
-        for(int i = 0; i < text.Length; ++i)
+        for(var i = 0; i < text.Length; ++i)
         {
             while(position > 0 && pattern[position] != text[i])
                 position = pi[position - 1];
@@ -45,7 +45,7 @@ public static class KnuthMorrisPratt
     private static List<int> prefixes(string pattern)
     {
         List<int> pi = [0];
-        int position = 0;
+        var position = 0;
 
         foreach(char letter in pattern.Skip(1))
         {

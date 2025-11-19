@@ -105,7 +105,7 @@ public class Heap<T> : IHeap<T>
         heap[0] = heap[^1];
         heap.RemoveAt(heap.Count - 1);
 
-        int index = 0;
+        var index = 0;
 
         while(index + index + 1 < heap.Count)
         {

@@ -80,7 +80,7 @@ public class PairingHeapTests
     public void GetEnumerator_WhenMultipleElements_ThenAllElementsMinimumFirst()
     {
         // when
-        var result = testObject.ToList();
+        List<int> result = testObject.ToList();
 
         // then
         Assert.That(result, Is.EquivalentTo(numbers));

@@ -19,9 +19,9 @@ public static class PrimesSearching
     public static IEnumerable<int> FindPrimes(int minimum, int maximum)
     {
         if(maximum <= minimum || maximum <= 2)
-            return Enumerable.Empty<int>();
+            return [];
 
-        int segmentSize = (int)Math.Sqrt(maximum);
+        var segmentSize = (int)Math.Sqrt(maximum);
         int[] basePrimes = getBasePrimes(segmentSize).ToArray();
         List<int> primes = [];
 
@@ -42,7 +42,7 @@ public static class PrimesSearching
     {
         bool[] isPrime = Enumerable.Repeat(true, (baseMaximum - 1) / 2).ToArray();
 
-        for(int i = 0; i < (int)(Math.Sqrt(baseMaximum) / 2); ++i)
+        for(var i = 0; i < (int)(Math.Sqrt(baseMaximum) / 2); ++i)
             if(isPrime[i])
             {
                 int primeValue = 2 * i + 3;

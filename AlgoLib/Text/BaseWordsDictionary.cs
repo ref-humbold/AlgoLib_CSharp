@@ -46,8 +46,8 @@ public class BaseWordsDictionary
 
     private static int getMaxLength(int n)
     {
-        int prev = 0;
-        int power = 1;
+        var prev = 0;
+        var power = 1;
 
         while(power < n)
         {
@@ -63,10 +63,11 @@ public class BaseWordsDictionary
     {
         int codeValue = extend(1, 0, (i, length) => [Text[i], 1 + Text[i], i, i + length]);
 
-        for(int currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
+        for(var currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
             codeValue = extend(
                 currentLength, codeValue,
-                (i, length) => [
+                (i, length) =>
+                [
                     factors[(i, i + length / 2)],
                     factors[(i + length / 2, i + length)],
                     i, i + length
@@ -76,11 +77,11 @@ public class BaseWordsDictionary
     // Encodes substring of given length using already counted factors.
     private int extend(int length, int codeValue, Func<int, int, int[]> func)
     {
-        (int, int) previousCode = (0, 0);
-        var codes = Enumerable.Range(0, Text.Length - length + 1)
-                              .Select(i => func.Invoke(i, length))
-                              .OrderBy(c => c, new CodesComparer())
-                              .ToList();
+        var previousCode = (0, 0);
+        List<int[]> codes = Enumerable.Range(0, Text.Length - length + 1)
+                                      .Select(i => func.Invoke(i, length))
+                                      .OrderBy(c => c, new CodesComparer())
+                                      .ToList();
 
         foreach(int[] code in codes)
         {
@@ -102,7 +103,7 @@ public class BaseWordsDictionary
     {
         public override int Compare(int[] a1, int[] a2)
         {
-            for(int i = 0; i < Math.Min(a1.Length, a2.Length); ++i)
+            for(var i = 0; i < Math.Min(a1.Length, a2.Length); ++i)
             {
                 int compareInts = a1[i].CompareTo(a2[i]);
 

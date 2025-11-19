@@ -104,7 +104,7 @@ public class EquationTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        string result = testObject.ToString();
+        var result = testObject.ToString();
 
         // then
         Assert.That(result, Is.EqualTo("2 x_0 + 3 x_1 + -2.5 x_3 = 15"));

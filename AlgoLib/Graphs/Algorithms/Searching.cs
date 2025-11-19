@@ -64,7 +64,7 @@ public static class Searching
     {
         var reached = new Dictionary<Vertex<TVertexId>, int>();
         var vertexStack = new Stack<Vertex<TVertexId>>();
-        int iteration = 1;
+        var iteration = 1;
 
         foreach(Vertex<TVertexId> root in roots)
             if(!reached.ContainsKey(root))

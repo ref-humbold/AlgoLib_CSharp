@@ -27,8 +27,8 @@ public class TreeGraphTests
     public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
-        string vertexProperty = "x";
-        string edgeProperty = "y";
+        var vertexProperty = "x";
+        var edgeProperty = "y";
         Vertex<int> vertex = testObject[2];
         Edge<int> edge = testObject[6, 2];
 
@@ -103,7 +103,7 @@ public class TreeGraphTests
     public void Indexer_WhenVertexExists_ThenVertex()
     {
         // given
-        int vertexId = 4;
+        var vertexId = 4;
 
         // when
         Vertex<int> result = testObject[vertexId];
@@ -179,10 +179,10 @@ public class TreeGraphTests
     public void AddVertex_WhenNewVertex_ThenCreatedEdge()
     {
         // given
-        int newVertexId = 13;
+        var newVertexId = 13;
         Vertex<int> neighbour = testObject[5];
-        string vertexProperty = "qwerty";
-        string edgeProperty = "asdfgh";
+        var vertexProperty = "qwerty";
+        var edgeProperty = "asdfgh";
 
         // when
         Edge<int> result = testObject.AddVertex(
@@ -203,7 +203,7 @@ public class TreeGraphTests
     {
         // given
         Vertex<int> vertex = testObject[6];
-        string property = "qwerty";
+        var property = "qwerty";
 
         testObject.Properties[vertex] = property;
 

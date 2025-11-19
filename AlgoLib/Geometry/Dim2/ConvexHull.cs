@@ -11,10 +11,12 @@ public static class ConvexHull
     /// <returns>The points in the convex hull.</returns>
     public static IEnumerable<Point2D> FindConvexHull(IEnumerable<Point2D> points)
     {
-        if(points.Count() < 3)
-            return Enumerable.Empty<Point2D>();
+        List<Point2D> pointsList = points.ToList();
 
-        List<Point2D> sorted = points.ToList().SortByX();
+        if(pointsList.Count < 3)
+            return [];
+
+        List<Point2D> sorted = pointsList.SortByX();
         List<Point2D> lowerHull = createHalfHull(sorted);
         List<Point2D> upperHull = createHalfHull(Enumerable.Reverse(sorted));
 

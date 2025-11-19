@@ -62,8 +62,8 @@ public static class Sorting
         if(sequence.Count <= 1)
             return;
 
-        for(int halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
-            for(int i = 0; i < sequence.Count; i += halfStep + halfStep)
+        for(var halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
+            for(var i = 0; i < sequence.Count; i += halfStep + halfStep)
                 merge(
                     sequence, i, Math.Min(i + halfStep, sequence.Count),
                     Math.Min(i + halfStep + halfStep, sequence.Count));
@@ -147,7 +147,7 @@ public static class Sorting
         for(int i = iter2; i < indexEnd; ++i)
             ordered.Add(sequence[i]);
 
-        for(int i = 0; i < ordered.Count; ++i)
+        for(var i = 0; i < ordered.Count; ++i)
             sequence[indexBegin + i] = ordered[i];
     }
 

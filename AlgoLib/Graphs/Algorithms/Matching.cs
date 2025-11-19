@@ -13,11 +13,11 @@ public static class Matching
     /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
     /// <param name="graph">The bipartite graph.</param>
     /// <returns>The dictionary of matched vertices.</returns>
-    public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty, TEdgeProperty>(
-        this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+    public static Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Match<TVertexId, TVertexProperty,
+        TEdgeProperty>(this MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
     {
         var augmenter = new MatchAugmenter<TVertexId, TVertexProperty, TEdgeProperty>(graph);
-        bool wasAugmented = true;
+        var wasAugmented = true;
 
         while(wasAugmented)
             wasAugmented = augmenter.AugmentMatch();
@@ -43,10 +43,12 @@ public static class Matching
         public bool AugmentMatch()
         {
             HashSet<Vertex<TVertexId>> visited = [];
-            var distances = graph.Vertices.ToDictionary(v => v, _ => Infinity);
+            Dictionary<Vertex<TVertexId>, double> distances =
+                graph.Vertices.ToDictionary(v => v, _ => Infinity);
 
             bfs(distances);
-            return unmatchedVertices().Aggregate(false, (acc, v) => dfs(v, visited, distances) || acc);
+            return unmatchedVertices().Aggregate(
+                false, (acc, v) => dfs(v, visited, distances) || acc);
         }
 
         private IEnumerable<Vertex<TVertexId>> unmatchedVertices() =>
@@ -98,7 +100,7 @@ public static class Matching
                 }
 
                 if(!visited.Contains(matched) && distances[matched] == distances[vertex] + 1
-                        && dfs(matched, visited, distances))
+                   && dfs(matched, visited, distances))
                 {
                     Matching[vertex] = neighbour;
                     Matching[neighbour] = vertex;

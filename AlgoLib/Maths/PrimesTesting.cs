@@ -25,7 +25,7 @@ public static class PrimesTesting
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
             return false;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             int witness = Random.Next(1, number - 1);
 
@@ -49,7 +49,7 @@ public static class PrimesTesting
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
             return false;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             long witness = Random.NextInt64(1, number - 1);
 
@@ -81,7 +81,7 @@ public static class PrimesTesting
         while(multiplicand % 2 == 0)
             multiplicand /= 2;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             int witness = Random.Next(1, number - 1);
 
@@ -118,7 +118,7 @@ public static class PrimesTesting
         while(multiplicand % 2 == 0)
             multiplicand /= 2;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             long witness = Random.NextInt64(1, number - 1);
 

@@ -30,7 +30,7 @@ public static class ShortestPaths
             [source] = 0.0
         };
 
-        for(int i = 0; i < graph.VerticesCount - 1; ++i)
+        for(var i = 0; i < graph.VerticesCount - 1; ++i)
             foreach(Vertex<TVertexId> vertex in graph.Vertices)
                 foreach(Edge<TVertexId> edge in graph.GetAdjacentEdges(vertex))
                     distances[edge.Destination] =

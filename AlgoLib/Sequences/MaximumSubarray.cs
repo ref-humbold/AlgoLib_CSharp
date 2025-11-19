@@ -35,18 +35,18 @@ public static class MaximumSubarray
     /// <returns>The sum of maximum subarray.</returns>
     public static double CountMaximalSubsum(this IEnumerable<double> sequence)
     {
-        int size = 1;
-        var sequenceList = sequence.ToList();
+        var size = 1;
+        List<double> sequenceList = sequence.ToList();
 
         while(size < 2 * sequenceList.Count)
             size *= 2;
 
-        var intervalSums = Enumerable.Repeat(0.0, size).ToList();
-        var prefixSums = Enumerable.Repeat(0.0, size).ToList();
-        var suffixSums = Enumerable.Repeat(0.0, size).ToList();
-        var allSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> intervalSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> prefixSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> suffixSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> allSums = Enumerable.Repeat(0.0, size).ToList();
 
-        int i = 0;
+        var i = 0;
 
         foreach(double elem in sequenceList)
         {

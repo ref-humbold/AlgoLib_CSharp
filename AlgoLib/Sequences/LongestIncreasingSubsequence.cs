@@ -22,10 +22,10 @@ public static class LongestIncreasingSubsequence
     /// <returns>The least lexicographically longest increasing subsequence.</returns>
     public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
     {
-        var previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
+        List<int?> previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
         List<int> subsequence = [0];
 
-        for(int i = 1; i < sequence.Count; ++i)
+        for(var i = 1; i < sequence.Count; ++i)
         {
             T elem = sequence[i];
 

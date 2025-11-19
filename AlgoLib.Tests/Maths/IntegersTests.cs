@@ -43,7 +43,7 @@ public class IntegersTests
     public void Gcd_WhenOneOfNumbersIsMultipleOfAnother_ThenLessNumber()
     {
         // given
-        int number = 34;
+        var number = 34;
 
         // when
         int result = Integers.Gcd(number, number * 6);
@@ -56,7 +56,7 @@ public class IntegersTests
     public void Gcd_WhenOneOfNumbersIsZero_ThenAnotherNumber()
     {
         // given
-        int number = 96;
+        var number = 96;
 
         // when
         int result = Integers.Gcd(number, 0);
@@ -102,7 +102,7 @@ public class IntegersTests
     public void Lcm_WhenOneOfNumbersIsMultipleOfAnother_ThenGreaterNumber()
     {
         // given
-        int number = 34;
+        var number = 34;
 
         // when
         int result = Integers.Lcm(number, number * 6);

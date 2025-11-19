@@ -24,7 +24,7 @@ public static class LongestCommonSubsequence
         {
             int previousAbove = lcs[0];
 
-            for(int i = 0; i < shortSeq.Count; ++i)
+            for(var i = 0; i < shortSeq.Count; ++i)
             {
                 int previousDiagonal = previousAbove;
 
@@ -54,7 +54,7 @@ public static class LongestCommonSubsequence
         {
             int previousAbove = lcs[0];
 
-            for(int i = 0; i < shortText.Length; ++i)
+            for(var i = 0; i < shortText.Length; ++i)
             {
                 int previousDiagonal = previousAbove;
 

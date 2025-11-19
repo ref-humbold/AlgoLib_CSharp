@@ -14,7 +14,7 @@ public static class ClosestPoints
     public static (Point2D Closest1, Point2D Closest2) FindClosestPoints(
         IEnumerable<Point2D> points)
     {
-        var pointsList = points.ToList();
+        List<Point2D> pointsList = points.ToList();
 
         if(pointsList.Count == 0)
             throw new InvalidOperationException("Sequence contains no elements");
@@ -48,11 +48,11 @@ public static class ClosestPoints
         List<int> beltPoints = [];
         double minDistance = width;
 
-        for(int i = 0; i < pointsY.Count; ++i)
+        for(var i = 0; i < pointsY.Count; ++i)
             if(pointsY[i].X >= middleX - width && pointsY[i].X <= middleX + width)
                 beltPoints.Add(i);
 
-        for(int i = 0; i < beltPoints.Count; ++i)
+        for(var i = 0; i < beltPoints.Count; ++i)
             for(int j = i + 1; j < beltPoints.Count; ++j)
             {
                 Point2D pt1 = pointsY[beltPoints[i]];
@@ -61,7 +61,7 @@ public static class ClosestPoints
                 if(pt2.Y > pt1.Y + width)
                     break;
 
-                if(pt1.X <= middleX && pt2.X >= middleX || pt1.X > middleX && pt2.X <= middleX)
+                if((pt1.X <= middleX && pt2.X >= middleX) || (pt1.X > middleX && pt2.X <= middleX))
                 {
                     double actualDistance = pt1.Distance(pt2);
 

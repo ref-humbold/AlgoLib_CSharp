@@ -45,9 +45,10 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
         if(isOffspring(vertex2, vertex1))
             return vertex1;
 
-        var candidates = paths[vertex1].Reverse<Vertex<TVertexId>>()
-                                       .Where(candidate => !isOffspring(vertex2, candidate))
-                                       .ToList();
+        List<Vertex<TVertexId>> candidates =
+            paths[vertex1].Reverse<Vertex<TVertexId>>()
+                          .Where(candidate => !isOffspring(vertex2, candidate))
+                          .ToList();
 
         return candidates.Count > 0
             ? find(candidates[0], vertex2)
@@ -61,7 +62,7 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
         foreach(Vertex<TVertexId> vertex in Graph.Vertices)
             paths[vertex] = [strategy.Parents[vertex]];
 
-        for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
+        for(var i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
             foreach(Vertex<TVertexId> vertex in Graph.Vertices)
                 paths[vertex].Add(paths[paths[vertex][i]][i]);
 
