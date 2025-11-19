@@ -8,8 +8,8 @@ namespace AlgoLib.Text;
 public class SuffixArray
 {
     private readonly List<int> suffixArray;
-    private readonly List<int> inverseArray = new();
-    private readonly List<int> lcpArray = new();
+    private readonly List<int> inverseArray = [];
+    private readonly List<int> lcpArray = [];
 
     public string Text { get; }
 
@@ -113,15 +113,20 @@ public class SuffixArray
 
         while(index0 < sa0.Count && index12 < sa12.Count)
         {
-            int pos12 = sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2;
+            int pos12 = sa12[index12] < length2
+                ? sa12[index12] * 3 + 1
+                : (sa12[index12] - length2) * 3 + 2;
             int pos0 = sa0[index0];
 
             bool cond = sa12[index12] < length2
-                ? lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                              getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
-                : lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                              getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
-                              getElement(t12, sa12[index12] - length2 + 1), getElement(t12, pos0 / 3 + length2));
+                ? lessOrEqual(
+                    getElement(t0, pos12), getElement(t0, pos0),
+                    getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
+                : lessOrEqual(
+                    getElement(t0, pos12), getElement(t0, pos0),
+                    getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
+                    getElement(t12, sa12[index12] - length2 + 1),
+                    getElement(t12, pos0 / 3 + length2));
 
             if(cond)
             {
@@ -137,7 +142,10 @@ public class SuffixArray
 
         while(index12 < sa12.Count)
         {
-            sa.Add(sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2);
+            sa.Add(
+                sa12[index12] < length2
+                    ? sa12[index12] * 3 + 1
+                    : (sa12[index12] - length2) * 3 + 2);
             ++index12;
         }
 
@@ -224,7 +232,7 @@ public class SuffixArray
         foreach(int i in indices12)
         {
             (int, int, int) elems = (getElement(txt, i), getElement(txt, i + 1),
-                                     getElement(txt, i + 2));
+                getElement(txt, i + 2));
 
             if(last != elems)
             {

@@ -36,8 +36,9 @@ public static class MaximumSubarray
     public static double CountMaximalSubsum(this IEnumerable<double> sequence)
     {
         int size = 1;
+        var sequenceList = sequence.ToList();
 
-        while(size < 2 * sequence.Count())
+        while(size < 2 * sequenceList.Count)
             size *= 2;
 
         var intervalSums = Enumerable.Repeat(0.0, size).ToList();
@@ -47,11 +48,11 @@ public static class MaximumSubarray
 
         int i = 0;
 
-        foreach(double elem in sequence)
+        foreach(double elem in sequenceList)
         {
             int index = size / 2 + i;
 
-            allSums[index] = allSums[index] + elem;
+            allSums[index] += elem;
             intervalSums[index] = Math.Max(allSums[index], 0.0);
             prefixSums[index] = Math.Max(allSums[index], 0.0);
             suffixSums[index] = Math.Max(allSums[index], 0.0);

@@ -28,7 +28,7 @@ internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
         {
             var vertex = new Vertex<TVertexId>(vertexId);
 
-            graphDict[vertex] = new HashSet<Edge<TVertexId>>();
+            graphDict[vertex] = [];
         }
     }
 
@@ -65,48 +65,48 @@ internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
         }
     }
 
-    public TVertexProperty getProperty(Vertex<TVertexId> vertex)
+    public TVertexProperty GetProperty(Vertex<TVertexId> vertex)
     {
         validateVertex(vertex);
         vertexProperties.TryGetValue(vertex, out TVertexProperty val);
         return val;
     }
 
-    public void setProperty(Vertex<TVertexId> vertex, TVertexProperty property)
+    public void SetProperty(Vertex<TVertexId> vertex, TVertexProperty property)
     {
         validateVertex(vertex);
         vertexProperties[vertex] = property;
     }
 
-    public TEdgeProperty getProperty(Edge<TVertexId> edge)
+    public TEdgeProperty GetProperty(Edge<TVertexId> edge)
     {
         validateEdge(edge);
         edgeProperties.TryGetValue(edge, out TEdgeProperty val);
         return val;
     }
 
-    public void setProperty(Edge<TVertexId> edge, TEdgeProperty property)
+    public void SetProperty(Edge<TVertexId> edge, TEdgeProperty property)
     {
         validateEdge(edge);
         edgeProperties[edge] = property;
     }
 
-    public IEnumerable<Edge<TVertexId>> getAdjacentEdges(Vertex<TVertexId> vertex)
+    public IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex)
     {
         validateVertex(vertex);
         return graphDict[vertex];
     }
 
-    public void addVertex(Vertex<TVertexId> vertex) =>
-        graphDict.TryAdd(vertex, new HashSet<Edge<TVertexId>>());
+    public void AddVertex(Vertex<TVertexId> vertex) =>
+        graphDict.TryAdd(vertex, []);
 
-    public void addEdgeToSource(Edge<TVertexId> edge)
+    public void AddEdgeToSource(Edge<TVertexId> edge)
     {
         validateEdgeVertices(edge);
         graphDict[edge.Source].Add(edge);
     }
 
-    public void addEdgeToDestination(Edge<TVertexId> edge)
+    public void AddEdgeToDestination(Edge<TVertexId> edge)
     {
         validateEdgeVertices(edge);
         graphDict[edge.Destination].Add(edge);

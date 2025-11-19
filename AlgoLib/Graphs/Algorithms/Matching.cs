@@ -20,14 +20,14 @@ public static class Matching
         bool wasAugmented = true;
 
         while(wasAugmented)
-            wasAugmented = augmenter.augmentMatch();
+            wasAugmented = augmenter.AugmentMatch();
 
         return augmenter.Matching;
     }
 
     private class MatchAugmenter<TVertexId, TVertexProperty, TEdgeProperty>
     {
-        private static readonly double Infinity = double.PositiveInfinity;
+        private const double Infinity = double.PositiveInfinity;
         private readonly MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
         public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Matching { get; } = new();
@@ -40,10 +40,10 @@ public static class Matching
             this.graph = graph;
         }
 
-        public bool augmentMatch()
+        public bool AugmentMatch()
         {
-            var visited = new HashSet<Vertex<TVertexId>>();
-            var distances = graph.Vertices.ToDictionary(v => v, v => Infinity);
+            HashSet<Vertex<TVertexId>> visited = [];
+            var distances = graph.Vertices.ToDictionary(v => v, _ => Infinity);
 
             bfs(distances);
             return unmatchedVertices().Aggregate(false, (acc, v) => dfs(v, visited, distances) || acc);
@@ -70,7 +70,7 @@ public static class Matching
                 {
                     bool isMatched = Matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
 
-                    if(isMatched && distances[matched] == Infinity)
+                    if(isMatched && double.IsPositiveInfinity(distances[matched]))
                     {
                         distances[matched] = distances[vertex] + 1;
                         vertexDeque.Enqueue(matched);

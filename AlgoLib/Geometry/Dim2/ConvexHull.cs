@@ -14,7 +14,7 @@ public static class ConvexHull
         if(points.Count() < 3)
             return Enumerable.Empty<Point2D>();
 
-        List<Point2D> sorted = Geometry2D.SortByX(points.ToList());
+        List<Point2D> sorted = points.ToList().SortByX();
         List<Point2D> lowerHull = createHalfHull(sorted);
         List<Point2D> upperHull = createHalfHull(Enumerable.Reverse(sorted));
 

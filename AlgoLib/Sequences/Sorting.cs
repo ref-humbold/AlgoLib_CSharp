@@ -64,8 +64,9 @@ public static class Sorting
 
         for(int halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
             for(int i = 0; i < sequence.Count; i += halfStep + halfStep)
-                merge(sequence, i, Math.Min(i + halfStep, sequence.Count),
-                      Math.Min(i + halfStep + halfStep, sequence.Count));
+                merge(
+                    sequence, i, Math.Min(i + halfStep, sequence.Count),
+                    Math.Min(i + halfStep + halfStep, sequence.Count));
     }
 
     /// <summary>Mutably sorts given sequence using quick-sort algorithm.</summary>

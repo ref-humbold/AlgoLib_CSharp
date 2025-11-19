@@ -19,7 +19,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
@@ -43,7 +43,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
@@ -70,7 +70,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
@@ -107,7 +107,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)

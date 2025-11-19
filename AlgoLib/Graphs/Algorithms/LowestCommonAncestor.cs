@@ -56,7 +56,7 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
 
     private void initialize()
     {
-        Searching.DfsRecursive(Graph, strategy, [Root]);
+        Graph.DfsRecursive(strategy, [Root]);
 
         foreach(Vertex<TVertexId> vertex in Graph.Vertices)
             paths[vertex] = [strategy.Parents[vertex]];
@@ -70,11 +70,11 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
 
     private bool isOffspring(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2) =>
         strategy.PreTimes[vertex1] >= strategy.PreTimes[vertex2]
-            && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
+        && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
 
     private class LcaStrategy : IDfsStrategy<TVertexId>
     {
-        private int timer = 0;
+        private int timer;
 
         public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = new();
 

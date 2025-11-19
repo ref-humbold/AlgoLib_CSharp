@@ -12,27 +12,28 @@ public static class StronglyConnectedComponents
     /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
     /// <param name="graph">The directed graph.</param>
     /// <returns>The vertices in strongly connected components.</returns>
-    public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty, TEdgeProperty>(
-        this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+    public static List<HashSet<Vertex<TVertexId>>> FindScc<TVertexId, TVertexProperty,
+        TEdgeProperty>(this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
     {
         var postOrderStrategy = new PostOrderStrategy<TVertexId>();
 
-        Searching.DfsRecursive(graph, postOrderStrategy, graph.Vertices);
+        graph.DfsRecursive(postOrderStrategy, graph.Vertices);
 
         var vertices = postOrderStrategy.PostTimes
                                         .OrderByDescending(kv => kv.Value)
                                         .Select(kv => kv.Key)
                                         .ToList();
-        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph = graph.ReversedCopy();
+        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph =
+            graph.ReversedCopy();
         var sccStrategy = new SccStrategy<TVertexId>();
 
-        Searching.DfsRecursive(reversedGraph, sccStrategy, vertices);
+        reversedGraph.DfsRecursive(sccStrategy, vertices);
         return sccStrategy.Components;
     }
 
     private class PostOrderStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        private int timer = 0;
+        private int timer;
 
         public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
 
@@ -61,10 +62,9 @@ public static class StronglyConnectedComponents
 
     private class SccStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        public List<HashSet<Vertex<TVertexId>>> Components { get; } = new();
+        public List<HashSet<Vertex<TVertexId>>> Components { get; } = [];
 
-        public void ForRoot(Vertex<TVertexId> root) =>
-            Components.Add(new HashSet<Vertex<TVertexId>>());
+        public void ForRoot(Vertex<TVertexId> root) => Components.Add([]);
 
         public void OnEntry(Vertex<TVertexId> vertex) => Components[^1].Add(vertex);
 

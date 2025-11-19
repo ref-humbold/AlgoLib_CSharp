@@ -3,7 +3,7 @@
 namespace AlgoLib.Geometry.Dim2;
 
 /// <summary>Structure of vector in 2D.</summary>
-public readonly record struct Vector2D(double X, double Y) : IGeometryObject, IEquatable<Vector2D>
+public readonly record struct Vector2D(double X, double Y) : IGeometryObject
 {
     public double[] Coordinates => [X, Y];
 

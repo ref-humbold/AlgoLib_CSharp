@@ -22,7 +22,10 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
         set => tree.Parent = value;
     }
 
-    public AvlTree(IComparer<T> comparer = null) => this.comparer = comparer ?? Comparer<T>.Default;
+    public AvlTree(IComparer<T> comparer = null)
+    {
+        this.comparer = comparer ?? Comparer<T>.Default;
+    }
 
     public AvlTree(IEnumerable<T> enumerable, IComparer<T> comparer = null)
         : this(comparer)
@@ -36,30 +39,31 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     public bool Add(T item)
     {
-        AvlInnerNode<T> node_parent =
-            findNode(item, (n, e) =>
-                search(n, e) == null || comparer.Compare(search(n, e).Element, e) == 0);
+        AvlInnerNode<T> nodeParent =
+            findNode(
+                item, (n, e) =>
+                    search(n, e) == null || comparer.Compare(search(n, e).Element, e) == 0);
 
-        if(node_parent == null)
+        if(nodeParent == null)
         {
             Root = new AvlInnerNode<T>(item);
             ++Count;
             return true;
         }
 
-        AvlInnerNode<T> theNode = search(node_parent, item);
+        AvlInnerNode<T> theNode = search(nodeParent, item);
 
         if(theNode != null)
             return false;
 
         var newNode = new AvlInnerNode<T>(item);
 
-        if(comparer.Compare(item, node_parent.Element) < 0)
-            node_parent.Left = newNode;
+        if(comparer.Compare(item, nodeParent.Element) < 0)
+            nodeParent.Left = newNode;
         else
-            node_parent.Right = newNode;
+            nodeParent.Right = newNode;
 
-        balance(node_parent);
+        balance(nodeParent);
         ++Count;
         return true;
     }
@@ -82,7 +86,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             throw new ArgumentException(
                 "Destination array is not long enough to copy all the items in the collection. Check array index and length.");
 
-        IEnumerator<T> enumerator = GetEnumerator();
+        using IEnumerator<T> enumerator = GetEnumerator();
 
         for(int i = arrayIndex; enumerator.MoveNext(); ++i)
             array[i] = enumerator.Current;
@@ -109,11 +113,11 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     public bool IsProperSupersetOf(IEnumerable<T> other) =>
         IsSupersetOf(other) && !IsSubsetOf(other);
 
-    public bool IsSubsetOf(IEnumerable<T> other) => this.All(e => other.Contains(e));
+    public bool IsSubsetOf(IEnumerable<T> other) => this.All(other.Contains);
 
-    public bool IsSupersetOf(IEnumerable<T> other) => other.All(e => Contains(e));
+    public bool IsSupersetOf(IEnumerable<T> other) => other.All(Contains);
 
-    public bool Overlaps(IEnumerable<T> other) => other.Any(e => Contains(e));
+    public bool Overlaps(IEnumerable<T> other) => other.Any(Contains);
 
     public bool Remove(T item)
     {
@@ -202,7 +206,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
                 balance(nodeParent);
             }
             else
+            {
                 Root = child;
+            }
 
             node.Left = null;
             node.Right = null;
@@ -255,7 +261,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             if(newBalance >= 2)
             {
                 if(countBalance(theNode.Left) > 0)
+                {
                     rotate(theNode.Left);
+                }
                 else if(countBalance(theNode.Left) < 0)
                 {
                     rotate(theNode.Left.Right);
@@ -265,7 +273,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             else if(newBalance <= -2)
             {
                 if(countBalance(theNode.Right) < 0)
+                {
                     rotate(theNode.Right);
+                }
                 else if(countBalance(theNode.Right) > 0)
                 {
                     rotate(theNode.Right.Left);
@@ -299,10 +309,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
         private AvlInnerNode<TItem> left;
         private AvlInnerNode<TItem> right;
 
-        public int Height
-        {
-            get; private set;
-        }
+        public int Height { get; private set; }
 
         IAvlNode<TItem> IAvlNode<TItem>.Left
         {
@@ -390,17 +397,13 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
         public IAvlNode<TItem> Left
         {
             get => null;
-            set
-            {
-            }
+            set { }
         }
 
         public IAvlNode<TItem> Right
         {
             get => null;
-            set
-            {
-            }
+            set { }
         }
 
         public AvlInnerNode<TItem> Parent
@@ -419,7 +422,10 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
         public IAvlNode<TItem> Maximum => Parent == null ? this : Parent.Maximum;
 
-        public AvlHeaderNode() => Parent = null;
+        public AvlHeaderNode()
+        {
+            Parent = null;
+        }
     }
 
     private sealed class AvlEnumerator : IEnumerator<T>
@@ -448,7 +454,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             if(currentNode.Height > 0)
             {
                 if(currentNode.Right != null)
+                {
                     currentNode = currentNode.Right.Minimum;
+                }
                 else
                 {
                     while(currentNode.Parent.Height > 0 && currentNode.Parent.Left != currentNode)
@@ -458,7 +466,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
                 }
             }
             else
+            {
                 currentNode = currentNode.Minimum;
+            }
 
             if((currentNode?.Height ?? 0) == 0)
             {

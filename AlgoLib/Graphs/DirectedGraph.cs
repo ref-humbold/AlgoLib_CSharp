@@ -42,7 +42,7 @@ public class DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     }
 
     public override int GetOutputDegree(Vertex<TVertexId> vertex) =>
-        Representation.getAdjacentEdges(vertex).Count();
+        Representation.GetAdjacentEdges(vertex).Count();
 
     public override int GetInputDegree(Vertex<TVertexId> vertex) =>
         Representation.EdgesSet
@@ -60,8 +60,8 @@ public class DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         }
         catch(KeyNotFoundException)
         {
-            Representation.addEdgeToSource(edge);
-            Representation.setProperty(edge, property);
+            Representation.AddEdgeToSource(edge);
+            Representation.SetProperty(edge, property);
             return edge;
         }
     }
@@ -72,14 +72,14 @@ public class DirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
             Vertices.Select(v => v.Id));
 
         foreach(Vertex<TVertexId> vertex in Vertices)
-            newRepresentation.setProperty(vertex, Representation.getProperty(vertex));
+            newRepresentation.SetProperty(vertex, Representation.GetProperty(vertex));
 
         foreach(Edge<TVertexId> edge in Edges)
         {
             Edge<TVertexId> newEdge = edge.Reversed();
 
-            newRepresentation.addEdgeToSource(newEdge);
-            newRepresentation.setProperty(newEdge, Representation.getProperty(edge));
+            newRepresentation.AddEdgeToSource(newEdge);
+            newRepresentation.SetProperty(newEdge, Representation.GetProperty(edge));
         }
 
         Representation = newRepresentation;

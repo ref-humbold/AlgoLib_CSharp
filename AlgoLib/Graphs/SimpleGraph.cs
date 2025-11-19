@@ -24,14 +24,20 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
 
     internal GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty> Representation
     {
-        get; set;
+        get;
+        set;
     }
 
-    public SimpleGraph() =>
+    public SimpleGraph()
+    {
         Representation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>();
+    }
 
-    public SimpleGraph(IEnumerable<TVertexId> vertexIds) =>
-        Representation = new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(vertexIds);
+    public SimpleGraph(IEnumerable<TVertexId> vertexIds)
+    {
+        Representation =
+            new GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>(vertexIds);
+    }
 
     public Vertex<TVertexId> this[TVertexId vertexId] => Representation[vertexId];
 
@@ -42,10 +48,10 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         this[source.Id, destination.Id];
 
     public IEnumerable<Vertex<TVertexId>> GetNeighbours(Vertex<TVertexId> vertex) =>
-        Representation.getAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
+        Representation.GetAdjacentEdges(vertex).Select(e => e.GetNeighbour(vertex));
 
     public IEnumerable<Edge<TVertexId>> GetAdjacentEdges(Vertex<TVertexId> vertex) =>
-        Representation.getAdjacentEdges(vertex);
+        Representation.GetAdjacentEdges(vertex);
 
     public abstract int GetOutputDegree(Vertex<TVertexId> vertex);
 
@@ -64,8 +70,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="property">The vertex property.</param>
     /// <returns>The created vertex.</returns>
     /// <exception cref="ArgumentException">If the vertex already exists.</exception>
-    public Vertex<TVertexId> AddVertex(
-        Vertex<TVertexId> vertex, TVertexProperty property = default)
+    public Vertex<TVertexId> AddVertex(Vertex<TVertexId> vertex, TVertexProperty property = default)
     {
         try
         {
@@ -75,7 +80,7 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         }
         catch(KeyNotFoundException)
         {
-            Representation.addVertex(vertex);
+            Representation.AddVertex(vertex);
             Properties[vertex] = property;
             return vertex;
         }
@@ -88,9 +93,9 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <returns>The created edge.</returns>
     /// <exception cref="ArgumentException">If the edge already exists.</exception>
     public Edge<TVertexId> AddEdgeBetween(
-            Vertex<TVertexId> source,
-            Vertex<TVertexId> destination,
-            TEdgeProperty property = default) =>
+        Vertex<TVertexId> source,
+        Vertex<TVertexId> destination,
+        TEdgeProperty property = default) =>
         AddEdge(new Edge<TVertexId>(source, destination), property);
 
     /// <summary>Adds new edge with given property to this graph.</summary>
@@ -98,27 +103,28 @@ public abstract class SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     /// <param name="property">The edge property.</param>
     /// <returns>The created edge.</returns>
     /// <exception cref="ArgumentException">If the edge already exists.</exception>
-    public abstract Edge<TVertexId> AddEdge(
-        Edge<TVertexId> edge, TEdgeProperty property = default);
+    public abstract Edge<TVertexId> AddEdge(Edge<TVertexId> edge, TEdgeProperty property = default);
 
     private class GraphPropertiesImpl :
         IGraph<TVertexId, TVertexProperty, TEdgeProperty>.IGraphProperties
     {
         private readonly SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-        public GraphPropertiesImpl(SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
+        public GraphPropertiesImpl(SimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+        {
             this.graph = graph;
+        }
 
         public TVertexProperty this[Vertex<TVertexId> vertex]
         {
-            get => graph.Representation.getProperty(vertex);
-            set => graph.Representation.setProperty(vertex, value);
+            get => graph.Representation.GetProperty(vertex);
+            set => graph.Representation.SetProperty(vertex, value);
         }
 
         public TEdgeProperty this[Edge<TVertexId> edge]
         {
-            get => graph.Representation.getProperty(edge);
-            set => graph.Representation.setProperty(edge, value);
+            get => graph.Representation.GetProperty(edge);
+            set => graph.Representation.SetProperty(edge, value);
         }
     }
 }

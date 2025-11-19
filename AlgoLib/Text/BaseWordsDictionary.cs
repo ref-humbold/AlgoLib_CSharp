@@ -64,12 +64,13 @@ public class BaseWordsDictionary
         int codeValue = extend(1, 0, (i, length) => [Text[i], 1 + Text[i], i, i + length]);
 
         for(int currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
-        {
-            codeValue = extend(currentLength, codeValue,
-                               (i, length) => [ factors[(i, i + length / 2)],
-                                                      factors[(i + length / 2, i + length)],
-                                                      i, i + length ]);
-        }
+            codeValue = extend(
+                currentLength, codeValue,
+                (i, length) => [
+                    factors[(i, i + length / 2)],
+                    factors[(i + length / 2, i + length)],
+                    i, i + length
+                ]);
     }
 
     // Encodes substring of given length using already counted factors.

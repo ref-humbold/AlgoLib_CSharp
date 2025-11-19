@@ -31,7 +31,7 @@ public class MinimalSpanningTreeTest
     public void Kruskal_ThenMinimalSpanningTree()
     {
         // when
-        IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Kruskal(graph);
+        IUndirectedGraph<int, object, WeightProp> result = graph.Kruskal();
 
         // then
         double mstSize = result.Edges

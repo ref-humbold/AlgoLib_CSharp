@@ -10,17 +10,20 @@ public class PairingHeap<T> : IHeap<T>
     where T : IComparable<T>
 {
     private static readonly IComparer<T> DefaultComparer = Comparer<T>.Default;
-    private HeapNode heap = null;
+    private HeapNode heap;
 
     public IComparer<T> Comparer => DefaultComparer;
 
-    public int Count { get; private set; } = 0;
+    public int Count { get; private set; }
 
     public PairingHeap()
     {
     }
 
-    public PairingHeap(IEnumerable<T> enumerable) => PushRange(enumerable);
+    public PairingHeap(IEnumerable<T> enumerable)
+    {
+        PushRange(enumerable);
+    }
 
     /// <summary>Merges given heaps.</summary>
     /// <param name="heap1">The first heap.</param>
@@ -141,7 +144,7 @@ public class PairingHeap<T> : IHeap<T>
         private readonly Queue<HeapNode> queue = new();
         private HeapNode currentNode;
 
-        public T Current => currentNode != default
+        public T Current => currentNode is not null
             ? currentNode.Element
             : throw new InvalidOperationException();
 
@@ -158,10 +161,8 @@ public class PairingHeap<T> : IHeap<T>
             bool hasNode = queue.TryDequeue(out HeapNode node);
 
             if(hasNode && node?.Children is not null)
-            {
                 foreach(HeapNode child in node.Children)
                     queue.Enqueue(child);
-            }
 
             currentNode = node;
             return hasNode;

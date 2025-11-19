@@ -8,7 +8,10 @@ public class Vertex<TVertexId> : IEquatable<Vertex<TVertexId>>
 {
     public TVertexId Id { get; }
 
-    public Vertex(TVertexId id) => Id = id;
+    public Vertex(TVertexId id)
+    {
+        Id = id;
+    }
 
     public bool Equals(Vertex<TVertexId> other) => other != null && Id.Equals(other.Id);
 

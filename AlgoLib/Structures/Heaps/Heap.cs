@@ -8,7 +8,7 @@ namespace AlgoLib.Structures.Heaps;
 /// <typeparam name="T">Type of heap elements.</typeparam>
 public class Heap<T> : IHeap<T>
 {
-    private List<T> heap = new();
+    private List<T> heap = [];
 
     public IComparer<T> Comparer { get; } = Comparer<T>.Default;
 
@@ -19,14 +19,20 @@ public class Heap<T> : IHeap<T>
     }
 
     public Heap(IEnumerable<T> enumerable)
-        : this() => PushRange(enumerable);
+        : this()
+    {
+        PushRange(enumerable);
+    }
 
     public Heap(Comparison<T> comparison)
         : this(Comparer<T>.Create(comparison))
     {
     }
 
-    public Heap(IComparer<T> comparer) => Comparer = comparer;
+    public Heap(IComparer<T> comparer)
+    {
+        Comparer = comparer;
+    }
 
     public void Clear() => heap = [];
 

@@ -36,11 +36,12 @@ public static class LongestIncreasingSubsequence
             }
             else
             {
-                int index = searchIndex(sequence, comparison, subsequence, i, 0,
-                                        subsequence.Count);
+                int index = searchIndex(
+                    sequence, comparison, subsequence, i, 0,
+                    subsequence.Count);
 
                 subsequence[index] = i;
-                previousElem[i] = index > 0 ? (int?)subsequence[index - 1] : null;
+                previousElem[i] = index > 0 ? subsequence[index - 1] : null;
             }
         }
 
@@ -72,6 +73,7 @@ public static class LongestIncreasingSubsequence
 
         return comparison(sequence[indexElem], sequence[subsequence[indexMiddle]]) > 0
             ? searchIndex(sequence, comparison, subsequence, indexElem, indexMiddle + 1, indexEnd)
-            : searchIndex(sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
+            : searchIndex(
+                sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
     }
 }

@@ -26,9 +26,10 @@ public static class PrimesSearching
         List<int> primes = [];
 
         if(minimum < segmentSize)
-            primes.AddRange(Enumerable.Range(2, 1)
-                  .Concat(basePrimes)
-                  .Where(p => p >= minimum));
+            primes.AddRange(
+                Enumerable.Range(2, 1)
+                          .Concat(basePrimes)
+                          .Where(p => p >= minimum));
 
         for(int i = Math.Max(minimum, segmentSize); i < maximum; i += segmentSize)
             primes.AddRange(getSegmentPrimes(i, Math.Min(i + segmentSize, maximum), basePrimes));

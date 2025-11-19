@@ -21,7 +21,7 @@ public class DisjointSetsTests
     }
 
     [SetUp]
-    public void SetUp() => testObject = new DisjointSets<int>(numbers.Select(n => (IEnumerable<int>)[n]));
+    public void SetUp() => testObject = new DisjointSets<int>(numbers.Select(n => new[] { n }));
 
     [Test]
     public void Constructor_WhenDuplicatesInDifferentSets_ThenArgumentException()

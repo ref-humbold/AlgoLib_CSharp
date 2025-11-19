@@ -9,10 +9,15 @@ public class Trie
 
     public int Count { get; private set; }
 
-    public Trie() => Count = 0;
+    public Trie()
+    {
+    }
 
     public Trie(IEnumerable<string> texts)
-        : this() => AddRange(texts);
+        : this()
+    {
+        AddRange(texts);
+    }
 
     public void Add(string text)
     {
@@ -95,8 +100,6 @@ public class Trie
         public int Count => children.Count;
 
         internal bool Terminus { get; set; }
-
-        public TrieNode() => Terminus = false;
 
         public TrieNode this[char c]
         {
