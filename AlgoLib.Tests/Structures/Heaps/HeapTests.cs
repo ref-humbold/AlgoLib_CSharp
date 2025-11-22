@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures.Heaps;
@@ -26,7 +25,7 @@ public class HeapTests
         int result = new Heap<int>().Count;
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -36,7 +35,7 @@ public class HeapTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(numbers.Length);
+        Assert.That(result, Is.EqualTo(numbers.Length));
     }
 
     [Test]
@@ -46,8 +45,8 @@ public class HeapTests
         testObject.Clear();
 
         // then
-        testObject.Should().BeEmpty();
-        testObject.Count.Should().Be(0);
+        Assert.That(testObject, Is.Empty);
+        Assert.That(testObject.Count, Is.Zero);
     }
 
     #region GetEnumerator
@@ -59,7 +58,7 @@ public class HeapTests
         IEnumerator<int> result = new Heap<int>().GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -72,9 +71,9 @@ public class HeapTests
         IEnumerator<int> result = new Heap<int>(new[] { element }).GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeTrue();
-        result.Current.Should().Be(element);
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.True);
+        Assert.That(result.Current, Is.EqualTo(element));
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -84,8 +83,8 @@ public class HeapTests
         var result = testObject.ToList();
 
         // then
-        result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, minimum);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Has.ItemAt(0).EqualTo(minimum));
     }
 
     #endregion
@@ -103,8 +102,8 @@ public class HeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(1);
-        testObject.Peek().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(1));
+        Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
     [Test]
@@ -117,8 +116,8 @@ public class HeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
     [Test]
@@ -128,8 +127,8 @@ public class HeapTests
         testObject.Push(minimum + 3);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(minimum);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.Peek(), Is.EqualTo(minimum));
     }
 
     [Test]
@@ -142,8 +141,8 @@ public class HeapTests
         testObject.PushRange(elements);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(elements.Min());
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + elements.Length));
+        Assert.That(testObject.Peek(), Is.EqualTo(elements.Min()));
     }
 
     #endregion
@@ -156,7 +155,7 @@ public class HeapTests
         Action action = () => _ = new Heap<int>().Peek();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -169,7 +168,7 @@ public class HeapTests
         int result = new Heap<int>(new[] { element }).Peek();
 
         // then
-        result.Should().Be(element);
+        Assert.That(result, Is.EqualTo(element));
     }
 
     [Test]
@@ -179,7 +178,7 @@ public class HeapTests
         int result = testObject.Peek();
 
         // then
-        result.Should().Be(minimum);
+        Assert.That(result, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -189,8 +188,8 @@ public class HeapTests
         bool result = new Heap<int>().TryPeek(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -200,8 +199,8 @@ public class HeapTests
         bool result = testObject.TryPeek(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
     }
 
     #endregion
@@ -214,7 +213,7 @@ public class HeapTests
         Action action = () => _ = new Heap<int>().Pop();
 
         // then then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -229,8 +228,8 @@ public class HeapTests
         int result = testObject.Pop();
 
         // then
-        result.Should().Be(element);
-        testObject.Should().BeEmpty();
+        Assert.That(result, Is.EqualTo(element));
+        Assert.That(testObject, Is.Empty);
     }
 
     [Test]
@@ -240,8 +239,8 @@ public class HeapTests
         int result = testObject.Pop();
 
         // then
-        result.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -254,8 +253,8 @@ public class HeapTests
             result.Add(testObject.Pop());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Ascending.Using(testObject.Comparer));
     }
 
     [Test]
@@ -265,8 +264,8 @@ public class HeapTests
         bool result = new Heap<int>().TryPop(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -276,9 +275,9 @@ public class HeapTests
         bool result = testObject.TryPop(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     #endregion

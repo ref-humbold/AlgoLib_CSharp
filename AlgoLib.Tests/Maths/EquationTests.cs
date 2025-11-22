@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -20,9 +19,9 @@ public class EquationTests
         Equation result = +testObject;
 
         // then
-        result.Should().NotBeSameAs(testObject);
-        result.Coefficients.Should().Equal(new[] { 2.0, 3.0, 0.0, -2.5 });
-        result.FreeTerm.Should().Be(15);
+        Assert.That(result, Is.Not.SameAs(testObject));
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 2.0, 3.0, 0.0, -2.5 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(15));
     }
 
     [Test]
@@ -32,8 +31,8 @@ public class EquationTests
         Equation result = -testObject;
 
         // then
-        result.Coefficients.Should().Equal(new[] { -2.0, -3.0, 0.0, 2.5 });
-        result.FreeTerm.Should().Be(-15);
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { -2.0, -3.0, 0.0, 2.5 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(-15));
     }
 
     [Test]
@@ -43,8 +42,8 @@ public class EquationTests
         Equation result = testObject + new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
 
         // then
-        result.Coefficients.Should().Equal(new[] { 3.0, 2.0, 4.0, 7.5 });
-        result.FreeTerm.Should().Be(20);
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 3.0, 2.0, 4.0, 7.5 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(20));
     }
 
     [Test]
@@ -54,8 +53,8 @@ public class EquationTests
         Equation result = testObject - new Equation(new[] { 1.0, -1.0, 4.0, 10.0 }, 5.0);
 
         // then
-        result.Coefficients.Should().Equal(new[] { 1.0, 4.0, -4.0, -12.5 });
-        result.FreeTerm.Should().Be(10);
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 1.0, 4.0, -4.0, -12.5 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(10));
     }
 
     [Test]
@@ -65,8 +64,8 @@ public class EquationTests
         Equation result = testObject * 2;
 
         // then
-        result.Coefficients.Should().Equal(new[] { 4.0, 6.0, 0.0, -5.0 });
-        result.FreeTerm.Should().Be(30);
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { 4.0, 6.0, 0.0, -5.0 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(30));
     }
 
     [Test]
@@ -76,7 +75,7 @@ public class EquationTests
         Action action = () => _ = 0 * testObject;
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<ArithmeticException>());
     }
 
     [Test]
@@ -86,9 +85,9 @@ public class EquationTests
         Equation result = testObject / -2;
 
         // then
-        result.Should().NotBeSameAs(testObject);
-        result.Coefficients.Should().Equal(new[] { -1.0, -1.5, 0.0, 1.25 });
-        result.FreeTerm.Should().Be(-7.5);
+        Assert.That(result, Is.Not.SameAs(testObject));
+        Assert.That(result.Coefficients, Is.EqualTo(new[] { -1.0, -1.5, 0.0, 1.25 }));
+        Assert.That(result.FreeTerm, Is.EqualTo(-7.5));
     }
 
     [Test]
@@ -98,7 +97,7 @@ public class EquationTests
         Action action = () => _ = testObject / 0;
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<ArithmeticException>());
     }
 
     [Test]
@@ -108,7 +107,7 @@ public class EquationTests
         string result = testObject.ToString();
 
         // then
-        result.Should().Be("2 x_0 + 3 x_1 + -2.5 x_3 = 15");
+        Assert.That(result, Is.EqualTo("2 x_0 + 3 x_1 + -2.5 x_3 = 15"));
     }
 
     [Test]
@@ -118,7 +117,7 @@ public class EquationTests
         bool result = testObject.HasSolution(new double[] { 10, 10, -29, 14 });
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -128,6 +127,6 @@ public class EquationTests
         bool result = testObject.HasSolution(new double[] { 10, 6, -17, 14 });
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 }

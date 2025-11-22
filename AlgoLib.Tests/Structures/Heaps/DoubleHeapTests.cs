@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures.Heaps;
@@ -31,7 +30,7 @@ public class DoubleHeapTests
         int result = new DoubleHeap<int>().Count;
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -41,7 +40,7 @@ public class DoubleHeapTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(numbers.Length);
+        Assert.That(result, Is.EqualTo(numbers.Length));
     }
 
     [Test]
@@ -51,8 +50,8 @@ public class DoubleHeapTests
         testObject.Clear();
 
         // then
-        testObject.Should().BeEmpty();
-        testObject.Count.Should().Be(0);
+        Assert.That(testObject, Is.Empty);
+        Assert.That(testObject.Count, Is.Zero);
     }
 
     #region GetEnumerator
@@ -64,7 +63,7 @@ public class DoubleHeapTests
         IEnumerator<int> result = new DoubleHeap<int>().GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -77,25 +76,25 @@ public class DoubleHeapTests
         IEnumerator<int> result = new DoubleHeap<int>(new[] { element }).GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeTrue();
-        result.Current.Should().Be(element);
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.True);
+        Assert.That(result.Current, Is.EqualTo(element));
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
     public void GetEnumerator_WhenMultipleElements_ThenAllElementsMinimumFirstMaximumLast()
     {
         // when
-        var result = testObject.ToList();
+        List<int> result = testObject.ToList();
 
         // then
-        result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, minimum)
-            .And.HaveElementAt(result.Count - 1, maximum);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Has.ItemAt(0).EqualTo(minimum));
+        Assert.That(result, Has.ItemAt(result.Count - 1).EqualTo(maximum));
     }
 
     #endregion
-    #region Push*
+    #region Push & PushRange
 
     [Test]
     public void Push_WhenEmpty_ThenAdded()
@@ -109,9 +108,9 @@ public class DoubleHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(1);
-        testObject.PeekMin().Should().Be(element);
-        testObject.PeekMax().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(1));
+        Assert.That(testObject.PeekMin(), Is.EqualTo(element));
+        Assert.That(testObject.PeekMax(), Is.EqualTo(element));
     }
 
     [Test]
@@ -121,9 +120,9 @@ public class DoubleHeapTests
         testObject.Push((minimum + maximum) / 2);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.PeekMin().Should().Be(minimum);
-        testObject.PeekMax().Should().Be(maximum);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.PeekMin(), Is.EqualTo(minimum));
+        Assert.That(testObject.PeekMax(), Is.EqualTo(maximum));
     }
 
     [Test]
@@ -136,9 +135,9 @@ public class DoubleHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.PeekMin().Should().Be(element);
-        testObject.PeekMax().Should().Be(maximum);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.PeekMin(), Is.EqualTo(element));
+        Assert.That(testObject.PeekMax(), Is.EqualTo(maximum));
     }
 
     [Test]
@@ -151,24 +150,25 @@ public class DoubleHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.PeekMin().Should().Be(minimum);
-        testObject.PeekMax().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.PeekMin(), Is.EqualTo(minimum));
+        Assert.That(testObject.PeekMax(), Is.EqualTo(element));
     }
 
     [Test]
     public void PushRange_WhenNewElements_ThenAllAdded()
     {
         // given
-        int[] elements = new[] { minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3 };
+        int[] elements = new[]
+            { minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3 };
 
         // when
         testObject.PushRange(elements);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.PeekMin().Should().Be(elements.Min());
-        testObject.PeekMax().Should().Be(elements.Max());
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + elements.Length));
+        Assert.That(testObject.PeekMin(), Is.EqualTo(elements.Min()));
+        Assert.That(testObject.PeekMax(), Is.EqualTo(elements.Max()));
     }
 
     #endregion
@@ -181,7 +181,7 @@ public class DoubleHeapTests
         int result = testObject.Peek();
 
         // then
-        result.Should().Be(minimum);
+        Assert.That(result, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -191,7 +191,7 @@ public class DoubleHeapTests
         Action action = () => new DoubleHeap<int>().PeekMin();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -204,7 +204,7 @@ public class DoubleHeapTests
         int result = new DoubleHeap<int>(new[] { element }).PeekMin();
 
         // then
-        result.Should().Be(element);
+        Assert.That(result, Is.EqualTo(element));
     }
 
     [Test]
@@ -214,7 +214,7 @@ public class DoubleHeapTests
         int result = testObject.PeekMin();
 
         // then
-        result.Should().Be(minimum);
+        Assert.That(result, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -224,7 +224,7 @@ public class DoubleHeapTests
         Action action = () => new DoubleHeap<int>().PeekMax();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -237,7 +237,7 @@ public class DoubleHeapTests
         int result = new DoubleHeap<int>(new[] { element }).PeekMax();
 
         // then
-        result.Should().Be(element);
+        Assert.That(result, Is.EqualTo(element));
     }
 
     [Test]
@@ -247,7 +247,7 @@ public class DoubleHeapTests
         int result = testObject.PeekMax();
 
         // then
-        result.Should().Be(maximum);
+        Assert.That(result, Is.EqualTo(maximum));
     }
 
     #endregion
@@ -260,8 +260,8 @@ public class DoubleHeapTests
         bool result = testObject.TryPeek(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -271,8 +271,8 @@ public class DoubleHeapTests
         bool result = new DoubleHeap<int>().TryPeekMin(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -282,8 +282,8 @@ public class DoubleHeapTests
         bool result = testObject.TryPeekMin(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -293,8 +293,8 @@ public class DoubleHeapTests
         bool result = new DoubleHeap<int>().TryPeekMax(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -304,8 +304,8 @@ public class DoubleHeapTests
         bool result = testObject.TryPeekMax(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(maximum);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(maximum));
     }
 
     #endregion
@@ -318,8 +318,8 @@ public class DoubleHeapTests
         int result = testObject.Pop();
 
         // then
-        result.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -329,7 +329,7 @@ public class DoubleHeapTests
         Action action = () => new DoubleHeap<int>().PopMin();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -344,8 +344,8 @@ public class DoubleHeapTests
         int result = testObject.PopMin();
 
         // then
-        result.Should().Be(element);
-        testObject.Should().BeEmpty();
+        Assert.That(result, Is.EqualTo(element));
+        Assert.That(testObject, Is.Empty);
     }
 
     [Test]
@@ -355,8 +355,8 @@ public class DoubleHeapTests
         int result = testObject.PopMin();
 
         // then
-        result.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -365,12 +365,12 @@ public class DoubleHeapTests
         // when
         var result = new List<int>();
 
-        while (testObject.Count > 0)
+        while(testObject.Count > 0)
             result.Add(testObject.PopMin());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Ascending.Using(testObject.Comparer));
     }
 
     [Test]
@@ -380,7 +380,7 @@ public class DoubleHeapTests
         Action action = () => new DoubleHeap<int>().PopMax();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -395,8 +395,8 @@ public class DoubleHeapTests
         int result = testObject.PopMax();
 
         // then
-        result.Should().Be(element);
-        testObject.Should().BeEmpty();
+        Assert.That(result, Is.EqualTo(element));
+        Assert.That(testObject, Is.Empty);
     }
 
     [Test]
@@ -406,8 +406,8 @@ public class DoubleHeapTests
         int result = testObject.PopMax();
 
         // then
-        result.Should().Be(maximum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.EqualTo(maximum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -416,12 +416,12 @@ public class DoubleHeapTests
         // when
         var result = new List<int>();
 
-        while (testObject.Count > 0)
+        while(testObject.Count > 0)
             result.Add(testObject.PopMax());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInDescendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Descending.Using(testObject.Comparer));
     }
 
     #endregion
@@ -434,9 +434,9 @@ public class DoubleHeapTests
         bool result = testObject.TryPop(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -446,8 +446,8 @@ public class DoubleHeapTests
         bool result = new DoubleHeap<int>().TryPopMin(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -457,9 +457,9 @@ public class DoubleHeapTests
         bool result = testObject.TryPopMin(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -469,8 +469,8 @@ public class DoubleHeapTests
         bool result = new DoubleHeap<int>().TryPopMax(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -480,9 +480,9 @@ public class DoubleHeapTests
         bool result = testObject.TryPopMax(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(maximum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(maximum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     #endregion

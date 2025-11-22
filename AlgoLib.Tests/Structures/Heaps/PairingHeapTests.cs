@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Structures.Heaps;
@@ -26,7 +25,7 @@ public class PairingHeapTests
         int result = new PairingHeap<int>().Count;
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -36,7 +35,7 @@ public class PairingHeapTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(numbers.Length);
+        Assert.That(result, Is.EqualTo(numbers.Length));
     }
 
     [Test]
@@ -46,8 +45,8 @@ public class PairingHeapTests
         testObject.Clear();
 
         // then
-        testObject.Should().BeEmpty();
-        testObject.Count.Should().Be(0);
+        Assert.That(testObject, Is.Empty);
+        Assert.That(testObject.Count, Is.Zero);
     }
 
     #region GetEnumerator
@@ -59,7 +58,7 @@ public class PairingHeapTests
         IEnumerator<int> result = new PairingHeap<int>().GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -72,9 +71,9 @@ public class PairingHeapTests
         IEnumerator<int> result = new PairingHeap<int>(new[] { element }).GetEnumerator();
 
         // then
-        result.MoveNext().Should().BeTrue();
-        result.Current.Should().Be(element);
-        result.MoveNext().Should().BeFalse();
+        Assert.That(result.MoveNext(), Is.True);
+        Assert.That(result.Current, Is.EqualTo(element));
+        Assert.That(result.MoveNext(), Is.False);
     }
 
     [Test]
@@ -84,8 +83,8 @@ public class PairingHeapTests
         var result = testObject.ToList();
 
         // then
-        result.Should().BeEquivalentTo(numbers);
-        result.Should().HaveElementAt(0, minimum);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Has.ItemAt(0).EqualTo(minimum));
     }
 
     #endregion
@@ -103,8 +102,8 @@ public class PairingHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(1);
-        testObject.Peek().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(1));
+        Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
     [Test]
@@ -117,8 +116,8 @@ public class PairingHeapTests
         testObject.Push(element);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(element);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.Peek(), Is.EqualTo(element));
     }
 
     [Test]
@@ -128,8 +127,8 @@ public class PairingHeapTests
         testObject.Push(minimum + 3);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + 1);
-        testObject.Peek().Should().Be(minimum);
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + 1));
+        Assert.That(testObject.Peek(), Is.EqualTo(minimum));
     }
 
     [Test]
@@ -142,8 +141,8 @@ public class PairingHeapTests
         testObject.PushRange(elements);
 
         // then
-        testObject.Should().HaveCount(numbers.Length + elements.Length);
-        testObject.Peek().Should().Be(elements.Min());
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length + elements.Length));
+        Assert.That(testObject.Peek(), Is.EqualTo(elements.Min()));
     }
 
     #endregion
@@ -156,7 +155,7 @@ public class PairingHeapTests
         Action action = () => _ = new PairingHeap<int>().Peek();
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -169,7 +168,7 @@ public class PairingHeapTests
         int result = new PairingHeap<int>(new[] { element }).Peek();
 
         // then
-        result.Should().Be(element);
+        Assert.That(result, Is.EqualTo(element));
     }
 
     [Test]
@@ -179,7 +178,7 @@ public class PairingHeapTests
         int result = testObject.Peek();
 
         // then
-        result.Should().Be(minimum);
+        Assert.That(result, Is.EqualTo(minimum));
     }
 
     [Test]
@@ -189,8 +188,8 @@ public class PairingHeapTests
         bool result = new PairingHeap<int>().TryPeek(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -200,8 +199,8 @@ public class PairingHeapTests
         bool result = testObject.TryPeek(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
     }
 
     #endregion
@@ -214,7 +213,7 @@ public class PairingHeapTests
         Action action = () => _ = new PairingHeap<int>().Pop();
 
         // then then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     [Test]
@@ -229,8 +228,8 @@ public class PairingHeapTests
         int result = testObject.Pop();
 
         // then
-        result.Should().Be(element);
-        testObject.Should().BeEmpty();
+        Assert.That(result, Is.EqualTo(element));
+        Assert.That(testObject, Is.Empty);
     }
 
     [Test]
@@ -240,8 +239,8 @@ public class PairingHeapTests
         int result = testObject.Pop();
 
         // then
-        result.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     [Test]
@@ -254,8 +253,8 @@ public class PairingHeapTests
             result.Add(testObject.Pop());
 
         // then
-        result.Should().BeEquivalentTo(numbers.ToList());
-        result.Should().BeInAscendingOrder(testObject.Comparer);
+        Assert.That(result, Is.EquivalentTo(numbers));
+        Assert.That(result, Is.Ordered.Ascending.Using(testObject.Comparer));
     }
 
     [Test]
@@ -265,8 +264,8 @@ public class PairingHeapTests
         bool result = new PairingHeap<int>().TryPop(out int resultValue);
 
         // then
-        result.Should().BeFalse();
-        resultValue.Should().Be(default);
+        Assert.That(result, Is.False);
+        Assert.That(resultValue, Is.Default);
     }
 
     [Test]
@@ -276,9 +275,9 @@ public class PairingHeapTests
         bool result = testObject.TryPop(out int resultValue);
 
         // then
-        result.Should().BeTrue();
-        resultValue.Should().Be(minimum);
-        testObject.Should().HaveCount(numbers.Length - 1);
+        Assert.That(result, Is.True);
+        Assert.That(resultValue, Is.EqualTo(minimum));
+        Assert.That(testObject, Has.Count.EqualTo(numbers.Length - 1));
     }
 
     #endregion
@@ -291,8 +290,8 @@ public class PairingHeapTests
         PairingHeap<int> result = new PairingHeap<int>() + testObject;
 
         // then
-        result.Count.Should().Be(numbers.Length);
-        result.Peek().Should().Be(testObject.Peek());
+        Assert.That(result.Count, Is.EqualTo(numbers.Length));
+        Assert.That(result.Peek(), Is.EqualTo(testObject.Peek()));
     }
 
     [Test]
@@ -302,8 +301,8 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + new PairingHeap<int>();
 
         // then
-        result.Count.Should().Be(numbers.Length);
-        result.Peek().Should().Be(testObject.Peek());
+        Assert.That(result.Count, Is.EqualTo(numbers.Length));
+        Assert.That(result.Peek(), Is.EqualTo(testObject.Peek()));
     }
 
     [Test]
@@ -317,8 +316,8 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + other;
 
         // then
-        result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(other.Peek());
+        Assert.That(result.Count, Is.EqualTo(numbers.Length + other.Count));
+        Assert.That(result.Peek(), Is.EqualTo(other.Peek()));
     }
 
     [Test]
@@ -331,16 +330,16 @@ public class PairingHeapTests
         PairingHeap<int> result = testObject + other;
 
         // then
-        result.Count.Should().Be(numbers.Length + other.Count);
-        result.Peek().Should().Be(testObject.Peek());
+        Assert.That(result.Count, Is.EqualTo(numbers.Length + other.Count));
+        Assert.That(result.Peek(), Is.EqualTo(testObject.Peek()));
     }
 
     [Test]
     public void OperatorPlus_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        int[] firstElements = new[] { 10, 20 };
-        int[] secondElements = new[] { 4, 8 };
+        var firstElements = new[] { 10, 20 };
+        var secondElements = new[] { 4, 8 };
 
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);
@@ -351,21 +350,21 @@ public class PairingHeapTests
         PairingHeap<int> result2 = result1 + second;
 
         // then
-        result1.Peek().Should().Be(firstElements.Min());
-        result1.ToArray().Should().BeEquivalentTo(firstElements);
-        result2.Peek().Should().Be(secondElements.Min());
-        result2.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
-        testObject.Should().BeEmpty();
-        first.ToArray().Should().BeEquivalentTo(firstElements);
-        second.ToArray().Should().BeEquivalentTo(secondElements);
+        Assert.That(result1.Peek(), Is.EqualTo(firstElements.Min()));
+        Assert.That(result1.ToArray(), Is.EquivalentTo(firstElements));
+        Assert.That(result2.Peek(), Is.EqualTo(secondElements.Min()));
+        Assert.That(result2.ToArray(), Is.EquivalentTo(firstElements.Concat(secondElements).ToArray()));
+        Assert.That(testObject, Is.Empty);
+        Assert.That(first.ToArray(), Is.EquivalentTo(firstElements));
+        Assert.That(second.ToArray(), Is.EquivalentTo(secondElements));
     }
 
     [Test]
     public void OperatorPlusEqual_WhenSharedInnerHeap_ThenChangedOnlyMergingHeap()
     {
         // given
-        int[] firstElements = new[] { 10, 20 };
-        int[] secondElements = new[] { 4, 8 };
+        var firstElements = new[] { 10, 20 };
+        var secondElements = new[] { 4, 8 };
 
         testObject = new PairingHeap<int>();
         var first = new PairingHeap<int>(firstElements);
@@ -376,10 +375,10 @@ public class PairingHeapTests
         testObject += second;
 
         // then
-        testObject.Peek().Should().Be(firstElements.Concat(secondElements).Min());
-        testObject.ToArray().Should().BeEquivalentTo(firstElements.Concat(secondElements).ToArray());
-        first.ToArray().Should().BeEquivalentTo(firstElements);
-        second.ToArray().Should().BeEquivalentTo(secondElements);
+        Assert.That(testObject.Peek(), Is.EqualTo(firstElements.Concat(secondElements).Min()));
+        Assert.That(testObject.ToArray(), Is.EquivalentTo(firstElements.Concat(secondElements).ToArray()));
+        Assert.That(first.ToArray(), Is.EquivalentTo(firstElements));
+        Assert.That(second.ToArray(), Is.EquivalentTo(secondElements));
     }
 
     #endregion

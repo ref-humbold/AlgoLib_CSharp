@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
@@ -17,7 +16,7 @@ public class KnuthMorrisPrattTests
             "abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek".KmpSearch("cdecdcde");
 
         // then
-        result.Should().ContainInOrder(2, 14, 19, 30);
+        Assert.That(result, Is.EqualTo(new[] { 2, 14, 19, 30 }));
     }
 
     [Test]
@@ -27,7 +26,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "abcde".KmpSearch("a");
 
         // then
-        result.Should().ContainInOrder(0);
+        Assert.That(result, Is.EqualTo(new[] { 0 }));
     }
 
     [Test]
@@ -37,7 +36,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "abcdae".KmpSearch("a");
 
         // then
-        result.Should().ContainInOrder(0, 4);
+        Assert.That(result, Is.EqualTo(new[] { 0, 4 }));
     }
 
     [Test]
@@ -47,7 +46,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "aaaabcde".KmpSearch("aaa");
 
         // then
-        result.Should().ContainInOrder(0, 1);
+        Assert.That(result, Is.EqualTo(new[] { 0, 1 }));
     }
 
     [Test]
@@ -57,27 +56,27 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "abcde".KmpSearch("x");
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
-    public void KmpSearch_WhenPatternIsEmptystring_ThenEmpty()
+    public void KmpSearch_WhenPatternIsEmptyString_ThenEmpty()
     {
         // when
         IEnumerable<int> result = "abcde".KmpSearch(string.Empty);
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
-    public void KmpSearch_WhenTextIsEmptystring_ThenEmpty()
+    public void KmpSearch_WhenTextIsEmptyString_ThenEmpty()
     {
         // when
         IEnumerable<int> result = string.Empty.KmpSearch("a");
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     [Test]
@@ -87,7 +86,7 @@ public class KnuthMorrisPrattTests
         Action action = () => KnuthMorrisPratt.KmpSearch(null, "a");
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 
     [Test]
@@ -97,6 +96,6 @@ public class KnuthMorrisPrattTests
         Action action = () => "abcde".KmpSearch(null);
 
         // then
-        action.Should().Throw<ArgumentNullException>();
+        Assert.That(action, Throws.ArgumentNullException);
     }
 }

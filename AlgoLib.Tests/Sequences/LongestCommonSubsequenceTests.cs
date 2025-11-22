@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
@@ -15,7 +14,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", string.Empty);
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -25,7 +24,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength("abcde", "eeee");
 
         // then
-        result.Should().Be(1);
+        Assert.That(result, Is.EqualTo(1));
     }
 
     [Test]
@@ -38,7 +37,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength(text + text, text);
 
         // then
-        result.Should().Be(text.Length);
+        Assert.That(result, Is.EqualTo(text.Length));
     }
 
     [Test]
@@ -51,7 +50,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength(text, text);
 
         // then
-        result.Should().Be(text.Length);
+        Assert.That(result, Is.EqualTo(text.Length));
     }
 
     [Test]
@@ -61,7 +60,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "zxqwertyasdfuiopcvb");
 
         // then
-        result.Should().Be("qwertyuiop".Length);
+        Assert.That(result, Is.EqualTo("qwertyuiop".Length));
     }
 
     [Test]
@@ -71,7 +70,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "asdfghjkl");
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -81,7 +80,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength("qwertyuiop", "zxrtyasdfuiopcvb");
 
         // then
-        result.Should().Be("rtyuiop".Length);
+        Assert.That(result, Is.EqualTo("rtyuiop".Length));
     }
 
     [Test]
@@ -94,7 +93,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence.Concat(sequence).ToList());
 
         // then
-        result.Should().Be(sequence.Count);
+        Assert.That(result, Is.EqualTo(sequence.Count));
     }
 
     [Test]
@@ -107,7 +106,7 @@ public class LongestCommonSubsequenceTests
         int result = LongestCommonSubsequence.CountLcsLength(sequence, sequence);
 
         // then
-        result.Should().Be(sequence.Count);
+        Assert.That(result, Is.EqualTo(sequence.Count));
     }
 
     [Test]
@@ -119,6 +118,6 @@ public class LongestCommonSubsequenceTests
             "zxrtyasdfuiopcvb".Select(c => (int)c).ToList());
 
         // then
-        result.Should().Be("rtyuiop".Length);
+        Assert.That(result, Is.EqualTo("rtyuiop".Length));
     }
 }

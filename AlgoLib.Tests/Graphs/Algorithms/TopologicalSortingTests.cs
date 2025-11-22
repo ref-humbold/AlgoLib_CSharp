@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
@@ -16,8 +15,7 @@ public class TopologicalSortingTests
     public void InputsTopologicalSort_WhenAcyclicGraph_ThenTopologicalOrder()
     {
         // given
-        DirectedSimpleGraph<int, object, object> graph = new DirectedSimpleGraph<int, object, object>(
-            Enumerable.Range(0, 6).ToArray());
+        var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6).ToArray());
 
         graph.AddEdgeBetween(graph[0], graph[2]);
         graph.AddEdgeBetween(graph[0], graph[4]);
@@ -31,18 +29,19 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[4]);
 
         // when
-        IEnumerable<Vertex<int>> result = TopologicalSorting.InputsTopologicalSort(graph);
+        IEnumerable<Vertex<int>> result = graph.InputsTopologicalSort();
 
         // then
-        result.Should().ContainInOrder(graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]);
+        Assert.That(
+            result,
+            Is.EqualTo(new[] { graph[3], graph[5], graph[1], graph[0], graph[2], graph[4] }));
     }
 
     [Test]
     public void InputsTopologicalSort_WhenCyclicGraph_ThenDirectedCyclicGraphException()
     {
         // given
-        DirectedSimpleGraph<int, object, object> graph = new DirectedSimpleGraph<int, object, object>(
-                Enumerable.Range(0, 6).ToArray());
+        var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6).ToArray());
 
         graph.AddEdgeBetween(graph[0], graph[2]);
         graph.AddEdgeBetween(graph[0], graph[4]);
@@ -57,10 +56,10 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[4]);
 
         // when
-        Action action = () => TopologicalSorting.InputsTopologicalSort(graph);
+        Action action = () => graph.InputsTopologicalSort();
 
         // then
-        action.Should().Throw<DirectedCyclicGraphException>();
+        Assert.That(action, Throws.TypeOf<DirectedCyclicGraphException>());
     }
 
     [Test]
@@ -74,7 +73,7 @@ public class TopologicalSortingTests
         IEnumerable<Vertex<int>> result = graph.InputsTopologicalSort();
 
         // then
-        result.Should().Equal(graph.Vertices);
+        Assert.That(result, Is.EqualTo(graph.Vertices));
     }
 
     #endregion
@@ -84,8 +83,7 @@ public class TopologicalSortingTests
     public void DfsTopologicalSort_WhenAcyclicGraph_ThenTopologicalOrder()
     {
         // given
-        DirectedSimpleGraph<int, object, object> graph = new DirectedSimpleGraph<int, object, object>(
-                Enumerable.Range(0, 6).ToArray());
+        var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6).ToArray());
 
         graph.AddEdgeBetween(graph[0], graph[2]);
         graph.AddEdgeBetween(graph[0], graph[4]);
@@ -98,26 +96,26 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[2]);
         graph.AddEdgeBetween(graph[5], graph[4]);
 
-        var expecteds = new Vertex<int>[][] {
-            new Vertex<int>[] { graph[3], graph[5], graph[1], graph[0], graph[2], graph[4] },
-            new Vertex<int>[] { graph[5], graph[3], graph[1], graph[0], graph[2], graph[4] },
-            new Vertex<int>[] { graph[3], graph[5], graph[1], graph[0], graph[4], graph[2] },
-            new Vertex<int>[] { graph[5], graph[3], graph[1], graph[0], graph[4], graph[2] }
+        Vertex<int>[][] expecteds = new[]
+        {
+            new[] { graph[3], graph[5], graph[1], graph[0], graph[2], graph[4] },
+            new[] { graph[5], graph[3], graph[1], graph[0], graph[2], graph[4] },
+            new[] { graph[3], graph[5], graph[1], graph[0], graph[4], graph[2] },
+            new[] { graph[5], graph[3], graph[1], graph[0], graph[4], graph[2] }
         };
 
         // when
-        IEnumerable<Vertex<int>> result = TopologicalSorting.DfsTopologicalSort(graph);
+        IEnumerable<Vertex<int>> result = graph.DfsTopologicalSort();
 
         // then
-        expecteds.Should().ContainEquivalentOf(result.ToArray());
+        Assert.That(expecteds, Has.Some.EquivalentTo(result.ToArray()));
     }
 
     [Test]
     public void DfsTopologicalSort_WhenCyclicGraph_ThenDirectedCyclicGraphException()
     {
         // given
-        DirectedSimpleGraph<int, object, object> graph = new DirectedSimpleGraph<int, object, object>(
-                Enumerable.Range(0, 6).ToArray());
+        var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 6).ToArray());
 
         graph.AddEdgeBetween(graph[0], graph[2]);
         graph.AddEdgeBetween(graph[0], graph[4]);
@@ -132,24 +130,23 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[4]);
 
         // when
-        Action action = () => TopologicalSorting.DfsTopologicalSort(graph);
+        Action action = () => graph.DfsTopologicalSort();
 
         // then
-        action.Should().Throw<DirectedCyclicGraphException>();
+        Assert.That(action, Throws.TypeOf<DirectedCyclicGraphException>());
     }
 
     [Test]
     public void DfsTopologicalSort_WhenEmptyGraph_ThenVertices()
     {
         // given
-        IDirectedGraph<int, object, object> graph =
-            new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
+        var graph = new DirectedSimpleGraph<int, object, object>(Enumerable.Range(0, 5));
 
         // when
         IEnumerable<Vertex<int>> result = graph.DfsTopologicalSort();
 
         // then
-        result.Should().Equal(graph.Vertices);
+        Assert.That(result, Is.EqualTo(graph.Vertices));
     }
 
     #endregion

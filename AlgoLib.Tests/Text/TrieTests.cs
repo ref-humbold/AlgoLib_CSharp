@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
@@ -25,7 +24,7 @@ public class TrieTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -35,49 +34,49 @@ public class TrieTests
         int result = testObject.Count;
 
         // then
-        result.Should().Be(texts.Count);
+        Assert.That(result, Is.EqualTo(texts.Count));
     }
 
     [Test]
     public void Add_WhenPresent_ThenNothingChanged()
     {
         // given
-        string text = "abcd";
+        var text = "abcd";
 
         // when
         testObject.Add(text);
 
         // then
-        testObject.Contains(text).Should().BeTrue();
-        testObject.Count.Should().Be(texts.Count);
+        Assert.That(testObject.Contains(text), Is.True);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count));
     }
 
     [Test]
     public void Add_WhenAbsent_ThenAdded()
     {
         // given
-        string text = "abxx";
+        var text = "abxx";
 
         // when
         testObject.Add(text);
 
         // then
-        testObject.Contains(text).Should().BeTrue();
-        testObject.Count.Should().Be(texts.Count + 1);
+        Assert.That(testObject.Contains(text), Is.True);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count + 1));
     }
 
     [Test]
     public void Add_WhenAbsentPrefix_ThenAdded()
     {
         // given
-        string text = "xy";
+        var text = "xy";
 
         // when
         testObject.Add(text);
 
         // then
-        testObject.Contains(text).Should().BeTrue();
-        testObject.Count.Should().Be(texts.Count + 1);
+        Assert.That(testObject.Contains(text), Is.True);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count + 1));
     }
 
     [Test]
@@ -91,9 +90,9 @@ public class TrieTests
 
         // then
         foreach(string text in textsToAdd)
-            testObject.Contains(text).Should().BeTrue();
+            Assert.That(testObject.Contains(text), Is.True);
 
-        testObject.Count.Should().Be(texts.Concat(textsToAdd).Distinct().Count());
+        Assert.That(testObject.Count, Is.EqualTo(texts.Concat(textsToAdd).Distinct().Count()));
     }
 
     [Test]
@@ -103,7 +102,7 @@ public class TrieTests
         testObject.Clear();
 
         // then
-        testObject.Count.Should().Be(0);
+        Assert.That(testObject.Count, Is.Zero);
     }
 
     [Test]
@@ -113,7 +112,7 @@ public class TrieTests
         bool result = testObject.Contains("abcd");
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -123,7 +122,7 @@ public class TrieTests
         bool result = testObject.Contains("abxx");
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
@@ -133,50 +132,50 @@ public class TrieTests
         bool result = testObject.Contains("xy");
 
         // then
-        result.Should().BeFalse();
+        Assert.That(result, Is.False);
     }
 
     [Test]
     public void Remove_WhenPresent_ThenRemoved()
     {
         // given
-        string text = "abcd";
+        var text = "abcd";
 
         // when
         testObject.Remove(text);
 
         // then
-        testObject.Contains(text).Should().BeFalse();
-        testObject.Count.Should().Be(texts.Count - 1);
+        Assert.That(testObject.Contains(text), Is.False);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count - 1));
     }
 
     [Test]
     public void Remove_WhenAbsent_ThenNothingChanged()
     {
         // given
-        string text = "abxx";
+        var text = "abxx";
 
         // when
         testObject.Remove(text);
 
         // then
-        testObject.Contains(text).Should().BeFalse();
-        testObject.Count.Should().Be(texts.Count);
+        Assert.That(testObject.Contains(text), Is.False);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count));
     }
 
     [Test]
     public void Remove_WhenAbsentPrefix_ThenNothingChanged()
     {
         // given
-        string text = "xy";
+        var text = "xy";
 
         // when
         testObject.Remove(text);
 
         // then
-        testObject.Contains("xyz").Should().BeTrue();
-        testObject.Contains(text).Should().BeFalse();
-        testObject.Count.Should().Be(texts.Count);
+        Assert.That(testObject.Contains("xyz"), Is.True);
+        Assert.That(testObject.Contains(text), Is.False);
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count));
     }
 
     [Test]
@@ -190,8 +189,8 @@ public class TrieTests
 
         // then
         foreach(string text in textsToRemove)
-            testObject.Contains(text).Should().BeFalse();
+            Assert.That(testObject.Contains(text), Is.False);
 
-        testObject.Count.Should().Be(texts.Where(t => !textsToRemove.Contains(t)).Count());
+        Assert.That(testObject.Count, Is.EqualTo(texts.Count(t => !textsToRemove.Contains(t))));
     }
 }

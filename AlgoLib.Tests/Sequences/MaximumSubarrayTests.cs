@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Sequences;
@@ -8,6 +7,8 @@ namespace AlgoLib.Sequences;
 [TestFixture]
 public class MaximumSubarrayTests
 {
+    private const double Precision = 1e-6;
+
     #region FindMaximumSubarray
 
     [Test]
@@ -20,7 +21,7 @@ public class MaximumSubarrayTests
         List<double> result = sequence.FindMaximumSubarray();
 
         // then
-        result.Should().Equal(3.5, 4.8, -1.6, 7.7, 2.1);
+        Assert.That(result, Is.EqualTo(new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1 }));
     }
 
     [Test]
@@ -33,7 +34,7 @@ public class MaximumSubarrayTests
         List<double> result = sequence.FindMaximumSubarray();
 
         // then
-        result.Should().Equal(7.7, 2.1, 0.8, 4.0);
+        Assert.That(result, Is.EqualTo(new List<double> { 7.7, 2.1, 0.8, 4.0 }));
     }
 
     [Test]
@@ -46,7 +47,7 @@ public class MaximumSubarrayTests
         List<double> result = sequence.FindMaximumSubarray();
 
         // then
-        result.Should().BeEmpty();
+        Assert.That(result, Is.Empty);
     }
 
     #endregion
@@ -62,7 +63,7 @@ public class MaximumSubarrayTests
         double result = sequence.CountMaximalSubsum();
 
         // then
-        result.Should().BeApproximately(16.5, 1e-6);
+        Assert.That(result, Is.EqualTo(16.5).Within(Precision));
     }
 
     [Test]
@@ -75,11 +76,11 @@ public class MaximumSubarrayTests
         double result = sequence.CountMaximalSubsum();
 
         // then
-        result.Should().BeApproximately(14.6, 1e-6);
+        Assert.That(result, Is.EqualTo(14.6).Within(Precision));
     }
 
     [Test]
-    public void CountMaximumalSubsum_WhenAllElementsAreNegative_ThenZero()
+    public void CountMaximalSubsum_WhenAllElementsAreNegative_ThenZero()
     {
         // given
         var sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
@@ -88,7 +89,7 @@ public class MaximumSubarrayTests
         double result = sequence.CountMaximalSubsum();
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     #endregion

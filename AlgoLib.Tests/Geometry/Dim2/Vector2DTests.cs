@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
@@ -8,7 +7,7 @@ namespace AlgoLib.Geometry.Dim2;
 [TestFixture]
 public class Vector2DTests
 {
-    private static readonly double Offset = IGeometryObject.Epsilon;
+    private static readonly double Precision = IGeometryObject.Epsilon;
 
     [Test]
     public void Coordinates_ThenArray()
@@ -17,7 +16,7 @@ public class Vector2DTests
         double[] result = Vector2D.Of(5.0, -19.0).Coordinates;
 
         // then
-        result.Should().Equal(5.0, -19.0);
+        Assert.That(result, Is.EqualTo(new[] { 5.0, -19.0 }));
     }
 
     [Test]
@@ -27,17 +26,17 @@ public class Vector2DTests
         double result = Vector2D.Of(8.0, -6.0).Length;
 
         // then
-        result.Should().BeApproximately(10.0, Offset);
+        Assert.That(result, Is.EqualTo(10.0).Within(Precision));
     }
 
     [Test]
     public void Between_ThenVectorFromBeginToEnd()
     {
         // when
-        var result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
+        Vector2D result = Vector2D.Between(Point2D.Of(2.4, 7.8), Point2D.Of(-1.5, 13.2));
 
         // then
-        result.Should().Be(Vector2D.Of(-3.9, 5.4));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(-3.9, 5.4)));
     }
 
     [Test]
@@ -47,7 +46,7 @@ public class Vector2DTests
         double result = Vector2D.Dot(Vector2D.Of(1.5, -4.0), Vector2D.Of(9.0, -2.5));
 
         // then
-        result.Should().BeApproximately(23.5, Offset);
+        Assert.That(result, Is.EqualTo(23.5).Within(Precision));
     }
 
     [Test]
@@ -57,7 +56,7 @@ public class Vector2DTests
         double result = Vector2D.Dot(Vector2D.Of(1.0, 0.0), Vector2D.Of(0.0, -2.0));
 
         // then
-        result.Should().BeApproximately(0.0, Offset);
+        Assert.That(result, Is.Zero.Within(Precision));
     }
 
     [Test]
@@ -67,7 +66,7 @@ public class Vector2DTests
         double result = Vector2D.Area(Vector2D.Of(1.5, -4.0), Vector2D.Of(9.0, -2.5));
 
         // then
-        result.Should().BeApproximately(32.25, Offset);
+        Assert.That(result, Is.EqualTo(32.25).Within(Precision));
     }
 
     [Test]
@@ -77,7 +76,7 @@ public class Vector2DTests
         double result = Vector2D.Area(Vector2D.Of(3.0, 3.0), Vector2D.Of(-8.0, -8.0));
 
         // then
-        result.Should().BeApproximately(0.0, Offset);
+        Assert.That(result, Is.Zero.Within(Precision));
     }
 
     [Test]
@@ -90,8 +89,8 @@ public class Vector2DTests
         Vector2D result = +vector;
 
         // then
-        result.Should().NotBeSameAs(vector);
-        result.Should().Be(Vector2D.Of(5.4, 9.0));
+        Assert.That(result, Is.Not.SameAs(vector));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(5.4, 9.0)));
     }
 
     [Test]
@@ -101,7 +100,7 @@ public class Vector2DTests
         Vector2D result = -Vector2D.Of(5.4, 9.0);
 
         // then
-        result.Should().Be(Vector2D.Of(-5.4, -9.0));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(-5.4, -9.0)));
     }
 
     [Test]
@@ -111,7 +110,7 @@ public class Vector2DTests
         Vector2D result = Vector2D.Of(5.4, 9.0) + Vector2D.Of(7.9, -8.1);
 
         // then
-        result.Should().Be(Vector2D.Of(13.3, 0.9));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(13.3, 0.9)));
     }
 
     [Test]
@@ -121,7 +120,7 @@ public class Vector2DTests
         Vector2D result = Vector2D.Of(5.4, 9.0) - Vector2D.Of(7.9, -8.1);
 
         // then
-        result.Should().Be(Vector2D.Of(-2.5, 17.1));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(-2.5, 17.1)));
     }
 
     [Test]
@@ -131,7 +130,7 @@ public class Vector2DTests
         Vector2D result = Vector2D.Of(5.4, 9.0) * 3;
 
         // then
-        result.Should().Be(Vector2D.Of(16.2, 27.0));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(16.2, 27.0)));
     }
 
     [Test]
@@ -141,7 +140,7 @@ public class Vector2DTests
         Vector2D result = 0 * Vector2D.Of(5.4, 9.0);
 
         // then
-        result.Should().Be(Vector2D.Of(0, 0));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(0, 0)));
     }
 
     [Test]
@@ -151,7 +150,7 @@ public class Vector2DTests
         Vector2D result = Vector2D.Of(5.4, 9.0) / 3;
 
         // then
-        result.Should().Be(Vector2D.Of(1.8, 3.0));
+        Assert.That(result, Is.EqualTo(Vector2D.Of(1.8, 3.0)));
     }
 
     [Test]
@@ -161,7 +160,7 @@ public class Vector2DTests
         Action action = () => _ = Vector2D.Of(1.0, 1.0) / 0;
 
         // then
-        action.Should().Throw<DivideByZeroException>();
+        Assert.That(action, Throws.TypeOf<DivideByZeroException>());
     }
 
     [Test]
@@ -171,7 +170,7 @@ public class Vector2DTests
         (double x, double y) = Vector2D.Of(5.0, -19.0);
 
         // then
-        x.Should().Be(5.0);
-        y.Should().Be(-19.0);
+        Assert.That(x, Is.EqualTo(5.0));
+        Assert.That(y, Is.EqualTo(-19.0));
     }
 }

@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
@@ -17,7 +16,7 @@ public class TreeDiameterTests
         double result = tree.CountDiameter();
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -40,7 +39,7 @@ public class TreeDiameterTests
         double result = tree.CountDiameter();
 
         // then
-        result.Should().Be(6);
+        Assert.That(result, Is.EqualTo(6));
     }
 
     [Test]
@@ -58,7 +57,7 @@ public class TreeDiameterTests
         double result = tree.CountDiameter();
 
         // then
-        result.Should().Be(1015);
+        Assert.That(result, Is.EqualTo(1015));
     }
 
     private sealed class Weighted : IWeighted

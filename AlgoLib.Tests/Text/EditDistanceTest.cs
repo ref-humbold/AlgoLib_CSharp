@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Text;
@@ -8,7 +7,7 @@ namespace AlgoLib.Text;
 [TestFixture]
 public class EditDistanceTest
 {
-    private static readonly double Precision = 1e-6;
+    private const double Precision = 1e-6;
 
     #region CountLevenshtein
 
@@ -16,55 +15,55 @@ public class EditDistanceTest
     public void CountLevenshtein_WhenDifferentText_ThenDistance()
     {
         // given
-        string source = "qwertyuiop";
-        string destination = "wertzuiopsx";
+        var source = "qwertyuiop";
+        var destination = "wertzuiopsx";
 
         // when
         double result = source.CountLevenshtein(destination);
 
         // then
-        result.Should().BeApproximately(4.0, Precision);
+        Assert.That(result, Is.EqualTo(4.0).Within(Precision));
     }
 
     [Test]
     public void CountLevenshtein_WhenSameText_ThenZero()
     {
         // given
-        string text = "qwertyuiop";
+        var text = "qwertyuiop";
 
         // when
         double result = text.CountLevenshtein(text);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
     public void CountLevenshtein_WhenEmptySource_ThenSumOfInsertions()
     {
         // given
-        string text = "qwertyuiop";
-        double insertionCost = 2.0;
+        var text = "qwertyuiop";
+        var insertionCost = 2.0;
 
         // when
-        double result = string.Empty.CountLevenshtein(text, insertionCost, 1.0, 1.0);
+        double result = string.Empty.CountLevenshtein(text, insertionCost);
 
         // then
-        result.Should().BeApproximately(text.Length * insertionCost, Precision);
+        Assert.That(result, Is.EqualTo(text.Length * insertionCost).Within(Precision));
     }
 
     [Test]
     public void CountLevenshtein_WhenEmptyDestination_ThenSumOfDeletions()
     {
         // given
-        string text = "qwertyuiop";
-        double deletionCost = 2.0;
+        var text = "qwertyuiop";
+        var deletionCost = 2.0;
 
         // when
-        double result = text.CountLevenshtein(string.Empty, 1.0, deletionCost, 1.0);
+        double result = text.CountLevenshtein(string.Empty, 1.0, deletionCost);
 
         // then
-        result.Should().BeApproximately(text.Length * deletionCost, Precision);
+        Assert.That(result, Is.EqualTo(text.Length * deletionCost).Within(Precision));
     }
 
     [Test]
@@ -74,7 +73,7 @@ public class EditDistanceTest
         Action action = () => "a".CountLevenshtein("b", 1.0, 1.0, -1.0);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     #endregion
@@ -84,55 +83,55 @@ public class EditDistanceTest
     public void CountLcs_WhenDifferentText_ThenDistance()
     {
         // given
-        string source = "qwertyuiop";
-        string destination = "wertzuiopsx";
+        var source = "qwertyuiop";
+        var destination = "wertzuiopsx";
 
         // when
         double result = source.CountLcs(destination);
 
         // then
-        result.Should().BeApproximately(5.0, Precision);
+        Assert.That(result, Is.EqualTo(5.0).Within(Precision));
     }
 
     [Test]
     public void CountLcs_WhenSameText_ThenZero()
     {
         // given
-        string text = "qwertyuiop";
+        var text = "qwertyuiop";
 
         // when
         double result = text.CountLcs(text);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
     public void CountLcs_WhenEmptySource_ThenSumOfInsertions()
     {
         // given
-        string text = "qwertyuiop";
-        double insertionCost = 2.0;
+        var text = "qwertyuiop";
+        var insertionCost = 2.0;
 
         // when
-        double result = string.Empty.CountLcs(text, insertionCost, 1.0);
+        double result = string.Empty.CountLcs(text, insertionCost);
 
         // then
-        result.Should().BeApproximately(text.Length * insertionCost, Precision);
+        Assert.That(result, Is.EqualTo(text.Length * insertionCost).Within(Precision));
     }
 
     [Test]
     public void CountLcs_WhenEmptyDestination_ThenSumOfDeletions()
     {
         // given
-        string text = "qwertyuiop";
-        double deletionCost = 2.0;
+        var text = "qwertyuiop";
+        var deletionCost = 2.0;
 
         // when
         double result = text.CountLcs(string.Empty, 1.0, deletionCost);
 
         // then
-        result.Should().BeApproximately(text.Length * deletionCost, Precision);
+        Assert.That(result, Is.EqualTo(text.Length * deletionCost).Within(Precision));
     }
 
     [Test]
@@ -142,7 +141,7 @@ public class EditDistanceTest
         Action action = () => "a".CountLcs("b", 1.0, -1.0);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     #endregion
@@ -152,41 +151,41 @@ public class EditDistanceTest
     public void CountHamming_WhenDifferentText_ThenDistance()
     {
         // given
-        string source = "qwertyuiop";
-        string destination = "qvertzuimp";
-        double substitutionCost = 2.0;
+        var source = "qwertyuiop";
+        var destination = "qvertzuimp";
+        var substitutionCost = 2.0;
 
         // when
         double result = source.CountHamming(destination, substitutionCost);
 
         // then
-        result.Should().BeApproximately(3 * substitutionCost, Precision);
+        Assert.That(result, Is.EqualTo(3 * substitutionCost).Within(Precision));
     }
 
     [Test]
     public void CountHamming_WhenSameText_ThenZero()
     {
         // given
-        string text = "qwertyuiop";
+        var text = "qwertyuiop";
 
         // when
         double result = text.CountHamming(text);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
     public void CountHamming_WhenEmptyText_ThenZero()
     {
         // given
-        string text = string.Empty;
+        var text = string.Empty;
 
         // when
         double result = text.CountHamming(text);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -196,7 +195,7 @@ public class EditDistanceTest
         Action action = () => "qwerty".CountHamming("asdf");
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
@@ -206,7 +205,7 @@ public class EditDistanceTest
         Action action = () => "a".CountHamming("b", -1.0);
 
         // then
-        action.Should().Throw<ArgumentException>();
+        Assert.That(action, Throws.ArgumentException);
     }
 
     #endregion

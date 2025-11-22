@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -28,7 +27,7 @@ public class PrimesSearchingTests
         IEnumerable<int> result2 = PrimesSearching.FindPrimes(0, 100);
 
         // then
-        result1.Should().Equal(result2);
+        Assert.That(result1, Is.EqualTo(result2));
     }
 
     [Test]
@@ -41,7 +40,7 @@ public class PrimesSearchingTests
         // then
         IEnumerable<int> expected = Primes.Where(p => p < number);
 
-        result.Should().Equal(expected);
+        Assert.That(result, Is.EqualTo(expected));
     }
 
     [Test]
@@ -55,6 +54,6 @@ public class PrimesSearchingTests
         // then
         IEnumerable<int> expected = Primes.Where(p => p >= minimum && p < maximum);
 
-        result.Should().Equal(expected);
+        Assert.That(result, Is.EqualTo(expected));
     }
 }

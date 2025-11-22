@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Maths;
@@ -17,7 +16,7 @@ public class FractionTests
         var result = Fraction.Of(32, 104);
 
         // then
-        result.Should().Be(Fraction.Of(4, 13));
+        Assert.That(result, Is.EqualTo(Fraction.Of(4, 13)));
     }
 
     [Test]
@@ -27,17 +26,17 @@ public class FractionTests
         var result = Fraction.Of(29);
 
         // then
-        result.Should().Be(Fraction.Of(29, 1));
+        Assert.That(result, Is.EqualTo(Fraction.Of(29, 1)));
     }
 
     [Test]
-    public void Of_WhenDenominatorIsZero_ThenArithmeticException()
+    public void Of_WhenDenominatorIsZero_ThenDivideByZeroException()
     {
         // when
         Action action = () => _ = Fraction.Of(1, 0);
 
         // then
-        action.Should().Throw<ArithmeticException>();
+        Assert.That(action, Throws.TypeOf<DivideByZeroException>());
     }
 
     [Test]
@@ -47,7 +46,7 @@ public class FractionTests
         var result = Fraction.Of(-4, 11);
 
         // then
-        result.As<IComparable<int>>().Should().BeLessThan(0);
+        Assert.That(result, Is.LessThan(0));
     }
 
     [Test]
@@ -57,7 +56,7 @@ public class FractionTests
         var result = Fraction.Of(4, -11);
 
         // then
-        result.As<IComparable<int>>().Should().BeLessThan(0);
+        Assert.That(result, Is.LessThan(0));
     }
 
     [Test]
@@ -67,7 +66,7 @@ public class FractionTests
         var result = Fraction.Of(-4, -11);
 
         // then
-        result.As<IComparable<int>>().Should().BeGreaterThan(0);
+        Assert.That(result, Is.GreaterThan(0));
     }
 
     #endregion
@@ -80,7 +79,7 @@ public class FractionTests
         double result = (double)Fraction.Of(-129, 20);
 
         // then
-        result.Should().Be(-6.45);
+        Assert.That(result, Is.EqualTo(-6.45));
     }
 
     [Test]
@@ -90,7 +89,7 @@ public class FractionTests
         decimal result = (decimal)Fraction.Of(-129, 20);
 
         // then
-        result.Should().Be(-6.45m);
+        Assert.That(result, Is.EqualTo(-6.45m));
     }
 
     [Test]
@@ -100,7 +99,7 @@ public class FractionTests
         int result = (int)Fraction.Of(-129, 20);
 
         // then
-        result.Should().Be(-6);
+        Assert.That(result, Is.EqualTo(-6));
     }
 
     [Test]
@@ -110,7 +109,7 @@ public class FractionTests
         Fraction result = 18;
 
         // then
-        result.Should().Be(Fraction.Of(18));
+        Assert.That(result, Is.EqualTo(Fraction.Of(18)));
     }
 
     #endregion
@@ -123,7 +122,7 @@ public class FractionTests
         bool result = Fraction.Of(9, 15) == Fraction.Of(3, 5);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -137,8 +136,8 @@ public class FractionTests
         bool result2 = integer == Fraction.Of(125, 5);
 
         // then
-        result1.Should().BeTrue();
-        result2.Should().BeTrue();
+        Assert.That(result1, Is.True);
+        Assert.That(result2, Is.True);
     }
 
     [Test]
@@ -148,7 +147,7 @@ public class FractionTests
         bool result = Fraction.Of(9, 14) != Fraction.Of(3, 5);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -158,7 +157,7 @@ public class FractionTests
         bool result = Fraction.Of(9, 14) < Fraction.Of(17, 14);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -168,7 +167,7 @@ public class FractionTests
         bool result = Fraction.Of(-31, 6) < -4;
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -178,7 +177,7 @@ public class FractionTests
         bool result = Fraction.Of(9, 14) > Fraction.Of(9, 26);
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     [Test]
@@ -188,7 +187,7 @@ public class FractionTests
         bool result = Fraction.Of(11, 3) > 2L;
 
         // then
-        result.Should().BeTrue();
+        Assert.That(result, Is.True);
     }
 
     #endregion
@@ -204,8 +203,8 @@ public class FractionTests
         Fraction result = +fraction;
 
         // then
-        result.Should().NotBeSameAs(fraction);
-        result.Should().Be(Fraction.Of(23, 18));
+        Assert.That(result, Is.Not.SameAs(fraction));
+        Assert.That(result, Is.EqualTo(Fraction.Of(23, 18)));
     }
 
     [Test]
@@ -215,7 +214,7 @@ public class FractionTests
         Fraction result = -Fraction.Of(23, 18);
 
         // then
-        result.Should().Be(Fraction.Of(-23, 18));
+        Assert.That(result, Is.EqualTo(Fraction.Of(-23, 18)));
     }
 
     [Test]
@@ -225,7 +224,7 @@ public class FractionTests
         Fraction result = ~Fraction.Of(23, 18);
 
         // then
-        result.Should().Be(Fraction.Of(18, 23));
+        Assert.That(result, Is.EqualTo(Fraction.Of(18, 23)));
     }
 
     [Test]
@@ -235,7 +234,7 @@ public class FractionTests
         Action action = () => _ = ~Fraction.Of(0);
 
         // then
-        action.Should().Throw<InvalidOperationException>();
+        Assert.That(action, Throws.InvalidOperationException);
     }
 
     #endregion
@@ -248,7 +247,7 @@ public class FractionTests
         Fraction result = Fraction.Of(1, 2) + Fraction.Of(5, 7);
 
         // then
-        result.Should().Be(Fraction.Of(17, 14));
+        Assert.That(result, Is.EqualTo(Fraction.Of(17, 14)));
     }
 
     [Test]
@@ -258,7 +257,7 @@ public class FractionTests
         Fraction result = Fraction.Of(1, 2) - Fraction.Of(3, 10);
 
         // then
-        result.Should().Be(Fraction.Of(1, 5));
+        Assert.That(result, Is.EqualTo(Fraction.Of(1, 5)));
     }
 
     [Test]
@@ -268,7 +267,7 @@ public class FractionTests
         Fraction result = Fraction.Of(3, 7) * Fraction.Of(5, 12);
 
         // then
-        result.Should().Be(Fraction.Of(5, 28));
+        Assert.That(result, Is.EqualTo(Fraction.Of(5, 28)));
     }
 
     [Test]
@@ -278,7 +277,7 @@ public class FractionTests
         Fraction result = Fraction.Of(9, 14) / Fraction.Of(2, 5);
 
         // then
-        result.Should().Be(Fraction.Of(45, 28));
+        Assert.That(result, Is.EqualTo(Fraction.Of(45, 28)));
     }
 
     [Test]
@@ -288,7 +287,7 @@ public class FractionTests
         Action action = () => _ = Fraction.Of(9, 14) / Fraction.Of(0);
 
         // then
-        action.Should().Throw<DivideByZeroException>();
+        Assert.That(action, Throws.TypeOf<DivideByZeroException>());
     }
 
     #endregion
@@ -301,7 +300,7 @@ public class FractionTests
         int result = Fraction.Of(-35, 14).CompareTo(Fraction.Of(5, -2));
 
         // then
-        result.Should().Be(0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -311,7 +310,7 @@ public class FractionTests
         int result = Fraction.Of(25, 7).CompareTo(Fraction.Of(3, 2));
 
         // then
-        result.Should().BeGreaterThan(0);
+        Assert.That(result, Is.GreaterThan(0));
     }
 
     [Test]
@@ -321,7 +320,7 @@ public class FractionTests
         int result = Fraction.Of(-25, 7).CompareTo(-2);
 
         // then
-        result.Should().BeLessThan(0);
+        Assert.That(result, Is.LessThan(0));
     }
 
     [Test]
@@ -331,7 +330,7 @@ public class FractionTests
         int result = Fraction.Of(25, 7).CompareTo(2L);
 
         // then
-        result.Should().BeGreaterThan(0);
+        Assert.That(result, Is.GreaterThan(0));
     }
 
     #endregion
@@ -343,6 +342,6 @@ public class FractionTests
         string result = Fraction.Of(4, -19).ToString();
 
         // then
-        result.Should().Be("-4/19");
+        Assert.That(result, Is.EqualTo("-4/19"));
     }
 }

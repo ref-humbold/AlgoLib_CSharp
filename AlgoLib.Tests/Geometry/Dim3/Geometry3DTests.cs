@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
@@ -12,60 +11,81 @@ public class Geometry3DTests
     public void SortByX_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D> {
+        var sequence = new List<Point3D>
+        {
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-            Point3D.Of(-3.0, 2.0, 5.0) };
+            Point3D.Of(-3.0, 2.0, 5.0)
+        };
 
         // when
         List<Point3D> result = sequence.SortByX();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
-                              Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
-                              Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                              Point3D.Of(3.0, 2.0, 5.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point3D>
+                {
+                    Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
+                    Point3D.Of(3.0, 2.0, 5.0)
+                }));
     }
 
     [Test]
     public void SortByY_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D> {
+        var sequence = new List<Point3D>
+        {
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-            Point3D.Of(-3.0, 2.0, 5.0) };
+            Point3D.Of(-3.0, 2.0, 5.0)
+        };
 
         // when
         List<Point3D> result = sequence.SortByY();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
-                              Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
-                              Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
-                              Point3D.Of(2.0, 3.0, -5.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point3D>
+                {
+                    Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
+                    Point3D.Of(2.0, 3.0, -5.0)
+                }));
     }
 
     [Test]
     public void SortByZ_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point3D> {
+        var sequence = new List<Point3D>
+        {
             Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
-            Point3D.Of(-3.0, 2.0, 5.0) };
+            Point3D.Of(-3.0, 2.0, 5.0)
+        };
 
         // when
         List<Point3D> result = sequence.SortByZ();
 
         // then
-        result.Should().NotBeSameAs(sequence);
-        result.Should().Equal(Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                              Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
-                              Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
-                              Point3D.Of(-3.0, 2.0, 5.0));
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(
+            result, Is.EqualTo(
+                new List<Point3D>
+                {
+                    Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
+                    Point3D.Of(-3.0, 2.0, 5.0)
+                }));
     }
 
     [Test]
@@ -75,20 +95,20 @@ public class Geometry3DTests
         double result = Point3D.Of(4.0, 8.0, 5.0).Distance(Point3D.Of(-2.0, -1.0, 3.0));
 
         // then
-        result.Should().Be(11.0);
+        Assert.That(result, Is.EqualTo(11.0));
     }
 
     [Test]
     public void Distance_WhenSamePoint_ThenZero()
     {
         // given
-        var point = Point3D.Of(13.5, 6.5, -4.2);
+        Point3D point = Point3D.Of(13.5, 6.5, -4.2);
 
         // when
         double result = point.Distance(point);
 
         // then
-        result.Should().Be(0.0);
+        Assert.That(result, Is.Zero);
     }
 
     [Test]
@@ -98,20 +118,20 @@ public class Geometry3DTests
         Point3D result = Point3D.Of(13.7, 6.5, -4.2).Translate(Vector3D.Of(-10.4, 3.3, 1.1));
 
         // then
-        result.Should().Be(Point3D.Of(3.3, 9.8, -3.1));
+        Assert.That(result, Is.EqualTo(Point3D.Of(3.3, 9.8, -3.1)));
     }
 
     [Test]
     public void Translate_WhenZeroVector_ThenSamePoint()
     {
         // given
-        var point = Point3D.Of(13.5, 6.5, -4.2);
+        Point3D point = Point3D.Of(13.5, 6.5, -4.2);
 
         // when
         Point3D result = point.Translate(Vector3D.Of(0.0, 0.0, 0.0));
 
         // then
-        result.Should().Be(point);
+        Assert.That(result, Is.EqualTo(point));
     }
 
     [Test]
@@ -121,7 +141,7 @@ public class Geometry3DTests
         Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Of(2.0, -1.0, -3.0));
 
         // then
-        result.Should().Be(Point3D.Of(-9.5, -8.5, -1.8));
+        Assert.That(result, Is.EqualTo(Point3D.Of(-9.5, -8.5, -1.8)));
     }
 
     [Test]
@@ -131,19 +151,19 @@ public class Geometry3DTests
         Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Of(0.0, 0.0, 0.0));
 
         // then
-        result.Should().Be(Point3D.Of(-13.5, -6.5, 4.2));
+        Assert.That(result, Is.EqualTo(Point3D.Of(-13.5, -6.5, 4.2)));
     }
 
     [Test]
     public void Reflect_WhenSamePoint_ThenSamePoint()
     {
         // given
-        var point = Point3D.Of(13.5, 6.5, -4.2);
+        Point3D point = Point3D.Of(13.5, 6.5, -4.2);
 
         // when
         Point3D result = point.Reflect(point);
 
         // then
-        result.Should().Be(point);
+        Assert.That(result, Is.EqualTo(point));
     }
 }

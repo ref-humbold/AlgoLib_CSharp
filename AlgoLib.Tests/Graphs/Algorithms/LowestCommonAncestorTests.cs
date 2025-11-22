@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace AlgoLib.Graphs.Algorithms;
 
@@ -37,7 +36,7 @@ public class LowestCommonAncestorTests
         Vertex<int> result = testObject.FindLca(vertex, vertex);
 
         // then
-        result.Should().Be(vertex);
+        Assert.That(result, Is.EqualTo(vertex));
     }
 
     [Test]
@@ -47,7 +46,7 @@ public class LowestCommonAncestorTests
         Vertex<int> result = testObject.FindLca(tree[5], tree[7]);
 
         // then
-        result.Should().Be(tree[1]);
+        Assert.That(result, Is.EqualTo(tree[1]));
     }
 
     [Test]
@@ -58,8 +57,8 @@ public class LowestCommonAncestorTests
         Vertex<int> result2 = testObject.FindLca(tree[7], tree[5]);
 
         // then
-        result1.Should().Be(tree[1]);
-        result2.Should().Be(result1);
+        Assert.That(result1, Is.EqualTo(tree[1]));
+        Assert.That(result2, Is.EqualTo(result1));
     }
 
     [Test]
@@ -69,7 +68,7 @@ public class LowestCommonAncestorTests
         Vertex<int> result = testObject.FindLca(tree[3], tree[9]);
 
         // then
-        result.Should().Be(testObject.Root);
+        Assert.That(result, Is.EqualTo(testObject.Root));
     }
 
     [Test]
@@ -83,7 +82,7 @@ public class LowestCommonAncestorTests
         Vertex<int> result = testObject.FindLca(vertex1, vertex2);
 
         // then
-        result.Should().Be(vertex2);
+        Assert.That(result, Is.EqualTo(vertex2));
     }
 
     [Test]
@@ -93,6 +92,6 @@ public class LowestCommonAncestorTests
         Vertex<int> result = testObject.FindLca(tree[4], testObject.Root);
 
         // then
-        result.Should().Be(testObject.Root);
+        Assert.That(result, Is.EqualTo(testObject.Root));
     }
 }

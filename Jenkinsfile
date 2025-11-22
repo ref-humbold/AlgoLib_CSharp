@@ -67,7 +67,7 @@ pipeline {
           runSettings: ["NUnit.TestOutputXml": "${env.NUNIT_RESULTS_PATH}"]
         )
       }
-      
+
       post {
         always {
           nunit(
@@ -94,10 +94,6 @@ pipeline {
   }
 
   post {
-    always {
-      chuckNorris()
-    }
-
     cleanup {
       cleanWs()
     }
