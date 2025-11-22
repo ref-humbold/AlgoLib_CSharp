@@ -84,29 +84,32 @@ public static class ClosestPoints
         int indexBegin = range.Start.GetOffset(pointsX.Count);
         int indexEnd = range.End.GetOffset(pointsX.Count);
 
-        if(indexEnd - indexBegin <= 2)
-            return (pointsX[indexBegin], pointsX[indexEnd - 1]);
+        switch(indexEnd - indexBegin)
+        {
+            case <= 2:
+                return (pointsX[indexBegin], pointsX[indexEnd - 1]);
 
-        if(indexEnd - indexBegin == 3)
-            return searchThree(
-                pointsX[indexBegin], pointsX[indexBegin + 1],
-                pointsX[indexBegin + 2]);
+            case 3:
+                return searchThree(
+                    pointsX[indexBegin], pointsX[indexBegin + 1],
+                    pointsX[indexBegin + 2]);
+        }
 
         int indexMiddle = (indexBegin + indexEnd) / 2;
-        List<Point2D> closetsYL = [];
-        List<Point2D> closetsYR = [];
+        List<Point2D> closestYLeft = [];
+        List<Point2D> closestYRight = [];
 
         foreach(Point2D pt in pointsY)
             if(pt.X < pointsX[indexMiddle].X ||
                (pt.X == pointsX[indexMiddle].X && pt.Y < pointsX[indexMiddle].Y))
-                closetsYL.Add(pt);
+                closestYLeft.Add(pt);
             else
-                closetsYR.Add(pt);
+                closestYRight.Add(pt);
 
         (Point2D Closest1, Point2D Closest2) closestLeft =
-            searchClosest(pointsX, closetsYL, indexBegin..indexMiddle);
+            searchClosest(pointsX, closestYLeft, indexBegin..indexMiddle);
         (Point2D Closest1, Point2D Closest2) closestRight =
-            searchClosest(pointsX, closetsYR, indexMiddle..indexEnd);
+            searchClosest(pointsX, closestYRight, indexMiddle..indexEnd);
         (Point2D Closest1, Point2D Closest2) closestPoints =
             closestLeft.Closest1.Distance(closestLeft.Closest2)
             <= closestRight.Closest1.Distance(closestRight.Closest2)

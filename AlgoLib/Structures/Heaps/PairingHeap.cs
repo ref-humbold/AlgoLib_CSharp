@@ -117,9 +117,9 @@ public class PairingHeap<T> : IHeap<T>
     private record HeapNode(T Element, HeapNodeList Children = null)
     {
         public static HeapNode operator +(HeapNode node1, HeapNode node2) =>
-            node1 == null
+            node1 is null
                 ? node2
-                : node2 == null
+                : node2 is null
                     ? node1
                     : DefaultComparer.Compare(node1.Element, node2.Element) <= 0
                         ? node1 with { Children = new HeapNodeList(node2, node1.Children) }
@@ -133,7 +133,7 @@ public class PairingHeap<T> : IHeap<T>
         public HeapNode Pop() => mergePairs(Children);
 
         private static HeapNode mergePairs(HeapNodeList list) =>
-            list?.Next == null
+            list?.Next is null
                 ? list?.Node
                 : list.Node + list.Next.Node + mergePairs(list.Next.Next);
     }

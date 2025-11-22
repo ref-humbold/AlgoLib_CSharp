@@ -19,10 +19,11 @@ public static class StronglyConnectedComponents
 
         graph.DfsRecursive(postOrderStrategy, graph.Vertices);
 
-        List<Vertex<TVertexId>> vertices = postOrderStrategy.PostTimes
-                                                            .OrderByDescending(kv => kv.Value)
-                                                            .Select(kv => kv.Key)
-                                                            .ToList();
+        List<Vertex<TVertexId>> vertices =
+            postOrderStrategy.PostTimes
+                             .OrderByDescending(kv => kv.Value)
+                             .Select(kv => kv.Key)
+                             .ToList();
         IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph =
             graph.ReversedCopy();
         var sccStrategy = new SccStrategy<TVertexId>();

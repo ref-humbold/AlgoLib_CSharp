@@ -3,67 +3,77 @@ using NUnit.Framework;
 
 namespace AlgoLib.Maths;
 
-// Tests: Structure of fraction.
+// Tests: Structure Constructor fraction.
 [TestFixture]
 public class FractionTests
 {
-    #region Of
+    #region constructor
 
     [Test]
-    public void Of_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
+    public void Constructor_WhenDefault_ThenZero()
     {
         // when
-        Fraction result = Fraction.Of(32, 104);
+        Fraction result = new();
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(4, 13)));
+        Assert.That(result, Is.EqualTo(new Fraction(0)));
     }
 
     [Test]
-    public void Of_WhenOnlyNumerator_ThenDenominatorEqualsOne()
+    public void Constructor_WhenNumeratorAndDenominatorAreDivisible_ThenNormalized()
     {
         // when
-        Fraction result = Fraction.Of(29);
+        Fraction result = new(32, 104);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(29, 1)));
+        Assert.That(result, Is.EqualTo(new Fraction(4, 13)));
     }
 
     [Test]
-    public void Of_WhenDenominatorIsZero_ThenDivideByZeroException()
+    public void Constructor_WhenOnlyNumerator_ThenDenominatorEqualsOne()
     {
         // when
-        Action action = () => _ = Fraction.Of(1, 0);
+        Fraction result = new(29);
+
+        // then
+        Assert.That(result, Is.EqualTo(new Fraction(29)));
+    }
+
+    [Test]
+    public void Constructor_WhenDenominatorIsZero_ThenDivideByZeroException()
+    {
+        // when
+        Action action = () => _ = new Fraction(1, 0);
 
         // then
         Assert.That(action, Throws.TypeOf<DivideByZeroException>());
     }
 
     [Test]
-    public void Of_WhenNumeratorIsNegative_ThenNegativeFraction()
+    public void Constructor_WhenNumeratorIsNegative_ThenNegativeFraction()
     {
         // when
-        Fraction result = Fraction.Of(-4, 11);
+        Fraction result = new(-4, 11);
 
         // then
         Assert.That(result, Is.LessThan(0));
     }
 
     [Test]
-    public void Of_WhenDenominatorIsNegative_ThenNegativeFraction()
+    public void Constructor_WhenDenominatorIsNegative_ThenNegativeFraction()
     {
         // when
-        Fraction result = Fraction.Of(4, -11);
+        Fraction result = new(4, -11);
 
         // then
         Assert.That(result, Is.LessThan(0));
     }
 
     [Test]
-    public void Of_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
+    public void Constructor_WhenNumeratorAndDenominatorAreNegative_ThenPositiveFraction()
     {
         // when
-        Fraction result = Fraction.Of(-4, -11);
+        Fraction result = new(-4, -11);
 
         // then
         Assert.That(result, Is.GreaterThan(0));
@@ -73,10 +83,10 @@ public class FractionTests
     #region cast operators
 
     [Test]
-    public void OperatorDouble_WhenToDouble_ThenDobuleValue()
+    public void OperatorDouble_WhenToDouble_ThenDoubleValue()
     {
         // when
-        var result = (double)Fraction.Of(-129, 20);
+        var result = (double)new Fraction(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6.45));
@@ -86,7 +96,7 @@ public class FractionTests
     public void OperatorDecimal_WhenToDouble_ThenDecimalValue()
     {
         // when
-        var result = (decimal)Fraction.Of(-129, 20);
+        var result = (decimal)new Fraction(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6.45m));
@@ -96,7 +106,7 @@ public class FractionTests
     public void OperatorInt_WhenToInt_ThenIntegerValueRoundedTowardsZero()
     {
         // when
-        var result = (int)Fraction.Of(-129, 20);
+        var result = (int)new Fraction(-129, 20);
 
         // then
         Assert.That(result, Is.EqualTo(-6));
@@ -109,7 +119,7 @@ public class FractionTests
         Fraction result = 18;
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(18)));
+        Assert.That(result, Is.EqualTo(new Fraction(18)));
     }
 
     #endregion
@@ -119,7 +129,7 @@ public class FractionTests
     public void OperatorEqual_WhenSameNormalizedFraction_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(9, 15) == Fraction.Of(3, 5);
+        bool result = new Fraction(9, 15) == new Fraction(3, 5);
 
         // then
         Assert.That(result, Is.True);
@@ -132,8 +142,8 @@ public class FractionTests
         var integer = 25;
 
         // when
-        bool result1 = Fraction.Of(125, 5) == integer;
-        bool result2 = integer == Fraction.Of(125, 5);
+        bool result1 = new Fraction(125, 5) == integer;
+        bool result2 = integer == new Fraction(125, 5);
 
         // then
         Assert.That(result1, Is.True);
@@ -144,7 +154,7 @@ public class FractionTests
     public void OperatorNotEqual_WhenDifferentFraction_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(9, 14) != Fraction.Of(3, 5);
+        bool result = new Fraction(9, 14) != new Fraction(3, 5);
 
         // then
         Assert.That(result, Is.True);
@@ -154,7 +164,7 @@ public class FractionTests
     public void OperatorLess_WhenSameDenominatorAndGreaterNumerator_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(9, 14) < Fraction.Of(17, 14);
+        bool result = new Fraction(9, 14) < new Fraction(17, 14);
 
         // then
         Assert.That(result, Is.True);
@@ -164,7 +174,7 @@ public class FractionTests
     public void OperatorLess_WhenLessThanInt_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(-31, 6) < -4;
+        bool result = new Fraction(-31, 6) < -4;
 
         // then
         Assert.That(result, Is.True);
@@ -174,7 +184,7 @@ public class FractionTests
     public void OperatorGreater_WhenSameNumeratorAndGreaterDenominator_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(9, 14) > Fraction.Of(9, 26);
+        bool result = new Fraction(9, 14) > new Fraction(9, 26);
 
         // then
         Assert.That(result, Is.True);
@@ -184,7 +194,7 @@ public class FractionTests
     public void OperatorGreater_WhenGreaterThanLong_ThenTrue()
     {
         // when
-        bool result = Fraction.Of(11, 3) > 2L;
+        bool result = new Fraction(11, 3) > 2L;
 
         // then
         Assert.That(result, Is.True);
@@ -197,41 +207,41 @@ public class FractionTests
     public void OperatorUnaryPlus_ThenCopied()
     {
         // given
-        Fraction fraction = Fraction.Of(23, 18);
+        Fraction fraction = new(23, 18);
 
         // when
         Fraction result = +fraction;
 
         // then
         Assert.That(result, Is.Not.SameAs(fraction));
-        Assert.That(result, Is.EqualTo(Fraction.Of(23, 18)));
+        Assert.That(result, Is.EqualTo(new Fraction(23, 18)));
     }
 
     [Test]
     public void OperatorUnaryMinus_ThenNegated()
     {
         // when
-        Fraction result = -Fraction.Of(23, 18);
+        Fraction result = -new Fraction(23, 18);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(-23, 18)));
+        Assert.That(result, Is.EqualTo(new Fraction(-23, 18)));
     }
 
     [Test]
     public void OperatorTilde_WhenProperFraction_ThenInverted()
     {
         // when
-        Fraction result = ~Fraction.Of(23, 18);
+        Fraction result = ~new Fraction(23, 18);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(18, 23)));
+        Assert.That(result, Is.EqualTo(new Fraction(18, 23)));
     }
 
     [Test]
     public void OperatorTilde_WhenZero_ThenInvalidOperationException()
     {
         // when
-        Action action = () => _ = ~Fraction.Of(0);
+        Action action = () => _ = ~new Fraction(0);
 
         // then
         Assert.That(action, Throws.InvalidOperationException);
@@ -244,47 +254,47 @@ public class FractionTests
     public void OperatorPlus_WhenFraction_ThenDenominatorEqualsLowestCommonMultiple()
     {
         // when
-        Fraction result = Fraction.Of(1, 2) + Fraction.Of(5, 7);
+        Fraction result = new Fraction(1, 2) + new Fraction(5, 7);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(17, 14)));
+        Assert.That(result, Is.EqualTo(new Fraction(17, 14)));
     }
 
     [Test]
     public void OperatorMinus_WhenFraction_ThenNormalized()
     {
         // when
-        Fraction result = Fraction.Of(1, 2) - Fraction.Of(3, 10);
+        Fraction result = new Fraction(1, 2) - new Fraction(3, 10);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(1, 5)));
+        Assert.That(result, Is.EqualTo(new Fraction(1, 5)));
     }
 
     [Test]
     public void OperatorAsterisk_WhenFraction_ThenNormalized()
     {
         // when
-        Fraction result = Fraction.Of(3, 7) * Fraction.Of(5, 12);
+        Fraction result = new Fraction(3, 7) * new Fraction(5, 12);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(5, 28)));
+        Assert.That(result, Is.EqualTo(new Fraction(5, 28)));
     }
 
     [Test]
     public void OperatorSlash_WhenFraction_ThenNormalized()
     {
         // when
-        Fraction result = Fraction.Of(9, 14) / Fraction.Of(2, 5);
+        Fraction result = new Fraction(9, 14) / new Fraction(2, 5);
 
         // then
-        Assert.That(result, Is.EqualTo(Fraction.Of(45, 28)));
+        Assert.That(result, Is.EqualTo(new Fraction(45, 28)));
     }
 
     [Test]
     public void OperatorSlash_WhenByZero_ThenDivideByZeroException()
     {
         // when
-        Action action = () => _ = Fraction.Of(9, 14) / Fraction.Of(0);
+        Action action = () => _ = new Fraction(9, 14) / new Fraction(0);
 
         // then
         Assert.That(action, Throws.TypeOf<DivideByZeroException>());
@@ -297,7 +307,7 @@ public class FractionTests
     public void CompareTo_WhenSameNormalizedFraction_ThenZero()
     {
         // when
-        int result = Fraction.Of(-35, 14).CompareTo(Fraction.Of(5, -2));
+        int result = new Fraction(-35, 14).CompareTo(new Fraction(5, -2));
 
         // then
         Assert.That(result, Is.Zero);
@@ -307,7 +317,7 @@ public class FractionTests
     public void CompareTo_WhenFraction_ThenCompared()
     {
         // when
-        int result = Fraction.Of(25, 7).CompareTo(Fraction.Of(3, 2));
+        int result = new Fraction(25, 7).CompareTo(new Fraction(3, 2));
 
         // then
         Assert.That(result, Is.GreaterThan(0));
@@ -317,7 +327,7 @@ public class FractionTests
     public void CompareTo_WhenInt_ThenCompared()
     {
         // when
-        int result = Fraction.Of(-25, 7).CompareTo(-2);
+        int result = new Fraction(-25, 7).CompareTo(-2);
 
         // then
         Assert.That(result, Is.LessThan(0));
@@ -327,7 +337,7 @@ public class FractionTests
     public void CompareTo_WhenLong_ThenCompared()
     {
         // when
-        int result = Fraction.Of(25, 7).CompareTo(2L);
+        int result = new Fraction(25, 7).CompareTo(2L);
 
         // then
         Assert.That(result, Is.GreaterThan(0));
@@ -339,7 +349,7 @@ public class FractionTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        var result = Fraction.Of(4, -19).ToString();
+        var result = new Fraction(4, -19).ToString();
 
         // then
         Assert.That(result, Is.EqualTo("-4/19"));

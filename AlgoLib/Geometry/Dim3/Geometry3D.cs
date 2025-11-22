@@ -12,30 +12,33 @@ public static class Geometry3D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByX(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.X).ToList();
+    public static List<Point3D> SortByX(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.X).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByY(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.Y).ToList();
+    public static List<Point3D> SortByY(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.Y).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their Z coordinate. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByZ(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.Z).ToList();
+    public static List<Point3D> SortByZ(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.Z).ToList();
+    }
 
     /// <summary>Calculates distance between given points.</summary>
     /// <param name="p1">The first point.</param>

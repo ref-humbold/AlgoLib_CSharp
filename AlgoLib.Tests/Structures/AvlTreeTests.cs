@@ -226,6 +226,22 @@ public class AvlTreeTests
         Assert.That(testObject, Has.Count.EqualTo(numbers.Length));
     }
 
+    [Test]
+    public void Add_WhenElementIsNull_ThenTrue()
+    {
+        // given
+        string element = null;
+        var localTestObject = new AvlTree<string>();
+
+        // when
+        bool result = localTestObject.Add(element);
+
+        // then
+        Assert.That(result, Is.True);
+        Assert.That(localTestObject, Does.Contain(element));
+        Assert.That(localTestObject, Has.Count.EqualTo(1));
+    }
+
     #endregion
     #region Remove
 

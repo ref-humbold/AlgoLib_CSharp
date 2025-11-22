@@ -92,15 +92,9 @@ public static class Matching
             {
                 bool isMatched = Matching.TryGetValue(neighbour, out Vertex<TVertexId> matched);
 
-                if(!isMatched)
-                {
-                    Matching[vertex] = neighbour;
-                    Matching[neighbour] = vertex;
-                    return true;
-                }
-
-                if(!visited.Contains(matched) && distances[matched] == distances[vertex] + 1
-                   && dfs(matched, visited, distances))
+                if(!isMatched || (!visited.Contains(matched) &&
+                       distances[matched] == distances[vertex] + 1
+                       && dfs(matched, visited, distances)))
                 {
                     Matching[vertex] = neighbour;
                     Matching[neighbour] = vertex;

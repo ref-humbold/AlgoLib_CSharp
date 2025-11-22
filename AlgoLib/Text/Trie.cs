@@ -56,7 +56,7 @@ public class Trie
         {
             node = node[character];
 
-            if(node == null)
+            if(node is null)
                 return false;
         }
 
@@ -86,7 +86,7 @@ public class Trie
         {
             TrieNode nextNode = node[text[i]];
 
-            if(nextNode != null && removeNode(text, nextNode, i + 1))
+            if(nextNode is not null && removeNode(text, nextNode, i + 1))
                 node.Remove(text[i]);
         }
 

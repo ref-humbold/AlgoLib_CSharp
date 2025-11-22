@@ -42,9 +42,9 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
         AvlInnerNode<T> nodeParent =
             findNode(
                 item, (n, e) =>
-                    search(n, e) == null || comparer.Compare(search(n, e).Element, e) == 0);
+                    search(n, e) is null || comparer.Compare(search(n, e).Element, e) == 0);
 
-        if(nodeParent == null)
+        if(nodeParent is null)
         {
             Root = new AvlInnerNode<T>(item);
             ++Count;
@@ -53,7 +53,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
         AvlInnerNode<T> theNode = search(nodeParent, item);
 
-        if(theNode != null)
+        if(theNode is not null)
             return false;
 
         var newNode = new AvlInnerNode<T>(item);
@@ -75,7 +75,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     }
 
     public bool Contains(T item) =>
-        Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) != null;
+        Count > 0 && findNode(item, (node, elem) => Equals(node.Element, elem)) is not null;
 
     public void CopyTo(T[] array, int arrayIndex)
     {
@@ -123,7 +123,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     {
         AvlInnerNode<T> node = findNode(item, (n, elem) => Equals(n.Element, elem));
 
-        if(node == null)
+        if(node is null)
             return false;
 
         deleteNode(node);
@@ -167,19 +167,20 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     // - node if element is in it
     // - left child if element is less than node's element
     // - right child if element is greater than node's element
-    private AvlInnerNode<T> search(AvlInnerNode<T> node, T element)
-    {
-        int comparison = comparer.Compare(element, node.Element);
-
-        return comparison < 0 ? node.Left : comparison > 0 ? node.Right : node;
-    }
+    private AvlInnerNode<T> search(AvlInnerNode<T> node, T element) =>
+        comparer.Compare(element, node.Element) switch
+        {
+            < 0 => node.Left,
+            > 0 => node.Right,
+            _ => node
+        };
 
     // Searches for node that satisfies given predicate with given value.
     private AvlInnerNode<T> findNode(T element, Func<AvlInnerNode<T>, T, bool> predicate)
     {
         AvlInnerNode<T> node = Root;
 
-        while(node != null && !predicate(node, element))
+        while(node is not null && !predicate(node, element))
             node = search(node, element);
 
         return node;
@@ -188,7 +189,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
     // Removes inner node from the tree.
     private void deleteNode(AvlInnerNode<T> node)
     {
-        if(node.Left != null && node.Right != null)
+        if(node.Left is not null && node.Right is not null)
         {
             AvlInnerNode<T> succ = node.Right.Minimum;
             (node.Element, succ.Element) = (succ.Element, node.Element);
@@ -339,7 +340,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             {
                 left = value;
 
-                if(left != null)
+                if(left is not null)
                     left.Parent = this;
 
                 countHeight();
@@ -353,16 +354,16 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             {
                 right = value;
 
-                if(right != null)
+                if(right is not null)
                     right.Parent = this;
 
                 countHeight();
             }
         }
 
-        public AvlInnerNode<TItem> Minimum => Left == null ? this : Left.Minimum;
+        public AvlInnerNode<TItem> Minimum => Left is null ? this : Left.Minimum;
 
-        public AvlInnerNode<TItem> Maximum => Right == null ? this : Right.Maximum;
+        public AvlInnerNode<TItem> Maximum => Right is null ? this : Right.Maximum;
 
         public AvlInnerNode(TItem element)
         {
@@ -413,14 +414,14 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             {
                 inner = value;
 
-                if(inner != null)
+                if(inner is not null)
                     inner.Parent = this;
             }
         }
 
-        public IAvlNode<TItem> Minimum => Parent == null ? this : Parent.Minimum;
+        public IAvlNode<TItem> Minimum => Parent is null ? this : Parent.Minimum;
 
-        public IAvlNode<TItem> Maximum => Parent == null ? this : Parent.Maximum;
+        public IAvlNode<TItem> Maximum => Parent is null ? this : Parent.Maximum;
 
         public AvlHeaderNode()
         {
@@ -448,12 +449,12 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
         public bool MoveNext()
         {
-            if(currentNode == null)
+            if(currentNode is null)
                 return false;
 
             if(currentNode.Height > 0)
             {
-                if(currentNode.Right != null)
+                if(currentNode.Right is not null)
                 {
                     currentNode = currentNode.Right.Minimum;
                 }
