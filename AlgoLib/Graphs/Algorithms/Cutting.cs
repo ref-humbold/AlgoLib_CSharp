@@ -41,12 +41,12 @@ public static class Cutting
 
     private class CuttingStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren = new();
-        private readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = new();
-        private readonly Dictionary<Vertex<TVertexId>, int> lowValues = new();
+        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren = [];
+        private readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = [];
+        private readonly Dictionary<Vertex<TVertexId>, int> lowValues = [];
         private int depth;
 
-        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> DfsParents { get; } = new();
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> DfsParents { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root)
         {

@@ -13,7 +13,7 @@ public class MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty>
 {
     private readonly UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> graph = new();
 
-    private readonly Dictionary<Vertex<TVertexId>, int> vertexGroupDict = new();
+    private readonly Dictionary<Vertex<TVertexId>, int> vertexGroupDict = [];
 
     public int GroupsCount { get; }
 

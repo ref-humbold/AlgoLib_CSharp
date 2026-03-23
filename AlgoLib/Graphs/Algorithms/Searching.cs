@@ -157,7 +157,7 @@ public static class Searching
 
     private class DfsRecursiveState<TVertexId>
     {
-        public Dictionary<Vertex<TVertexId>, int> Reached { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> Reached { get; } = [];
 
         public Vertex<TVertexId> Vertex { get; set; }
 

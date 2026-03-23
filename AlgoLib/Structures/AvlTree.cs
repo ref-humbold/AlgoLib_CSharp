@@ -339,10 +339,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             set
             {
                 left = value;
-
-                if(left is not null)
-                    left.Parent = this;
-
+                left?.Parent = this;
                 countHeight();
             }
         }
@@ -353,10 +350,7 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
             set
             {
                 right = value;
-
-                if(right is not null)
-                    right.Parent = this;
-
+                right?.Parent = this;
                 countHeight();
             }
         }
@@ -385,8 +379,6 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
     private class AvlHeaderNode<TItem> : IAvlNode<TItem>
     {
-        private AvlInnerNode<TItem> inner;
-
         public int Height => 0;
 
         IAvlNode<TItem> IAvlNode<TItem>.Parent
@@ -409,13 +401,11 @@ public class AvlTree<T> : ISet<T>, IReadOnlyCollection<T>
 
         public AvlInnerNode<TItem> Parent
         {
-            get => inner;
+            get;
             set
             {
-                inner = value;
-
-                if(inner is not null)
-                    inner.Parent = this;
+                field = value;
+                field?.Parent = this;
             }
         }
 

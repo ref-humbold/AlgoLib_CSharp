@@ -10,7 +10,7 @@ namespace AlgoLib.Graphs.Algorithms;
 /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
 public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
 {
-    private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();
+    private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = [];
     private readonly LcaStrategy strategy = new();
     private bool empty = true;
 
@@ -77,11 +77,11 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
     {
         private int timer;
 
-        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = new();
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = [];
 
-        public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = [];
 
-        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root) => Parents[root] = root;
 

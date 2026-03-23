@@ -7,7 +7,7 @@ namespace AlgoLib.Text;
 /// <summary>Structure of base words dictionary using Karp-Miller-Rosenberg algorithm.</summary>
 public class BaseWordsDictionary
 {
-    private readonly Dictionary<(int, int), int> factors = new();
+    private readonly Dictionary<(int, int), int> factors = [];
 
     public string Text { get; }
 

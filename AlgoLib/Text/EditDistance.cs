@@ -112,7 +112,6 @@ public static class EditDistance
 
         return source.Zip(destination)
                      .Where(p => p.First != p.Second)
-                     .Select(_ => substitutionCost)
-                     .Sum();
+                     .Sum(_ => substitutionCost);
     }
 }

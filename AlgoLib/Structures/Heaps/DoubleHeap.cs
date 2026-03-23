@@ -324,7 +324,7 @@ public class DoubleHeap<T> : IHeap<T>
 
     private sealed class HeapEnumerator : IEnumerator<T>
     {
-        private readonly List<T> orderList = new();
+        private readonly List<T> orderList = [];
         private readonly IEnumerator<T> orderListEnumerator;
 
         public T Current => orderListEnumerator.Current;

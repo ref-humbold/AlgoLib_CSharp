@@ -95,7 +95,7 @@ public class Trie
 
     private class TrieNode
     {
-        private readonly Dictionary<char, TrieNode> children = new();
+        private readonly Dictionary<char, TrieNode> children = [];
 
         public int Count => children.Count;
 

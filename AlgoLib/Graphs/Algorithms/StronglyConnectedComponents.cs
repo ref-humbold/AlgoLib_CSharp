@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AlgoLib.Graphs.Algorithms;
@@ -24,8 +24,7 @@ public static class StronglyConnectedComponents
                              .OrderByDescending(kv => kv.Value)
                              .Select(kv => kv.Key)
                              .ToList();
-        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph =
-            graph.ReversedCopy();
+        IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> reversedGraph = graph.ReversedCopy();
         var sccStrategy = new SccStrategy<TVertexId>();
 
         reversedGraph.DfsRecursive(sccStrategy, vertices);
@@ -36,7 +35,7 @@ public static class StronglyConnectedComponents
     {
         private int timer;
 
-        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root)
         {

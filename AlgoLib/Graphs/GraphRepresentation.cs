@@ -6,9 +6,9 @@ namespace AlgoLib.Graphs;
 
 internal class GraphRepresentation<TVertexId, TVertexProperty, TEdgeProperty>
 {
-    private readonly Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> graphDict = new();
-    private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties = new();
-    private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties = new();
+    private readonly Dictionary<Vertex<TVertexId>, HashSet<Edge<TVertexId>>> graphDict = [];
+    private readonly Dictionary<Vertex<TVertexId>, TVertexProperty> vertexProperties = [];
+    private readonly Dictionary<Edge<TVertexId>, TEdgeProperty> edgeProperties = [];
 
     public int Count => graphDict.Count;
 

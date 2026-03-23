@@ -8,7 +8,7 @@ namespace AlgoLib.Structures;
 /// <typeparam name="T">Type of sets elements.</typeparam>
 public class DisjointSets<T>
 {
-    private readonly Dictionary<T, T> represents = new();
+    private readonly Dictionary<T, T> represents = [];
 
     /// <summary>Gets the number of sets in this structure.</summary>
     /// <value>The number of sets.</value>

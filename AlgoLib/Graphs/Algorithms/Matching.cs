@@ -30,7 +30,7 @@ public static class Matching
         private const double Infinity = double.PositiveInfinity;
         private readonly MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph;
 
-        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Matching { get; } = new();
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Matching { get; } = [];
 
         public MatchAugmenter(MultipartiteGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
         {
