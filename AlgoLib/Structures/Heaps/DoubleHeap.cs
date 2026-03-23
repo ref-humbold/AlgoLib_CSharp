@@ -10,7 +10,7 @@ public class DoubleHeap<T> : IHeap<T>
 {
     private const int IndexMin = 0;
     private const int IndexMax = 1;
-    private List<T> heap = new();
+    private List<T> heap = [];
 
     /// <summary>Gets the comparer of this heap.</summary>
     /// <value>The comparer.</value>
@@ -25,17 +25,23 @@ public class DoubleHeap<T> : IHeap<T>
     }
 
     public DoubleHeap(IEnumerable<T> enumerable)
-        : this() => PushRange(enumerable);
+        : this()
+    {
+        PushRange(enumerable);
+    }
 
     public DoubleHeap(Comparison<T> comparison)
         : this(Comparer<T>.Create(comparison))
     {
     }
 
-    public DoubleHeap(IComparer<T> comparer) => Comparer = comparer;
+    public DoubleHeap(IComparer<T> comparer)
+    {
+        Comparer = comparer;
+    }
 
     /// <summary>Removes all elements from this heap.</summary>
-    public void Clear() => heap = new List<T>();
+    public void Clear() => heap = [];
 
     public IEnumerator<T> GetEnumerator() => new HeapEnumerator(heap);
 
@@ -122,7 +128,9 @@ public class DoubleHeap<T> : IHeap<T>
                     moveToMin(index - 1);
                 }
                 else
+                {
                     moveToMax(index);
+                }
             }
             else
             {
@@ -134,7 +142,9 @@ public class DoubleHeap<T> : IHeap<T>
                     moveToMax(newIndex);
                 }
                 else
+                {
                     moveToMin(index);
+                }
             }
         }
     }
@@ -231,7 +241,9 @@ public class DoubleHeap<T> : IHeap<T>
             return;
 
         if(index % 2 == 0)
+        {
             stepToMin(index, (index / 2 - 1) / 2 * 2);
+        }
         else
         {
             int leftIndex = index + index + 1;
@@ -244,9 +256,13 @@ public class DoubleHeap<T> : IHeap<T>
                 stepToMin(index, childIndex);
             }
             else if(leftIndex < heap.Count)
+            {
                 stepToMin(index, leftIndex);
+            }
             else if(index < heap.Count)
+            {
                 stepToMin(index, index - 1);
+            }
         }
     }
 
@@ -267,7 +283,9 @@ public class DoubleHeap<T> : IHeap<T>
             return;
 
         if(index % 2 == 1)
+        {
             stepToMax(index, (index / 2 - 1) / 2 * 2 + 1);
+        }
         else
         {
             int leftIndex = index + index + 2;
@@ -280,9 +298,13 @@ public class DoubleHeap<T> : IHeap<T>
                 stepToMax(index, childIndex);
             }
             else if(leftIndex < heap.Count)
+            {
                 stepToMax(index, leftIndex);
+            }
             else if(index + 1 < heap.Count)
+            {
                 stepToMax(index, index + 1);
+            }
         }
     }
 
@@ -302,7 +324,7 @@ public class DoubleHeap<T> : IHeap<T>
 
     private sealed class HeapEnumerator : IEnumerator<T>
     {
-        private readonly List<T> orderList = new();
+        private readonly List<T> orderList = [];
         private readonly IEnumerator<T> orderListEnumerator;
 
         public T Current => orderListEnumerator.Current;
@@ -329,7 +351,7 @@ public class DoubleHeap<T> : IHeap<T>
         private static List<T> createOrderedMinimalList(List<T> heap)
         {
             var indices = new Queue<int>();
-            var minimalList = new List<T>();
+            List<T> minimalList = [];
 
             if(heap.Count > IndexMin)
                 indices.Enqueue(IndexMin);
@@ -353,7 +375,7 @@ public class DoubleHeap<T> : IHeap<T>
         private static List<T> createOrderedMaximalList(List<T> heap)
         {
             var indices = new Queue<int>();
-            var maximalList = new List<T>();
+            List<T> maximalList = [];
 
             if(heap.Count > IndexMax)
                 indices.Enqueue(IndexMax);

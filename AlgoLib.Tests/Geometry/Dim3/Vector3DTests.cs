@@ -16,7 +16,7 @@ public class Vector3DTests
         double[] result = Vector3D.Of(5.0, -19.0, 14.2).Coordinates;
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 5.0, -19.0, 14.2 }));
+        Assert.That(result, Is.EqualTo([5.0, -19.0, 14.2]));
     }
 
     [Test]

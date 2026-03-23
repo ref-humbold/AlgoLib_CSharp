@@ -17,8 +17,8 @@ public static class TopologicalSorting
     /// <param name="graph">The directed acyclic graph.</param>
     /// <returns>The topological order of vertices.</returns>
     /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
-    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
-        this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
+    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty,
+        TEdgeProperty>(this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph) =>
         InputsTopologicalSort(graph, Comparer<TVertexId>.Default.Compare);
 
     /// <summary>
@@ -31,7 +31,8 @@ public static class TopologicalSorting
     /// <param name="comparer">The comparer of vertex identifiers.</param>
     /// <returns>The topological order of vertices.</returns>
     /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
-    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
+    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty,
+        TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
         IComparer<TVertexId> comparer) =>
         InputsTopologicalSort(graph, comparer.Compare);
@@ -46,17 +47,18 @@ public static class TopologicalSorting
     /// <param name="comparison">The comparison function of vertex identifiers.</param>
     /// <returns>The topological order of vertices.</returns>
     /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
-    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
+    public static IEnumerable<Vertex<TVertexId>> InputsTopologicalSort<TVertexId, TVertexProperty,
+        TEdgeProperty>(
         this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph,
         Comparison<TVertexId> comparison)
     {
         if(graph.EdgesCount == 0)
             return graph.Vertices;
 
-        var order = new List<Vertex<TVertexId>>();
+        List<Vertex<TVertexId>> order = [];
         var inputDegrees = new Dictionary<Vertex<TVertexId>, int>();
-        var vertexHeap = new Heap<Vertex<TVertexId>>(
-                (vertex1, vertex2) => comparison(vertex1.Id, vertex2.Id));
+        var vertexHeap =
+            new Heap<Vertex<TVertexId>>((vertex1, vertex2) => comparison(vertex1.Id, vertex2.Id));
 
         foreach(Vertex<TVertexId> vertex in graph.Vertices)
         {
@@ -98,8 +100,8 @@ public static class TopologicalSorting
     /// <param name="graph">The directed acyclic graph.</param>
     /// <returns>The topological order of vertices.</returns>
     /// <exception cref="DirectedCyclicGraphException">If the graph contains a cycle.</exception>
-    public static IEnumerable<Vertex<TVertexId>> DfsTopologicalSort<TVertexId, TVertexProperty, TEdgeProperty>(
-        this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
+    public static IEnumerable<Vertex<TVertexId>> DfsTopologicalSort<TVertexId, TVertexProperty,
+        TEdgeProperty>(this IDirectedGraph<TVertexId, TVertexProperty, TEdgeProperty> graph)
     {
         if(graph.EdgesCount == 0)
             return graph.Vertices;
@@ -112,7 +114,7 @@ public static class TopologicalSorting
 
     private class TopologicalStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        public List<Vertex<TVertexId>> Order { get; set; } = new();
+        public List<Vertex<TVertexId>> Order { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root)
         {

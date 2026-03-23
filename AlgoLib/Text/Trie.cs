@@ -9,10 +9,15 @@ public class Trie
 
     public int Count { get; private set; }
 
-    public Trie() => Count = 0;
+    public Trie()
+    {
+    }
 
     public Trie(IEnumerable<string> texts)
-        : this() => AddRange(texts);
+        : this()
+    {
+        AddRange(texts);
+    }
 
     public void Add(string text)
     {
@@ -51,7 +56,7 @@ public class Trie
         {
             node = node[character];
 
-            if(node == null)
+            if(node is null)
                 return false;
         }
 
@@ -81,7 +86,7 @@ public class Trie
         {
             TrieNode nextNode = node[text[i]];
 
-            if(nextNode != null && removeNode(text, nextNode, i + 1))
+            if(nextNode is not null && removeNode(text, nextNode, i + 1))
                 node.Remove(text[i]);
         }
 
@@ -90,13 +95,11 @@ public class Trie
 
     private class TrieNode
     {
-        private readonly Dictionary<char, TrieNode> children = new();
+        private readonly Dictionary<char, TrieNode> children = [];
 
         public int Count => children.Count;
 
         internal bool Terminus { get; set; }
-
-        public TrieNode() => Terminus = false;
 
         public TrieNode this[char c]
         {

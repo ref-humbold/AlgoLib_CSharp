@@ -19,13 +19,13 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
             return false;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             int witness = Random.Next(1, number - 1);
 
@@ -43,13 +43,13 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
             return false;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             long witness = Random.NextInt64(1, number - 1);
 
@@ -70,7 +70,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
@@ -81,13 +81,13 @@ public static class PrimesTesting
         while(multiplicand % 2 == 0)
             multiplicand /= 2;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             int witness = Random.Next(1, number - 1);
 
             if(Integers.Power(witness, multiplicand, number) != 1)
             {
-                var exponents = new List<int>();
+                List<int> exponents = [];
 
                 for(int d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);
@@ -107,7 +107,7 @@ public static class PrimesTesting
     {
         number = Math.Abs(number);
 
-        if(number == 2 || number == 3)
+        if(number is 2 or 3)
             return true;
 
         if(number < 2 || number % 2 == 0 || number % 3 == 0)
@@ -118,13 +118,13 @@ public static class PrimesTesting
         while(multiplicand % 2 == 0)
             multiplicand /= 2;
 
-        for(int i = 0; i < Attempts; ++i)
+        for(var i = 0; i < Attempts; ++i)
         {
             long witness = Random.NextInt64(1, number - 1);
 
             if(Integers.Power(witness, multiplicand, number) != 1)
             {
-                var exponents = new List<long>();
+                List<long> exponents = [];
 
                 for(long d = multiplicand; d <= number / 2; d *= 2)
                     exponents.Add(d);

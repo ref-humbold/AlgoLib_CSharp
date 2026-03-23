@@ -14,23 +14,23 @@ public static class ClosestPoints
     public static (Point2D Closest1, Point2D Closest2) FindClosestPoints(
         IEnumerable<Point2D> points)
     {
-        var pointsList = points.ToList();
+        List<Point2D> pointsList = points.ToList();
 
         if(pointsList.Count == 0)
             throw new InvalidOperationException("Sequence contains no elements");
 
-        List<Point2D> pointsY = Geometry2D.SortByY(pointsList);
+        List<Point2D> pointsY = pointsList.SortByY();
 
-        return searchClosest(Geometry2D.SortByX(pointsY), pointsY, ..);
+        return searchClosest(pointsY.SortByX(), pointsY, ..);
     }
 
     // Searches for closest points among three of them.
     private static (Point2D Closest1, Point2D Closest2) searchThree(
         Point2D point1, Point2D point2, Point2D point3)
     {
-        double distance12 = Geometry2D.Distance(point1, point2);
-        double distance23 = Geometry2D.Distance(point2, point3);
-        double distance31 = Geometry2D.Distance(point3, point1);
+        double distance12 = point1.Distance(point2);
+        double distance23 = point2.Distance(point3);
+        double distance31 = point3.Distance(point1);
 
         return distance12 <= distance23 && distance12 <= distance31
             ? (point1, point2)
@@ -45,14 +45,14 @@ public static class ClosestPoints
         List<Point2D> pointsY, double middleX, double width)
     {
         (Point2D, Point2D)? closestPoints = null;
-        var beltPoints = new List<int>();
+        List<int> beltPoints = [];
         double minDistance = width;
 
-        for(int i = 0; i < pointsY.Count; ++i)
+        for(var i = 0; i < pointsY.Count; ++i)
             if(pointsY[i].X >= middleX - width && pointsY[i].X <= middleX + width)
                 beltPoints.Add(i);
 
-        for(int i = 0; i < beltPoints.Count; ++i)
+        for(var i = 0; i < beltPoints.Count; ++i)
             for(int j = i + 1; j < beltPoints.Count; ++j)
             {
                 Point2D pt1 = pointsY[beltPoints[i]];
@@ -61,9 +61,9 @@ public static class ClosestPoints
                 if(pt2.Y > pt1.Y + width)
                     break;
 
-                if(pt1.X <= middleX && pt2.X >= middleX || pt1.X > middleX && pt2.X <= middleX)
+                if((pt1.X <= middleX && pt2.X >= middleX) || (pt1.X > middleX && pt2.X <= middleX))
                 {
-                    double actualDistance = Geometry2D.Distance(pt1, pt2);
+                    double actualDistance = pt1.Distance(pt2);
 
                     if(actualDistance < minDistance)
                     {
@@ -84,35 +84,41 @@ public static class ClosestPoints
         int indexBegin = range.Start.GetOffset(pointsX.Count);
         int indexEnd = range.End.GetOffset(pointsX.Count);
 
-        if(indexEnd - indexBegin <= 2)
-            return (pointsX[indexBegin], pointsX[indexEnd - 1]);
+        switch(indexEnd - indexBegin)
+        {
+            case <= 2:
+                return (pointsX[indexBegin], pointsX[indexEnd - 1]);
 
-        if(indexEnd - indexBegin == 3)
-            return searchThree(pointsX[indexBegin], pointsX[indexBegin + 1],
-                               pointsX[indexBegin + 2]);
+            case 3:
+                return searchThree(
+                    pointsX[indexBegin], pointsX[indexBegin + 1],
+                    pointsX[indexBegin + 2]);
+        }
 
         int indexMiddle = (indexBegin + indexEnd) / 2;
-        var closetsYL = new List<Point2D>();
-        var closetsYR = new List<Point2D>();
+        List<Point2D> closestYLeft = [];
+        List<Point2D> closestYRight = [];
 
         foreach(Point2D pt in pointsY)
-            if(pt.X < pointsX[indexMiddle].X
-                    || pt.X == pointsX[indexMiddle].X && pt.Y < pointsX[indexMiddle].Y)
-                closetsYL.Add(pt);
+            if(pt.X < pointsX[indexMiddle].X ||
+               (pt.X == pointsX[indexMiddle].X && pt.Y < pointsX[indexMiddle].Y))
+                closestYLeft.Add(pt);
             else
-                closetsYR.Add(pt);
+                closestYRight.Add(pt);
 
         (Point2D Closest1, Point2D Closest2) closestLeft =
-            searchClosest(pointsX, closetsYL, indexBegin..indexMiddle);
+            searchClosest(pointsX, closestYLeft, indexBegin..indexMiddle);
         (Point2D Closest1, Point2D Closest2) closestRight =
-            searchClosest(pointsX, closetsYR, indexMiddle..indexEnd);
+            searchClosest(pointsX, closestYRight, indexMiddle..indexEnd);
         (Point2D Closest1, Point2D Closest2) closestPoints =
-            Geometry2D.Distance(closestLeft.Closest1, closestLeft.Closest2)
-                <= Geometry2D.Distance(closestRight.Closest1, closestRight.Closest2)
-                ? closestLeft : closestRight;
+            closestLeft.Closest1.Distance(closestLeft.Closest2)
+            <= closestRight.Closest1.Distance(closestRight.Closest2)
+                ? closestLeft
+                : closestRight;
         (Point2D Closest1, Point2D Closest2)? beltPoints =
-            checkBelt(pointsY, pointsX[indexMiddle].X,
-                      Geometry2D.Distance(closestPoints.Closest1, closestPoints.Closest2));
+            checkBelt(
+                pointsY, pointsX[indexMiddle].X,
+                closestPoints.Closest1.Distance(closestPoints.Closest2));
 
         return beltPoints ?? closestPoints;
     }

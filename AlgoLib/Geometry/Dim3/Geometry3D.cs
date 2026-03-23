@@ -12,38 +12,42 @@ public static class Geometry3D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByX(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.X).ToList();
+    public static List<Point3D> SortByX(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.X).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByY(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.Y).ToList();
+    public static List<Point3D> SortByY(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.Y).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their Z coordinate. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point3D> SortByZ(this List<Point3D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.Z).ToList();
+    public static List<Point3D> SortByZ(this List<Point3D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.Z).ToList();
+    }
 
     /// <summary>Calculates distance between given points.</summary>
     /// <param name="p1">The first point.</param>
     /// <param name="p2">The second point.</param>
     /// <returns>The distance between the points.</returns>
     public static double Distance(this Point3D p1, Point3D p2) =>
-        Math.Sqrt((p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y)
-                + (p2.Z - p1.Z) * (p2.Z - p1.Z));
+        Math.Sqrt(
+            (p2.X - p1.X) * (p2.X - p1.X) + (p2.Y - p1.Y) * (p2.Y - p1.Y) +
+            (p2.Z - p1.Z) * (p2.Z - p1.Z));
 
     /// <summary>Translates given point by given vector.</summary>
     /// <param name="p">The point.</param>

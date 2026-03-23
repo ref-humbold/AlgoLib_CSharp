@@ -29,7 +29,6 @@ public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     public override IEnumerable<Edge<TVertexId>> Edges => Representation.Edges.Distinct();
 
     public UndirectedSimpleGraph()
-        : base()
     {
     }
 
@@ -39,10 +38,10 @@ public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
     }
 
     public override int GetOutputDegree(Vertex<TVertexId> vertex) =>
-        Representation.getAdjacentEdges(vertex).Count();
+        Representation.GetAdjacentEdges(vertex).Count();
 
     public override int GetInputDegree(Vertex<TVertexId> vertex) =>
-        Representation.getAdjacentEdges(vertex).Count();
+        Representation.GetAdjacentEdges(vertex).Count();
 
     public override Edge<TVertexId> AddEdge(
         Edge<TVertexId> edge, TEdgeProperty property = default)
@@ -55,9 +54,9 @@ public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         }
         catch(KeyNotFoundException)
         {
-            Representation.addEdgeToSource(edge);
-            Representation.addEdgeToDestination(edge);
-            Representation.setProperty(edge, property);
+            Representation.AddEdgeToSource(edge);
+            Representation.AddEdgeToDestination(edge);
+            Representation.SetProperty(edge, property);
             return edge;
         }
     }
@@ -74,7 +73,7 @@ public class UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty> :
         {
             directedSimpleGraph.AddEdge(edge, Properties[edge]);
 
-            if(edge.Source != edge.Destination)
+            if(!edge.Source.Equals(edge.Destination))
                 directedSimpleGraph.AddEdge(edge.Reversed(), Properties[edge]);
         }
 

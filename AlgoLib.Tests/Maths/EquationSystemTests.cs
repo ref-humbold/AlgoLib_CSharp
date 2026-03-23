@@ -12,9 +12,9 @@ public class EquationSystemTests
     {
         // given
         var testObject = new EquationSystem(
-            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
-            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
-            new Equation(new[] { -1.0, 6.0, 4.0 }, 9));
+            new Equation([2.0, 3.0, -2.0], 15),
+            new Equation([7.0, -1.0, 0.0], 4),
+            new Equation([-1.0, 6.0, 4.0], 9));
 
         // when
         var result = testObject.ToString();
@@ -31,17 +31,17 @@ public class EquationSystemTests
     {
         // given
         var testObject = new EquationSystem(
-            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
-            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
-            new Equation(new[] { -1.0, 6.0, 4.0 }, 9));
+            new Equation([2.0, 3.0, -2.0], 15),
+            new Equation([7.0, -1.0, 0.0], 4),
+            new Equation([-1.0, 6.0, 4.0], 9));
 
         // when
         double[] result = testObject.Solve();
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 1.0, 3.0, -2.0 }));
+        Assert.That(result, Is.EqualTo([1.0, 3.0, -2.0]));
         Assert.That(testObject.HasSolution(result), Is.True);
-        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
+        Assert.That(testObject.HasSolution([-2.0, -18.0, -36.5]), Is.False);
     }
 
     [Test]
@@ -49,17 +49,17 @@ public class EquationSystemTests
     {
         // given
         var testObject = new EquationSystem(
-            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
-            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
-            new Equation(new[] { -1.0, -1.5, 1.0 }, -1));
+            new Equation([2.0, 3.0, -2.0], 15),
+            new Equation([7.0, -1.0, 0.0], 4),
+            new Equation([-1.0, -1.5, 1.0], -1));
 
         // when
         Action action = () => testObject.Solve();
 
         // then
         Assert.That(action, Throws.TypeOf<NoSolutionException>());
-        Assert.That(testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.False);
-        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.False);
+        Assert.That(testObject.HasSolution([1.0, 3.0, -2.0]), Is.False);
+        Assert.That(testObject.HasSolution([-2.0, -18.0, -36.5]), Is.False);
     }
 
     [Test]
@@ -67,17 +67,17 @@ public class EquationSystemTests
     {
         // given
         var testObject = new EquationSystem(
-            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
-            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
-            new Equation(new[] { 4.0, 6.0, -4.0 }, 30));
+            new Equation([2.0, 3.0, -2.0], 15),
+            new Equation([7.0, -1.0, 0.0], 4),
+            new Equation([4.0, 6.0, -4.0], 30));
 
         // when
         Action action = () => testObject.Solve();
 
         // then
         Assert.That(action, Throws.TypeOf<InfiniteSolutionsException>());
-        Assert.That(testObject.HasSolution(new[] { 1.0, 3.0, -2.0 }), Is.True);
-        Assert.That(testObject.HasSolution(new[] { -2.0, -18.0, -36.5 }), Is.True);
+        Assert.That(testObject.HasSolution([1.0, 3.0, -2.0]), Is.True);
+        Assert.That(testObject.HasSolution([-2.0, -18.0, -36.5]), Is.True);
     }
 
     [Test]
@@ -85,9 +85,9 @@ public class EquationSystemTests
     {
         // given
         var testObject = new EquationSystem(
-            new Equation(new[] { 2.0, 3.0, -2.0 }, 15),
-            new Equation(new[] { 7.0, -1.0, 0.0 }, 4),
-            new Equation(new[] { -1.0, 6.0, 4.0 }, 9));
+            new Equation([2.0, 3.0, -2.0], 15),
+            new Equation([7.0, -1.0, 0.0], 4),
+            new Equation([-1.0, 6.0, 4.0], 9));
 
         // when
         testObject.Swap(0, 2);

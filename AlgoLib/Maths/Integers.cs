@@ -14,7 +14,7 @@ public static class Integers
     public static int Gcd(int number1, int number2)
     {
         (int Min, int Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
-                                         Math.Abs(Math.Max(number1, number2)));
+            Math.Abs(Math.Max(number1, number2)));
 
         while(numberPair.Min > 0)
             numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
@@ -29,7 +29,7 @@ public static class Integers
     public static long Gcd(long number1, long number2)
     {
         (long Min, long Max) numberPair = (Math.Abs(Math.Min(number1, number2)),
-                                           Math.Abs(Math.Max(number1, number2)));
+            Math.Abs(Math.Max(number1, number2)));
 
         while(numberPair.Min > 0)
             numberPair = (numberPair.Max % numberPair.Min, numberPair.Min);
@@ -63,7 +63,7 @@ public static class Integers
     /// <returns>The multiplication result.</returns>
     public static int Multiply(int factor1, int factor2)
     {
-        int result = 0;
+        var result = 0;
 
         if(factor1 < 0 && factor2 < 0)
             return Multiply(-factor1, -factor2);
@@ -122,7 +122,7 @@ public static class Integers
     /// <returns>The multiplication result with modulo taken.</returns>
     public static int Multiply(int factor1, int factor2, int modulo)
     {
-        int result = 0;
+        var result = 0;
 
         if(modulo <= 0)
             throw new ArithmeticException("Non-positive modulo");
@@ -190,7 +190,7 @@ public static class Integers
     /// <returns>The exponentiation result.</returns>
     public static int Power(int baseNum, int exponent)
     {
-        int result = 1;
+        var result = 1;
 
         if(exponent < 0)
             throw new ArithmeticException("Negative exponent");
@@ -243,7 +243,7 @@ public static class Integers
     /// <returns>The exponentiation result with modulo taken.</returns>
     public static int Power(int baseNum, int exponent, int modulo)
     {
-        int result = 1;
+        var result = 1;
 
         if(modulo <= 0)
             throw new ArithmeticException("Non-positive modulo");

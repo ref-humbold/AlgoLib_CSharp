@@ -31,7 +31,7 @@ public class MinimalSpanningTreeTest
     public void Kruskal_ThenMinimalSpanningTree()
     {
         // when
-        IUndirectedGraph<int, object, WeightProp> result = MinimalSpanningTree.Kruskal(graph);
+        IUndirectedGraph<int, object, WeightProp> result = graph.Kruskal();
 
         // then
         double mstSize = result.Edges
@@ -43,7 +43,7 @@ public class MinimalSpanningTreeTest
         Assert.That(result.EdgesCount, Is.EqualTo(4));
         Assert.That(
             result.Edges,
-            Is.EquivalentTo(new[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] }));
+            Is.EquivalentTo([graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4]]));
         Assert.That(mstSize, Is.EqualTo(12.0).Within(Precision));
     }
 
@@ -67,7 +67,7 @@ public class MinimalSpanningTreeTest
         Assert.That(result.EdgesCount, Is.EqualTo(4));
         Assert.That(
             result.Edges,
-            Is.EquivalentTo(new[] { graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4] }));
+            Is.EquivalentTo([graph[0, 1], graph[0, 2], graph[2, 4], graph[3, 4]]));
         Assert.That(mstSize, Is.EqualTo(12.0).Within(Precision));
     }
 

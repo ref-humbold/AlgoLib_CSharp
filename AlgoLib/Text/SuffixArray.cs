@@ -8,8 +8,8 @@ namespace AlgoLib.Text;
 public class SuffixArray
 {
     private readonly List<int> suffixArray;
-    private readonly List<int> inverseArray = new();
-    private readonly List<int> lcpArray = new();
+    private readonly List<int> inverseArray = [];
+    private readonly List<int> lcpArray = [];
 
     public string Text { get; }
 
@@ -96,7 +96,7 @@ public class SuffixArray
 
     private static bool lessOrEqual(params int[] elements)
     {
-        for(int i = 0; i < elements.Length; i += 2)
+        for(var i = 0; i < elements.Length; i += 2)
             if(elements[i] < elements[i + 1])
                 return true;
             else if(elements[i] > elements[i + 1])
@@ -107,21 +107,26 @@ public class SuffixArray
 
     private static List<int> merge(List<int> t0, List<int> sa0, List<int> t12, List<int> sa12)
     {
-        var sa = new List<int>();
+        List<int> sa = [];
         int length2 = (t0.Count + 2) / 3, length1 = (t0.Count + 1) / 3;
         int index0 = 0, index12 = length2 - length1;
 
         while(index0 < sa0.Count && index12 < sa12.Count)
         {
-            int pos12 = sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2;
+            int pos12 = sa12[index12] < length2
+                ? sa12[index12] * 3 + 1
+                : (sa12[index12] - length2) * 3 + 2;
             int pos0 = sa0[index0];
 
             bool cond = sa12[index12] < length2
-                ? lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                              getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
-                : lessOrEqual(getElement(t0, pos12), getElement(t0, pos0),
-                              getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
-                              getElement(t12, sa12[index12] - length2 + 1), getElement(t12, pos0 / 3 + length2));
+                ? lessOrEqual(
+                    getElement(t0, pos12), getElement(t0, pos0),
+                    getElement(t12, sa12[index12] + length2), getElement(t12, pos0 / 3))
+                : lessOrEqual(
+                    getElement(t0, pos12), getElement(t0, pos0),
+                    getElement(t0, pos12 + 1), getElement(t0, pos0 + 1),
+                    getElement(t12, sa12[index12] - length2 + 1),
+                    getElement(t12, pos0 / 3 + length2));
 
             if(cond)
             {
@@ -137,7 +142,10 @@ public class SuffixArray
 
         while(index12 < sa12.Count)
         {
-            sa.Add(sa12[index12] < length2 ? sa12[index12] * 3 + 1 : (sa12[index12] - length2) * 3 + 2);
+            sa.Add(
+                sa12[index12] < length2
+                    ? sa12[index12] * 3 + 1
+                    : (sa12[index12] - length2) * 3 + 2);
             ++index12;
         }
 
@@ -153,7 +161,7 @@ public class SuffixArray
     private static void sortIndices(List<int> indices, List<int> values, int shift)
     {
         var buckets = new SortedDictionary<int, Queue<int>>();
-        int j = 0;
+        var j = 0;
 
         foreach(int i in indices)
         {
@@ -171,11 +179,75 @@ public class SuffixArray
             }
     }
 
+    private static List<int> createArray(List<int> txt)
+    {
+        if(txt.Count < 2)
+            return [0];
+
+        int length2 = (txt.Count + 2) / 3, length1 = (txt.Count + 1) / 3, length0 = txt.Count / 3;
+        int length02 = length0 + length2;
+        List<int> indices12 = [];
+
+        for(var i = 0; i < txt.Count + length2 - length1; ++i)
+            if(i % 3 != 0)
+                indices12.Add(i);
+
+        sortIndices(indices12, txt, 2);
+        sortIndices(indices12, txt, 1);
+        sortIndices(indices12, txt, 0);
+
+        var code = 0;
+        var last = (int.MaxValue, int.MaxValue, int.MaxValue);
+        List<int> text12 = Enumerable.Repeat(0, length02).ToList();
+
+        foreach(int i in indices12)
+        {
+            (int, int, int) elems = (getElement(txt, i), getElement(txt, i + 1),
+                getElement(txt, i + 2));
+
+            if(last != elems)
+            {
+                ++code;
+                last = elems;
+            }
+
+            if(i % 3 == 1)
+                text12[i / 3] = code;
+            else
+                text12[i / 3 + length2] = code;
+        }
+
+        List<int> sa0 = [];
+        List<int> sa12;
+
+        if(code < length02)
+        {
+            sa12 = createArray(text12);
+
+            for(var i = 0; i < sa12.Count; ++i)
+                text12[sa12[i]] = i + 1;
+        }
+        else
+        {
+            sa12 = Enumerable.Repeat(0, length02).ToList();
+
+            for(var i = 0; i < text12.Count; ++i)
+                sa12[text12[i] - 1] = i;
+        }
+
+        foreach(int i in sa12)
+            if(i < length2)
+                sa0.Add(3 * i);
+
+        sortIndices(sa0, txt, 0);
+        return merge(txt, sa0, text12, sa12);
+    }
+
     private void initInverseArray()
     {
         inverseArray.AddRange(Enumerable.Range(0, Count));
 
-        for(int i = 0; i < Count; ++i)
+        for(var i = 0; i < Count; ++i)
             inverseArray[suffixArray[i]] = i;
     }
 
@@ -198,69 +270,5 @@ public class SuffixArray
             if(len > 0)
                 --len;
         }
-    }
-
-    private List<int> createArray(List<int> txt)
-    {
-        if(txt.Count < 2)
-            return new List<int> { 0 };
-
-        int length2 = (txt.Count + 2) / 3, length1 = (txt.Count + 1) / 3, length0 = txt.Count / 3;
-        int length02 = length0 + length2;
-        var indices12 = new List<int>();
-
-        for(int i = 0; i < txt.Count + length2 - length1; ++i)
-            if(i % 3 != 0)
-                indices12.Add(i);
-
-        sortIndices(indices12, txt, 2);
-        sortIndices(indices12, txt, 1);
-        sortIndices(indices12, txt, 0);
-
-        int code = 0;
-        (int, int, int) last = (int.MaxValue, int.MaxValue, int.MaxValue);
-        var text12 = Enumerable.Repeat(0, length02).ToList();
-
-        foreach(int i in indices12)
-        {
-            (int, int, int) elems = (getElement(txt, i), getElement(txt, i + 1),
-                                     getElement(txt, i + 2));
-
-            if(last != elems)
-            {
-                ++code;
-                last = elems;
-            }
-
-            if(i % 3 == 1)
-                text12[i / 3] = code;
-            else
-                text12[i / 3 + length2] = code;
-        }
-
-        var sa0 = new List<int>();
-        List<int> sa12;
-
-        if(code < length02)
-        {
-            sa12 = createArray(text12);
-
-            for(int i = 0; i < sa12.Count; ++i)
-                text12[sa12[i]] = i + 1;
-        }
-        else
-        {
-            sa12 = Enumerable.Repeat(0, length02).ToList();
-
-            for(int i = 0; i < text12.Count; ++i)
-                sa12[text12[i] - 1] = i;
-        }
-
-        foreach(int i in sa12)
-            if(i < length2)
-                sa0.Add(3 * i);
-
-        sortIndices(sa0, txt, 0);
-        return merge(txt, sa0, text12, sa12);
     }
 }

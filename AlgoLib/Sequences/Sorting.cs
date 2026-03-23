@@ -15,8 +15,7 @@ public static class Sorting
     public static void HeapSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(sequence);
 
         int heapCount = sequence.Count;
 
@@ -45,9 +44,7 @@ public static class Sorting
     public static void TopDownMergeSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
-
+        ArgumentNullException.ThrowIfNull(sequence);
         doMergeSort(sequence, ..);
     }
 
@@ -60,16 +57,16 @@ public static class Sorting
     public static void BottomUpMergeSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
+        ArgumentNullException.ThrowIfNull(sequence);
 
         if(sequence.Count <= 1)
             return;
 
-        for(int halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
-            for(int i = 0; i < sequence.Count; i += halfStep + halfStep)
-                merge(sequence, i, Math.Min(i + halfStep, sequence.Count),
-                      Math.Min(i + halfStep + halfStep, sequence.Count));
+        for(var halfStep = 1; halfStep < sequence.Count; halfStep *= 2)
+            for(var i = 0; i < sequence.Count; i += halfStep + halfStep)
+                merge(
+                    sequence, i, Math.Min(i + halfStep, sequence.Count),
+                    Math.Min(i + halfStep + halfStep, sequence.Count));
     }
 
     /// <summary>Mutably sorts given sequence using quick-sort algorithm.</summary>
@@ -78,9 +75,7 @@ public static class Sorting
     public static void QuickSort<T>(this List<T> sequence)
         where T : IComparable<T>
     {
-        if(sequence == null)
-            throw new ArgumentNullException(nameof(sequence));
-
+        ArgumentNullException.ThrowIfNull(sequence);
         doQuickSort(sequence, ..);
     }
 
@@ -130,7 +125,7 @@ public static class Sorting
     private static void merge<T>(List<T> sequence, int indexBegin, int indexMiddle, int indexEnd)
         where T : IComparable<T>
     {
-        var ordered = new List<T>();
+        List<T> ordered = [];
         int iter1 = indexBegin;
         int iter2 = indexMiddle;
 
@@ -152,7 +147,7 @@ public static class Sorting
         for(int i = iter2; i < indexEnd; ++i)
             ordered.Add(sequence[i]);
 
-        for(int i = 0; i < ordered.Count; ++i)
+        for(var i = 0; i < ordered.Count; ++i)
             sequence[indexBegin + i] = ordered[i];
     }
 

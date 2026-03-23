@@ -23,8 +23,10 @@ public class TreeGraph<TVertexId, TVertexProperty, TEdgeProperty> :
 
     public IEnumerable<Edge<TVertexId>> Edges => graph.Edges;
 
-    public TreeGraph(TVertexId vertexId) =>
-        graph = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>(new[] { vertexId });
+    public TreeGraph(TVertexId vertexId)
+    {
+        graph = new UndirectedSimpleGraph<TVertexId, TVertexProperty, TEdgeProperty>([vertexId]);
+    }
 
     public Vertex<TVertexId> this[TVertexId vertexId] => graph[vertexId];
 

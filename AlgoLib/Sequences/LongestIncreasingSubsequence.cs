@@ -22,10 +22,10 @@ public static class LongestIncreasingSubsequence
     /// <returns>The least lexicographically longest increasing subsequence.</returns>
     public static IEnumerable<T> FindLis<T>(this IList<T> sequence, Comparison<T> comparison)
     {
-        var previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
-        var subsequence = new List<int> { 0 };
+        List<int?> previousElem = Enumerable.Repeat<int?>(null, sequence.Count).ToList();
+        List<int> subsequence = [0];
 
-        for(int i = 1; i < sequence.Count; ++i)
+        for(var i = 1; i < sequence.Count; ++i)
         {
             T elem = sequence[i];
 
@@ -36,15 +36,16 @@ public static class LongestIncreasingSubsequence
             }
             else
             {
-                int index = searchIndex(sequence, comparison, subsequence, i, 0,
-                                        subsequence.Count);
+                int index = searchIndex(
+                    sequence, comparison, subsequence, i, 0,
+                    subsequence.Count);
 
                 subsequence[index] = i;
-                previousElem[i] = index > 0 ? (int?)subsequence[index - 1] : null;
+                previousElem[i] = index > 0 ? subsequence[index - 1] : null;
             }
         }
 
-        var longestSubsequence = new List<T>();
+        List<T> longestSubsequence = [];
         int? subsequenceIndex = subsequence[^1];
 
         while(subsequenceIndex.HasValue)
@@ -72,6 +73,7 @@ public static class LongestIncreasingSubsequence
 
         return comparison(sequence[indexElem], sequence[subsequence[indexMiddle]]) > 0
             ? searchIndex(sequence, comparison, subsequence, indexElem, indexMiddle + 1, indexEnd)
-            : searchIndex(sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
+            : searchIndex(
+                sequence, comparison, subsequence, indexElem, indexBegin, indexMiddle + 1);
     }
 }

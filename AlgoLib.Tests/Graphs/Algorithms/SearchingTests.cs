@@ -46,7 +46,7 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            undirectedGraph.Bfs(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+            undirectedGraph.Bfs(default(EmptyStrategy<int>), [undirectedGraph[0]]);
 
         // then
         Vertex<int>[] resultArray = result.ToArray();
@@ -65,7 +65,7 @@ public class SearchingTests
 
         // when
         IEnumerable<Vertex<int>> result =
-            undirectedGraph.Bfs(strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+            undirectedGraph.Bfs(strategy, [undirectedGraph[0], undirectedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(undirectedGraph.Vertices));
@@ -89,16 +89,15 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.Bfs(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+            directedGraph.Bfs(default(EmptyStrategy<int>), [directedGraph[1]]);
 
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     directedGraph[0], directedGraph[1], directedGraph[3],
                     directedGraph[4], directedGraph[7]
-                }));
+                ]));
     }
 
     [Test]
@@ -109,7 +108,7 @@ public class SearchingTests
 
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.Bfs(strategy, new[] { directedGraph[8], directedGraph[6] });
+            directedGraph.Bfs(strategy, [directedGraph[8], directedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(directedGraph.Vertices));
@@ -126,7 +125,7 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            undirectedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+            undirectedGraph.DfsIterative(default(EmptyStrategy<int>), [undirectedGraph[0]]);
 
         // then
         Vertex<int>[] resultArray = result.ToArray();
@@ -146,7 +145,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.DfsIterative(
-                strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+                strategy, [undirectedGraph[0], undirectedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(undirectedGraph.Vertices));
@@ -170,16 +169,15 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.DfsIterative(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+            directedGraph.DfsIterative(default(EmptyStrategy<int>), [directedGraph[1]]);
 
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     directedGraph[0], directedGraph[1], directedGraph[3],
                     directedGraph[4], directedGraph[7]
-                }));
+                ]));
     }
 
     [Test]
@@ -190,7 +188,7 @@ public class SearchingTests
 
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.DfsIterative(strategy, new[] { directedGraph[8], directedGraph[6] });
+            directedGraph.DfsIterative(strategy, [directedGraph[8], directedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(directedGraph.Vertices));
@@ -207,7 +205,7 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { undirectedGraph[0] });
+            undirectedGraph.DfsRecursive(default(EmptyStrategy<int>), [undirectedGraph[0]]);
 
         // then
         Vertex<int>[] resultArray = result.ToArray();
@@ -227,7 +225,7 @@ public class SearchingTests
         // when
         IEnumerable<Vertex<int>> result =
             undirectedGraph.DfsRecursive(
-                strategy, new[] { undirectedGraph[0], undirectedGraph[6] });
+                strategy, [undirectedGraph[0], undirectedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(undirectedGraph.Vertices));
@@ -251,16 +249,15 @@ public class SearchingTests
     {
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.DfsRecursive(default(EmptyStrategy<int>), new[] { directedGraph[1] });
+            directedGraph.DfsRecursive(default(EmptyStrategy<int>), [directedGraph[1]]);
 
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     directedGraph[0], directedGraph[1], directedGraph[3], directedGraph[4],
                     directedGraph[7]
-                }));
+                ]));
     }
 
     [Test]
@@ -271,7 +268,7 @@ public class SearchingTests
 
         // when
         IEnumerable<Vertex<int>> result =
-            directedGraph.DfsRecursive(strategy, new[] { directedGraph[8], directedGraph[6] });
+            directedGraph.DfsRecursive(strategy, [directedGraph[8], directedGraph[6]]);
 
         // then
         Assert.That(result, Is.EquivalentTo(directedGraph.Vertices));

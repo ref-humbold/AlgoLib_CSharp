@@ -9,8 +9,8 @@ namespace AlgoLib.Structures;
 [TestFixture]
 public class DisjointSetsTests
 {
-    private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-    private readonly int[] absent = new[] { 111, 140, 187, 253 };
+    private readonly int[] numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26];
+    private readonly int[] absent = [111, 140, 187, 253];
     private readonly int[] present;
 
     private DisjointSets<int> testObject;
@@ -27,8 +27,7 @@ public class DisjointSetsTests
     public void Constructor_WhenDuplicatesInDifferentSets_ThenArgumentException()
     {
         // when
-        Action action = () => _ = new DisjointSets<int>(
-            new[] { new[] { 1, 2, 3 }, new[] { 1, 11, 21, 31 } });
+        Action action = () => _ = new DisjointSets<int>([[1, 2, 3], [1, 11, 21, 31]]);
 
         // then
         Assert.That(action, Throws.ArgumentException);
@@ -38,7 +37,7 @@ public class DisjointSetsTests
     public void Constructor_WhenDuplicatesInSameSet_ThenConstructed()
     {
         // given
-        var sets = new[] { new[] { 1, 2, 3 }, new[] { 10, 100, 10 } };
+        int[][] sets = [[1, 2, 3], [10, 100, 10]];
 
         // when
         testObject = new DisjointSets<int>(sets);
@@ -336,7 +335,7 @@ public class DisjointSetsTests
         int element1 = numbers[1];
         int element2 = numbers[2];
 
-        testObject = new DisjointSets<int>(new[] { absent, numbers });
+        testObject = new DisjointSets<int>([absent, numbers]);
 
         // when
         DisjointSets<int> result = testObject.UnionSet(element1, element2);

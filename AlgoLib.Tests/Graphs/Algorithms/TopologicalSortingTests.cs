@@ -34,7 +34,7 @@ public class TopologicalSortingTests
         // then
         Assert.That(
             result,
-            Is.EqualTo(new[] { graph[3], graph[5], graph[1], graph[0], graph[2], graph[4] }));
+            Is.EqualTo([graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]]));
     }
 
     [Test]
@@ -96,13 +96,13 @@ public class TopologicalSortingTests
         graph.AddEdgeBetween(graph[5], graph[2]);
         graph.AddEdgeBetween(graph[5], graph[4]);
 
-        Vertex<int>[][] expecteds = new[]
-        {
-            new[] { graph[3], graph[5], graph[1], graph[0], graph[2], graph[4] },
-            new[] { graph[5], graph[3], graph[1], graph[0], graph[2], graph[4] },
-            new[] { graph[3], graph[5], graph[1], graph[0], graph[4], graph[2] },
-            new[] { graph[5], graph[3], graph[1], graph[0], graph[4], graph[2] }
-        };
+        Vertex<int>[][] expecteds =
+        [
+            [graph[3], graph[5], graph[1], graph[0], graph[2], graph[4]],
+            [graph[5], graph[3], graph[1], graph[0], graph[2], graph[4]],
+            [graph[3], graph[5], graph[1], graph[0], graph[4], graph[2]],
+            [graph[5], graph[3], graph[1], graph[0], graph[4], graph[2]]
+        ];
 
         // when
         IEnumerable<Vertex<int>> result = graph.DfsTopologicalSort();

@@ -16,7 +16,7 @@ public class KnuthMorrisPrattTests
             "abcdecdcdefgcdcdecdcdecdcdehijcdecdcdek".KmpSearch("cdecdcde");
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 2, 14, 19, 30 }));
+        Assert.That(result, Is.EqualTo([2, 14, 19, 30]));
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "abcde".KmpSearch("a");
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 0 }));
+        Assert.That(result, Is.EqualTo([0]));
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "abcdae".KmpSearch("a");
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 0, 4 }));
+        Assert.That(result, Is.EqualTo([0, 4]));
     }
 
     [Test]
@@ -46,7 +46,7 @@ public class KnuthMorrisPrattTests
         IEnumerable<int> result = "aaaabcde".KmpSearch("aaa");
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 0, 1 }));
+        Assert.That(result, Is.EqualTo([0, 1]));
     }
 
     [Test]

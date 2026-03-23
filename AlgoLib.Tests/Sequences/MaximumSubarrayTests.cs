@@ -15,33 +15,33 @@ public class MaximumSubarrayTests
     public void FindMaximumSubarray_WhenNegativeIsLessThanSubsum_ThenIncludeNegative()
     {
         // given
-        var sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
+        List<double> sequence = [3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8];
 
         // when
         List<double> result = sequence.FindMaximumSubarray();
 
         // then
-        Assert.That(result, Is.EqualTo(new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1 }));
+        Assert.That(result, Is.EqualTo([3.5, 4.8, -1.6, 7.7, 2.1]));
     }
 
     [Test]
     public void FindMaximumSubarray_WhenNegativeIsGreaterThanSubsum_ThenExcludeNegative()
     {
         // given
-        var sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
+        List<double> sequence = [-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0];
 
         // when
         List<double> result = sequence.FindMaximumSubarray();
 
         // then
-        Assert.That(result, Is.EqualTo(new List<double> { 7.7, 2.1, 0.8, 4.0 }));
+        Assert.That(result, Is.EqualTo([7.7, 2.1, 0.8, 4.0]));
     }
 
     [Test]
     public void FindMaximumSubarray_WhenAllElementsAreNegative_ThenEmpty()
     {
         // given
-        var sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
+        List<double> sequence = [-9.0, -2.4, -3.07, -1.93, -12.67];
 
         // when
         List<double> result = sequence.FindMaximumSubarray();
@@ -57,7 +57,7 @@ public class MaximumSubarrayTests
     public void CountMaximalSubsum_WhenNegativeIsLessThanSubsum_ThenIncludeNegative()
     {
         // given
-        var sequence = new List<double> { 3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8 };
+        List<double> sequence = [3.5, 4.8, -1.6, 7.7, 2.1, -9.3, 0.8];
 
         // when
         double result = sequence.CountMaximalSubsum();
@@ -70,7 +70,7 @@ public class MaximumSubarrayTests
     public void CountMaximalSubsum_WhenNegativeIsGreaterThanSubsum_ThenExcludeNegative()
     {
         // given
-        var sequence = new List<double> { -9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0 };
+        List<double> sequence = [-9.3, -1.2, 3.5, 4.8, -10.6, 7.7, 2.1, 0.8, 4.0];
 
         // when
         double result = sequence.CountMaximalSubsum();
@@ -83,7 +83,7 @@ public class MaximumSubarrayTests
     public void CountMaximalSubsum_WhenAllElementsAreNegative_ThenZero()
     {
         // given
-        var sequence = new List<double> { -9.0, -2.4, -3.07, -1.93, -12.67 };
+        List<double> sequence = [-9.0, -2.4, -3.07, -1.93, -12.67];
 
         // when
         double result = sequence.CountMaximalSubsum();

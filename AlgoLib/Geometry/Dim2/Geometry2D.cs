@@ -12,20 +12,22 @@ public static class Geometry2D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByX(this List<Point2D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.X).ToList();
+    public static List<Point2D> SortByX(this List<Point2D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.X).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their Y coordinate. Sorting is guaranteed to be stable.
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByY(this List<Point2D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.Y).ToList();
+    public static List<Point2D> SortByY(this List<Point2D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.Y).ToList();
+    }
 
     /// <summary>
     /// Immutably sorts given points by their polar coordinates. First sorts by angle, then by
@@ -33,10 +35,11 @@ public static class Geometry2D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByAngle(this List<Point2D> points) =>
-        points == null
-            ? throw new ArgumentNullException(nameof(points))
-            : points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
+    public static List<Point2D> SortByAngle(this List<Point2D> points)
+    {
+        ArgumentNullException.ThrowIfNull(points);
+        return points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
+    }
 
     /// <summary>Calculates distance between given points.</summary>
     /// <param name="p1">The first point.</param>

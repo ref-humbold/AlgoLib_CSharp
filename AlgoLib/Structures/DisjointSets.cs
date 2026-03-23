@@ -8,7 +8,7 @@ namespace AlgoLib.Structures;
 /// <typeparam name="T">Type of sets elements.</typeparam>
 public class DisjointSets<T>
 {
-    private readonly Dictionary<T, T> represents = new();
+    private readonly Dictionary<T, T> represents = [];
 
     /// <summary>Gets the number of sets in this structure.</summary>
     /// <value>The number of sets.</value>
@@ -86,11 +86,13 @@ public class DisjointSets<T>
     /// <exception cref="KeyNotFoundException">If the represent is not present.</exception>
     public DisjointSets<T> Add(IEnumerable<T> items, T represent)
     {
-        foreach(T item in items)
+        T[] itemsArray = items.ToArray();
+
+        foreach(T item in itemsArray)
             if(Contains(item))
                 throw new ArgumentException($"Value {item} already present.");
 
-        foreach(T item in items)
+        foreach(T item in itemsArray)
             represents[item] = this[represent];
 
         return this;

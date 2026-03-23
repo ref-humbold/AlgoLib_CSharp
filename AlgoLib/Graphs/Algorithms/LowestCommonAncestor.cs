@@ -10,7 +10,7 @@ namespace AlgoLib.Graphs.Algorithms;
 /// <typeparam name="TEdgeProperty">The type of edge properties.</typeparam>
 public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProperty>
 {
-    private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = new();
+    private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> paths = [];
     private readonly LcaStrategy strategy = new();
     private bool empty = true;
 
@@ -45,9 +45,10 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
         if(isOffspring(vertex2, vertex1))
             return vertex1;
 
-        var candidates = paths[vertex1].Reverse<Vertex<TVertexId>>()
-                                       .Where(candidate => !isOffspring(vertex2, candidate))
-                                       .ToList();
+        List<Vertex<TVertexId>> candidates =
+            paths[vertex1].Reverse<Vertex<TVertexId>>()
+                          .Where(candidate => !isOffspring(vertex2, candidate))
+                          .ToList();
 
         return candidates.Count > 0
             ? find(candidates[0], vertex2)
@@ -56,12 +57,12 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
 
     private void initialize()
     {
-        Searching.DfsRecursive(Graph, strategy, new List<Vertex<TVertexId>> { Root });
+        Graph.DfsRecursive(strategy, [Root]);
 
         foreach(Vertex<TVertexId> vertex in Graph.Vertices)
-            paths[vertex] = new List<Vertex<TVertexId>> { strategy.Parents[vertex] };
+            paths[vertex] = [strategy.Parents[vertex]];
 
-        for(int i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
+        for(var i = 0; i < Math.Log2(Graph.VerticesCount) + 3; ++i)
             foreach(Vertex<TVertexId> vertex in Graph.Vertices)
                 paths[vertex].Add(paths[paths[vertex][i]][i]);
 
@@ -70,17 +71,17 @@ public sealed class LowestCommonAncestor<TVertexId, TVertexProperty, TEdgeProper
 
     private bool isOffspring(Vertex<TVertexId> vertex1, Vertex<TVertexId> vertex2) =>
         strategy.PreTimes[vertex1] >= strategy.PreTimes[vertex2]
-            && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
+        && strategy.PostTimes[vertex1] <= strategy.PostTimes[vertex2];
 
     private class LcaStrategy : IDfsStrategy<TVertexId>
     {
-        private int timer = 0;
+        private int timer;
 
-        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = new();
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> Parents { get; } = [];
 
-        public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> PreTimes { get; } = [];
 
-        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> PostTimes { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root) => Parents[root] = root;
 

@@ -18,7 +18,7 @@ public static class Searching
         IBfsStrategy<TVertexId> strategy,
         IEnumerable<Vertex<TVertexId>> roots)
     {
-        var reached = new HashSet<Vertex<TVertexId>>();
+        HashSet<Vertex<TVertexId>> reached = [];
         var vertexQueue = new Queue<Vertex<TVertexId>>();
 
         foreach(Vertex<TVertexId> root in roots)
@@ -64,7 +64,7 @@ public static class Searching
     {
         var reached = new Dictionary<Vertex<TVertexId>, int>();
         var vertexStack = new Stack<Vertex<TVertexId>>();
-        int iteration = 1;
+        var iteration = 1;
 
         foreach(Vertex<TVertexId> root in roots)
             if(!reached.ContainsKey(root))
@@ -76,19 +76,20 @@ public static class Searching
                 {
                     Vertex<TVertexId> vertex = vertexStack.Pop();
 
-                    if(!reached.ContainsKey(vertex))
+                    if(reached.TryAdd(vertex, iteration))
                     {
-                        reached[vertex] = iteration;
                         strategy.OnEntry(vertex);
 
                         foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
-                            if(!reached.ContainsKey(neighbour))
+                            if(!reached.TryGetValue(neighbour, out int iter))
                             {
                                 strategy.OnNextVertex(vertex, neighbour);
                                 vertexStack.Push(neighbour);
                             }
-                            else if(reached[neighbour] == iteration)
+                            else if(iter == iteration)
+                            {
                                 strategy.OnEdgeToVisited(vertex, neighbour);
+                            }
 
                         strategy.OnExit(vertex);
                         reached[root] = -iteration;
@@ -135,33 +136,35 @@ public static class Searching
         DfsRecursiveState<TVertexId> state)
     {
         Vertex<TVertexId> vertex = state.Vertex;
-        state.onEntry(vertex);
+        state.OnEntry(vertex);
         strategy.OnEntry(vertex);
 
         foreach(Vertex<TVertexId> neighbour in graph.GetNeighbours(vertex))
-            if(!state.Reached.ContainsKey(neighbour))
+            if(!state.Reached.TryGetValue(neighbour, out int iter))
             {
                 strategy.OnNextVertex(vertex, neighbour);
                 state.Vertex = neighbour;
                 graph.dfsRecursiveStep(strategy, state);
             }
-            else if(state.Reached[neighbour] == state.Iteration)
+            else if(iter == state.Iteration)
+            {
                 strategy.OnEdgeToVisited(vertex, neighbour);
+            }
 
         strategy.OnExit(vertex);
-        state.onExit(vertex);
+        state.OnExit(vertex);
     }
 
     private class DfsRecursiveState<TVertexId>
     {
-        public Dictionary<Vertex<TVertexId>, int> Reached { get; } = new();
+        public Dictionary<Vertex<TVertexId>, int> Reached { get; } = [];
 
         public Vertex<TVertexId> Vertex { get; set; }
 
         public int Iteration { get; set; } = 1;
 
-        public void onEntry(Vertex<TVertexId> vertex) => Reached[vertex] = Iteration;
+        public void OnEntry(Vertex<TVertexId> vertex) => Reached[vertex] = Iteration;
 
-        public void onExit(Vertex<TVertexId> vertex) => Reached[vertex] = -Iteration;
+        public void OnExit(Vertex<TVertexId> vertex) => Reached[vertex] = -Iteration;
     }
 }

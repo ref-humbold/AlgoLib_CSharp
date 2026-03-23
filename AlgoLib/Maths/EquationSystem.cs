@@ -50,7 +50,7 @@ public class EquationSystem
         if(equations[^1].Coefficients[^1] == 0 && equations[^1].FreeTerm != 0)
             throw new NoSolutionException();
 
-        double[] solution = new double[Count];
+        var solution = new double[Count];
 
         solution[^1] = equations[^1].FreeTerm / equations[^1].Coefficients[^1];
 
@@ -70,7 +70,7 @@ public class EquationSystem
     /// <summary>Runs the Gaussian elimination algorithm on this equation system.</summary>
     public void GaussianReduce()
     {
-        for(int i = 0; i < Count - 1; ++i)
+        for(var i = 0; i < Count - 1; ++i)
         {
             int indexMin = getMinimalCoefficientIndex(i);
 

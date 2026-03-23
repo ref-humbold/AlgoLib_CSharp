@@ -27,8 +27,8 @@ public class TreeGraphTests
     public void PropertiesIndexer_WhenSettingProperty_ThenProperty()
     {
         // given
-        string vertexProperty = "x";
-        string edgeProperty = "y";
+        var vertexProperty = "x";
+        var edgeProperty = "y";
         Vertex<int> vertex = testObject[2];
         Edge<int> edge = testObject[6, 2];
 
@@ -63,11 +63,10 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Vertex<int>(0), new Vertex<int>(1), new Vertex<int>(2), new Vertex<int>(3),
                     new Vertex<int>(4), new Vertex<int>(5), new Vertex<int>(6), new Vertex<int>(7)
-                }));
+                ]));
     }
 
     [Test]
@@ -89,8 +88,7 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(2), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(3), new Vertex<int>(0)),
@@ -98,14 +96,14 @@ public class TreeGraphTests
                     new Edge<int>(new Vertex<int>(5), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(6), new Vertex<int>(2)),
                     new Edge<int>(new Vertex<int>(7), new Vertex<int>(2))
-                }));
+                ]));
     }
 
     [Test]
     public void Indexer_WhenVertexExists_ThenVertex()
     {
         // given
-        int vertexId = 4;
+        var vertexId = 4;
 
         // when
         Vertex<int> result = testObject[vertexId];
@@ -138,7 +136,7 @@ public class TreeGraphTests
         // then
         Assert.That(
             result,
-            Is.EquivalentTo(new[] { new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5) }));
+            Is.EquivalentTo([new Vertex<int>(0), new Vertex<int>(4), new Vertex<int>(5)]));
     }
 
     [Test]
@@ -150,12 +148,11 @@ public class TreeGraphTests
         // then
         Assert.That(
             result, Is.EquivalentTo(
-                new[]
-                {
+                [
                     new Edge<int>(new Vertex<int>(1), new Vertex<int>(0)),
                     new Edge<int>(new Vertex<int>(4), new Vertex<int>(1)),
                     new Edge<int>(new Vertex<int>(5), new Vertex<int>(1))
-                }));
+                ]));
     }
 
     [Test]
@@ -182,10 +179,10 @@ public class TreeGraphTests
     public void AddVertex_WhenNewVertex_ThenCreatedEdge()
     {
         // given
-        int newVertexId = 13;
+        var newVertexId = 13;
         Vertex<int> neighbour = testObject[5];
-        string vertexProperty = "qwerty";
-        string edgeProperty = "asdfgh";
+        var vertexProperty = "qwerty";
+        var edgeProperty = "asdfgh";
 
         // when
         Edge<int> result = testObject.AddVertex(
@@ -196,7 +193,7 @@ public class TreeGraphTests
         Assert.That(result.Destination, Is.EqualTo(neighbour));
         Assert.That(testObject.VerticesCount, Is.EqualTo(9));
         Assert.That(
-            testObject.GetNeighbours(testObject[newVertexId]), Is.EqualTo(new[] { neighbour }));
+            testObject.GetNeighbours(testObject[newVertexId]), Is.EqualTo([neighbour]));
         Assert.That(testObject.Properties[testObject[newVertexId]], Is.EqualTo(vertexProperty));
         Assert.That(testObject.Properties[result], Is.EqualTo(edgeProperty));
     }
@@ -206,7 +203,7 @@ public class TreeGraphTests
     {
         // given
         Vertex<int> vertex = testObject[6];
-        string property = "qwerty";
+        var property = "qwerty";
 
         testObject.Properties[vertex] = property;
 

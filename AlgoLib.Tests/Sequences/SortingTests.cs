@@ -14,7 +14,7 @@ public class SortingTests
     public void HeapSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        List<int> sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2];
 
         // when
         sequence.HeapSort();
@@ -27,7 +27,7 @@ public class SortingTests
     public void HeapSort_WhenEmptyList_ThenEmpty()
     {
         // given
-        var sequence = new List<int>();
+        List<int> sequence = [];
 
         // when
         sequence.HeapSort();
@@ -53,7 +53,7 @@ public class SortingTests
     public void TopDownMergeSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        List<int> sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2];
 
         // when
         sequence.TopDownMergeSort();
@@ -66,10 +66,9 @@ public class SortingTests
     public void TopDownMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
     {
         // given
-        var sequence = new List<IntPair>
-        {
+        List<IntPair> sequence = [
             new(3, 17), new(-6, 0), new(9, 12), new(3, 4), new(9, -14), new(-1, 7), new(0, 2)
-        };
+        ];
 
         // when
         sequence.TopDownMergeSort();
@@ -88,7 +87,7 @@ public class SortingTests
     public void TopDownMergeSort_WhenEmptyList_ThenEmpty()
     {
         // given
-        var sequence = new List<int>();
+        List<int> sequence = [];
 
         // when
         sequence.TopDownMergeSort();
@@ -114,7 +113,7 @@ public class SortingTests
     public void BottomUpMergeSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        List<int> sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2];
 
         // when
         sequence.BottomUpMergeSort();
@@ -127,11 +126,10 @@ public class SortingTests
     public void BottomUpMergeSort_WhenSortingPairsByFirst_ThenSortingIsStable()
     {
         // given
-        var sequence = new List<IntPair>
-        {
+        List<IntPair> sequence = [
             new(3, 17), new(-6, 0), new(9, 12), new(3, 4),
             new(9, -14), new(-1, 7), new(0, 2)
-        };
+        ];
 
         // when
         sequence.BottomUpMergeSort();
@@ -150,7 +148,7 @@ public class SortingTests
     public void BottomUpMergeSort_WhenEmptyList_ThenEmpty()
     {
         // given
-        var sequence = new List<int>();
+        List<int> sequence = [];
 
         // when
         sequence.BottomUpMergeSort();
@@ -176,7 +174,7 @@ public class SortingTests
     public void QuickSort_ThenSortedAscending()
     {
         // given
-        var sequence = new List<int> { 3, 17, -6, 0, 9, -12, 7, 4, 2 };
+        List<int> sequence = [3, 17, -6, 0, 9, -12, 7, 4, 2];
 
         // when
         sequence.QuickSort();
@@ -189,7 +187,7 @@ public class SortingTests
     public void QuickSort_WhenEmptyList_ThenEmpty()
     {
         // given
-        var sequence = new List<int>();
+        List<int> sequence = [];
 
         // when
         sequence.QuickSort();
@@ -210,21 +208,12 @@ public class SortingTests
 
     #endregion
 
-    private readonly record struct IntPair(int First, int Second)
-        : IComparable, IComparable<IntPair>
+    private readonly record struct IntPair(int First, int Second) : IComparable<IntPair>
     {
-        public int CompareTo(object obj) =>
-            obj is IntPair pair
-                ? CompareTo(pair)
-                : throw new ArgumentException(
-                    "Compared object is not of type IntPair", nameof(obj));
-
         public int CompareTo(IntPair other) => First.CompareTo(other.First);
 
         public bool Equals(IntPair other) => First == other.First && Second == other.Second;
 
         public override int GetHashCode() => (First, Second).GetHashCode();
-
-        public override string ToString() => $"IntPair({First}, {Second})";
     }
 }

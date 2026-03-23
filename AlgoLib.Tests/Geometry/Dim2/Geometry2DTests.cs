@@ -11,12 +11,11 @@ public class Geometry2DTests
     public void SortByX_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D>
-        {
+        List<Point2D> sequence = [
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
-        };
+        ];
 
         // when
         List<Point2D> result = sequence.SortByX();
@@ -24,25 +23,22 @@ public class Geometry2DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point2D>
-                {
+            result, Is.EqualTo([
                     Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
                     Point2D.Of(-2.0, 3.0), Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0),
                     Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0)
-                }));
+                ]));
     }
 
     [Test]
     public void SortByY_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D>
-        {
+        List<Point2D> sequence = [
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
-        };
+        ];
 
         // when
         List<Point2D> result = sequence.SortByY();
@@ -50,25 +46,22 @@ public class Geometry2DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point2D>
-                {
+            result, Is.EqualTo([
                     Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
                     Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
                     Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0)
-                }));
+                ]));
     }
 
     [Test]
     public void SortByAngle_ThenSortedStablyAscending()
     {
         // given
-        var sequence = new List<Point2D>
-        {
+        List<Point2D> sequence = [
             Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
-        };
+        ];
 
         // when
         List<Point2D> result = sequence.SortByAngle();
@@ -76,13 +69,11 @@ public class Geometry2DTests
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
         Assert.That(
-            result, Is.EqualTo(
-                new List<Point2D>
-                {
+            result, Is.EqualTo([
                     Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
                     Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
                     Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
-                }));
+                ]));
     }
 
     [Test]

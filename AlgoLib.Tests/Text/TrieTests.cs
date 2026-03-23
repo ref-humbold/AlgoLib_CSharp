@@ -8,7 +8,7 @@ namespace AlgoLib.Text;
 [TestFixture]
 public class TrieTests
 {
-    private readonly List<string> texts = new() { "abcd", "ab", "xyz" };
+    private readonly List<string> texts = ["abcd", "ab", "xyz"];
     private Trie testObject;
 
     [SetUp]
@@ -83,7 +83,7 @@ public class TrieTests
     public void AddRange_WhenPresentAndAbsent_ThenAbsentAdded()
     {
         // given
-        var textsToAdd = new List<string> { "abxx", "x", "abcdef", "xyz" };
+        List<string> textsToAdd = ["abxx", "x", "abcdef", "xyz"];
 
         // when
         testObject.AddRange(textsToAdd);
@@ -182,7 +182,7 @@ public class TrieTests
     public void RemoveRange_WhenPresentAndAbsent_ThenPresentRemoved()
     {
         // given
-        var textsToRemove = new List<string> { "abxx", "x", "abcdef", "xyz" };
+        List<string> textsToRemove = ["abxx", "x", "abcdef", "xyz"];
 
         // when
         testObject.RemoveRange(textsToRemove);

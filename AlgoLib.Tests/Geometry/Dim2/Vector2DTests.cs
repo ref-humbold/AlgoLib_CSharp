@@ -7,7 +7,7 @@ namespace AlgoLib.Geometry.Dim2;
 [TestFixture]
 public class Vector2DTests
 {
-    private static readonly double Precision = IGeometryObject.Epsilon;
+    private const double Precision = IGeometryObject.Epsilon;
 
     [Test]
     public void Coordinates_ThenArray()
@@ -16,7 +16,7 @@ public class Vector2DTests
         double[] result = Vector2D.Of(5.0, -19.0).Coordinates;
 
         // then
-        Assert.That(result, Is.EqualTo(new[] { 5.0, -19.0 }));
+        Assert.That(result, Is.EqualTo([5.0, -19.0]));
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class Vector2DTests
     public void OperatorUnaryPlus_ThenCopied()
     {
         // given
-        var vector = Vector2D.Of(5.4, 9.0);
+        Vector2D vector = Vector2D.Of(5.4, 9.0);
 
         // when
         Vector2D result = +vector;

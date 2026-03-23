@@ -113,7 +113,7 @@ public class ShortestPathsTests
     public void BellmanFord_WhenDirectedGraph_ThenShortestPathsLengths()
     {
         // given
-        double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+        double[] distances = [20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0];
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
         // when
@@ -127,7 +127,7 @@ public class ShortestPathsTests
     public void BellmanFord_WhenNegativeEdge_ThenEdgeIncluded()
     {
         // given
-        double[] distances = new[] { 8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0 };
+        double[] distances = [8.0, 0.0, Inf, 5.0, 7.0, 8.0, 12.0, 10.0, 10.0, 20.0];
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
         directedGraph.AddEdgeBetween(directedGraph[8], directedGraph[3], new Weighted(-5.0));
@@ -143,7 +143,7 @@ public class ShortestPathsTests
     public void BellmanFord_WhenUndirectedGraph_ThenShortestPathsLengths()
     {
         // given
-        double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
+        double[] distances = [4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf];
         Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
 
         // when
@@ -174,7 +174,7 @@ public class ShortestPathsTests
     public void Dijkstra_WhenDirectedGraph_ThenShortestPathsLengths()
     {
         // given
-        double[] distances = new[] { 20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0 };
+        double[] distances = [20.0, 0.0, Inf, 17.0, 7.0, 8.0, 12.0, 12.0, 10.0, 20.0];
         Dictionary<Vertex<int>, double> expected = fromList(directedGraph, distances);
 
         // when
@@ -188,7 +188,7 @@ public class ShortestPathsTests
     public void Dijkstra_WhenUndirectedGraph_ThenShortestPathsLengths()
     {
         // given
-        double[] distances = new[] { 4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf };
+        double[] distances = [4.0, 0.0, Inf, 7.0, 7.0, 8.0, Inf, 10.0, 10.0, Inf];
         Dictionary<Vertex<int>, double> expected = fromList(undirectedGraph, distances);
 
         // when

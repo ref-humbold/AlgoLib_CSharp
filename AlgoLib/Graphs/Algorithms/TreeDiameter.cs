@@ -18,7 +18,9 @@ public static class TreeDiameter
     {
         Vertex<TVertexId> root = tree.Vertices.Aggregate<Vertex<TVertexId>, Vertex<TVertexId>>(
             null,
-            (acc, v) => acc is null || tree.GetOutputDegree(v) > tree.GetOutputDegree(acc) ? v : acc);
+            (acc, v) => acc is null || tree.GetOutputDegree(v) > tree.GetOutputDegree(acc)
+                ? v
+                : acc);
 
         return root is null ? 0.0 : dfs(tree, root, root).Subtree;
     }
@@ -29,9 +31,9 @@ public static class TreeDiameter
         Vertex<TVertexId> parent)
         where TEdgeProperty : IWeighted
     {
-        double pathFrom = 0.0;
-        double pathSubtree = 0.0;
-        double pathThrough = 0.0;
+        var pathFrom = 0.0;
+        var pathSubtree = 0.0;
+        var pathThrough = 0.0;
 
         foreach(Edge<TVertexId> edge in tree.GetAdjacentEdges(vertex))
         {

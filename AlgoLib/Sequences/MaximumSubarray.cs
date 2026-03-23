@@ -12,19 +12,19 @@ public static class MaximumSubarray
     /// <returns>The maximum subarray.</returns>
     public static List<double> FindMaximumSubarray(this IEnumerable<double> sequence)
     {
-        (double Sum, List<double> Subarray) actual = (0.0, new List<double>());
-        (double Sum, List<double> Subarray) maximal = (0.0, new List<double>());
+        (double Sum, List<double> Subarray) actual = (0.0, []);
+        (double Sum, List<double> Subarray) maximal = (0.0, []);
 
         foreach(double elem in sequence)
         {
             if(actual.Sum < 0.0)
-                actual = (0.0, new List<double>());
+                actual = (0.0, []);
 
             actual = (actual.Sum + elem, actual.Subarray);
             actual.Subarray.Add(elem);
 
             if(actual.Sum > maximal.Sum)
-                maximal = (actual.Sum, new List<double>(actual.Subarray));
+                maximal = (actual.Sum, [.. actual.Subarray]);
         }
 
         return maximal.Subarray;
@@ -35,23 +35,24 @@ public static class MaximumSubarray
     /// <returns>The sum of maximum subarray.</returns>
     public static double CountMaximalSubsum(this IEnumerable<double> sequence)
     {
-        int size = 1;
+        var size = 1;
+        List<double> sequenceList = sequence.ToList();
 
-        while(size < 2 * sequence.Count())
+        while(size < 2 * sequenceList.Count)
             size *= 2;
 
-        var intervalSums = Enumerable.Repeat(0.0, size).ToList();
-        var prefixSums = Enumerable.Repeat(0.0, size).ToList();
-        var suffixSums = Enumerable.Repeat(0.0, size).ToList();
-        var allSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> intervalSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> prefixSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> suffixSums = Enumerable.Repeat(0.0, size).ToList();
+        List<double> allSums = Enumerable.Repeat(0.0, size).ToList();
 
-        int i = 0;
+        var i = 0;
 
-        foreach(double elem in sequence)
+        foreach(double elem in sequenceList)
         {
             int index = size / 2 + i;
 
-            allSums[index] = allSums[index] + elem;
+            allSums[index] += elem;
             intervalSums[index] = Math.Max(allSums[index], 0.0);
             prefixSums[index] = Math.Max(allSums[index], 0.0);
             suffixSums[index] = Math.Max(allSums[index], 0.0);

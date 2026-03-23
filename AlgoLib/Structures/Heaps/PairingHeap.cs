@@ -10,17 +10,20 @@ public class PairingHeap<T> : IHeap<T>
     where T : IComparable<T>
 {
     private static readonly IComparer<T> DefaultComparer = Comparer<T>.Default;
-    private HeapNode heap = null;
+    private HeapNode heap;
 
     public IComparer<T> Comparer => DefaultComparer;
 
-    public int Count { get; private set; } = 0;
+    public int Count { get; private set; }
 
     public PairingHeap()
     {
     }
 
-    public PairingHeap(IEnumerable<T> enumerable) => PushRange(enumerable);
+    public PairingHeap(IEnumerable<T> enumerable)
+    {
+        PushRange(enumerable);
+    }
 
     /// <summary>Merges given heaps.</summary>
     /// <param name="heap1">The first heap.</param>
@@ -114,9 +117,9 @@ public class PairingHeap<T> : IHeap<T>
     private record HeapNode(T Element, HeapNodeList Children = null)
     {
         public static HeapNode operator +(HeapNode node1, HeapNode node2) =>
-            node1 == null
+            node1 is null
                 ? node2
-                : node2 == null
+                : node2 is null
                     ? node1
                     : DefaultComparer.Compare(node1.Element, node2.Element) <= 0
                         ? node1 with { Children = new HeapNodeList(node2, node1.Children) }
@@ -130,7 +133,7 @@ public class PairingHeap<T> : IHeap<T>
         public HeapNode Pop() => mergePairs(Children);
 
         private static HeapNode mergePairs(HeapNodeList list) =>
-            list?.Next == null
+            list?.Next is null
                 ? list?.Node
                 : list.Node + list.Next.Node + mergePairs(list.Next.Next);
     }
@@ -141,7 +144,7 @@ public class PairingHeap<T> : IHeap<T>
         private readonly Queue<HeapNode> queue = new();
         private HeapNode currentNode;
 
-        public T Current => currentNode != default
+        public T Current => currentNode is not null
             ? currentNode.Element
             : throw new InvalidOperationException();
 
@@ -158,10 +161,8 @@ public class PairingHeap<T> : IHeap<T>
             bool hasNode = queue.TryDequeue(out HeapNode node);
 
             if(hasNode && node?.Children is not null)
-            {
                 foreach(HeapNode child in node.Children)
                     queue.Enqueue(child);
-            }
 
             currentNode = node;
             return hasNode;

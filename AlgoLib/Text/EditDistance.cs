@@ -34,7 +34,7 @@ public static class EditDistance
 
             distance[0] += deletionCost;
 
-            for(int i = 0; i < destination.Length; ++i)
+            for(var i = 0; i < destination.Length; ++i)
             {
                 double previousDiagonal = previousAbove;
 
@@ -78,7 +78,7 @@ public static class EditDistance
 
             distance[0] += deletionCost;
 
-            for(int i = 0; i < destination.Length; ++i)
+            for(var i = 0; i < destination.Length; ++i)
             {
                 double previousDiagonal = previousAbove;
 
@@ -112,7 +112,6 @@ public static class EditDistance
 
         return source.Zip(destination)
                      .Where(p => p.First != p.Second)
-                     .Select(_ => substitutionCost)
-                     .Sum();
+                     .Sum(_ => substitutionCost);
     }
 }

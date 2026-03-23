@@ -3,21 +3,28 @@
 namespace AlgoLib.Maths;
 
 /// <summary>Structure of fraction.</summary>
-public class Fraction :
+public readonly record struct Fraction :
     IComparable<Fraction>, IComparable<int>, IComparable<long>
 {
     private readonly long numerator;
     private readonly long denominator;
 
-    private Fraction(long numerator, long denominator)
+    public Fraction()
+        : this(0)
     {
-        if(denominator == 0)
-            throw new DivideByZeroException("Denominator cannot be zero");
+    }
 
-        if(denominator < 0)
+    public Fraction(long numerator, long denominator = 1)
+    {
+        switch(denominator)
         {
-            numerator = -numerator;
-            denominator = -denominator;
+            case 0:
+                throw new DivideByZeroException("Denominator cannot be zero");
+
+            case < 0:
+                numerator = -numerator;
+                denominator = -denominator;
+                break;
         }
 
         long gcd = Integers.Gcd(numerator, denominator);
@@ -25,8 +32,6 @@ public class Fraction :
         this.numerator = numerator / gcd;
         this.denominator = denominator / gcd;
     }
-
-    public static Fraction Of(long numerator, long denominator = 1) => new(numerator, denominator);
 
     /// <summary>Performs an explicit conversion to <see cref="int" />.</summary>
     /// <param name="f">The fraction.</param>
@@ -56,16 +61,12 @@ public class Fraction :
     /// <summary>Performs an implicit conversion from <see cref="int" />.</summary>
     /// <param name="n">The integer.</param>
     /// <returns>The result of the conversion.</returns>
-    public static implicit operator Fraction(int n) => Of(n);
+    public static implicit operator Fraction(int n) => new(n);
 
     /// <summary>Performs an implicit conversion from <see cref="long" />.</summary>
     /// <param name="n">The long integer.</param>
     /// <returns>The result of the conversion.</returns>
-    public static implicit operator Fraction(long n) => Of(n);
-
-    public static bool operator ==(Fraction f1, Fraction f2) => f1.Equals(f2);
-
-    public static bool operator !=(Fraction f1, Fraction f2) => !(f1 == f2);
+    public static implicit operator Fraction(long n) => new(n);
 
     public static bool operator <(Fraction f1, Fraction f2) => f1.CompareTo(f2) < 0;
 
@@ -78,12 +79,16 @@ public class Fraction :
     /// <summary>Copies fraction.</summary>
     /// <param name="f">The fraction.</param>
     /// <returns>The copied fraction.</returns>
-    public static Fraction operator +(Fraction f) => Of(+f.numerator, +f.denominator);
+    public static Fraction operator +(Fraction f)
+    {
+        long denominator1 = +f.denominator;
+        return new Fraction(+f.numerator, denominator1);
+    }
 
     /// <summary>Negates fraction.</summary>
     /// <param name="f">The fraction.</param>
     /// <returns>The negated fraction.</returns>
-    public static Fraction operator -(Fraction f) => Of(-f.numerator, f.denominator);
+    public static Fraction operator -(Fraction f) => new(-f.numerator, f.denominator);
 
     /// <summary>Inverts fraction.</summary>
     /// <param name="f">The fraction.</param>
@@ -92,45 +97,53 @@ public class Fraction :
     public static Fraction operator ~(Fraction f) =>
         f.numerator == 0
             ? throw new InvalidOperationException("Value of zero cannot be inverted")
-            : Of(f.denominator, f.numerator);
+            : new Fraction(f.denominator, f.numerator);
 
     /// <summary>Adds two fractions.</summary>
     /// <param name="f1">The first fraction.</param>
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of addition.</returns>
-    public static Fraction operator +(Fraction f1, Fraction f2) => Of(
-        f1.numerator * f2.denominator + f2.numerator * f1.denominator,
-        f1.denominator * f2.denominator);
+    public static Fraction operator +(Fraction f1, Fraction f2)
+    {
+        long denominator1 = f1.denominator * f2.denominator;
+        return new Fraction(
+            f1.numerator * f2.denominator + f2.numerator * f1.denominator, denominator1);
+    }
 
     /// <summary>Subtracts two fractions.</summary>
     /// <param name="f1">The first fraction.</param>
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of subtraction.</returns>
-    public static Fraction operator -(Fraction f1, Fraction f2) => Of(
-        f1.numerator * f2.denominator - f2.numerator * f1.denominator,
-        f1.denominator * f2.denominator);
+    public static Fraction operator -(Fraction f1, Fraction f2)
+    {
+        long denominator1 = f1.denominator * f2.denominator;
+        return new Fraction(
+            f1.numerator * f2.denominator - f2.numerator * f1.denominator, denominator1);
+    }
 
     /// <summary>Multiplies two fractions.</summary>
     /// <param name="f1">The first fraction.</param>
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of multiplication.</returns>
-    public static Fraction operator *(Fraction f1, Fraction f2) =>
-        Of(f1.numerator * f2.numerator, f1.denominator * f2.denominator);
+    public static Fraction operator *(Fraction f1, Fraction f2)
+    {
+        long denominator1 = f1.denominator * f2.denominator;
+        return new Fraction(f1.numerator * f2.numerator, denominator1);
+    }
 
     /// <summary>Divides two fractions.</summary>
     /// <param name="f1">The first fraction.</param>
     /// <param name="f2">The second fraction.</param>
     /// <returns>The result of division.</returns>
     /// <exception cref="DivideByZeroException">If the divisor is equal to zero.</exception>
-    public static Fraction operator /(Fraction f1, Fraction f2) =>
-        f2.numerator == 0
+    public static Fraction operator /(Fraction f1, Fraction f2)
+    {
+        long denominator1 = f1.denominator * f2.numerator;
+
+        return f2.numerator == 0
             ? throw new DivideByZeroException("Division by zero")
-            : Of(f1.numerator * f2.denominator, f1.denominator * f2.numerator);
-
-    public override bool Equals(object obj) =>
-        obj is Fraction f && numerator == f.numerator && denominator == f.denominator;
-
-    public override int GetHashCode() => (numerator, denominator).GetHashCode();
+            : new Fraction(f1.numerator * f2.denominator, denominator1);
+    }
 
     public override string ToString() => $"{numerator}/{denominator}";
 
@@ -143,7 +156,7 @@ public class Fraction :
         return thisNumerator.CompareTo(otherNumerator);
     }
 
-    public int CompareTo(int other) => CompareTo(Of(other));
+    public int CompareTo(int other) => CompareTo(new Fraction(other));
 
-    public int CompareTo(long other) => CompareTo(Of(other));
+    public int CompareTo(long other) => CompareTo(new Fraction(other));
 }

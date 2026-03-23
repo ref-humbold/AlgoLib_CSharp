@@ -5,7 +5,7 @@ namespace AlgoLib.Geometry.Dim3;
 /// <summary>Structure of vector in 3D.</summary>
 public readonly record struct Vector3D(double X, double Y, double Z) : IGeometryObject
 {
-    public double[] Coordinates => new[] { X, Y, Z };
+    public double[] Coordinates => [X, Y, Z];
 
     public double Length => Math.Sqrt(X * X + Y * Y + Z * Z);
 

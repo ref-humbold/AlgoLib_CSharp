@@ -9,8 +9,8 @@ namespace AlgoLib.Structures;
 [TestFixture]
 public class AvlTreeTests
 {
-    private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
-    private readonly int[] absent = new[] { 111, 140, 187, 253 };
+    private readonly int[] numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26];
+    private readonly int[] absent = [111, 140, 187, 253];
     private readonly int[] present;
 
     private AvlTree<int> testObject;
@@ -82,7 +82,7 @@ public class AvlTreeTests
         int element = numbers[0];
 
         // when
-        IEnumerator<int> result = new AvlTree<int>(new[] { element }).GetEnumerator();
+        IEnumerator<int> result = new AvlTree<int>([element]).GetEnumerator();
 
         // then
         Assert.That(result.MoveNext(), Is.True);
@@ -226,6 +226,22 @@ public class AvlTreeTests
         Assert.That(testObject, Has.Count.EqualTo(numbers.Length));
     }
 
+    [Test]
+    public void Add_WhenElementIsNull_ThenTrue()
+    {
+        // given
+        string element = null;
+        var localTestObject = new AvlTree<string>();
+
+        // when
+        bool result = localTestObject.Add(element);
+
+        // then
+        Assert.That(result, Is.True);
+        Assert.That(localTestObject, Does.Contain(element));
+        Assert.That(localTestObject, Has.Count.EqualTo(1));
+    }
+
     #endregion
     #region Remove
 
@@ -278,7 +294,7 @@ public class AvlTreeTests
         int root = absent[1];
         int element = absent[0];
 
-        testObject = new AvlTree<int>(new[] { root, element });
+        testObject = new AvlTree<int>([root, element]);
 
         // when
         bool result = testObject.Remove(root);
@@ -297,7 +313,7 @@ public class AvlTreeTests
         int root = absent[0];
         int element = absent[1];
 
-        testObject = new AvlTree<int>(new[] { root, element });
+        testObject = new AvlTree<int>([root, element]);
 
         // when
         bool result = testObject.Remove(root);
@@ -315,7 +331,7 @@ public class AvlTreeTests
         // given
         int root = absent[0];
 
-        testObject = new AvlTree<int>(new[] { root });
+        testObject = new AvlTree<int>([root]);
 
         // when
         bool result = testObject.Remove(root);

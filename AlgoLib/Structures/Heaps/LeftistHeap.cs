@@ -10,17 +10,20 @@ public class LeftistHeap<T> : IHeap<T>
     where T : IComparable<T>
 {
     private static readonly IComparer<T> DefaultComparer = Comparer<T>.Default;
-    private HeapNode heap = null;
+    private HeapNode heap;
 
     public IComparer<T> Comparer => DefaultComparer;
 
-    public int Count { get; private set; } = 0;
+    public int Count { get; private set; }
 
     public LeftistHeap()
     {
     }
 
-    public LeftistHeap(IEnumerable<T> enumerable) => PushRange(enumerable);
+    public LeftistHeap(IEnumerable<T> enumerable)
+    {
+        PushRange(enumerable);
+    }
 
     /// <summary>Merges given heaps.</summary>
     /// <param name="heap1">The first heap.</param>
@@ -99,30 +102,30 @@ public class LeftistHeap<T> : IHeap<T>
 
     private class HeapNode
     {
-        public int Rank { get; }
-
         public T Element { get; }
 
         public HeapNode Left { get; }
 
         public HeapNode Right { get; }
 
+        private readonly int rank;
+
         public HeapNode(T element, HeapNode node1 = null, HeapNode node2 = null)
         {
-            int rank1 = node1?.Rank ?? 0;
-            int rank2 = node2?.Rank ?? 0;
+            int rank1 = node1?.rank ?? 0;
+            int rank2 = node2?.rank ?? 0;
 
             Element = element;
 
             if(rank1 < rank2)
             {
-                Rank = rank1 + 1;
+                rank = rank1 + 1;
                 Left = node2;
                 Right = node1;
             }
             else
             {
-                Rank = rank2 + 1;
+                rank = rank2 + 1;
                 Left = node1;
                 Right = node2;
             }
@@ -146,7 +149,7 @@ public class LeftistHeap<T> : IHeap<T>
         private readonly Stack<HeapNode> stack = new();
         private HeapNode currentNode;
 
-        public T Current => currentNode != default
+        public T Current => currentNode is not null
             ? currentNode.Element
             : throw new InvalidOperationException();
 

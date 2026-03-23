@@ -37,7 +37,7 @@ public class CuttingTests
         // then
         Assert.That(
             result,
-            Is.EquivalentTo(new[] { graph[graph[0], graph[7]], graph[graph[5], graph[6]] }));
+            Is.EquivalentTo([graph[graph[0], graph[7]], graph[graph[5], graph[6]]]));
     }
 
     [Test]
@@ -88,7 +88,7 @@ public class CuttingTests
         IEnumerable<Vertex<int>> result = graph.FindVertexCut();
 
         // then
-        Assert.That(result, Is.EquivalentTo(new[] { graph[0], graph[1], graph[5], graph[7] }));
+        Assert.That(result, Is.EquivalentTo([graph[0], graph[1], graph[5], graph[7]]));
     }
 
     [Test]

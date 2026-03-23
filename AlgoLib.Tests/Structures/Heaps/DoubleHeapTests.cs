@@ -9,7 +9,7 @@ namespace AlgoLib.Structures.Heaps;
 [TestFixture]
 public class DoubleHeapTests
 {
-    private readonly int[] numbers = new[] { 10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26 };
+    private readonly int[] numbers = [10, 6, 14, 97, 24, 37, 2, 30, 45, 18, 51, 71, 68, 26];
     private readonly int minimum;
     private readonly int maximum;
     private DoubleHeap<int> testObject;
@@ -73,7 +73,7 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         // when
-        IEnumerator<int> result = new DoubleHeap<int>(new[] { element }).GetEnumerator();
+        IEnumerator<int> result = new DoubleHeap<int>([element]).GetEnumerator();
 
         // then
         Assert.That(result.MoveNext(), Is.True);
@@ -159,8 +159,7 @@ public class DoubleHeapTests
     public void PushRange_WhenNewElements_ThenAllAdded()
     {
         // given
-        int[] elements = new[]
-            { minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3 };
+        int[] elements = [minimum - 3, minimum + 5, minimum + 13, minimum + 20, maximum + 3];
 
         // when
         testObject.PushRange(elements);
@@ -201,7 +200,7 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         // when
-        int result = new DoubleHeap<int>(new[] { element }).PeekMin();
+        int result = new DoubleHeap<int>([element]).PeekMin();
 
         // then
         Assert.That(result, Is.EqualTo(element));
@@ -234,7 +233,7 @@ public class DoubleHeapTests
         int element = numbers[0];
 
         // when
-        int result = new DoubleHeap<int>(new[] { element }).PeekMax();
+        int result = new DoubleHeap<int>([element]).PeekMax();
 
         // then
         Assert.That(result, Is.EqualTo(element));
@@ -338,7 +337,7 @@ public class DoubleHeapTests
         // given
         int element = numbers[0];
 
-        testObject = new DoubleHeap<int>(new[] { element });
+        testObject = new DoubleHeap<int>([element]);
 
         // when
         int result = testObject.PopMin();
@@ -363,7 +362,7 @@ public class DoubleHeapTests
     public void PopMin_WhenMultipleCalls_ThenSortedAscendingToComparer()
     {
         // when
-        var result = new List<int>();
+        List<int> result = [];
 
         while(testObject.Count > 0)
             result.Add(testObject.PopMin());
@@ -389,7 +388,7 @@ public class DoubleHeapTests
         // given
         int element = numbers[0];
 
-        testObject = new DoubleHeap<int>(new[] { element });
+        testObject = new DoubleHeap<int>([element]);
 
         // when
         int result = testObject.PopMax();
@@ -414,7 +413,7 @@ public class DoubleHeapTests
     public void PopMax_WhenMultipleCalls_ThenSortedDescendingToComparer()
     {
         // when
-        var result = new List<int>();
+        List<int> result = [];
 
         while(testObject.Count > 0)
             result.Add(testObject.PopMax());

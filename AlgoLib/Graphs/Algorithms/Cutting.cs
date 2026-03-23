@@ -18,9 +18,9 @@ public static class Cutting
     {
         var strategy = new CuttingStrategy<TVertexId>();
 
-        Searching.DfsRecursive(graph, strategy, graph.Vertices);
+        graph.DfsRecursive(strategy, graph.Vertices);
         return graph.Vertices
-                    .Where(vertex => strategy.hasBridge(vertex))
+                    .Where(vertex => strategy.HasBridge(vertex))
                     .Select(vertex => graph[vertex, strategy.DfsParents[vertex]]);
     }
 
@@ -35,18 +35,18 @@ public static class Cutting
     {
         var strategy = new CuttingStrategy<TVertexId>();
 
-        Searching.DfsRecursive(graph, strategy, graph.Vertices);
-        return graph.Vertices.Where(vertex => strategy.isSeparator(vertex));
+        graph.DfsRecursive(strategy, graph.Vertices);
+        return graph.Vertices.Where(vertex => strategy.IsSeparator(vertex));
     }
 
     private class CuttingStrategy<TVertexId> : IDfsStrategy<TVertexId>
     {
-        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren = new();
-        private readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = new();
-        private readonly Dictionary<Vertex<TVertexId>, int> lowValues = new();
-        private int depth = 0;
+        private readonly Dictionary<Vertex<TVertexId>, List<Vertex<TVertexId>>> dfsChildren = [];
+        private readonly Dictionary<Vertex<TVertexId>, int> dfsDepths = [];
+        private readonly Dictionary<Vertex<TVertexId>, int> lowValues = [];
+        private int depth;
 
-        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> DfsParents { get; } = new();
+        public Dictionary<Vertex<TVertexId>, Vertex<TVertexId>> DfsParents { get; } = [];
 
         public void ForRoot(Vertex<TVertexId> root)
         {
@@ -56,7 +56,7 @@ public static class Cutting
         {
             dfsDepths[vertex] = depth;
             lowValues[vertex] = depth;
-            dfsChildren.TryAdd(vertex, new List<Vertex<TVertexId>>());
+            dfsChildren.TryAdd(vertex, []);
             ++depth;
         }
 
@@ -81,14 +81,14 @@ public static class Cutting
                 lowValues[vertex] = Math.Min(lowValues[vertex], dfsDepths[neighbour]);
         }
 
-        public bool hasBridge(Vertex<TVertexId> vertex) =>
+        public bool HasBridge(Vertex<TVertexId> vertex) =>
             !isDfsRoot(vertex) && lowValues[vertex] == dfsDepths[vertex];
 
-        public bool isSeparator(Vertex<TVertexId> vertex) =>
+        public bool IsSeparator(Vertex<TVertexId> vertex) =>
             isDfsRoot(vertex)
                 ? dfsChildren[vertex].Count > 1
                 : dfsChildren[vertex].Any(child => lowValues[child] >= dfsDepths[vertex]);
 
-        public bool isDfsRoot(Vertex<TVertexId> vertex) => dfsDepths[vertex] == 0;
+        private bool isDfsRoot(Vertex<TVertexId> vertex) => dfsDepths[vertex] == 0;
     }
 }
