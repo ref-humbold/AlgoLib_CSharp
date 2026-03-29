@@ -61,31 +61,29 @@ public class BaseWordsDictionary
     // Builds base words dictionary using Karp-Miller-Rosenberg algorithm.
     private void create()
     {
-        int codeValue = extend(1, 0, (i, length) => [Text[i], 1 + Text[i], i, i + length]);
+        int codeValue = extend(
+            1, 0, (i, _) =>
+                new ExtensionCode(Text[i], 1 + Text[i], i));
 
         for(var currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
             codeValue = extend(
                 currentLength, codeValue,
-                (i, length) =>
-                [
-                    factors[(i, i + length / 2)],
-                    factors[(i + length / 2, i + length)],
-                    i, i + length
-                ]);
+                (i, length) => new ExtensionCode(
+                    factors[(i, i + length / 2)], factors[(i + length / 2, i + length)], i));
     }
 
     // Encodes substring of given length using already counted factors.
-    private int extend(int length, int codeValue, Func<int, int, int[]> func)
+    private int extend(int length, int codeValue, Func<int, int, ExtensionCode> func)
     {
         var previousCode = (0, 0);
-        List<int[]> codes = Enumerable.Range(0, Text.Length - length + 1)
-                                      .Select(i => func.Invoke(i, length))
-                                      .OrderBy(c => c, new CodesComparer())
-                                      .ToList();
+        List<ExtensionCode> codes = Enumerable.Range(0, Text.Length - length + 1)
+                                              .Select(i => func.Invoke(i, length))
+                                              .OrderBy(c => c)
+                                              .ToList();
 
-        foreach(int[] code in codes)
+        foreach(ExtensionCode code in codes)
         {
-            (int, int) codePair = (code[0], code[1]);
+            (int, int) codePair = (code.PrefixCode, code.SuffixCode);
 
             if(!Equals(previousCode, codePair))
             {
@@ -93,25 +91,28 @@ public class BaseWordsDictionary
                 previousCode = codePair;
             }
 
-            factors[(code[2], code[3])] = codeValue;
+            factors[(code.Index, code.Index + length)] = codeValue;
         }
 
         return codeValue;
     }
 
-    private class CodesComparer : Comparer<int[]>
+    private record ExtensionCode(int PrefixCode, int SuffixCode, int Index) :
+        IComparable<ExtensionCode>
     {
-        public override int Compare(int[] a1, int[] a2)
+        public int CompareTo(ExtensionCode other)
         {
-            for(var i = 0; i < Math.Min(a1.Length, a2.Length); ++i)
-            {
-                int compareInts = a1[i].CompareTo(a2[i]);
+            int comparePrefixCode = PrefixCode.CompareTo(other.PrefixCode);
 
-                if(compareInts != 0)
-                    return compareInts;
-            }
+            if(comparePrefixCode != 0)
+                return comparePrefixCode;
 
-            return 0;
+            int compareSuffixCode = SuffixCode.CompareTo(other.SuffixCode);
+
+            if(compareSuffixCode != 0)
+                return compareSuffixCode;
+
+            return Index.CompareTo(other.Index);
         }
     }
 }
