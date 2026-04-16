@@ -5,6 +5,8 @@ namespace AlgoLib.Geometry.Dim2;
 /// <summary>Structure of vector in 2D.</summary>
 public readonly record struct Vector2D(double X, double Y) : IGeometryObject
 {
+    public static readonly Vector2D Zero = Of(0, 0);
+
     public double[] Coordinates => [X, Y];
 
     public double Length => Math.Sqrt(X * X + Y * Y);

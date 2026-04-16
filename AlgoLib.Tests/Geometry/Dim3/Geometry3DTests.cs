@@ -12,7 +12,7 @@ public class Geometry3DTests
     {
         // given
         List<Point3D> sequence = [
-            Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+            Point3D.Zero, Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
         ];
@@ -25,7 +25,7 @@ public class Geometry3DTests
         Assert.That(
             result, Is.EqualTo([
                     Point3D.Of(-3.0, 2.0, 5.0), Point3D.Of(-2.0, -3.0, 5.0),
-                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Zero,
                     Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
                     Point3D.Of(3.0, 2.0, 5.0)
                 ]));
@@ -36,7 +36,7 @@ public class Geometry3DTests
     {
         // given
         List<Point3D> sequence = [
-            Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+            Point3D.Zero, Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
         ];
@@ -49,7 +49,7 @@ public class Geometry3DTests
         Assert.That(
             result, Is.EqualTo([
                     Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(2.0, -3.0, -5.0),
-                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Zero,
                     Point3D.Of(3.0, 2.0, 5.0), Point3D.Of(-3.0, 2.0, 5.0),
                     Point3D.Of(2.0, 3.0, -5.0)
                 ]));
@@ -60,7 +60,7 @@ public class Geometry3DTests
     {
         // given
         List<Point3D> sequence = [
-            Point3D.Of(0.0, 0.0, 0.0), Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
+            Point3D.Zero, Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(-2.0, -3.0, 5.0),
             Point3D.Of(2.0, -3.0, -5.0), Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(3.0, 2.0, 5.0),
             Point3D.Of(-3.0, 2.0, 5.0)
         ];
@@ -73,7 +73,7 @@ public class Geometry3DTests
         Assert.That(
             result, Is.EqualTo([
                     Point3D.Of(2.0, 3.0, -5.0), Point3D.Of(2.0, -3.0, -5.0),
-                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Of(0.0, 0.0, 0.0),
+                    Point3D.Of(-2.0, -3.0, -5.0), Point3D.Zero,
                     Point3D.Of(-2.0, -3.0, 5.0), Point3D.Of(3.0, 2.0, 5.0),
                     Point3D.Of(-3.0, 2.0, 5.0)
                 ]));
@@ -119,7 +119,7 @@ public class Geometry3DTests
         Point3D point = Point3D.Of(13.5, 6.5, -4.2);
 
         // when
-        Point3D result = point.Translate(Vector3D.Of(0.0, 0.0, 0.0));
+        Point3D result = point.Translate(Vector3D.Zero);
 
         // then
         Assert.That(result, Is.EqualTo(point));
@@ -139,7 +139,7 @@ public class Geometry3DTests
     public void Reflect_WhenZeroPoint_ThenPointReflected()
     {
         // when
-        Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Of(0.0, 0.0, 0.0));
+        Point3D result = Point3D.Of(13.5, 6.5, -4.2).Reflect(Point3D.Zero);
 
         // then
         Assert.That(result, Is.EqualTo(Point3D.Of(-13.5, -6.5, 4.2)));

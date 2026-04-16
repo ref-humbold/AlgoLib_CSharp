@@ -5,6 +5,8 @@ namespace AlgoLib.Geometry.Dim3;
 /// <summary>Structure of point in 3D.</summary>
 public readonly record struct Point3D(double X, double Y, double Z) : IGeometryObject
 {
+    public static readonly Point3D Zero = Of(0, 0, 0);
+
     public double[] Coordinates => [X, Y, Z];
 
     public double Radius => Math.Sqrt(X * X + Y * Y + Z * Z);

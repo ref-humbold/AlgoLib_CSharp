@@ -17,8 +17,8 @@ public static class ConvexHull
             return [];
 
         List<Point2D> sorted = pointsList.SortByX();
-        List<Point2D> lowerHull = createHalfHull(sorted);
-        List<Point2D> upperHull = createHalfHull(Enumerable.Reverse(sorted));
+        List<Point2D> lowerHull = collectHull(sorted);
+        List<Point2D> upperHull = collectHull(Enumerable.Reverse(sorted));
 
         lowerHull.RemoveAt(lowerHull.Count - 1);
         upperHull.RemoveAt(upperHull.Count - 1);
@@ -26,8 +26,8 @@ public static class ConvexHull
         return lowerHull;
     }
 
-    // Computes half of convex hull for given points.
-    private static List<Point2D> createHalfHull(IEnumerable<Point2D> points)
+    // Collects points of convex hull for given points.
+    private static List<Point2D> collectHull(IEnumerable<Point2D> points)
     {
         List<Point2D> hull = [];
 

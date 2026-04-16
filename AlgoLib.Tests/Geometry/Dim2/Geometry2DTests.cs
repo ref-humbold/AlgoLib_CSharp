@@ -12,7 +12,7 @@ public class Geometry2DTests
     {
         // given
         List<Point2D> sequence = [
-            Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+            Point2D.Zero, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
         ];
@@ -22,12 +22,11 @@ public class Geometry2DTests
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
-        Assert.That(
-            result, Is.EqualTo([
-                    Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
-                    Point2D.Of(-2.0, 3.0), Point2D.Of(0.0, 0.0), Point2D.Of(2.0, 3.0),
-                    Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0)
-                ]));
+        Assert.That(result, Is.EqualTo([
+            Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, -3.0),
+            Point2D.Of(-2.0, 3.0), Point2D.Zero, Point2D.Of(2.0, 3.0),
+            Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0), Point2D.Of(3.0, 2.0)
+        ]));
     }
 
     [Test]
@@ -35,7 +34,7 @@ public class Geometry2DTests
     {
         // given
         List<Point2D> sequence = [
-            Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+            Point2D.Zero, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
         ];
@@ -45,12 +44,11 @@ public class Geometry2DTests
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
-        Assert.That(
-            result, Is.EqualTo([
-                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-                    Point2D.Of(-3.0, -2.0), Point2D.Of(0.0, 0.0), Point2D.Of(-3.0, 2.0),
-                    Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0)
-                ]));
+        Assert.That(result, Is.EqualTo([
+            Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+            Point2D.Of(-3.0, -2.0), Point2D.Zero, Point2D.Of(-3.0, 2.0),
+            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0), Point2D.Of(-2.0, 3.0)
+        ]));
     }
 
     [Test]
@@ -58,7 +56,7 @@ public class Geometry2DTests
     {
         // given
         List<Point2D> sequence = [
-            Point2D.Of(0.0, 0.0), Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+            Point2D.Zero, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
             Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
             Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
         ];
@@ -68,12 +66,57 @@ public class Geometry2DTests
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
-        Assert.That(
-            result, Is.EqualTo([
-                    Point2D.Of(0.0, 0.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-                    Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-                    Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
-                ]));
+        Assert.That(result, Is.EqualTo([
+            Point2D.Zero, Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+            Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
+            Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
+        ]));
+    }
+
+    [Test]
+    public void SortByAngleAround_WhenCentreInside_ThenSortedStablyAscending()
+    {
+        // given
+        var centre = Point2D.Of(2.0, 2.0);
+        List<Point2D> sequence = [
+            centre, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+            Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
+            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
+        ];
+
+        // when
+        List<Point2D> result = sequence.SortByAngleAround(centre);
+
+        // then
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(result, Is.EqualTo([
+            centre, Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+            Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
+            Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
+        ]));
+    }
+
+    [Test]
+    public void SortByAngleAround_WhenCentreOutside_ThenSortedStablyAscending()
+    {
+        // given
+        var centre = Point2D.Of(-5.0, -5.0);
+        List<Point2D> sequence = [
+            centre, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
+            Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
+            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
+        ];
+
+        // when
+        List<Point2D> result = sequence.SortByAngleAround(centre);
+
+        // then
+        Assert.That(result, Is.Not.SameAs(sequence));
+        Assert.That(result, Is.EqualTo([
+            centre, Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
+            Point2D.Of(-2.0, -3.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
+            Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0)
+        ]));
     }
 
     [Test]
@@ -116,7 +159,7 @@ public class Geometry2DTests
         Point2D point = Point2D.Of(13.5, 6.5);
 
         // when
-        Point2D result = point.Translate(Vector2D.Of(0.0, 0.0));
+        Point2D result = point.Translate(Vector2D.Zero);
 
         // then
         Assert.That(result, Is.EqualTo(point));
@@ -136,7 +179,7 @@ public class Geometry2DTests
     public void Reflect_WhenZeroPoint_ThenPointReflected()
     {
         // when
-        Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Of(0.0, 0.0));
+        Point2D result = Point2D.Of(13.5, 6.5).Reflect(Point2D.Zero);
 
         // then
         Assert.That(result, Is.EqualTo(Point2D.Of(-13.5, -6.5)));
