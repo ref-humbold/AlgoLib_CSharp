@@ -11,9 +11,7 @@ public readonly record struct Point2D(double X, double Y) : IGeometryObject
 
     public double Radius => Math.Sqrt(X * X + Y * Y);
 
-    public double AngleRad => Math.Atan2(Y, X);
-
-    public double AngleDeg => (Math.Atan2(Y, X) * 180 / Math.PI + 360) % 360;
+    public Angle Angle => Angle.FromRadians(Math.Atan2(Y, X));
 
     public static Point2D Of(double x, double y) => new(x, y);
 

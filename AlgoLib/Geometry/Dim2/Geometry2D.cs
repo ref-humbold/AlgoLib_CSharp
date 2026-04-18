@@ -38,7 +38,7 @@ public static class Geometry2D
     public static List<Point2D> SortByAngle(this List<Point2D> points)
     {
         ArgumentNullException.ThrowIfNull(points);
-        return points.OrderBy(pt => pt.AngleDeg).ThenBy(pt => pt.Radius).ToList();
+        return points.OrderBy(pt => pt.Angle).ThenBy(pt => pt.Radius).ToList();
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public static class Geometry2D
         Vector2D translation = Vector2D.Between(centre, Point2D.Zero);
 
         return points.Select(pt => (Point: pt, Translated: pt.Translate(translation)))
-                     .OrderBy(p => p.Translated.AngleDeg)
+                     .OrderBy(p => p.Translated.Angle)
                      .ThenBy(p => p.Translated.Radius)
                      .Select(pt => pt.Point)
                      .ToList();

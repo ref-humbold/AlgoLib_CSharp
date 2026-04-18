@@ -36,20 +36,20 @@ public class BasicFactorsDictionaryTests
     public void Indexer_WhenStartIndexEqualToEndIndex_ThenArgumentException()
     {
         // when
-        Action result = () => _ = testObject[4..4];
+        Action action = () => _ = testObject[4..4];
 
         // then
-        Assert.That(result, Throws.ArgumentException);
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [Test]
     public void Indexer_WhenStartIndexGreaterThanEndIndex_ThenArgumentException()
     {
         // when
-        Action result = () => _ = testObject[6..2];
+        Action action = () => _ = testObject[6..2];
 
         // then
-        Assert.That(result, Throws.ArgumentException);
+        Assert.That(action, Throws.ArgumentException);
     }
 
     [TestCaseSource(nameof(ParamsFor_Indexer_WhenInvalidStartAndEndIndices))]
