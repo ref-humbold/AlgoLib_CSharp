@@ -3,9 +3,10 @@
 namespace AlgoLib.Geometry.Dim2;
 
 /// <summary>Structure of point in 2D.</summary>
-public readonly record struct Point2D(double X, double Y) : IGeometryObject
+public readonly record struct Point2D(double X, double Y)
 {
     public static readonly Point2D Zero = Of(0, 0);
+    private static readonly GeometryComparer Comparer = new();
 
     public double[] Coordinates => [X, Y];
 
@@ -15,8 +16,7 @@ public readonly record struct Point2D(double X, double Y) : IGeometryObject
 
     public static Point2D Of(double x, double y) => new(x, y);
 
-    public bool Equals(Point2D p) =>
-        IGeometryObject.AreEqual(X, p.X) && IGeometryObject.AreEqual(Y, p.Y);
+    public bool Equals(Point2D p) => Comparer.Compare(X, p.X) == 0 && Comparer.Compare(Y, p.Y) == 0;
 
     public override int GetHashCode() => HashCode.Combine(X, Y);
 

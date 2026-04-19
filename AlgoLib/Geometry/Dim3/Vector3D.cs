@@ -3,9 +3,10 @@
 namespace AlgoLib.Geometry.Dim3;
 
 /// <summary>Structure of vector in 3D.</summary>
-public readonly record struct Vector3D(double X, double Y, double Z) : IGeometryObject
+public readonly record struct Vector3D(double X, double Y, double Z)
 {
     public static readonly Vector3D Zero = Of(0, 0, 0);
+    private static readonly GeometryComparer Comparer = new();
 
     public double[] Coordinates => [X, Y, Z];
 
@@ -16,8 +17,7 @@ public readonly record struct Vector3D(double X, double Y, double Z) : IGeometry
     public static Vector3D Between(Point3D begin, Point3D end) =>
         Of(end.X - begin.X, end.Y - begin.Y, end.Z - begin.Z);
 
-    public static double Dot(Vector3D v1, Vector3D v2) =>
-        v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
+    public static double Dot(Vector3D v1, Vector3D v2) => v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z;
 
     public static Vector3D Cross(Vector3D v1, Vector3D v2) =>
         Of(v1.Y * v2.Z - v1.Z * v2.Y, v1.Z * v2.X - v1.X * v2.Z, v1.X * v2.Y - v1.Y * v2.X);
@@ -44,8 +44,8 @@ public readonly record struct Vector3D(double X, double Y, double Z) : IGeometry
         c == 0 ? throw new DivideByZeroException() : Of(v.X / c, v.Y / c, v.Z / c);
 
     public bool Equals(Vector3D v) =>
-        IGeometryObject.AreEqual(X, v.X) && IGeometryObject.AreEqual(Y, v.Y)
-            && IGeometryObject.AreEqual(Z, v.Z);
+        Comparer.Compare(X, v.X) == 0 && Comparer.Compare(Y, v.Y) == 0
+        && Comparer.Compare(Z, v.Z) == 0;
 
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 

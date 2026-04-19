@@ -7,7 +7,7 @@ namespace AlgoLib.Geometry.Dim3;
 [TestFixture]
 public class Vector3DTests
 {
-    private static readonly double Precision = IGeometryObject.Epsilon;
+    private const double Precision = 1e-12;
 
     [Test]
     public void Coordinates_ThenArray()

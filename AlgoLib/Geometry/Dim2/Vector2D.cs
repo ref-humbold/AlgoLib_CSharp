@@ -3,9 +3,10 @@
 namespace AlgoLib.Geometry.Dim2;
 
 /// <summary>Structure of vector in 2D.</summary>
-public readonly record struct Vector2D(double X, double Y) : IGeometryObject
+public readonly record struct Vector2D(double X, double Y)
 {
     public static readonly Vector2D Zero = Of(0, 0);
+    private static readonly GeometryComparer Comparer = new();
 
     public double[] Coordinates => [X, Y];
 
@@ -36,7 +37,7 @@ public readonly record struct Vector2D(double X, double Y) : IGeometryObject
         c == 0 ? throw new DivideByZeroException() : Of(v.X / c, v.Y / c);
 
     public bool Equals(Vector2D v) =>
-        IGeometryObject.AreEqual(X, v.X) && IGeometryObject.AreEqual(Y, v.Y);
+        Comparer.Compare(X, v.X) == 0 && Comparer.Compare(Y, v.Y) == 0;
 
     public override int GetHashCode() => HashCode.Combine(X, Y);
 
