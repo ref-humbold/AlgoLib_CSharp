@@ -39,4 +39,6 @@ public readonly struct Angle : IEquatable<Angle>, IComparable<Angle>
     public override int GetHashCode() => Degrees.GetHashCode();
 
     public int CompareTo(Angle other) => Comparer.Compare(Degrees, other.Degrees);
+
+    public override string ToString() => $"Angle({Degrees} deg)";
 }

@@ -52,4 +52,14 @@ public class AngleTest
         // then
         Assert.That(result, Is.EqualTo(radians).Within(1e-6));
     }
+
+    [Test]
+    public void ToString_ThenStringRepresentation()
+    {
+        // when
+        var result = Angle.FromDegrees(150.123456789).ToString();
+
+        // then
+        Assert.That(result, Is.EqualTo("Angle(150.123456789 deg)"));
+    }
 }
