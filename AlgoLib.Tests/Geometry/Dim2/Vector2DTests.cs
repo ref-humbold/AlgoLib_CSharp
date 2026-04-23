@@ -10,23 +10,28 @@ public class Vector2DTests
     private const double Precision = 1e-12;
 
     [Test]
+    [Sequential]
     public void Coordinates_ThenArray()
     {
         // when
-        double[] result = Vector2D.Of(5.0, -19.0).Coordinates;
+        double[] result = Vector2D.Of(150.123456789, -3700.987654321).Coordinates;
 
         // then
-        Assert.That(result, Is.EqualTo([5.0, -19.0]));
+        Assert.That(result, Is.EqualTo([150.123456789, -3700.987654321]));
     }
 
     [Test]
-    public void Length_ThenLengthOfVector()
+    [Sequential]
+    public void Length_ThenLengthOfVector(
+        [Values(0.0, 14.0, 8.0, 0.0, -8.0, -14.0, -8.0, 0.0, 8.0)] double x,
+        [Values(0.0, 0.0, 6.0, 14.0, 6.0, 0.0, -6.0, -14.0, -6.0)] double y,
+        [Values(0.0, 14.0, 10.0, 14.0, 10.0, 14.0, 10.0, 14.0, 10.0)] double expected)
     {
         // when
-        double result = Vector2D.Of(8.0, -6.0).Length;
+        double result = Vector2D.Of(x, y).Length;
 
         // then
-        Assert.That(result, Is.EqualTo(10.0).Within(Precision));
+        Assert.That(result, Is.EqualTo(expected).Within(Precision));
     }
 
     [Test]
@@ -140,7 +145,7 @@ public class Vector2DTests
         Vector2D result = 0 * Vector2D.Of(5.4, 9.0);
 
         // then
-        Assert.That(result, Is.EqualTo(Vector2D.Of(0, 0)));
+        Assert.That(result, Is.EqualTo(Vector2D.Zero));
     }
 
     [Test]
@@ -164,13 +169,23 @@ public class Vector2DTests
     }
 
     [Test]
+    public void ToString_ThenStringRepresentation()
+    {
+        // when
+        string result = Vector2D.Of(150.123456789, -3700.987654321).ToString();
+
+        // then
+        Assert.That(result, Is.EqualTo("[150.123456789, -3700.987654321]"));
+    }
+
+    [Test]
     public void Deconstruct_ThenCoordinates()
     {
         // when
-        (double x, double y) = Vector2D.Of(5.0, -19.0);
+        (double x, double y) = Vector2D.Of(150.123456789, -3700.987654321);
 
         // then
-        Assert.That(x, Is.EqualTo(5.0));
-        Assert.That(y, Is.EqualTo(-19.0));
+        Assert.That(x, Is.EqualTo(150.123456789));
+        Assert.That(y, Is.EqualTo(-3700.987654321));
     }
 }

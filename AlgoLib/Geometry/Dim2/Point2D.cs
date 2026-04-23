@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
 
 namespace AlgoLib.Geometry.Dim2;
 
@@ -20,7 +22,8 @@ public readonly record struct Point2D(double X, double Y)
 
     public override int GetHashCode() => HashCode.Combine(X, Y);
 
-    public override string ToString() => $"({X}, {Y})";
+    public override string ToString() =>
+        $"({string.Join(", ", Coordinates.Select(c => c.ToString(CultureInfo.InvariantCulture)))})";
 
     public void Deconstruct(out double x, out double y)
     {

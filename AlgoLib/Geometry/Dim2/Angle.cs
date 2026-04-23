@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace AlgoLib.Geometry.Dim2;
 
@@ -40,5 +41,5 @@ public readonly struct Angle : IEquatable<Angle>, IComparable<Angle>
 
     public int CompareTo(Angle other) => Comparer.Compare(Degrees, other.Degrees);
 
-    public override string ToString() => $"Angle({Degrees} deg)";
+    public override string ToString() => $"Angle({Degrees.ToString(CultureInfo.InvariantCulture)} deg)";
 }

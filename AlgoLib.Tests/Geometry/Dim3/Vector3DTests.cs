@@ -13,10 +13,10 @@ public class Vector3DTests
     public void Coordinates_ThenArray()
     {
         // when
-        double[] result = Vector3D.Of(5.0, -19.0, 14.2).Coordinates;
+        double[] result = Vector3D.Of(150.123456789, -3700.987654321, 0.55555555).Coordinates;
 
         // then
-        Assert.That(result, Is.EqualTo([5.0, -19.0, 14.2]));
+        Assert.That(result, Is.EqualTo([150.123456789, -3700.987654321, 0.55555555]));
     }
 
     [Test]
@@ -197,7 +197,7 @@ public class Vector3DTests
         Vector3D result = 0 * Vector3D.Of(5.4, 9.0, -12.3);
 
         // then
-        Assert.That(result, Is.EqualTo(Vector3D.Of(0.0, 0.0, 0.0)));
+        Assert.That(result, Is.EqualTo(Vector3D.Zero));
     }
 
     [Test]
@@ -221,14 +221,24 @@ public class Vector3DTests
     }
 
     [Test]
+    public void ToString_ThenStringRepresentation()
+    {
+        // when
+        string result = Vector3D.Of(150.123456789, -3700.987654321, 0.55555555).ToString();
+
+        // then
+        Assert.That(result, Is.EqualTo("[150.123456789, -3700.987654321, 0.55555555]"));
+    }
+
+    [Test]
     public void Deconstruct_ThenCoordinates()
     {
         // when
-        (double x, double y, double z) = Vector3D.Of(5.0, -19.0, 14.2);
+        (double x, double y, double z) = Vector3D.Of(150.123456789, -3700.987654321, 0.55555555);
 
         // then
-        Assert.That(x, Is.EqualTo(5.0));
-        Assert.That(y, Is.EqualTo(-19.0));
-        Assert.That(z, Is.EqualTo(14.2));
+        Assert.That(x, Is.EqualTo(150.123456789));
+        Assert.That(y, Is.EqualTo(-3700.987654321));
+        Assert.That(z, Is.EqualTo(0.55555555));
     }
 }

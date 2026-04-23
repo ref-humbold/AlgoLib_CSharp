@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
 
 namespace AlgoLib.Geometry.Dim3;
 
@@ -49,7 +51,8 @@ public readonly record struct Vector3D(double X, double Y, double Z)
 
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 
-    public override string ToString() => $"[{X}, {Y}, {Z}]";
+    public override string ToString() =>
+        $"[{string.Join(", ", Coordinates.Select(c => c.ToString(CultureInfo.InvariantCulture)))}]";
 
     public void Deconstruct(out double x, out double y, out double z)
     {
