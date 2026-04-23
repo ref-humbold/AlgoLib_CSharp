@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
@@ -18,7 +19,7 @@ public class Geometry2DTests
         ];
 
         // when
-        List<Point2D> result = sequence.SortByX();
+        List<Point2D> result = sequence.SortByX().ToList();
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
@@ -40,7 +41,7 @@ public class Geometry2DTests
         ];
 
         // when
-        List<Point2D> result = sequence.SortByY();
+        List<Point2D> result = sequence.SortByY().ToList();
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
@@ -62,7 +63,7 @@ public class Geometry2DTests
         ];
 
         // when
-        List<Point2D> result = sequence.SortByAngle();
+        List<Point2D> result = sequence.SortByAngle().ToList();
 
         // then
         Assert.That(result, Is.Not.SameAs(sequence));
@@ -70,52 +71,6 @@ public class Geometry2DTests
             Point2D.Zero, Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
             Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
             Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
-        ]));
-    }
-
-    [Test]
-    public void SortByAngleAround_WhenCentreInside_ThenSortedStablyAscending()
-    {
-        // given
-        var centre = Point2D.Of(2.0, 2.0);
-        List<Point2D> sequence = [
-            centre, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
-            Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
-        ];
-
-        // when
-        List<Point2D> result = sequence.SortByAngleAround(centre);
-
-        // then
-        Assert.That(result, Is.Not.SameAs(sequence));
-        Assert.That(result, Is.EqualTo([
-            centre, Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-            Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0), Point2D.Of(-3.0, -2.0),
-            Point2D.Of(-2.0, -3.0), Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0)
-        ]));
-    }
-
-    [Test]
-    public void SortByAngleAround_WhenCentreOutside_ThenSortedStablyAscending()
-    {
-        // given
-        var centre = Point2D.Of(-5.0, -5.0);
-        List<Point2D> sequence = [
-            centre, Point2D.Of(-2.0, -3.0), Point2D.Of(-3.0, 2.0),
-            Point2D.Of(2.0, 3.0), Point2D.Of(3.0, -2.0), Point2D.Of(-2.0, 3.0),
-            Point2D.Of(3.0, 2.0), Point2D.Of(2.0, -3.0), Point2D.Of(-3.0, -2.0)
-        ];
-
-        // when
-        List<Point2D> result = sequence.SortByAngleAround(centre);
-
-        // then
-        Assert.That(result, Is.Not.SameAs(sequence));
-        Assert.That(result, Is.EqualTo([
-            centre, Point2D.Of(2.0, -3.0), Point2D.Of(3.0, -2.0),
-            Point2D.Of(-2.0, -3.0), Point2D.Of(3.0, 2.0), Point2D.Of(2.0, 3.0),
-            Point2D.Of(-3.0, -2.0), Point2D.Of(-2.0, 3.0), Point2D.Of(-3.0, 2.0)
         ]));
     }
 

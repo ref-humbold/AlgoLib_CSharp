@@ -19,9 +19,9 @@ public static class ClosestPoints
         if(pointsList.Count == 0)
             throw new InvalidOperationException("Sequence contains no elements");
 
-        List<Point2D> pointsY = pointsList.SortByY();
+        List<Point2D> pointsY = pointsList.SortByY().ToList();
 
-        return searchClosest(pointsY.SortByX(), pointsY, ..);
+        return searchClosest(pointsY.SortByX().ToList(), pointsY, ..);
     }
 
     // Searches for closest points among three of them.

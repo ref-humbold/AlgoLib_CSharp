@@ -12,10 +12,10 @@ public static class Geometry2D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByX(this List<Point2D> points)
+    public static IEnumerable<Point2D> SortByX(this IEnumerable<Point2D> points)
     {
         ArgumentNullException.ThrowIfNull(points);
-        return points.OrderBy(pt => pt.X).ToList();
+        return points.OrderBy(pt => pt.X);
     }
 
     /// <summary>
@@ -23,10 +23,10 @@ public static class Geometry2D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByY(this List<Point2D> points)
+    public static IEnumerable<Point2D> SortByY(this IEnumerable<Point2D> points)
     {
         ArgumentNullException.ThrowIfNull(points);
-        return points.OrderBy(pt => pt.Y).ToList();
+        return points.OrderBy(pt => pt.Y);
     }
 
     /// <summary>
@@ -35,30 +35,10 @@ public static class Geometry2D
     /// </summary>
     /// <param name="points">The points.</param>
     /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByAngle(this List<Point2D> points)
+    public static IEnumerable<Point2D> SortByAngle(this IEnumerable<Point2D> points)
     {
         ArgumentNullException.ThrowIfNull(points);
-        return points.OrderBy(pt => pt.Angle).ThenBy(pt => pt.Radius).ToList();
-    }
-
-    /// <summary>
-    /// Immutably sorts given points by their polar coordinates around given central point. First
-    /// sorts by angle, then by radius. Sorting is guaranteed to be stable.
-    /// </summary>
-    /// <param name="points">The points.</param>
-    /// <param name="centre">The central point.</param>
-    /// <returns>The sorted points.</returns>
-    public static List<Point2D> SortByAngleAround(this List<Point2D> points, Point2D centre)
-    {
-        ArgumentNullException.ThrowIfNull(points);
-
-        Vector2D translation = Vector2D.Between(centre, Point2D.Zero);
-
-        return points.Select(pt => (Point: pt, Translated: pt.Translate(translation)))
-                     .OrderBy(p => p.Translated.Angle)
-                     .ThenBy(p => p.Translated.Radius)
-                     .Select(pt => pt.Point)
-                     .ToList();
+        return points.OrderBy(pt => pt.Angle).ThenBy(pt => pt.Radius);
     }
 
     /// <summary>Calculates distance between given points.</summary>
