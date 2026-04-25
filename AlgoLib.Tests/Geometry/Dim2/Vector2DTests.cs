@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
@@ -9,8 +10,15 @@ public class Vector2DTests
 {
     private const double Precision = 1e-12;
 
+    private static IEnumerable<object[]> ParamsFor_Length =>
+    [
+        [Vector2D.Zero, 0.0], [Vector2D.Of(14.0, 0.0), 14.0], [Vector2D.Of(-14.0, 0.0), 14.0],
+        [Vector2D.Of(0.0, 14.0), 14.0], [Vector2D.Of(0.0, -14.0), 14.0],
+        [Vector2D.Of(8.0, 6.0), 10.0], [Vector2D.Of(8.0, -6.0), 10.0],
+        [Vector2D.Of(-8.0, 6.0), 10.0], [Vector2D.Of(-8.0, -6.0), 10.0]
+    ];
+
     [Test]
-    [Sequential]
     public void Coordinates_ThenArray()
     {
         // when
@@ -20,15 +28,11 @@ public class Vector2DTests
         Assert.That(result, Is.EqualTo([150.123456789, -3700.987654321]));
     }
 
-    [Test]
-    [Sequential]
-    public void Length_ThenLengthOfVector(
-        [Values(0.0, 14.0, 8.0, 0.0, -8.0, -14.0, -8.0, 0.0, 8.0)] double x,
-        [Values(0.0, 0.0, 6.0, 14.0, 6.0, 0.0, -6.0, -14.0, -6.0)] double y,
-        [Values(0.0, 14.0, 10.0, 14.0, 10.0, 14.0, 10.0, 14.0, 10.0)] double expected)
+    [TestCaseSource(nameof(ParamsFor_Length))]
+    public void Length_ThenLengthOfVector(Vector2D vector, double expected)
     {
         // when
-        double result = Vector2D.Of(x, y).Length;
+        double result = vector.Length;
 
         // then
         Assert.That(result, Is.EqualTo(expected).Within(Precision));

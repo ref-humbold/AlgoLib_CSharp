@@ -1,10 +1,29 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
 
 public class Point3DTests
 {
     private const double Precision = 1e-12;
+
+    private static IEnumerable<object[]> ParamsFor_Radius =>
+    [
+        [Point3D.Zero, 0.0], [Point3D.Of(14.0, 0.0, 0.0), 14.0],
+        [Point3D.Of(-14.0, 0.0, 0.0), 14.0], [Point3D.Of(0.0, 14.0, 0.0), 14.0],
+        [Point3D.Of(0.0, -14.0, 0.0), 14.0], [Point3D.Of(0.0, 0.0, 14.0), 14.0],
+        [Point3D.Of(0.0, 0.0, -14.0), 14.0], [Point3D.Of(8.0, 6.0, 0.0), 10.0],
+        [Point3D.Of(8.0, -6.0, 0.0), 10.0], [Point3D.Of(-8.0, 6.0, 0.0), 10.0],
+        [Point3D.Of(-8.0, -6.0, 0.0), 10.0], [Point3D.Of(8.0, 0.0, 6.0), 10.0],
+        [Point3D.Of(8.0, 0.0, -6.0), 10.0], [Point3D.Of(-8.0, 0.0, 6.0), 10.0],
+        [Point3D.Of(-8.0, 0.0, -6.0), 10.0], [Point3D.Of(0.0, 8.0, 6.0), 10.0],
+        [Point3D.Of(0.0, 8.0, -6.0), 10.0], [Point3D.Of(0.0, -8.0, 6.0), 10.0],
+        [Point3D.Of(0.0, -8.0, -6.0), 10.0], [Point3D.Of(18.0, 6.0, 13.0), 23.0],
+        [Point3D.Of(18.0, 6.0, -13.0), 23.0], [Point3D.Of(18.0, -6.0, 13.0), 23.0],
+        [Point3D.Of(18.0, -6.0, -13.0), 23.0], [Point3D.Of(-18.0, 6.0, 13.0), 23.0],
+        [Point3D.Of(-18.0, 6.0, -13.0), 23.0], [Point3D.Of(-18.0, -6.0, 13.0), 23.0],
+        [Point3D.Of(-18.0, -6.0, -13.0), 23.0]
+    ];
 
     [Test]
     public void Coordinates_ThenArray()
@@ -16,14 +35,14 @@ public class Point3DTests
         Assert.That(result, Is.EqualTo([150.123456789, -3700.987654321, 0.55555555]));
     }
 
-    [Test]
-    public void Radius_ThenDistanceFromZeroPoint()
+    [TestCaseSource(nameof(ParamsFor_Radius))]
+    public void Radius_ThenDistanceFromZeroPoint(Point3D point, double expected)
     {
         // when
-        double result = Point3D.Of(18.0, -6.0, 13.0).Radius;
+        double result = point.Radius;
 
         // then
-        Assert.That(result, Is.EqualTo(23.0).Within(Precision));
+        Assert.That(result, Is.EqualTo(expected).Within(Precision));
     }
 
     [Test]

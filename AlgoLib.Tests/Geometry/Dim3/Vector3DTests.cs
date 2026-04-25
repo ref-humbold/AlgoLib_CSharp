@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
@@ -8,6 +9,24 @@ namespace AlgoLib.Geometry.Dim3;
 public class Vector3DTests
 {
     private const double Precision = 1e-12;
+
+    private static IEnumerable<object[]> ParamsFor_Length =>
+    [
+        [Vector3D.Zero, 0.0], [Vector3D.Of(14.0, 0.0, 0.0), 14.0],
+        [Vector3D.Of(-14.0, 0.0, 0.0), 14.0], [Vector3D.Of(0.0, 14.0, 0.0), 14.0],
+        [Vector3D.Of(0.0, -14.0, 0.0), 14.0], [Vector3D.Of(0.0, 0.0, 14.0), 14.0],
+        [Vector3D.Of(0.0, 0.0, -14.0), 14.0], [Vector3D.Of(8.0, 6.0, 0.0), 10.0],
+        [Vector3D.Of(8.0, -6.0, 0.0), 10.0], [Vector3D.Of(-8.0, 6.0, 0.0), 10.0],
+        [Vector3D.Of(-8.0, -6.0, 0.0), 10.0], [Vector3D.Of(8.0, 0.0, 6.0), 10.0],
+        [Vector3D.Of(8.0, 0.0, -6.0), 10.0], [Vector3D.Of(-8.0, 0.0, 6.0), 10.0],
+        [Vector3D.Of(-8.0, 0.0, -6.0), 10.0], [Vector3D.Of(0.0, 8.0, 6.0), 10.0],
+        [Vector3D.Of(0.0, 8.0, -6.0), 10.0], [Vector3D.Of(0.0, -8.0, 6.0), 10.0],
+        [Vector3D.Of(0.0, -8.0, -6.0), 10.0], [Vector3D.Of(18.0, 6.0, 13.0), 23.0],
+        [Vector3D.Of(18.0, 6.0, -13.0), 23.0], [Vector3D.Of(18.0, -6.0, 13.0), 23.0],
+        [Vector3D.Of(18.0, -6.0, -13.0), 23.0], [Vector3D.Of(-18.0, 6.0, 13.0), 23.0],
+        [Vector3D.Of(-18.0, 6.0, -13.0), 23.0], [Vector3D.Of(-18.0, -6.0, 13.0), 23.0],
+        [Vector3D.Of(-18.0, -6.0, -13.0), 23.0]
+    ];
 
     [Test]
     public void Coordinates_ThenArray()
@@ -19,22 +38,22 @@ public class Vector3DTests
         Assert.That(result, Is.EqualTo([150.123456789, -3700.987654321, 0.55555555]));
     }
 
-    [Test]
-    public void Length_ThenLengthOfVector()
+    [TestCaseSource(nameof(ParamsFor_Length))]
+    public void Length_ThenLengthOfVector(Vector3D vector, double expected)
     {
         // when
-        double result = Vector3D.Of(18.0, -6.0, 13.0).Length;
+        double result = vector.Length;
 
         // then
-        Assert.That(result, Is.EqualTo(23.0).Within(Precision));
+        Assert.That(result, Is.EqualTo(expected).Within(Precision));
     }
 
     [Test]
     public void Between_ThenVectorFromBeginToEnd()
     {
         // when
-        Vector3D result =
-            Vector3D.Between(Point3D.Of(2.4, 7.8, -10.3), Point3D.Of(-1.5, 13.2, 15.8));
+        Vector3D result = Vector3D.Between(
+            Point3D.Of(2.4, 7.8, -10.3), Point3D.Of(-1.5, 13.2, 15.8));
 
         // then
         Assert.That(result, Is.EqualTo(Vector3D.Of(-3.9, 5.4, 26.1)));
@@ -105,8 +124,7 @@ public class Vector3DTests
     {
         // when
         double result = Vector3D.Volume(
-            Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5),
-            Vector3D.Of(1.0, -1.0, 1.0));
+            Vector3D.Of(1.5, -4.0, -3.5), Vector3D.Of(9.0, -2.5, 8.5), Vector3D.Of(1.0, -1.0, 1.0));
 
         // then
         Assert.That(result, Is.EqualTo(33.75).Within(Precision));
@@ -117,8 +135,7 @@ public class Vector3DTests
     {
         // when
         double result = Vector3D.Volume(
-            Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0),
-            Vector3D.Of(2.0, -2.0, 2.0));
+            Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(-8.0, -8.0, -8.0), Vector3D.Of(2.0, -2.0, 2.0));
 
         // then
         Assert.That(result, Is.Zero.Within(Precision));
@@ -129,8 +146,7 @@ public class Vector3DTests
     {
         // when
         double result = Vector3D.Volume(
-            Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(1.0, 0.0, 1.0),
-            Vector3D.Of(0.0, -2.0, 0.0));
+            Vector3D.Of(3.0, 3.0, 3.0), Vector3D.Of(1.0, 0.0, 1.0), Vector3D.Of(0.0, -2.0, 0.0));
 
         // then
         Assert.That(result, Is.Zero.Within(Precision));
@@ -224,7 +240,7 @@ public class Vector3DTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        string result = Vector3D.Of(150.123456789, -3700.987654321, 0.55555555).ToString();
+        var result = Vector3D.Of(150.123456789, -3700.987654321, 0.55555555).ToString();
 
         // then
         Assert.That(result, Is.EqualTo("[150.123456789, -3700.987654321, 0.55555555]"));
