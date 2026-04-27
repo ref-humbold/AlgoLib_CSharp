@@ -41,7 +41,7 @@ public class ConvexHullTest
         IEnumerable<Point2D> result = ConvexHull.FindAndrewConvexHull(points);
 
         // then
-        Assert.That(result, Is.EquivalentTo(points));
+        Assert.That(result, Is.EqualTo(points));
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class ConvexHullTest
 
         // then
         Assert.That(
-            result, Is.EquivalentTo(
+            result, Is.EqualTo(
                 [
                     Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
                     Point2D.Of(6, -4), Point2D.Of(10, 2), Point2D.Of(5, 9),
@@ -81,7 +81,7 @@ public class ConvexHullTest
 
         // then
         Assert.That(
-            result, Is.EquivalentTo(
+            result, Is.EqualTo(
             [Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
     }
 
@@ -120,7 +120,7 @@ public class ConvexHullTest
         IEnumerable<Point2D> result = ConvexHull.FindGrahamConvexHull(points);
 
         // then
-        Assert.That(result, Is.EquivalentTo(points));
+        Assert.That(result, Is.EqualTo(points));
     }
 
     [Test]
@@ -139,11 +139,11 @@ public class ConvexHullTest
 
         // then
         Assert.That(
-            result, Is.EquivalentTo(
+            result, Is.EqualTo(
                 [
-                    Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
-                    Point2D.Of(6, -4), Point2D.Of(10, 2), Point2D.Of(5, 9),
-                    Point2D.Of(-5, 10), Point2D.Of(-7, 7)
+                    Point2D.Of(-1, -8), Point2D.Of(3, -6), Point2D.Of(6, -4),
+                    Point2D.Of(10, 2), Point2D.Of(5, 9), Point2D.Of(-5, 10),
+                    Point2D.Of(-7, 7), Point2D.Of(-8, -7)
                 ]));
     }
 
@@ -160,7 +160,7 @@ public class ConvexHullTest
 
         // then
         Assert.That(
-            result, Is.EquivalentTo(
+            result, Is.EqualTo(
             [Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
     }
 

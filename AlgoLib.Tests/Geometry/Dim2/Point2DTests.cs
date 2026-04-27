@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
+// Tests: Structure of point in 2D.
 public class Point2DTests
 {
     private const double Precision = 1e-12;
@@ -37,10 +38,10 @@ public class Point2DTests
     public void Angle_ThenCounterClockwiseAngleFromXAxis(Point2D point, double expected)
     {
         // when
-        Angle result = point.Angle;
+        Angle2D result = point.Angle;
 
         // then
-        Assert.That(result, Is.EqualTo(Angle.FromDegrees(expected)));
+        Assert.That(result, Is.EqualTo(Angle2D.FromDegrees(expected)));
     }
 
     [TestCaseSource(nameof(ParamsFor_Radius))]

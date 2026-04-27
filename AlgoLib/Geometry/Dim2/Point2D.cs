@@ -14,7 +14,7 @@ public readonly record struct Point2D(double X, double Y)
 
     public double Radius => Math.Sqrt(X * X + Y * Y);
 
-    public Angle Angle => Angle.FromRadians(Math.Atan2(Y, X));
+    public Angle2D Angle => Angle2D.FromRadians(Math.Atan2(Y, X));
 
     public static Point2D Of(double x, double y) => new(x, y);
 

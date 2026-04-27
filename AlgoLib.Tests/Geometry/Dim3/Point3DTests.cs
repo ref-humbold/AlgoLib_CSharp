@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim3;
 
+// Tests: Structure of point in 3D.
 public class Point3DTests
 {
     private const double Precision = 1e-12;

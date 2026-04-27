@@ -4,9 +4,9 @@ using NUnit.Framework;
 
 namespace AlgoLib.Geometry.Dim2;
 
-// Tests: Structure of angle.
+// Tests: Structure of angle in 2D.
 [TestFixture]
-public class AngleTest
+public class Angle2DTest
 {
     private static IEnumerable<double[]> ParamsFor_Degrees_WhenFromRadians =>
     [
@@ -28,7 +28,7 @@ public class AngleTest
     public void Degrees_WhenFromRadians_ThenPositiveDegreesInRange(double radians, double degrees)
     {
         // given
-        Angle angle = Angle.FromRadians(radians);
+        Angle2D angle = Angle2D.FromRadians(radians);
 
         // when
         double result = angle.Degrees;
@@ -41,7 +41,7 @@ public class AngleTest
     public void Radians_WhenFromDegrees_ThenPositiveRadiansInRange(double degrees, double radians)
     {
         // given
-        Angle angle = Angle.FromDegrees(degrees);
+        Angle2D angle = Angle2D.FromDegrees(degrees);
 
         // when
         double result = angle.Radians;
@@ -54,9 +54,9 @@ public class AngleTest
     public void ToString_ThenStringRepresentation()
     {
         // when
-        var result = Angle.FromDegrees(150.123456789).ToString();
+        var result = Angle2D.FromDegrees(150.123456789).ToString();
 
         // then
-        Assert.That(result, Is.EqualTo("Angle(150.123456789 deg)"));
+        Assert.That(result, Is.EqualTo("Angle<150.123456789 deg>"));
     }
 }
