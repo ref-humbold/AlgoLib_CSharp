@@ -34,8 +34,7 @@ public class ConvexHullTest
     public void FindAndrewConvexHull_WhenThreePoints_ThenThesePointsInHull()
     {
         // given
-        Point2D[] points =
-            [Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0)];
+        Point2D[] points = [Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0)];
 
         // when
         IEnumerable<Point2D> result = ConvexHull.FindAndrewConvexHull(points);
@@ -50,21 +49,19 @@ public class ConvexHullTest
         // when
         IEnumerable<Point2D> result = ConvexHull.FindAndrewConvexHull(
             [
-                Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7),
-                Point2D.Of(-8, -7), Point2D.Of(-3, -4), Point2D.Of(5, 9),
-                Point2D.Of(-1, -8), Point2D.Of(-5, 10), Point2D.Of(8, 0),
-                Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
-                Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7),
-                Point2D.Of(6, -4)
+                Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7), Point2D.Of(-8, -7),
+                Point2D.Of(-3, -4), Point2D.Of(5, 9), Point2D.Of(-1, -8), Point2D.Of(-5, 10),
+                Point2D.Of(8, 0), Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
+                Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7), Point2D.Of(6, -4)
             ]);
 
         // then
         Assert.That(
-            result, Is.EqualTo(
+            result,
+            Is.EqualTo(
                 [
-                    Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6),
-                    Point2D.Of(6, -4), Point2D.Of(10, 2), Point2D.Of(5, 9),
-                    Point2D.Of(-5, 10), Point2D.Of(-7, 7)
+                    Point2D.Of(-8, -7), Point2D.Of(-1, -8), Point2D.Of(3, -6), Point2D.Of(6, -4),
+                    Point2D.Of(10, 2), Point2D.Of(5, 9), Point2D.Of(-5, 10), Point2D.Of(-7, 7)
                 ]));
     }
 
@@ -74,15 +71,12 @@ public class ConvexHullTest
         // when
         IEnumerable<Point2D> result = ConvexHull.FindAndrewConvexHull(
             [
-                Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
-                Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
-                Point2D.Of(7, -3), Point2D.Of(-3, -2)
+                Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1), Point2D.Of(2, -3),
+                Point2D.Of(-3, 5), Point2D.Of(0, -3), Point2D.Of(7, -3), Point2D.Of(-3, -2)
             ]);
 
         // then
-        Assert.That(
-            result, Is.EqualTo(
-            [Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
+        Assert.That(result, Is.EqualTo([Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
     }
 
     #endregion
@@ -113,8 +107,7 @@ public class ConvexHullTest
     public void FindGrahamConvexHull_WhenThreePoints_ThenThesePointsInHull()
     {
         // given
-        Point2D[] points =
-            [Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0)];
+        Point2D[] points = [Point2D.Of(1.0, -1.0), Point2D.Of(5.0, 1.0), Point2D.Of(3.0, 4.0)];
 
         // when
         IEnumerable<Point2D> result = ConvexHull.FindGrahamConvexHull(points);
@@ -129,21 +122,19 @@ public class ConvexHullTest
         // when
         IEnumerable<Point2D> result = ConvexHull.FindGrahamConvexHull(
             [
-                Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7),
-                Point2D.Of(-8, -7), Point2D.Of(-3, -4), Point2D.Of(5, 9),
-                Point2D.Of(-1, -8), Point2D.Of(-5, 10), Point2D.Of(8, 0),
-                Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
-                Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7),
-                Point2D.Of(6, -4)
+                Point2D.Of(1, -3), Point2D.Of(-4, 6), Point2D.Of(-5, -7), Point2D.Of(-8, -7),
+                Point2D.Of(-3, -4), Point2D.Of(5, 9), Point2D.Of(-1, -8), Point2D.Of(-5, 10),
+                Point2D.Of(8, 0), Point2D.Of(3, -6), Point2D.Of(-2, 1), Point2D.Of(-2, 8),
+                Point2D.Of(10, 2), Point2D.Of(6, 3), Point2D.Of(-7, 7), Point2D.Of(6, -4)
             ]);
 
         // then
         Assert.That(
-            result, Is.EqualTo(
+            result,
+            Is.EqualTo(
                 [
-                    Point2D.Of(-1, -8), Point2D.Of(3, -6), Point2D.Of(6, -4),
-                    Point2D.Of(10, 2), Point2D.Of(5, 9), Point2D.Of(-5, 10),
-                    Point2D.Of(-7, 7), Point2D.Of(-8, -7)
+                    Point2D.Of(-1, -8), Point2D.Of(3, -6), Point2D.Of(6, -4), Point2D.Of(10, 2),
+                    Point2D.Of(5, 9), Point2D.Of(-5, 10), Point2D.Of(-7, 7), Point2D.Of(-8, -7)
                 ]));
     }
 
@@ -153,15 +144,12 @@ public class ConvexHullTest
         // when
         IEnumerable<Point2D> result = ConvexHull.FindGrahamConvexHull(
             [
-                Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1),
-                Point2D.Of(2, -3), Point2D.Of(-3, 5), Point2D.Of(0, -3),
-                Point2D.Of(7, -3), Point2D.Of(-3, -2)
+                Point2D.Of(-1, -3), Point2D.Of(-3, -3), Point2D.Of(-3, -1), Point2D.Of(2, -3),
+                Point2D.Of(-3, 5), Point2D.Of(0, -3), Point2D.Of(7, -3), Point2D.Of(-3, -2)
             ]);
 
         // then
-        Assert.That(
-            result, Is.EqualTo(
-            [Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
+        Assert.That(result, Is.EqualTo([Point2D.Of(-3, -3), Point2D.Of(7, -3), Point2D.Of(-3, 5)]));
     }
 
     #endregion

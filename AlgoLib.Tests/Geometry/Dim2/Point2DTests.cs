@@ -58,7 +58,7 @@ public class Point2DTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        string result = Point2D.Of(150.123456789, -3700.987654321).ToString();
+        var result = Point2D.Of(150.123456789, -3700.987654321).ToString();
 
         // then
         Assert.That(result, Is.EqualTo("(150.123456789, -3700.987654321)"));

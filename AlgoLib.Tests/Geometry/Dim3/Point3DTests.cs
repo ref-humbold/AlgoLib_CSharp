@@ -50,7 +50,7 @@ public class Point3DTests
     public void ToString_ThenStringRepresentation()
     {
         // when
-        string result = Point3D.Of(150.123456789, -3700.987654321, 0.55555555).ToString();
+        var result = Point3D.Of(150.123456789, -3700.987654321, 0.55555555).ToString();
 
         // then
         Assert.That(result, Is.EqualTo("(150.123456789, -3700.987654321, 0.55555555)"));

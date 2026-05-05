@@ -35,12 +35,10 @@ public static class ConvexHull
         if(pointsList.Count < 3)
             return [];
 
-        Point2D minimal = pointsList.MinBy(pt => (pt.Y, pt.X));
-        Vector2D moving = Vector2D.Between(minimal, Point2D.Zero);
+        Point2D minPoint = pointsList.MinBy(pt => (pt.Y, pt.X));
+        Vector2D moving = Vector2D.Between(minPoint, Point2D.Zero);
 
-        List<Point2D> sorted = pointsList.Select(pt => pt.Translate(moving))
-                                         .SortByAngle()
-                                         .ToList();
+        List<Point2D> sorted = pointsList.Select(pt => pt.Translate(moving)).SortByAngle().ToList();
 
         return collectHull(sorted).Select(pt => pt.Translate(-moving));
     }
