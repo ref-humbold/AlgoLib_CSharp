@@ -77,6 +77,13 @@ pipeline {
             failedTestsFailBuild: true,
             healthScaleFactor: 1.0
           )
+          recordCoverage(
+            tools: [[
+              parser: "COBERTURA",
+              pattern: "${env.TEST_RESULTS_DIR}/**/coverage.cobertura.xml"
+            ]],
+            ignoreParsingErrors: true
+          )
         }
       }
     }
