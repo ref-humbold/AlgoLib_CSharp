@@ -64,8 +64,12 @@ public class BasicFactorsDictionary
         for(var currentLength = 2; currentLength <= Text.Length; currentLength *= 2)
             codeValue = extend(
                 currentLength, codeValue,
-                (i, length) => new ExtensionCode(
-                    factors[(i, i + length / 2)], factors[(i + length / 2, i + length)], i));
+                (i, length) => new ExtensionCode
+                {
+                    PrefixCode = factors[(i, i + length / 2)],
+                    SuffixCode = factors[(i + length / 2, i + length)],
+                    Index = i
+                });
     }
 
     // Encodes substring of given length using already counted factors.
@@ -74,7 +78,12 @@ public class BasicFactorsDictionary
         ExtensionCode[] codes = Enumerable.Range(0, Text.Length - length + 1)
                                           .Select(i => func.Invoke(i, length))
                                           .OrderBy(c => c)
-                                          .Prepend(new ExtensionCode(0, 0, -1))
+                                          .Prepend(new ExtensionCode
+                                          {
+                                              PrefixCode = 0,
+                                              SuffixCode = 0,
+                                              Index = -1
+                                          })
                                           .ToArray();
 
         for(var i = 1; i < codes.Length; ++i)
